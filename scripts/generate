@@ -1,0 +1,93 @@
+#!/bin/sh
+# Regenerates src/main/generated/java from a Wavvon-docs checkout with
+# openapi-generator (java, native HttpClient, Jackson) and records the docs
+# commit in src/main/generated/SPEC_COMMIT.
+#
+#   scripts/generate [docs-path] [git-ref]
+#
+# docs-path defaults to ../../docs (the monorepo layout), git-ref to HEAD. The
+# spec is always read from a commit, never the working tree, so the output is
+# reproducible from SPEC_COMMIT alone.
+set -eu
+
+root=$(cd "$(dirname "$0")/.." && pwd)
+docs=${1:-"$root/../../docs"}
+ref=${2:-HEAD}
+out="$root/src/main/generated"
+spec="$root/target/spec/openapi.yaml"
+
+commit=$(git -C "$docs" rev-parse "$ref")
+mkdir -p "$(dirname "$spec")"
+git -C "$docs" show "$commit:openapi.yaml" >"$spec"
+work=$(mktemp -d)
+trap 'rm -rf "$work"' EXIT
+
+# Schemas the spec references but does not define, written from the hub's own
+# serde types. Each one is a spec bug: once Wavvon-docs defines the name, the
+# patch stops applying and the commit loses its "+Name" suffix.
+patch_gap() {
+  name=$1
+  file=$2
+  if grep -q "#/components/schemas/$name" "$spec" && ! grep -q "^    $name:" "$spec"; then
+    echo "PATCH: openapi.yaml references $name but never defines it; patching it in. Fix the spec." >&2
+    awk -v gap="$file" '{ print } /^  schemas:/ && !done { while ((getline line < gap) > 0) print line; done = 1 }' \
+      "$spec" >"$work/patched.yaml"
+    mv "$work/patched.yaml" "$spec"
+    commit="$commit+$name"
+  fi
+}
+
+# crates/hub/src/routes/apps/models.rs, AppMeResponse
+cat >"$work/AppRegistration.yaml" <<'EOF'
+    AppRegistration:
+      type: object
+      required: [pubkey, name, commands]
+      properties:
+        pubkey: { type: string }
+        name: { type: string }
+        avatar_url: { type: string }
+        description: { type: string }
+        webhook_url: { type: string }
+        homepage_url: { type: string }
+        commands:
+          type: array
+          items:
+            type: object
+            required: [name, description]
+            properties:
+              name: { type: string }
+              description: { type: string }
+              args: { type: string }
+              scope: { type: string }
+              privileged: { type: boolean }
+              cooldown_seconds: { type: integer }
+EOF
+patch_gap AppRegistration "$work/AppRegistration.yaml"
+
+# The hub serialises integers as Rust i64 (message timestamps are milliseconds),
+# but most spec integers carry no format, which the generator reads as Integer:
+# a message's created_at would overflow. Widen every format-less integer.
+awk '
+  /format:/ { print; next }
+  /^ *type: integer *$/ { print; match($0, /^ */); print substr($0, 1, RLENGTH) "format: int64"; widened++; next }
+  /type: integer *[,}]/ { sub(/type: integer */, "type: integer, format: int64"); sub(/int64 *, *}/, "int64 }"); widened++ }
+  { print }
+  END { if (widened) exit 3 }
+' "$spec" >"$work/widened.yaml" || {
+  [ $? -eq 3 ] || exit 1
+  echo "PATCH: widened format-less integers to int64" >&2
+  commit="$commit+int64"
+}
+mv "$work/widened.yaml" "$spec"
+
+cd "$root"
+# The spec does not pass openapi-generator validation (operations without
+# responses, responses without descriptions); generation tolerates it.
+echo "NOTE: generating with validation skipped; the spec has validation errors" >&2
+rm -rf target/openapi
+./mvnw -B -q -Pgenerate initialize -Dspec="$spec"
+rm -rf "$out/java"
+mkdir -p "$out"
+cp -r target/openapi/src/main/java "$out/java"
+echo "$commit" >"$out/SPEC_COMMIT"
+echo "generated from Wavvon-docs $commit"
