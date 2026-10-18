@@ -24,8 +24,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.ArrayList;
 import java.util.Arrays;
-import org.wavvon.sdk.generated.model.ListApps200ResponseInnerGame;
+import java.util.List;
+import org.wavvon.sdk.generated.model.AppCommandDef;
+import org.wavvon.sdk.generated.model.GameLaunchCard;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -36,9 +39,11 @@ import org.wavvon.sdk.generated.ApiClient;
 @JsonPropertyOrder({
   SetMeAppProfileRequest.JSON_PROPERTY_NAME,
   SetMeAppProfileRequest.JSON_PROPERTY_AVATAR_URL,
-  SetMeAppProfileRequest.JSON_PROPERTY_DESCRIPTION,
   SetMeAppProfileRequest.JSON_PROPERTY_WEBHOOK_URL,
+  SetMeAppProfileRequest.JSON_PROPERTY_DESCRIPTION,
   SetMeAppProfileRequest.JSON_PROPERTY_HOMEPAGE_URL,
+  SetMeAppProfileRequest.JSON_PROPERTY_COMMANDS,
+  SetMeAppProfileRequest.JSON_PROPERTY_CAPABILITIES,
   SetMeAppProfileRequest.JSON_PROPERTY_MINI_APP_URL,
   SetMeAppProfileRequest.JSON_PROPERTY_REQUIRES_CAMERA,
   SetMeAppProfileRequest.JSON_PROPERTY_GAME
@@ -53,17 +58,25 @@ public class SetMeAppProfileRequest {
   @jakarta.annotation.Nullable
   private String avatarUrl;
 
-  public static final String JSON_PROPERTY_DESCRIPTION = "description";
-  @jakarta.annotation.Nullable
-  private String description;
-
   public static final String JSON_PROPERTY_WEBHOOK_URL = "webhook_url";
   @jakarta.annotation.Nullable
   private String webhookUrl;
 
+  public static final String JSON_PROPERTY_DESCRIPTION = "description";
+  @jakarta.annotation.Nullable
+  private String description;
+
   public static final String JSON_PROPERTY_HOMEPAGE_URL = "homepage_url";
   @jakarta.annotation.Nullable
   private String homepageUrl;
+
+  public static final String JSON_PROPERTY_COMMANDS = "commands";
+  @jakarta.annotation.Nullable
+  private List<AppCommandDef> commands = new ArrayList<>();
+
+  public static final String JSON_PROPERTY_CAPABILITIES = "capabilities";
+  @jakarta.annotation.Nullable
+  private List<String> capabilities = new ArrayList<>();
 
   public static final String JSON_PROPERTY_MINI_APP_URL = "mini_app_url";
   @jakarta.annotation.Nullable
@@ -75,7 +88,7 @@ public class SetMeAppProfileRequest {
 
   public static final String JSON_PROPERTY_GAME = "game";
   @jakarta.annotation.Nullable
-  private ListApps200ResponseInnerGame game;
+  private GameLaunchCard game;
 
   public SetMeAppProfileRequest() { 
   }
@@ -128,30 +141,6 @@ public class SetMeAppProfileRequest {
   }
 
 
-  public SetMeAppProfileRequest description(@jakarta.annotation.Nullable String description) {
-    this.description = description;
-    return this;
-  }
-
-  /**
-   * Get description
-   * @return description
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_DESCRIPTION)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getDescription() {
-    return description;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_DESCRIPTION)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setDescription(@jakarta.annotation.Nullable String description) {
-    this.description = description;
-  }
-
-
   public SetMeAppProfileRequest webhookUrl(@jakarta.annotation.Nullable String webhookUrl) {
     this.webhookUrl = webhookUrl;
     return this;
@@ -176,6 +165,30 @@ public class SetMeAppProfileRequest {
   }
 
 
+  public SetMeAppProfileRequest description(@jakarta.annotation.Nullable String description) {
+    this.description = description;
+    return this;
+  }
+
+  /**
+   * Get description
+   * @return description
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_DESCRIPTION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getDescription() {
+    return description;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_DESCRIPTION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setDescription(@jakarta.annotation.Nullable String description) {
+    this.description = description;
+  }
+
+
   public SetMeAppProfileRequest homepageUrl(@jakarta.annotation.Nullable String homepageUrl) {
     this.homepageUrl = homepageUrl;
     return this;
@@ -197,6 +210,70 @@ public class SetMeAppProfileRequest {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setHomepageUrl(@jakarta.annotation.Nullable String homepageUrl) {
     this.homepageUrl = homepageUrl;
+  }
+
+
+  public SetMeAppProfileRequest commands(@jakarta.annotation.Nullable List<AppCommandDef> commands) {
+    this.commands = commands;
+    return this;
+  }
+
+  public SetMeAppProfileRequest addCommandsItem(AppCommandDef commandsItem) {
+    if (this.commands == null) {
+      this.commands = new ArrayList<>();
+    }
+    this.commands.add(commandsItem);
+    return this;
+  }
+
+  /**
+   * Get commands
+   * @return commands
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_COMMANDS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public List<AppCommandDef> getCommands() {
+    return commands;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_COMMANDS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setCommands(@jakarta.annotation.Nullable List<AppCommandDef> commands) {
+    this.commands = commands;
+  }
+
+
+  public SetMeAppProfileRequest capabilities(@jakarta.annotation.Nullable List<String> capabilities) {
+    this.capabilities = capabilities;
+    return this;
+  }
+
+  public SetMeAppProfileRequest addCapabilitiesItem(String capabilitiesItem) {
+    if (this.capabilities == null) {
+      this.capabilities = new ArrayList<>();
+    }
+    this.capabilities.add(capabilitiesItem);
+    return this;
+  }
+
+  /**
+   * Get capabilities
+   * @return capabilities
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CAPABILITIES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public List<String> getCapabilities() {
+    return capabilities;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_CAPABILITIES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setCapabilities(@jakarta.annotation.Nullable List<String> capabilities) {
+    this.capabilities = capabilities;
   }
 
 
@@ -248,7 +325,7 @@ public class SetMeAppProfileRequest {
   }
 
 
-  public SetMeAppProfileRequest game(@jakarta.annotation.Nullable ListApps200ResponseInnerGame game) {
+  public SetMeAppProfileRequest game(@jakarta.annotation.Nullable GameLaunchCard game) {
     this.game = game;
     return this;
   }
@@ -260,14 +337,14 @@ public class SetMeAppProfileRequest {
   @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_GAME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public ListApps200ResponseInnerGame getGame() {
+  public GameLaunchCard getGame() {
     return game;
   }
 
 
   @JsonProperty(JSON_PROPERTY_GAME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setGame(@jakarta.annotation.Nullable ListApps200ResponseInnerGame game) {
+  public void setGame(@jakarta.annotation.Nullable GameLaunchCard game) {
     this.game = game;
   }
 
@@ -286,9 +363,11 @@ public class SetMeAppProfileRequest {
     SetMeAppProfileRequest setMeAppProfileRequest = (SetMeAppProfileRequest) o;
     return Objects.equals(this.name, setMeAppProfileRequest.name) &&
         Objects.equals(this.avatarUrl, setMeAppProfileRequest.avatarUrl) &&
-        Objects.equals(this.description, setMeAppProfileRequest.description) &&
         Objects.equals(this.webhookUrl, setMeAppProfileRequest.webhookUrl) &&
+        Objects.equals(this.description, setMeAppProfileRequest.description) &&
         Objects.equals(this.homepageUrl, setMeAppProfileRequest.homepageUrl) &&
+        Objects.equals(this.commands, setMeAppProfileRequest.commands) &&
+        Objects.equals(this.capabilities, setMeAppProfileRequest.capabilities) &&
         Objects.equals(this.miniAppUrl, setMeAppProfileRequest.miniAppUrl) &&
         Objects.equals(this.requiresCamera, setMeAppProfileRequest.requiresCamera) &&
         Objects.equals(this.game, setMeAppProfileRequest.game);
@@ -296,7 +375,7 @@ public class SetMeAppProfileRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, avatarUrl, description, webhookUrl, homepageUrl, miniAppUrl, requiresCamera, game);
+    return Objects.hash(name, avatarUrl, webhookUrl, description, homepageUrl, commands, capabilities, miniAppUrl, requiresCamera, game);
   }
 
   @Override
@@ -305,9 +384,11 @@ public class SetMeAppProfileRequest {
     sb.append("class SetMeAppProfileRequest {\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    avatarUrl: ").append(toIndentedString(avatarUrl)).append("\n");
-    sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    webhookUrl: ").append(toIndentedString(webhookUrl)).append("\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    homepageUrl: ").append(toIndentedString(homepageUrl)).append("\n");
+    sb.append("    commands: ").append(toIndentedString(commands)).append("\n");
+    sb.append("    capabilities: ").append(toIndentedString(capabilities)).append("\n");
     sb.append("    miniAppUrl: ").append(toIndentedString(miniAppUrl)).append("\n");
     sb.append("    requiresCamera: ").append(toIndentedString(requiresCamera)).append("\n");
     sb.append("    game: ").append(toIndentedString(game)).append("\n");
@@ -368,19 +449,38 @@ public class SetMeAppProfileRequest {
       joiner.add(String.format("%savatar_url%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getAvatarUrl()))));
     }
 
-    // add `description` to the URL query string
-    if (getDescription() != null) {
-      joiner.add(String.format("%sdescription%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getDescription()))));
-    }
-
     // add `webhook_url` to the URL query string
     if (getWebhookUrl() != null) {
       joiner.add(String.format("%swebhook_url%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getWebhookUrl()))));
     }
 
+    // add `description` to the URL query string
+    if (getDescription() != null) {
+      joiner.add(String.format("%sdescription%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getDescription()))));
+    }
+
     // add `homepage_url` to the URL query string
     if (getHomepageUrl() != null) {
       joiner.add(String.format("%shomepage_url%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getHomepageUrl()))));
+    }
+
+    // add `commands` to the URL query string
+    if (getCommands() != null) {
+      for (int i = 0; i < getCommands().size(); i++) {
+        if (getCommands().get(i) != null) {
+          joiner.add(getCommands().get(i).toUrlQueryString(String.format("%scommands%s%s", prefix, suffix,
+          "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix))));
+        }
+      }
+    }
+
+    // add `capabilities` to the URL query string
+    if (getCapabilities() != null) {
+      for (int i = 0; i < getCapabilities().size(); i++) {
+        joiner.add(String.format("%scapabilities%s%s=%s", prefix, suffix,
+            "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix),
+            ApiClient.urlEncode(ApiClient.valueToString(getCapabilities().get(i)))));
+      }
     }
 
     // add `mini_app_url` to the URL query string

@@ -27,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.wavvon.sdk.generated.model.SubkeyCert;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -71,7 +72,7 @@ public class CreateFederationDmMemberChangeRequest {
 
   public static final String JSON_PROPERTY_SIGNER_CERT = "signer_cert";
   @jakarta.annotation.Nullable
-  private Object signerCert;
+  private SubkeyCert signerCert;
 
   public CreateFederationDmMemberChangeRequest() { 
   }
@@ -236,7 +237,7 @@ public class CreateFederationDmMemberChangeRequest {
   }
 
 
-  public CreateFederationDmMemberChangeRequest signerCert(@jakarta.annotation.Nullable Object signerCert) {
+  public CreateFederationDmMemberChangeRequest signerCert(@jakarta.annotation.Nullable SubkeyCert signerCert) {
     this.signerCert = signerCert;
     return this;
   }
@@ -248,14 +249,14 @@ public class CreateFederationDmMemberChangeRequest {
   @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_SIGNER_CERT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Object getSignerCert() {
+  public SubkeyCert getSignerCert() {
     return signerCert;
   }
 
 
   @JsonProperty(JSON_PROPERTY_SIGNER_CERT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setSignerCert(@jakarta.annotation.Nullable Object signerCert) {
+  public void setSignerCert(@jakarta.annotation.Nullable SubkeyCert signerCert) {
     this.signerCert = signerCert;
   }
 
@@ -384,7 +385,7 @@ public class CreateFederationDmMemberChangeRequest {
 
     // add `signer_cert` to the URL query string
     if (getSignerCert() != null) {
-      joiner.add(String.format("%ssigner_cert%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getSignerCert()))));
+      joiner.add(getSignerCert().toUrlQueryString(prefix + "signer_cert" + suffix));
     }
 
     return joiner.toString();

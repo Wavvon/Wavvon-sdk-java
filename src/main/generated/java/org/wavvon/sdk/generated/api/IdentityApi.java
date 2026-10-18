@@ -18,8 +18,16 @@ import org.wavvon.sdk.generated.ApiResponse;
 import org.wavvon.sdk.generated.Configuration;
 import org.wavvon.sdk.generated.Pair;
 
+import org.wavvon.sdk.generated.model.ClaimIdentityPairingRequest;
+import org.wavvon.sdk.generated.model.CompleteIdentityPairingRequest;
+import org.wavvon.sdk.generated.model.CreateIdentityDesignationRequest;
+import org.wavvon.sdk.generated.model.CreateIdentityPairingOfferRequest;
+import org.wavvon.sdk.generated.model.CreateIdentityRevocationRequest;
 import org.wavvon.sdk.generated.model.ListIdentityDmBlocks200Response;
+import org.wavvon.sdk.generated.model.SetIdentityDhKeyRequest;
 import org.wavvon.sdk.generated.model.SetIdentityDmBlocksRequest;
+import org.wavvon.sdk.generated.model.SetIdentityPrefsRequest;
+import org.wavvon.sdk.generated.model.SubkeyCert;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -86,20 +94,22 @@ public class IdentityApi {
   /**
    * Claim a pairing offer from a new device
    * 
+   * @param claimIdentityPairingRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void claimIdentityPairing() throws ApiException {
-    claimIdentityPairingWithHttpInfo();
+  public void claimIdentityPairing(ClaimIdentityPairingRequest claimIdentityPairingRequest) throws ApiException {
+    claimIdentityPairingWithHttpInfo(claimIdentityPairingRequest);
   }
 
   /**
    * Claim a pairing offer from a new device
    * 
+   * @param claimIdentityPairingRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> claimIdentityPairingWithHttpInfo() throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = claimIdentityPairingRequestBuilder();
+  public ApiResponse<Void> claimIdentityPairingWithHttpInfo(ClaimIdentityPairingRequest claimIdentityPairingRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = claimIdentityPairingRequestBuilder(claimIdentityPairingRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -132,7 +142,11 @@ public class IdentityApi {
     }
   }
 
-  private HttpRequest.Builder claimIdentityPairingRequestBuilder() throws ApiException {
+  private HttpRequest.Builder claimIdentityPairingRequestBuilder(ClaimIdentityPairingRequest claimIdentityPairingRequest) throws ApiException {
+    // verify the required parameter 'claimIdentityPairingRequest' is set
+    if (claimIdentityPairingRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'claimIdentityPairingRequest' when calling claimIdentityPairing");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -140,9 +154,15 @@ public class IdentityApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(claimIdentityPairingRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }
@@ -155,20 +175,22 @@ public class IdentityApi {
   /**
    * Complete the pairing handshake
    * 
+   * @param completeIdentityPairingRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void completeIdentityPairing() throws ApiException {
-    completeIdentityPairingWithHttpInfo();
+  public void completeIdentityPairing(CompleteIdentityPairingRequest completeIdentityPairingRequest) throws ApiException {
+    completeIdentityPairingWithHttpInfo(completeIdentityPairingRequest);
   }
 
   /**
    * Complete the pairing handshake
    * 
+   * @param completeIdentityPairingRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> completeIdentityPairingWithHttpInfo() throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = completeIdentityPairingRequestBuilder();
+  public ApiResponse<Void> completeIdentityPairingWithHttpInfo(CompleteIdentityPairingRequest completeIdentityPairingRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = completeIdentityPairingRequestBuilder(completeIdentityPairingRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -201,7 +223,11 @@ public class IdentityApi {
     }
   }
 
-  private HttpRequest.Builder completeIdentityPairingRequestBuilder() throws ApiException {
+  private HttpRequest.Builder completeIdentityPairingRequestBuilder(CompleteIdentityPairingRequest completeIdentityPairingRequest) throws ApiException {
+    // verify the required parameter 'completeIdentityPairingRequest' is set
+    if (completeIdentityPairingRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'completeIdentityPairingRequest' when calling completeIdentityPairing");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -209,9 +235,15 @@ public class IdentityApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(completeIdentityPairingRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }
@@ -225,21 +257,23 @@ public class IdentityApi {
    * Publish a master-signed home-hub list
    * Unauthenticated on purpose: a client publishes the same designation to every hub in the list it just signed, and holds a session with at most one of them. The signature is what makes it safe — you can only write your own designation, one row per master, and only forward (&#x60;sequence&#x60; must exceed the stored one).  **403** when this hub has never met the identity behind &#x60;master&#x60;: no member carries it, and no device cert for it names a subkey that is a member here. Such a row could never be read — the lookup starts from a member — so it was only ever a way for a stranger to leave rows behind.
    * @param master  (required)
+   * @param createIdentityDesignationRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void createIdentityDesignation(String master) throws ApiException {
-    createIdentityDesignationWithHttpInfo(master);
+  public void createIdentityDesignation(String master, CreateIdentityDesignationRequest createIdentityDesignationRequest) throws ApiException {
+    createIdentityDesignationWithHttpInfo(master, createIdentityDesignationRequest);
   }
 
   /**
    * Publish a master-signed home-hub list
    * Unauthenticated on purpose: a client publishes the same designation to every hub in the list it just signed, and holds a session with at most one of them. The signature is what makes it safe — you can only write your own designation, one row per master, and only forward (&#x60;sequence&#x60; must exceed the stored one).  **403** when this hub has never met the identity behind &#x60;master&#x60;: no member carries it, and no device cert for it names a subkey that is a member here. Such a row could never be read — the lookup starts from a member — so it was only ever a way for a stranger to leave rows behind.
    * @param master  (required)
+   * @param createIdentityDesignationRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> createIdentityDesignationWithHttpInfo(String master) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = createIdentityDesignationRequestBuilder(master);
+  public ApiResponse<Void> createIdentityDesignationWithHttpInfo(String master, CreateIdentityDesignationRequest createIdentityDesignationRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = createIdentityDesignationRequestBuilder(master, createIdentityDesignationRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -272,10 +306,14 @@ public class IdentityApi {
     }
   }
 
-  private HttpRequest.Builder createIdentityDesignationRequestBuilder(String master) throws ApiException {
+  private HttpRequest.Builder createIdentityDesignationRequestBuilder(String master, CreateIdentityDesignationRequest createIdentityDesignationRequest) throws ApiException {
     // verify the required parameter 'master' is set
     if (master == null) {
       throw new ApiException(400, "Missing the required parameter 'master' when calling createIdentityDesignation");
+    }
+    // verify the required parameter 'createIdentityDesignationRequest' is set
+    if (createIdentityDesignationRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createIdentityDesignationRequest' when calling createIdentityDesignation");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -285,9 +323,15 @@ public class IdentityApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(createIdentityDesignationRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }
@@ -301,21 +345,23 @@ public class IdentityApi {
    * Register a new device subkey
    * 
    * @param master  (required)
+   * @param subkeyCert  (required)
    * @throws ApiException if fails to make API call
    */
-  public void createIdentityDevice(String master) throws ApiException {
-    createIdentityDeviceWithHttpInfo(master);
+  public void createIdentityDevice(String master, SubkeyCert subkeyCert) throws ApiException {
+    createIdentityDeviceWithHttpInfo(master, subkeyCert);
   }
 
   /**
    * Register a new device subkey
    * 
    * @param master  (required)
+   * @param subkeyCert  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> createIdentityDeviceWithHttpInfo(String master) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = createIdentityDeviceRequestBuilder(master);
+  public ApiResponse<Void> createIdentityDeviceWithHttpInfo(String master, SubkeyCert subkeyCert) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = createIdentityDeviceRequestBuilder(master, subkeyCert);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -348,10 +394,14 @@ public class IdentityApi {
     }
   }
 
-  private HttpRequest.Builder createIdentityDeviceRequestBuilder(String master) throws ApiException {
+  private HttpRequest.Builder createIdentityDeviceRequestBuilder(String master, SubkeyCert subkeyCert) throws ApiException {
     // verify the required parameter 'master' is set
     if (master == null) {
       throw new ApiException(400, "Missing the required parameter 'master' when calling createIdentityDevice");
+    }
+    // verify the required parameter 'subkeyCert' is set
+    if (subkeyCert == null) {
+      throw new ApiException(400, "Missing the required parameter 'subkeyCert' when calling createIdentityDevice");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -361,9 +411,15 @@ public class IdentityApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(subkeyCert);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }
@@ -376,20 +432,22 @@ public class IdentityApi {
   /**
    * Create a device-pairing offer
    * 
+   * @param createIdentityPairingOfferRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void createIdentityPairingOffer() throws ApiException {
-    createIdentityPairingOfferWithHttpInfo();
+  public void createIdentityPairingOffer(CreateIdentityPairingOfferRequest createIdentityPairingOfferRequest) throws ApiException {
+    createIdentityPairingOfferWithHttpInfo(createIdentityPairingOfferRequest);
   }
 
   /**
    * Create a device-pairing offer
    * 
+   * @param createIdentityPairingOfferRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> createIdentityPairingOfferWithHttpInfo() throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = createIdentityPairingOfferRequestBuilder();
+  public ApiResponse<Void> createIdentityPairingOfferWithHttpInfo(CreateIdentityPairingOfferRequest createIdentityPairingOfferRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = createIdentityPairingOfferRequestBuilder(createIdentityPairingOfferRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -422,7 +480,11 @@ public class IdentityApi {
     }
   }
 
-  private HttpRequest.Builder createIdentityPairingOfferRequestBuilder() throws ApiException {
+  private HttpRequest.Builder createIdentityPairingOfferRequestBuilder(CreateIdentityPairingOfferRequest createIdentityPairingOfferRequest) throws ApiException {
+    // verify the required parameter 'createIdentityPairingOfferRequest' is set
+    if (createIdentityPairingOfferRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createIdentityPairingOfferRequest' when calling createIdentityPairingOffer");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -430,9 +492,15 @@ public class IdentityApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(createIdentityPairingOfferRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }
@@ -446,21 +514,23 @@ public class IdentityApi {
    * Revoke a device key
    * 
    * @param master  (required)
+   * @param createIdentityRevocationRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void createIdentityRevocation(String master) throws ApiException {
-    createIdentityRevocationWithHttpInfo(master);
+  public void createIdentityRevocation(String master, CreateIdentityRevocationRequest createIdentityRevocationRequest) throws ApiException {
+    createIdentityRevocationWithHttpInfo(master, createIdentityRevocationRequest);
   }
 
   /**
    * Revoke a device key
    * 
    * @param master  (required)
+   * @param createIdentityRevocationRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> createIdentityRevocationWithHttpInfo(String master) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = createIdentityRevocationRequestBuilder(master);
+  public ApiResponse<Void> createIdentityRevocationWithHttpInfo(String master, CreateIdentityRevocationRequest createIdentityRevocationRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = createIdentityRevocationRequestBuilder(master, createIdentityRevocationRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -493,10 +563,14 @@ public class IdentityApi {
     }
   }
 
-  private HttpRequest.Builder createIdentityRevocationRequestBuilder(String master) throws ApiException {
+  private HttpRequest.Builder createIdentityRevocationRequestBuilder(String master, CreateIdentityRevocationRequest createIdentityRevocationRequest) throws ApiException {
     // verify the required parameter 'master' is set
     if (master == null) {
       throw new ApiException(400, "Missing the required parameter 'master' when calling createIdentityRevocation");
+    }
+    // verify the required parameter 'createIdentityRevocationRequest' is set
+    if (createIdentityRevocationRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createIdentityRevocationRequest' when calling createIdentityRevocation");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -506,9 +580,15 @@ public class IdentityApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(createIdentityRevocationRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }
@@ -1055,21 +1135,23 @@ public class IdentityApi {
    * Publish own DH public key
    * 
    * @param pubkey  (required)
+   * @param setIdentityDhKeyRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void setIdentityDhKey(String pubkey) throws ApiException {
-    setIdentityDhKeyWithHttpInfo(pubkey);
+  public void setIdentityDhKey(String pubkey, SetIdentityDhKeyRequest setIdentityDhKeyRequest) throws ApiException {
+    setIdentityDhKeyWithHttpInfo(pubkey, setIdentityDhKeyRequest);
   }
 
   /**
    * Publish own DH public key
    * 
    * @param pubkey  (required)
+   * @param setIdentityDhKeyRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> setIdentityDhKeyWithHttpInfo(String pubkey) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = setIdentityDhKeyRequestBuilder(pubkey);
+  public ApiResponse<Void> setIdentityDhKeyWithHttpInfo(String pubkey, SetIdentityDhKeyRequest setIdentityDhKeyRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = setIdentityDhKeyRequestBuilder(pubkey, setIdentityDhKeyRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -1102,10 +1184,14 @@ public class IdentityApi {
     }
   }
 
-  private HttpRequest.Builder setIdentityDhKeyRequestBuilder(String pubkey) throws ApiException {
+  private HttpRequest.Builder setIdentityDhKeyRequestBuilder(String pubkey, SetIdentityDhKeyRequest setIdentityDhKeyRequest) throws ApiException {
     // verify the required parameter 'pubkey' is set
     if (pubkey == null) {
       throw new ApiException(400, "Missing the required parameter 'pubkey' when calling setIdentityDhKey");
+    }
+    // verify the required parameter 'setIdentityDhKeyRequest' is set
+    if (setIdentityDhKeyRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'setIdentityDhKeyRequest' when calling setIdentityDhKey");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -1115,9 +1201,15 @@ public class IdentityApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("PUT", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(setIdentityDhKeyRequest);
+      localVarRequestBuilder.method("PUT", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }
@@ -1130,7 +1222,7 @@ public class IdentityApi {
   /**
    * Replace the caller&#39;s DM-block set
    * 
-   * @param setIdentityDmBlocksRequest  (optional)
+   * @param setIdentityDmBlocksRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void setIdentityDmBlocks(SetIdentityDmBlocksRequest setIdentityDmBlocksRequest) throws ApiException {
@@ -1140,7 +1232,7 @@ public class IdentityApi {
   /**
    * Replace the caller&#39;s DM-block set
    * 
-   * @param setIdentityDmBlocksRequest  (optional)
+   * @param setIdentityDmBlocksRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -1179,6 +1271,10 @@ public class IdentityApi {
   }
 
   private HttpRequest.Builder setIdentityDmBlocksRequestBuilder(SetIdentityDmBlocksRequest setIdentityDmBlocksRequest) throws ApiException {
+    // verify the required parameter 'setIdentityDmBlocksRequest' is set
+    if (setIdentityDmBlocksRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'setIdentityDmBlocksRequest' when calling setIdentityDmBlocks");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -1208,21 +1304,23 @@ public class IdentityApi {
    * Store cross-device preferences blob
    * 
    * @param master  (required)
+   * @param setIdentityPrefsRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void setIdentityPrefs(String master) throws ApiException {
-    setIdentityPrefsWithHttpInfo(master);
+  public void setIdentityPrefs(String master, SetIdentityPrefsRequest setIdentityPrefsRequest) throws ApiException {
+    setIdentityPrefsWithHttpInfo(master, setIdentityPrefsRequest);
   }
 
   /**
    * Store cross-device preferences blob
    * 
    * @param master  (required)
+   * @param setIdentityPrefsRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> setIdentityPrefsWithHttpInfo(String master) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = setIdentityPrefsRequestBuilder(master);
+  public ApiResponse<Void> setIdentityPrefsWithHttpInfo(String master, SetIdentityPrefsRequest setIdentityPrefsRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = setIdentityPrefsRequestBuilder(master, setIdentityPrefsRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -1255,10 +1353,14 @@ public class IdentityApi {
     }
   }
 
-  private HttpRequest.Builder setIdentityPrefsRequestBuilder(String master) throws ApiException {
+  private HttpRequest.Builder setIdentityPrefsRequestBuilder(String master, SetIdentityPrefsRequest setIdentityPrefsRequest) throws ApiException {
     // verify the required parameter 'master' is set
     if (master == null) {
       throw new ApiException(400, "Missing the required parameter 'master' when calling setIdentityPrefs");
+    }
+    // verify the required parameter 'setIdentityPrefsRequest' is set
+    if (setIdentityPrefsRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'setIdentityPrefsRequest' when calling setIdentityPrefs");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -1268,9 +1370,15 @@ public class IdentityApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("PUT", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(setIdentityPrefsRequest);
+      localVarRequestBuilder.method("PUT", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }

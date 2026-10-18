@@ -40,17 +40,17 @@ import org.wavvon.sdk.generated.ApiClient;
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class Certification {
   public static final String JSON_PROPERTY_PAYLOAD = "payload";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private CertPayload payload;
 
   public static final String JSON_PROPERTY_SIGNATURE = "signature";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private String signature;
 
   public Certification() { 
   }
 
-  public Certification payload(@jakarta.annotation.Nullable CertPayload payload) {
+  public Certification payload(@jakarta.annotation.Nonnull CertPayload payload) {
     this.payload = payload;
     return this;
   }
@@ -59,22 +59,22 @@ public class Certification {
    * Get payload
    * @return payload
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_PAYLOAD)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public CertPayload getPayload() {
     return payload;
   }
 
 
   @JsonProperty(JSON_PROPERTY_PAYLOAD)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setPayload(@jakarta.annotation.Nullable CertPayload payload) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setPayload(@jakarta.annotation.Nonnull CertPayload payload) {
     this.payload = payload;
   }
 
 
-  public Certification signature(@jakarta.annotation.Nullable String signature) {
+  public Certification signature(@jakarta.annotation.Nonnull String signature) {
     this.signature = signature;
     return this;
   }
@@ -83,17 +83,17 @@ public class Certification {
    * Get signature
    * @return signature
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_SIGNATURE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getSignature() {
     return signature;
   }
 
 
   @JsonProperty(JSON_PROPERTY_SIGNATURE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setSignature(@jakarta.annotation.Nullable String signature) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setSignature(@jakarta.annotation.Nonnull String signature) {
     this.signature = signature;
   }
 

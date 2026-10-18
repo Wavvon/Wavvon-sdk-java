@@ -91,7 +91,7 @@ public class MessagesApi {
    * Send a message
    * 
    * @param channelId  (required)
-   * @param createChannelMessageRequest  (optional)
+   * @param createChannelMessageRequest  (required)
    * @return Message
    * @throws ApiException if fails to make API call
    */
@@ -104,7 +104,7 @@ public class MessagesApi {
    * Send a message
    * 
    * @param channelId  (required)
-   * @param createChannelMessageRequest  (optional)
+   * @param createChannelMessageRequest  (required)
    * @return ApiResponse&lt;Message&gt;
    * @throws ApiException if fails to make API call
    */
@@ -153,6 +153,10 @@ public class MessagesApi {
     if (channelId == null) {
       throw new ApiException(400, "Missing the required parameter 'channelId' when calling createChannelMessage");
     }
+    // verify the required parameter 'createChannelMessageRequest' is set
+    if (createChannelMessageRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createChannelMessageRequest' when calling createChannelMessage");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -184,7 +188,7 @@ public class MessagesApi {
    * 
    * @param channelId  (required)
    * @param messageId  (required)
-   * @param createChannelMessageReactionRequest  (optional)
+   * @param createChannelMessageReactionRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void createChannelMessageReaction(String channelId, String messageId, CreateChannelMessageReactionRequest createChannelMessageReactionRequest) throws ApiException {
@@ -196,7 +200,7 @@ public class MessagesApi {
    * 
    * @param channelId  (required)
    * @param messageId  (required)
-   * @param createChannelMessageReactionRequest  (optional)
+   * @param createChannelMessageReactionRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -242,6 +246,10 @@ public class MessagesApi {
     // verify the required parameter 'messageId' is set
     if (messageId == null) {
       throw new ApiException(400, "Missing the required parameter 'messageId' when calling createChannelMessageReaction");
+    }
+    // verify the required parameter 'createChannelMessageReactionRequest' is set
+    if (createChannelMessageReactionRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createChannelMessageReactionRequest' when calling createChannelMessageReaction");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -922,7 +930,7 @@ public class MessagesApi {
    * 
    * @param channelId  (required)
    * @param messageId  (required)
-   * @param updateChannelMessageRequest  (optional)
+   * @param updateChannelMessageRequest  (required)
    * @return Message
    * @throws ApiException if fails to make API call
    */
@@ -936,7 +944,7 @@ public class MessagesApi {
    * 
    * @param channelId  (required)
    * @param messageId  (required)
-   * @param updateChannelMessageRequest  (optional)
+   * @param updateChannelMessageRequest  (required)
    * @return ApiResponse&lt;Message&gt;
    * @throws ApiException if fails to make API call
    */
@@ -988,6 +996,10 @@ public class MessagesApi {
     // verify the required parameter 'messageId' is set
     if (messageId == null) {
       throw new ApiException(400, "Missing the required parameter 'messageId' when calling updateChannelMessage");
+    }
+    // verify the required parameter 'updateChannelMessageRequest' is set
+    if (updateChannelMessageRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'updateChannelMessageRequest' when calling updateChannelMessage");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();

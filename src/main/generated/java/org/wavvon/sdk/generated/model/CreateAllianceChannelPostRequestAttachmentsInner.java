@@ -30,81 +30,60 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * SetMeAppCommandsRequestCommandsInner
+ * CreateAllianceChannelPostRequestAttachmentsInner
  */
 @JsonPropertyOrder({
-  SetMeAppCommandsRequestCommandsInner.JSON_PROPERTY_NAME,
-  SetMeAppCommandsRequestCommandsInner.JSON_PROPERTY_DESCRIPTION,
-  SetMeAppCommandsRequestCommandsInner.JSON_PROPERTY_ARGS,
-  SetMeAppCommandsRequestCommandsInner.JSON_PROPERTY_SCOPE,
-  SetMeAppCommandsRequestCommandsInner.JSON_PROPERTY_PRIVILEGED,
-  SetMeAppCommandsRequestCommandsInner.JSON_PROPERTY_COOLDOWN_SECONDS
+  CreateAllianceChannelPostRequestAttachmentsInner.JSON_PROPERTY_URL,
+  CreateAllianceChannelPostRequestAttachmentsInner.JSON_PROPERTY_NAME,
+  CreateAllianceChannelPostRequestAttachmentsInner.JSON_PROPERTY_MIME,
+  CreateAllianceChannelPostRequestAttachmentsInner.JSON_PROPERTY_SIZE
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class SetMeAppCommandsRequestCommandsInner {
+public class CreateAllianceChannelPostRequestAttachmentsInner {
+  public static final String JSON_PROPERTY_URL = "url";
+  @jakarta.annotation.Nonnull
+  private String url;
+
   public static final String JSON_PROPERTY_NAME = "name";
   @jakarta.annotation.Nonnull
   private String name;
 
-  public static final String JSON_PROPERTY_DESCRIPTION = "description";
+  public static final String JSON_PROPERTY_MIME = "mime";
   @jakarta.annotation.Nonnull
-  private String description;
+  private String mime;
 
-  public static final String JSON_PROPERTY_ARGS = "args";
-  @jakarta.annotation.Nullable
-  private String args;
+  public static final String JSON_PROPERTY_SIZE = "size";
+  @jakarta.annotation.Nonnull
+  private Long size;
+
+  public CreateAllianceChannelPostRequestAttachmentsInner() { 
+  }
+
+  public CreateAllianceChannelPostRequestAttachmentsInner url(@jakarta.annotation.Nonnull String url) {
+    this.url = url;
+    return this;
+  }
 
   /**
-   * Gets or Sets scope
+   * Get url
+   * @return url
    */
-  public enum ScopeEnum {
-    CHANNEL(String.valueOf("channel")),
-    
-    HUB(String.valueOf("hub"));
-
-    private String value;
-
-    ScopeEnum(String value) {
-      this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static ScopeEnum fromValue(String value) {
-      for (ScopeEnum b : ScopeEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_URL)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public String getUrl() {
+    return url;
   }
 
-  public static final String JSON_PROPERTY_SCOPE = "scope";
-  @jakarta.annotation.Nullable
-  private ScopeEnum scope;
 
-  public static final String JSON_PROPERTY_PRIVILEGED = "privileged";
-  @jakarta.annotation.Nullable
-  private Boolean privileged;
-
-  public static final String JSON_PROPERTY_COOLDOWN_SECONDS = "cooldown_seconds";
-  @jakarta.annotation.Nullable
-  private Long cooldownSeconds;
-
-  public SetMeAppCommandsRequestCommandsInner() { 
+  @JsonProperty(JSON_PROPERTY_URL)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setUrl(@jakarta.annotation.Nonnull String url) {
+    this.url = url;
   }
 
-  public SetMeAppCommandsRequestCommandsInner name(@jakarta.annotation.Nonnull String name) {
+
+  public CreateAllianceChannelPostRequestAttachmentsInner name(@jakarta.annotation.Nonnull String name) {
     this.name = name;
     return this;
   }
@@ -128,128 +107,56 @@ public class SetMeAppCommandsRequestCommandsInner {
   }
 
 
-  public SetMeAppCommandsRequestCommandsInner description(@jakarta.annotation.Nonnull String description) {
-    this.description = description;
+  public CreateAllianceChannelPostRequestAttachmentsInner mime(@jakarta.annotation.Nonnull String mime) {
+    this.mime = mime;
     return this;
   }
 
   /**
-   * Get description
-   * @return description
+   * Get mime
+   * @return mime
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_DESCRIPTION)
+  @JsonProperty(JSON_PROPERTY_MIME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public String getDescription() {
-    return description;
+  public String getMime() {
+    return mime;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_DESCRIPTION)
+  @JsonProperty(JSON_PROPERTY_MIME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setDescription(@jakarta.annotation.Nonnull String description) {
-    this.description = description;
+  public void setMime(@jakarta.annotation.Nonnull String mime) {
+    this.mime = mime;
   }
 
 
-  public SetMeAppCommandsRequestCommandsInner args(@jakarta.annotation.Nullable String args) {
-    this.args = args;
+  public CreateAllianceChannelPostRequestAttachmentsInner size(@jakarta.annotation.Nonnull Long size) {
+    this.size = size;
     return this;
   }
 
   /**
-   * Get args
-   * @return args
+   * Get size
+   * @return size
    */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_ARGS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getArgs() {
-    return args;
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_SIZE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public Long getSize() {
+    return size;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_ARGS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setArgs(@jakarta.annotation.Nullable String args) {
-    this.args = args;
-  }
-
-
-  public SetMeAppCommandsRequestCommandsInner scope(@jakarta.annotation.Nullable ScopeEnum scope) {
-    this.scope = scope;
-    return this;
-  }
-
-  /**
-   * Get scope
-   * @return scope
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_SCOPE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public ScopeEnum getScope() {
-    return scope;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_SCOPE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setScope(@jakarta.annotation.Nullable ScopeEnum scope) {
-    this.scope = scope;
-  }
-
-
-  public SetMeAppCommandsRequestCommandsInner privileged(@jakarta.annotation.Nullable Boolean privileged) {
-    this.privileged = privileged;
-    return this;
-  }
-
-  /**
-   * Get privileged
-   * @return privileged
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_PRIVILEGED)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Boolean getPrivileged() {
-    return privileged;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_PRIVILEGED)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setPrivileged(@jakarta.annotation.Nullable Boolean privileged) {
-    this.privileged = privileged;
-  }
-
-
-  public SetMeAppCommandsRequestCommandsInner cooldownSeconds(@jakarta.annotation.Nullable Long cooldownSeconds) {
-    this.cooldownSeconds = cooldownSeconds;
-    return this;
-  }
-
-  /**
-   * Per-user, per-command cooldown in seconds (default 3, 0 &#x3D; none)
-   * @return cooldownSeconds
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_COOLDOWN_SECONDS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Long getCooldownSeconds() {
-    return cooldownSeconds;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_COOLDOWN_SECONDS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCooldownSeconds(@jakarta.annotation.Nullable Long cooldownSeconds) {
-    this.cooldownSeconds = cooldownSeconds;
+  @JsonProperty(JSON_PROPERTY_SIZE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setSize(@jakarta.annotation.Nonnull Long size) {
+    this.size = size;
   }
 
 
   /**
-   * Return true if this setMeAppCommands_request_commands_inner object is equal to o.
+   * Return true if this createAllianceChannelPost_request_attachments_inner object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -259,30 +166,26 @@ public class SetMeAppCommandsRequestCommandsInner {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SetMeAppCommandsRequestCommandsInner setMeAppCommandsRequestCommandsInner = (SetMeAppCommandsRequestCommandsInner) o;
-    return Objects.equals(this.name, setMeAppCommandsRequestCommandsInner.name) &&
-        Objects.equals(this.description, setMeAppCommandsRequestCommandsInner.description) &&
-        Objects.equals(this.args, setMeAppCommandsRequestCommandsInner.args) &&
-        Objects.equals(this.scope, setMeAppCommandsRequestCommandsInner.scope) &&
-        Objects.equals(this.privileged, setMeAppCommandsRequestCommandsInner.privileged) &&
-        Objects.equals(this.cooldownSeconds, setMeAppCommandsRequestCommandsInner.cooldownSeconds);
+    CreateAllianceChannelPostRequestAttachmentsInner createAllianceChannelPostRequestAttachmentsInner = (CreateAllianceChannelPostRequestAttachmentsInner) o;
+    return Objects.equals(this.url, createAllianceChannelPostRequestAttachmentsInner.url) &&
+        Objects.equals(this.name, createAllianceChannelPostRequestAttachmentsInner.name) &&
+        Objects.equals(this.mime, createAllianceChannelPostRequestAttachmentsInner.mime) &&
+        Objects.equals(this.size, createAllianceChannelPostRequestAttachmentsInner.size);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, description, args, scope, privileged, cooldownSeconds);
+    return Objects.hash(url, name, mime, size);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SetMeAppCommandsRequestCommandsInner {\n");
+    sb.append("class CreateAllianceChannelPostRequestAttachmentsInner {\n");
+    sb.append("    url: ").append(toIndentedString(url)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    description: ").append(toIndentedString(description)).append("\n");
-    sb.append("    args: ").append(toIndentedString(args)).append("\n");
-    sb.append("    scope: ").append(toIndentedString(scope)).append("\n");
-    sb.append("    privileged: ").append(toIndentedString(privileged)).append("\n");
-    sb.append("    cooldownSeconds: ").append(toIndentedString(cooldownSeconds)).append("\n");
+    sb.append("    mime: ").append(toIndentedString(mime)).append("\n");
+    sb.append("    size: ").append(toIndentedString(size)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -330,34 +233,24 @@ public class SetMeAppCommandsRequestCommandsInner {
 
     StringJoiner joiner = new StringJoiner("&");
 
+    // add `url` to the URL query string
+    if (getUrl() != null) {
+      joiner.add(String.format("%surl%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getUrl()))));
+    }
+
     // add `name` to the URL query string
     if (getName() != null) {
       joiner.add(String.format("%sname%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getName()))));
     }
 
-    // add `description` to the URL query string
-    if (getDescription() != null) {
-      joiner.add(String.format("%sdescription%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getDescription()))));
+    // add `mime` to the URL query string
+    if (getMime() != null) {
+      joiner.add(String.format("%smime%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getMime()))));
     }
 
-    // add `args` to the URL query string
-    if (getArgs() != null) {
-      joiner.add(String.format("%sargs%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getArgs()))));
-    }
-
-    // add `scope` to the URL query string
-    if (getScope() != null) {
-      joiner.add(String.format("%sscope%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getScope()))));
-    }
-
-    // add `privileged` to the URL query string
-    if (getPrivileged() != null) {
-      joiner.add(String.format("%sprivileged%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getPrivileged()))));
-    }
-
-    // add `cooldown_seconds` to the URL query string
-    if (getCooldownSeconds() != null) {
-      joiner.add(String.format("%scooldown_seconds%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCooldownSeconds()))));
+    // add `size` to the URL query string
+    if (getSize() != null) {
+      joiner.add(String.format("%ssize%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getSize()))));
     }
 
     return joiner.toString();

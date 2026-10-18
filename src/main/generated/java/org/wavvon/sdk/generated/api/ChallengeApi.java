@@ -163,7 +163,7 @@ public class ChallengeApi {
   /**
    * Submit challenge answer and receive a one-time token
    * On success returns a &#x60;challenge_token&#x60; to include in &#x60;POST /auth/verify&#x60;. 
-   * @param verifyChallengeRequest  (optional)
+   * @param verifyChallengeRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void verifyChallenge(VerifyChallengeRequest verifyChallengeRequest) throws ApiException {
@@ -173,7 +173,7 @@ public class ChallengeApi {
   /**
    * Submit challenge answer and receive a one-time token
    * On success returns a &#x60;challenge_token&#x60; to include in &#x60;POST /auth/verify&#x60;. 
-   * @param verifyChallengeRequest  (optional)
+   * @param verifyChallengeRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -212,6 +212,10 @@ public class ChallengeApi {
   }
 
   private HttpRequest.Builder verifyChallengeRequestBuilder(VerifyChallengeRequest verifyChallengeRequest) throws ApiException {
+    // verify the required parameter 'verifyChallengeRequest' is set
+    if (verifyChallengeRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'verifyChallengeRequest' when calling verifyChallenge");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 

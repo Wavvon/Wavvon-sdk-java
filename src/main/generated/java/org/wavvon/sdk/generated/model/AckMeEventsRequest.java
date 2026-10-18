@@ -40,13 +40,13 @@ import org.wavvon.sdk.generated.ApiClient;
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class AckMeEventsRequest {
   public static final String JSON_PROPERTY_IDS = "ids";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private List<String> ids = new ArrayList<>();
 
   public AckMeEventsRequest() { 
   }
 
-  public AckMeEventsRequest ids(@jakarta.annotation.Nullable List<String> ids) {
+  public AckMeEventsRequest ids(@jakarta.annotation.Nonnull List<String> ids) {
     this.ids = ids;
     return this;
   }
@@ -63,17 +63,17 @@ public class AckMeEventsRequest {
    * Get ids
    * @return ids
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_IDS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public List<String> getIds() {
     return ids;
   }
 
 
   @JsonProperty(JSON_PROPERTY_IDS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setIds(@jakarta.annotation.Nullable List<String> ids) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setIds(@jakarta.annotation.Nonnull List<String> ids) {
     this.ids = ids;
   }
 

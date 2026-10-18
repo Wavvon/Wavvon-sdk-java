@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.wavvon.sdk.generated.model.Attachment;
+import org.wavvon.sdk.generated.model.GameLaunchCard;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -38,7 +39,8 @@ import org.wavvon.sdk.generated.ApiClient;
 @JsonPropertyOrder({
   CreateChannelMessageRequest.JSON_PROPERTY_CONTENT,
   CreateChannelMessageRequest.JSON_PROPERTY_ATTACHMENTS,
-  CreateChannelMessageRequest.JSON_PROPERTY_REPLY_TO
+  CreateChannelMessageRequest.JSON_PROPERTY_REPLY_TO,
+  CreateChannelMessageRequest.JSON_PROPERTY_GAME
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class CreateChannelMessageRequest {
@@ -53,6 +55,10 @@ public class CreateChannelMessageRequest {
   public static final String JSON_PROPERTY_REPLY_TO = "reply_to";
   @jakarta.annotation.Nullable
   private String replyTo;
+
+  public static final String JSON_PROPERTY_GAME = "game";
+  @jakarta.annotation.Nullable
+  private GameLaunchCard game;
 
   public CreateChannelMessageRequest() { 
   }
@@ -137,6 +143,30 @@ public class CreateChannelMessageRequest {
   }
 
 
+  public CreateChannelMessageRequest game(@jakarta.annotation.Nullable GameLaunchCard game) {
+    this.game = game;
+    return this;
+  }
+
+  /**
+   * Get game
+   * @return game
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_GAME)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public GameLaunchCard getGame() {
+    return game;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_GAME)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setGame(@jakarta.annotation.Nullable GameLaunchCard game) {
+    this.game = game;
+  }
+
+
   /**
    * Return true if this createChannelMessage_request object is equal to o.
    */
@@ -151,12 +181,13 @@ public class CreateChannelMessageRequest {
     CreateChannelMessageRequest createChannelMessageRequest = (CreateChannelMessageRequest) o;
     return Objects.equals(this.content, createChannelMessageRequest.content) &&
         Objects.equals(this.attachments, createChannelMessageRequest.attachments) &&
-        Objects.equals(this.replyTo, createChannelMessageRequest.replyTo);
+        Objects.equals(this.replyTo, createChannelMessageRequest.replyTo) &&
+        Objects.equals(this.game, createChannelMessageRequest.game);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(content, attachments, replyTo);
+    return Objects.hash(content, attachments, replyTo, game);
   }
 
   @Override
@@ -166,6 +197,7 @@ public class CreateChannelMessageRequest {
     sb.append("    content: ").append(toIndentedString(content)).append("\n");
     sb.append("    attachments: ").append(toIndentedString(attachments)).append("\n");
     sb.append("    replyTo: ").append(toIndentedString(replyTo)).append("\n");
+    sb.append("    game: ").append(toIndentedString(game)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -231,6 +263,11 @@ public class CreateChannelMessageRequest {
     // add `reply_to` to the URL query string
     if (getReplyTo() != null) {
       joiner.add(String.format("%sreply_to%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getReplyTo()))));
+    }
+
+    // add `game` to the URL query string
+    if (getGame() != null) {
+      joiner.add(getGame().toUrlQueryString(prefix + "game" + suffix));
     }
 
     return joiner.toString();

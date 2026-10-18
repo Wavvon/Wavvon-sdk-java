@@ -24,139 +24,178 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * SetConversationSenderKeysRequestRecipientsInner
+ * CreateIdentityDesignationRequest
  */
 @JsonPropertyOrder({
-  SetConversationSenderKeysRequestRecipientsInner.JSON_PROPERTY_RECIPIENT_PUBKEY,
-  SetConversationSenderKeysRequestRecipientsInner.JSON_PROPERTY_WRAPPED_KEY_HEX,
-  SetConversationSenderKeysRequestRecipientsInner.JSON_PROPERTY_WRAP_NONCE_HEX,
-  SetConversationSenderKeysRequestRecipientsInner.JSON_PROPERTY_ITERATION
+  CreateIdentityDesignationRequest.JSON_PROPERTY_MASTER_PUBKEY,
+  CreateIdentityDesignationRequest.JSON_PROPERTY_HUBS,
+  CreateIdentityDesignationRequest.JSON_PROPERTY_ISSUED_AT,
+  CreateIdentityDesignationRequest.JSON_PROPERTY_SEQUENCE,
+  CreateIdentityDesignationRequest.JSON_PROPERTY_SIGNATURE
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class SetConversationSenderKeysRequestRecipientsInner {
-  public static final String JSON_PROPERTY_RECIPIENT_PUBKEY = "recipient_pubkey";
+public class CreateIdentityDesignationRequest {
+  public static final String JSON_PROPERTY_MASTER_PUBKEY = "master_pubkey";
   @jakarta.annotation.Nonnull
-  private String recipientPubkey;
+  private String masterPubkey;
 
-  public static final String JSON_PROPERTY_WRAPPED_KEY_HEX = "wrapped_key_hex";
+  public static final String JSON_PROPERTY_HUBS = "hubs";
   @jakarta.annotation.Nonnull
-  private String wrappedKeyHex;
+  private List<String> hubs = new ArrayList<>();
 
-  public static final String JSON_PROPERTY_WRAP_NONCE_HEX = "wrap_nonce_hex";
+  public static final String JSON_PROPERTY_ISSUED_AT = "issued_at";
   @jakarta.annotation.Nonnull
-  private String wrapNonceHex;
+  private Long issuedAt;
 
-  public static final String JSON_PROPERTY_ITERATION = "iteration";
+  public static final String JSON_PROPERTY_SEQUENCE = "sequence";
   @jakarta.annotation.Nonnull
-  private Long iteration;
+  private Long sequence;
 
-  public SetConversationSenderKeysRequestRecipientsInner() { 
+  public static final String JSON_PROPERTY_SIGNATURE = "signature";
+  @jakarta.annotation.Nonnull
+  private String signature;
+
+  public CreateIdentityDesignationRequest() { 
   }
 
-  public SetConversationSenderKeysRequestRecipientsInner recipientPubkey(@jakarta.annotation.Nonnull String recipientPubkey) {
-    this.recipientPubkey = recipientPubkey;
+  public CreateIdentityDesignationRequest masterPubkey(@jakarta.annotation.Nonnull String masterPubkey) {
+    this.masterPubkey = masterPubkey;
     return this;
   }
 
   /**
-   * Get recipientPubkey
-   * @return recipientPubkey
+   * Get masterPubkey
+   * @return masterPubkey
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_RECIPIENT_PUBKEY)
+  @JsonProperty(JSON_PROPERTY_MASTER_PUBKEY)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public String getRecipientPubkey() {
-    return recipientPubkey;
+  public String getMasterPubkey() {
+    return masterPubkey;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_RECIPIENT_PUBKEY)
+  @JsonProperty(JSON_PROPERTY_MASTER_PUBKEY)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setRecipientPubkey(@jakarta.annotation.Nonnull String recipientPubkey) {
-    this.recipientPubkey = recipientPubkey;
+  public void setMasterPubkey(@jakarta.annotation.Nonnull String masterPubkey) {
+    this.masterPubkey = masterPubkey;
   }
 
 
-  public SetConversationSenderKeysRequestRecipientsInner wrappedKeyHex(@jakarta.annotation.Nonnull String wrappedKeyHex) {
-    this.wrappedKeyHex = wrappedKeyHex;
+  public CreateIdentityDesignationRequest hubs(@jakarta.annotation.Nonnull List<String> hubs) {
+    this.hubs = hubs;
+    return this;
+  }
+
+  public CreateIdentityDesignationRequest addHubsItem(String hubsItem) {
+    if (this.hubs == null) {
+      this.hubs = new ArrayList<>();
+    }
+    this.hubs.add(hubsItem);
     return this;
   }
 
   /**
-   * Get wrappedKeyHex
-   * @return wrappedKeyHex
+   * Get hubs
+   * @return hubs
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_WRAPPED_KEY_HEX)
+  @JsonProperty(JSON_PROPERTY_HUBS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public String getWrappedKeyHex() {
-    return wrappedKeyHex;
+  public List<String> getHubs() {
+    return hubs;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_WRAPPED_KEY_HEX)
+  @JsonProperty(JSON_PROPERTY_HUBS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setWrappedKeyHex(@jakarta.annotation.Nonnull String wrappedKeyHex) {
-    this.wrappedKeyHex = wrappedKeyHex;
+  public void setHubs(@jakarta.annotation.Nonnull List<String> hubs) {
+    this.hubs = hubs;
   }
 
 
-  public SetConversationSenderKeysRequestRecipientsInner wrapNonceHex(@jakarta.annotation.Nonnull String wrapNonceHex) {
-    this.wrapNonceHex = wrapNonceHex;
+  public CreateIdentityDesignationRequest issuedAt(@jakarta.annotation.Nonnull Long issuedAt) {
+    this.issuedAt = issuedAt;
     return this;
   }
 
   /**
-   * Get wrapNonceHex
-   * @return wrapNonceHex
+   * Get issuedAt
+   * @return issuedAt
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_WRAP_NONCE_HEX)
+  @JsonProperty(JSON_PROPERTY_ISSUED_AT)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public String getWrapNonceHex() {
-    return wrapNonceHex;
+  public Long getIssuedAt() {
+    return issuedAt;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_WRAP_NONCE_HEX)
+  @JsonProperty(JSON_PROPERTY_ISSUED_AT)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setWrapNonceHex(@jakarta.annotation.Nonnull String wrapNonceHex) {
-    this.wrapNonceHex = wrapNonceHex;
+  public void setIssuedAt(@jakarta.annotation.Nonnull Long issuedAt) {
+    this.issuedAt = issuedAt;
   }
 
 
-  public SetConversationSenderKeysRequestRecipientsInner iteration(@jakarta.annotation.Nonnull Long iteration) {
-    this.iteration = iteration;
+  public CreateIdentityDesignationRequest sequence(@jakarta.annotation.Nonnull Long sequence) {
+    this.sequence = sequence;
     return this;
   }
 
   /**
-   * Get iteration
-   * @return iteration
+   * Get sequence
+   * @return sequence
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_ITERATION)
+  @JsonProperty(JSON_PROPERTY_SEQUENCE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public Long getIteration() {
-    return iteration;
+  public Long getSequence() {
+    return sequence;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_ITERATION)
+  @JsonProperty(JSON_PROPERTY_SEQUENCE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setIteration(@jakarta.annotation.Nonnull Long iteration) {
-    this.iteration = iteration;
+  public void setSequence(@jakarta.annotation.Nonnull Long sequence) {
+    this.sequence = sequence;
+  }
+
+
+  public CreateIdentityDesignationRequest signature(@jakarta.annotation.Nonnull String signature) {
+    this.signature = signature;
+    return this;
+  }
+
+  /**
+   * Get signature
+   * @return signature
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_SIGNATURE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public String getSignature() {
+    return signature;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_SIGNATURE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setSignature(@jakarta.annotation.Nonnull String signature) {
+    this.signature = signature;
   }
 
 
   /**
-   * Return true if this setConversationSenderKeys_request_recipients_inner object is equal to o.
+   * Return true if this createIdentityDesignation_request object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -166,26 +205,28 @@ public class SetConversationSenderKeysRequestRecipientsInner {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SetConversationSenderKeysRequestRecipientsInner setConversationSenderKeysRequestRecipientsInner = (SetConversationSenderKeysRequestRecipientsInner) o;
-    return Objects.equals(this.recipientPubkey, setConversationSenderKeysRequestRecipientsInner.recipientPubkey) &&
-        Objects.equals(this.wrappedKeyHex, setConversationSenderKeysRequestRecipientsInner.wrappedKeyHex) &&
-        Objects.equals(this.wrapNonceHex, setConversationSenderKeysRequestRecipientsInner.wrapNonceHex) &&
-        Objects.equals(this.iteration, setConversationSenderKeysRequestRecipientsInner.iteration);
+    CreateIdentityDesignationRequest createIdentityDesignationRequest = (CreateIdentityDesignationRequest) o;
+    return Objects.equals(this.masterPubkey, createIdentityDesignationRequest.masterPubkey) &&
+        Objects.equals(this.hubs, createIdentityDesignationRequest.hubs) &&
+        Objects.equals(this.issuedAt, createIdentityDesignationRequest.issuedAt) &&
+        Objects.equals(this.sequence, createIdentityDesignationRequest.sequence) &&
+        Objects.equals(this.signature, createIdentityDesignationRequest.signature);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(recipientPubkey, wrappedKeyHex, wrapNonceHex, iteration);
+    return Objects.hash(masterPubkey, hubs, issuedAt, sequence, signature);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SetConversationSenderKeysRequestRecipientsInner {\n");
-    sb.append("    recipientPubkey: ").append(toIndentedString(recipientPubkey)).append("\n");
-    sb.append("    wrappedKeyHex: ").append(toIndentedString(wrappedKeyHex)).append("\n");
-    sb.append("    wrapNonceHex: ").append(toIndentedString(wrapNonceHex)).append("\n");
-    sb.append("    iteration: ").append(toIndentedString(iteration)).append("\n");
+    sb.append("class CreateIdentityDesignationRequest {\n");
+    sb.append("    masterPubkey: ").append(toIndentedString(masterPubkey)).append("\n");
+    sb.append("    hubs: ").append(toIndentedString(hubs)).append("\n");
+    sb.append("    issuedAt: ").append(toIndentedString(issuedAt)).append("\n");
+    sb.append("    sequence: ").append(toIndentedString(sequence)).append("\n");
+    sb.append("    signature: ").append(toIndentedString(signature)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -233,24 +274,33 @@ public class SetConversationSenderKeysRequestRecipientsInner {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `recipient_pubkey` to the URL query string
-    if (getRecipientPubkey() != null) {
-      joiner.add(String.format("%srecipient_pubkey%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getRecipientPubkey()))));
+    // add `master_pubkey` to the URL query string
+    if (getMasterPubkey() != null) {
+      joiner.add(String.format("%smaster_pubkey%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getMasterPubkey()))));
     }
 
-    // add `wrapped_key_hex` to the URL query string
-    if (getWrappedKeyHex() != null) {
-      joiner.add(String.format("%swrapped_key_hex%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getWrappedKeyHex()))));
+    // add `hubs` to the URL query string
+    if (getHubs() != null) {
+      for (int i = 0; i < getHubs().size(); i++) {
+        joiner.add(String.format("%shubs%s%s=%s", prefix, suffix,
+            "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix),
+            ApiClient.urlEncode(ApiClient.valueToString(getHubs().get(i)))));
+      }
     }
 
-    // add `wrap_nonce_hex` to the URL query string
-    if (getWrapNonceHex() != null) {
-      joiner.add(String.format("%swrap_nonce_hex%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getWrapNonceHex()))));
+    // add `issued_at` to the URL query string
+    if (getIssuedAt() != null) {
+      joiner.add(String.format("%sissued_at%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getIssuedAt()))));
     }
 
-    // add `iteration` to the URL query string
-    if (getIteration() != null) {
-      joiner.add(String.format("%siteration%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getIteration()))));
+    // add `sequence` to the URL query string
+    if (getSequence() != null) {
+      joiner.add(String.format("%ssequence%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getSequence()))));
+    }
+
+    // add `signature` to the URL query string
+    if (getSignature() != null) {
+      joiner.add(String.format("%ssignature%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getSignature()))));
     }
 
     return joiner.toString();

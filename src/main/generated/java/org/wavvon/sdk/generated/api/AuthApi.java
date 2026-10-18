@@ -98,7 +98,7 @@ public class AuthApi {
   /**
    * Start WebAuthn passkey authentication (login)
    * 
-   * @param beginWebauthnAssertionRequest  (optional)
+   * @param beginWebauthnAssertionRequest  (required)
    * @return BeginWebauthnAssertion200Response
    * @throws ApiException if fails to make API call
    */
@@ -110,7 +110,7 @@ public class AuthApi {
   /**
    * Start WebAuthn passkey authentication (login)
    * 
-   * @param beginWebauthnAssertionRequest  (optional)
+   * @param beginWebauthnAssertionRequest  (required)
    * @return ApiResponse&lt;BeginWebauthnAssertion200Response&gt;
    * @throws ApiException if fails to make API call
    */
@@ -155,6 +155,10 @@ public class AuthApi {
   }
 
   private HttpRequest.Builder beginWebauthnAssertionRequestBuilder(BeginWebauthnAssertionRequest beginWebauthnAssertionRequest) throws ApiException {
+    // verify the required parameter 'beginWebauthnAssertionRequest' is set
+    if (beginWebauthnAssertionRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'beginWebauthnAssertionRequest' when calling beginWebauthnAssertion");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -183,7 +187,7 @@ public class AuthApi {
   /**
    * Start WebAuthn passkey registration
    * Excludes credentials the user already has so re-registering the same authenticator is blocked.
-   * @param beginWebauthnRegistrationRequest  (optional)
+   * @param beginWebauthnRegistrationRequest  (required)
    * @return BeginWebauthnRegistration200Response
    * @throws ApiException if fails to make API call
    */
@@ -195,7 +199,7 @@ public class AuthApi {
   /**
    * Start WebAuthn passkey registration
    * Excludes credentials the user already has so re-registering the same authenticator is blocked.
-   * @param beginWebauthnRegistrationRequest  (optional)
+   * @param beginWebauthnRegistrationRequest  (required)
    * @return ApiResponse&lt;BeginWebauthnRegistration200Response&gt;
    * @throws ApiException if fails to make API call
    */
@@ -240,6 +244,10 @@ public class AuthApi {
   }
 
   private HttpRequest.Builder beginWebauthnRegistrationRequestBuilder(BeginWebauthnRegistrationRequest beginWebauthnRegistrationRequest) throws ApiException {
+    // verify the required parameter 'beginWebauthnRegistrationRequest' is set
+    if (beginWebauthnRegistrationRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'beginWebauthnRegistrationRequest' when calling beginWebauthnRegistration");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -357,7 +365,7 @@ public class AuthApi {
   /**
    * Mint a long-lived \&quot;trust this device\&quot; token
    * Requires an existing session (e.g. right after a WebAuthn assertion).
-   * @param createAuthDeviceTokenRequest  (optional)
+   * @param createAuthDeviceTokenRequest  (required)
    * @return CreateAuthDeviceToken200Response
    * @throws ApiException if fails to make API call
    */
@@ -369,7 +377,7 @@ public class AuthApi {
   /**
    * Mint a long-lived \&quot;trust this device\&quot; token
    * Requires an existing session (e.g. right after a WebAuthn assertion).
-   * @param createAuthDeviceTokenRequest  (optional)
+   * @param createAuthDeviceTokenRequest  (required)
    * @return ApiResponse&lt;CreateAuthDeviceToken200Response&gt;
    * @throws ApiException if fails to make API call
    */
@@ -414,6 +422,10 @@ public class AuthApi {
   }
 
   private HttpRequest.Builder createAuthDeviceTokenRequestBuilder(CreateAuthDeviceTokenRequest createAuthDeviceTokenRequest) throws ApiException {
+    // verify the required parameter 'createAuthDeviceTokenRequest' is set
+    if (createAuthDeviceTokenRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createAuthDeviceTokenRequest' when calling createAuthDeviceToken");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -442,7 +454,7 @@ public class AuthApi {
   /**
    * Complete WebAuthn assertion and issue a session token
    * 
-   * @param finishWebauthnAssertionRequest  (optional)
+   * @param finishWebauthnAssertionRequest  (required)
    * @return FinishWebauthnRegistration200Response
    * @throws ApiException if fails to make API call
    */
@@ -454,7 +466,7 @@ public class AuthApi {
   /**
    * Complete WebAuthn assertion and issue a session token
    * 
-   * @param finishWebauthnAssertionRequest  (optional)
+   * @param finishWebauthnAssertionRequest  (required)
    * @return ApiResponse&lt;FinishWebauthnRegistration200Response&gt;
    * @throws ApiException if fails to make API call
    */
@@ -499,6 +511,10 @@ public class AuthApi {
   }
 
   private HttpRequest.Builder finishWebauthnAssertionRequestBuilder(FinishWebauthnAssertionRequest finishWebauthnAssertionRequest) throws ApiException {
+    // verify the required parameter 'finishWebauthnAssertionRequest' is set
+    if (finishWebauthnAssertionRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'finishWebauthnAssertionRequest' when calling finishWebauthnAssertion");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -527,7 +543,7 @@ public class AuthApi {
   /**
    * Complete WebAuthn passkey registration and issue a session token
    * 
-   * @param finishWebauthnRegistrationRequest  (optional)
+   * @param finishWebauthnRegistrationRequest  (required)
    * @return FinishWebauthnRegistration200Response
    * @throws ApiException if fails to make API call
    */
@@ -539,7 +555,7 @@ public class AuthApi {
   /**
    * Complete WebAuthn passkey registration and issue a session token
    * 
-   * @param finishWebauthnRegistrationRequest  (optional)
+   * @param finishWebauthnRegistrationRequest  (required)
    * @return ApiResponse&lt;FinishWebauthnRegistration200Response&gt;
    * @throws ApiException if fails to make API call
    */
@@ -584,6 +600,10 @@ public class AuthApi {
   }
 
   private HttpRequest.Builder finishWebauthnRegistrationRequestBuilder(FinishWebauthnRegistrationRequest finishWebauthnRegistrationRequest) throws ApiException {
+    // verify the required parameter 'finishWebauthnRegistrationRequest' is set
+    if (finishWebauthnRegistrationRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'finishWebauthnRegistrationRequest' when calling finishWebauthnRegistration");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -612,7 +632,7 @@ public class AuthApi {
   /**
    * Exchange a device token for a fresh session token
    * Rotates the device token on each use (issues a new one, invalidates the old).
-   * @param redeemAuthDeviceTokenRequest  (optional)
+   * @param redeemAuthDeviceTokenRequest  (required)
    * @return FinishWebauthnRegistration200Response
    * @throws ApiException if fails to make API call
    */
@@ -624,7 +644,7 @@ public class AuthApi {
   /**
    * Exchange a device token for a fresh session token
    * Rotates the device token on each use (issues a new one, invalidates the old).
-   * @param redeemAuthDeviceTokenRequest  (optional)
+   * @param redeemAuthDeviceTokenRequest  (required)
    * @return ApiResponse&lt;FinishWebauthnRegistration200Response&gt;
    * @throws ApiException if fails to make API call
    */
@@ -669,6 +689,10 @@ public class AuthApi {
   }
 
   private HttpRequest.Builder redeemAuthDeviceTokenRequestBuilder(RedeemAuthDeviceTokenRequest redeemAuthDeviceTokenRequest) throws ApiException {
+    // verify the required parameter 'redeemAuthDeviceTokenRequest' is set
+    if (redeemAuthDeviceTokenRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'redeemAuthDeviceTokenRequest' when calling redeemAuthDeviceToken");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 

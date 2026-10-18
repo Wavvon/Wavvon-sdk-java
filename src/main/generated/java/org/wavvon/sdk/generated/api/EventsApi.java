@@ -21,8 +21,8 @@ import org.wavvon.sdk.generated.Pair;
 import org.wavvon.sdk.generated.model.Channel;
 import org.wavvon.sdk.generated.model.CreateEventRequest;
 import org.wavvon.sdk.generated.model.CreateEventSlot201Response;
-import org.wavvon.sdk.generated.model.CreateEventSlotRequest;
 import org.wavvon.sdk.generated.model.CreateEventSquadRoomRequest;
+import org.wavvon.sdk.generated.model.CreateSlotRequest;
 import org.wavvon.sdk.generated.model.ListEventAssignments200ResponseInner;
 import org.wavvon.sdk.generated.model.ListEventRsvps200ResponseInner;
 import org.wavvon.sdk.generated.model.ListEvents200ResponseInner;
@@ -95,7 +95,7 @@ public class EventsApi {
   /**
    * Create an event (create_events)
    * Also posts a system card message into the target channel.
-   * @param createEventRequest  (optional)
+   * @param createEventRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void createEvent(CreateEventRequest createEventRequest) throws ApiException {
@@ -105,7 +105,7 @@ public class EventsApi {
   /**
    * Create an event (create_events)
    * Also posts a system card message into the target channel.
-   * @param createEventRequest  (optional)
+   * @param createEventRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -144,6 +144,10 @@ public class EventsApi {
   }
 
   private HttpRequest.Builder createEventRequestBuilder(CreateEventRequest createEventRequest) throws ApiException {
+    // verify the required parameter 'createEventRequest' is set
+    if (createEventRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createEventRequest' when calling createEvent");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -173,12 +177,12 @@ public class EventsApi {
    * Create a sign-up slot for an event (creator or admin)
    * 
    * @param eventId  (required)
-   * @param createEventSlotRequest  (optional)
+   * @param createSlotRequest  (required)
    * @return CreateEventSlot201Response
    * @throws ApiException if fails to make API call
    */
-  public CreateEventSlot201Response createEventSlot(String eventId, CreateEventSlotRequest createEventSlotRequest) throws ApiException {
-    ApiResponse<CreateEventSlot201Response> localVarResponse = createEventSlotWithHttpInfo(eventId, createEventSlotRequest);
+  public CreateEventSlot201Response createEventSlot(String eventId, CreateSlotRequest createSlotRequest) throws ApiException {
+    ApiResponse<CreateEventSlot201Response> localVarResponse = createEventSlotWithHttpInfo(eventId, createSlotRequest);
     return localVarResponse.getData();
   }
 
@@ -186,12 +190,12 @@ public class EventsApi {
    * Create a sign-up slot for an event (creator or admin)
    * 
    * @param eventId  (required)
-   * @param createEventSlotRequest  (optional)
+   * @param createSlotRequest  (required)
    * @return ApiResponse&lt;CreateEventSlot201Response&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<CreateEventSlot201Response> createEventSlotWithHttpInfo(String eventId, CreateEventSlotRequest createEventSlotRequest) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = createEventSlotRequestBuilder(eventId, createEventSlotRequest);
+  public ApiResponse<CreateEventSlot201Response> createEventSlotWithHttpInfo(String eventId, CreateSlotRequest createSlotRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = createEventSlotRequestBuilder(eventId, createSlotRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -230,10 +234,14 @@ public class EventsApi {
     }
   }
 
-  private HttpRequest.Builder createEventSlotRequestBuilder(String eventId, CreateEventSlotRequest createEventSlotRequest) throws ApiException {
+  private HttpRequest.Builder createEventSlotRequestBuilder(String eventId, CreateSlotRequest createSlotRequest) throws ApiException {
     // verify the required parameter 'eventId' is set
     if (eventId == null) {
       throw new ApiException(400, "Missing the required parameter 'eventId' when calling createEventSlot");
+    }
+    // verify the required parameter 'createSlotRequest' is set
+    if (createSlotRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createSlotRequest' when calling createEventSlot");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -247,7 +255,7 @@ public class EventsApi {
     localVarRequestBuilder.header("Accept", "application/json");
 
     try {
-      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(createEventSlotRequest);
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(createSlotRequest);
       localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
     } catch (IOException e) {
       throw new ApiException(e);
@@ -265,7 +273,7 @@ public class EventsApi {
    * Auto-spawn temp squad voice channels
    * Creates &#x60;count&#x60; temp voice-capable channels named \&quot;&lt;prefix&gt; 1\&quot;…\&quot;&lt;prefix&gt; N\&quot;, parented under the event&#39;s anchor and tagged with the event id so clients can identify them and the reminder worker can sweep them at event end. Needs organizer/&#x60;create_events&#x60; **and** &#x60;move_members&#x60; on the anchor. See events.md §7.5.
    * @param eventId  (required)
-   * @param createEventSquadRoomRequest  (optional)
+   * @param createEventSquadRoomRequest  (required)
    * @return List&lt;Channel&gt;
    * @throws ApiException if fails to make API call
    */
@@ -278,7 +286,7 @@ public class EventsApi {
    * Auto-spawn temp squad voice channels
    * Creates &#x60;count&#x60; temp voice-capable channels named \&quot;&lt;prefix&gt; 1\&quot;…\&quot;&lt;prefix&gt; N\&quot;, parented under the event&#39;s anchor and tagged with the event id so clients can identify them and the reminder worker can sweep them at event end. Needs organizer/&#x60;create_events&#x60; **and** &#x60;move_members&#x60; on the anchor. See events.md §7.5.
    * @param eventId  (required)
-   * @param createEventSquadRoomRequest  (optional)
+   * @param createEventSquadRoomRequest  (required)
    * @return ApiResponse&lt;List&lt;Channel&gt;&gt;
    * @throws ApiException if fails to make API call
    */
@@ -326,6 +334,10 @@ public class EventsApi {
     // verify the required parameter 'eventId' is set
     if (eventId == null) {
       throw new ApiException(400, "Missing the required parameter 'eventId' when calling createEventSquadRoom");
+    }
+    // verify the required parameter 'createEventSquadRoomRequest' is set
+    if (createEventSquadRoomRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createEventSquadRoomRequest' when calling createEventSquadRoom");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -862,7 +874,7 @@ public class EventsApi {
    * RSVP to an event (upserts the caller&#39;s status)
    * 
    * @param eventId  (required)
-   * @param rsvpEventRequest  (optional)
+   * @param rsvpEventRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void rsvpEvent(String eventId, RsvpEventRequest rsvpEventRequest) throws ApiException {
@@ -873,7 +885,7 @@ public class EventsApi {
    * RSVP to an event (upserts the caller&#39;s status)
    * 
    * @param eventId  (required)
-   * @param rsvpEventRequest  (optional)
+   * @param rsvpEventRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -916,6 +928,10 @@ public class EventsApi {
     if (eventId == null) {
       throw new ApiException(400, "Missing the required parameter 'eventId' when calling rsvpEvent");
     }
+    // verify the required parameter 'rsvpEventRequest' is set
+    if (rsvpEventRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'rsvpEventRequest' when calling rsvpEvent");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -946,7 +962,7 @@ public class EventsApi {
    * Update an event (creator or admin)
    * 
    * @param eventId  (required)
-   * @param setEventRequest  (optional)
+   * @param setEventRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void setEvent(String eventId, SetEventRequest setEventRequest) throws ApiException {
@@ -957,7 +973,7 @@ public class EventsApi {
    * Update an event (creator or admin)
    * 
    * @param eventId  (required)
-   * @param setEventRequest  (optional)
+   * @param setEventRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -1000,6 +1016,10 @@ public class EventsApi {
     if (eventId == null) {
       throw new ApiException(400, "Missing the required parameter 'eventId' when calling setEvent");
     }
+    // verify the required parameter 'setEventRequest' is set
+    if (setEventRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'setEventRequest' when calling setEvent");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -1031,7 +1051,7 @@ public class EventsApi {
    * Rejects shrinking capacity below the current claim count; demote claimants off the slot first.
    * @param eventId  (required)
    * @param slotId  (required)
-   * @param updateEventSlotRequest  (optional)
+   * @param updateEventSlotRequest  (required)
    * @return CreateEventSlot201Response
    * @throws ApiException if fails to make API call
    */
@@ -1045,7 +1065,7 @@ public class EventsApi {
    * Rejects shrinking capacity below the current claim count; demote claimants off the slot first.
    * @param eventId  (required)
    * @param slotId  (required)
-   * @param updateEventSlotRequest  (optional)
+   * @param updateEventSlotRequest  (required)
    * @return ApiResponse&lt;CreateEventSlot201Response&gt;
    * @throws ApiException if fails to make API call
    */
@@ -1097,6 +1117,10 @@ public class EventsApi {
     // verify the required parameter 'slotId' is set
     if (slotId == null) {
       throw new ApiException(400, "Missing the required parameter 'slotId' when calling updateEventSlot");
+    }
+    // verify the required parameter 'updateEventSlotRequest' is set
+    if (updateEventSlotRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'updateEventSlotRequest' when calling updateEventSlot");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();

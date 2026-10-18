@@ -30,75 +30,46 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * CreateChannelPollRequestOptionsInner
+ * KickUserRequest
  */
 @JsonPropertyOrder({
-  CreateChannelPollRequestOptionsInner.JSON_PROPERTY_ID,
-  CreateChannelPollRequestOptionsInner.JSON_PROPERTY_TEXT
+  KickUserRequest.JSON_PROPERTY_TARGET_PUBLIC_KEY
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class CreateChannelPollRequestOptionsInner {
-  public static final String JSON_PROPERTY_ID = "id";
+public class KickUserRequest {
+  public static final String JSON_PROPERTY_TARGET_PUBLIC_KEY = "target_public_key";
   @jakarta.annotation.Nonnull
-  private String id;
+  private String targetPublicKey;
 
-  public static final String JSON_PROPERTY_TEXT = "text";
-  @jakarta.annotation.Nonnull
-  private String text;
-
-  public CreateChannelPollRequestOptionsInner() { 
+  public KickUserRequest() { 
   }
 
-  public CreateChannelPollRequestOptionsInner id(@jakarta.annotation.Nonnull String id) {
-    this.id = id;
+  public KickUserRequest targetPublicKey(@jakarta.annotation.Nonnull String targetPublicKey) {
+    this.targetPublicKey = targetPublicKey;
     return this;
   }
 
   /**
-   * Get id
-   * @return id
+   * Get targetPublicKey
+   * @return targetPublicKey
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_ID)
+  @JsonProperty(JSON_PROPERTY_TARGET_PUBLIC_KEY)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public String getId() {
-    return id;
+  public String getTargetPublicKey() {
+    return targetPublicKey;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_ID)
+  @JsonProperty(JSON_PROPERTY_TARGET_PUBLIC_KEY)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setId(@jakarta.annotation.Nonnull String id) {
-    this.id = id;
-  }
-
-
-  public CreateChannelPollRequestOptionsInner text(@jakarta.annotation.Nonnull String text) {
-    this.text = text;
-    return this;
-  }
-
-  /**
-   * Get text
-   * @return text
-   */
-  @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_TEXT)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public String getText() {
-    return text;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_TEXT)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setText(@jakarta.annotation.Nonnull String text) {
-    this.text = text;
+  public void setTargetPublicKey(@jakarta.annotation.Nonnull String targetPublicKey) {
+    this.targetPublicKey = targetPublicKey;
   }
 
 
   /**
-   * Return true if this createChannelPoll_request_options_inner object is equal to o.
+   * Return true if this kickUser_request object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -108,22 +79,20 @@ public class CreateChannelPollRequestOptionsInner {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CreateChannelPollRequestOptionsInner createChannelPollRequestOptionsInner = (CreateChannelPollRequestOptionsInner) o;
-    return Objects.equals(this.id, createChannelPollRequestOptionsInner.id) &&
-        Objects.equals(this.text, createChannelPollRequestOptionsInner.text);
+    KickUserRequest kickUserRequest = (KickUserRequest) o;
+    return Objects.equals(this.targetPublicKey, kickUserRequest.targetPublicKey);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, text);
+    return Objects.hash(targetPublicKey);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CreateChannelPollRequestOptionsInner {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    text: ").append(toIndentedString(text)).append("\n");
+    sb.append("class KickUserRequest {\n");
+    sb.append("    targetPublicKey: ").append(toIndentedString(targetPublicKey)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -171,14 +140,9 @@ public class CreateChannelPollRequestOptionsInner {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `id` to the URL query string
-    if (getId() != null) {
-      joiner.add(String.format("%sid%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getId()))));
-    }
-
-    // add `text` to the URL query string
-    if (getText() != null) {
-      joiner.add(String.format("%stext%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getText()))));
+    // add `target_public_key` to the URL query string
+    if (getTargetPublicKey() != null) {
+      joiner.add(String.format("%starget_public_key%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getTargetPublicKey()))));
     }
 
     return joiner.toString();

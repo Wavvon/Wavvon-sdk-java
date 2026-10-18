@@ -25,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Arrays;
+import org.wavvon.sdk.generated.model.SignedMemberChange;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -33,13 +34,18 @@ import org.wavvon.sdk.generated.ApiClient;
  * CreateConversationMemberRequest
  */
 @JsonPropertyOrder({
-  CreateConversationMemberRequest.JSON_PROPERTY_PUBLIC_KEY
+  CreateConversationMemberRequest.JSON_PROPERTY_PUBLIC_KEY,
+  CreateConversationMemberRequest.JSON_PROPERTY_SIGNED
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class CreateConversationMemberRequest {
   public static final String JSON_PROPERTY_PUBLIC_KEY = "public_key";
   @jakarta.annotation.Nonnull
   private String publicKey;
+
+  public static final String JSON_PROPERTY_SIGNED = "signed";
+  @jakarta.annotation.Nullable
+  private SignedMemberChange signed;
 
   public CreateConversationMemberRequest() { 
   }
@@ -68,6 +74,30 @@ public class CreateConversationMemberRequest {
   }
 
 
+  public CreateConversationMemberRequest signed(@jakarta.annotation.Nullable SignedMemberChange signed) {
+    this.signed = signed;
+    return this;
+  }
+
+  /**
+   * Get signed
+   * @return signed
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_SIGNED)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public SignedMemberChange getSigned() {
+    return signed;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_SIGNED)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setSigned(@jakarta.annotation.Nullable SignedMemberChange signed) {
+    this.signed = signed;
+  }
+
+
   /**
    * Return true if this createConversationMember_request object is equal to o.
    */
@@ -80,12 +110,13 @@ public class CreateConversationMemberRequest {
       return false;
     }
     CreateConversationMemberRequest createConversationMemberRequest = (CreateConversationMemberRequest) o;
-    return Objects.equals(this.publicKey, createConversationMemberRequest.publicKey);
+    return Objects.equals(this.publicKey, createConversationMemberRequest.publicKey) &&
+        Objects.equals(this.signed, createConversationMemberRequest.signed);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(publicKey);
+    return Objects.hash(publicKey, signed);
   }
 
   @Override
@@ -93,6 +124,7 @@ public class CreateConversationMemberRequest {
     StringBuilder sb = new StringBuilder();
     sb.append("class CreateConversationMemberRequest {\n");
     sb.append("    publicKey: ").append(toIndentedString(publicKey)).append("\n");
+    sb.append("    signed: ").append(toIndentedString(signed)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -143,6 +175,11 @@ public class CreateConversationMemberRequest {
     // add `public_key` to the URL query string
     if (getPublicKey() != null) {
       joiner.add(String.format("%spublic_key%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getPublicKey()))));
+    }
+
+    // add `signed` to the URL query string
+    if (getSigned() != null) {
+      joiner.add(getSigned().toUrlQueryString(prefix + "signed" + suffix));
     }
 
     return joiner.toString();

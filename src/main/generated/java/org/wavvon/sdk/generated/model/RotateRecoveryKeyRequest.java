@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.wavvon.sdk.generated.model.RotateRecoveryKeyRequestAttestationsInner;
+import org.wavvon.sdk.generated.model.AttestationInput;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -39,6 +39,7 @@ import org.wavvon.sdk.generated.ApiClient;
   RotateRecoveryKeyRequest.JSON_PROPERTY_OLD_PUBKEY,
   RotateRecoveryKeyRequest.JSON_PROPERTY_NEW_PUBKEY,
   RotateRecoveryKeyRequest.JSON_PROPERTY_REASON,
+  RotateRecoveryKeyRequest.JSON_PROPERTY_NEW_KEY_SIGNATURE,
   RotateRecoveryKeyRequest.JSON_PROPERTY_ATTESTATIONS
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
@@ -55,9 +56,13 @@ public class RotateRecoveryKeyRequest {
   @jakarta.annotation.Nullable
   private String reason;
 
-  public static final String JSON_PROPERTY_ATTESTATIONS = "attestations";
+  public static final String JSON_PROPERTY_NEW_KEY_SIGNATURE = "new_key_signature";
   @jakarta.annotation.Nonnull
-  private List<RotateRecoveryKeyRequestAttestationsInner> attestations = new ArrayList<>();
+  private String newKeySignature;
+
+  public static final String JSON_PROPERTY_ATTESTATIONS = "attestations";
+  @jakarta.annotation.Nullable
+  private List<AttestationInput> attestations = new ArrayList<>();
 
   public RotateRecoveryKeyRequest() { 
   }
@@ -134,12 +139,36 @@ public class RotateRecoveryKeyRequest {
   }
 
 
-  public RotateRecoveryKeyRequest attestations(@jakarta.annotation.Nonnull List<RotateRecoveryKeyRequestAttestationsInner> attestations) {
+  public RotateRecoveryKeyRequest newKeySignature(@jakarta.annotation.Nonnull String newKeySignature) {
+    this.newKeySignature = newKeySignature;
+    return this;
+  }
+
+  /**
+   * Get newKeySignature
+   * @return newKeySignature
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_NEW_KEY_SIGNATURE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public String getNewKeySignature() {
+    return newKeySignature;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_NEW_KEY_SIGNATURE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setNewKeySignature(@jakarta.annotation.Nonnull String newKeySignature) {
+    this.newKeySignature = newKeySignature;
+  }
+
+
+  public RotateRecoveryKeyRequest attestations(@jakarta.annotation.Nullable List<AttestationInput> attestations) {
     this.attestations = attestations;
     return this;
   }
 
-  public RotateRecoveryKeyRequest addAttestationsItem(RotateRecoveryKeyRequestAttestationsInner attestationsItem) {
+  public RotateRecoveryKeyRequest addAttestationsItem(AttestationInput attestationsItem) {
     if (this.attestations == null) {
       this.attestations = new ArrayList<>();
     }
@@ -151,17 +180,17 @@ public class RotateRecoveryKeyRequest {
    * Get attestations
    * @return attestations
    */
-  @jakarta.annotation.Nonnull
+  @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_ATTESTATIONS)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public List<RotateRecoveryKeyRequestAttestationsInner> getAttestations() {
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public List<AttestationInput> getAttestations() {
     return attestations;
   }
 
 
   @JsonProperty(JSON_PROPERTY_ATTESTATIONS)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setAttestations(@jakarta.annotation.Nonnull List<RotateRecoveryKeyRequestAttestationsInner> attestations) {
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setAttestations(@jakarta.annotation.Nullable List<AttestationInput> attestations) {
     this.attestations = attestations;
   }
 
@@ -181,12 +210,13 @@ public class RotateRecoveryKeyRequest {
     return Objects.equals(this.oldPubkey, rotateRecoveryKeyRequest.oldPubkey) &&
         Objects.equals(this.newPubkey, rotateRecoveryKeyRequest.newPubkey) &&
         Objects.equals(this.reason, rotateRecoveryKeyRequest.reason) &&
+        Objects.equals(this.newKeySignature, rotateRecoveryKeyRequest.newKeySignature) &&
         Objects.equals(this.attestations, rotateRecoveryKeyRequest.attestations);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(oldPubkey, newPubkey, reason, attestations);
+    return Objects.hash(oldPubkey, newPubkey, reason, newKeySignature, attestations);
   }
 
   @Override
@@ -196,6 +226,7 @@ public class RotateRecoveryKeyRequest {
     sb.append("    oldPubkey: ").append(toIndentedString(oldPubkey)).append("\n");
     sb.append("    newPubkey: ").append(toIndentedString(newPubkey)).append("\n");
     sb.append("    reason: ").append(toIndentedString(reason)).append("\n");
+    sb.append("    newKeySignature: ").append(toIndentedString(newKeySignature)).append("\n");
     sb.append("    attestations: ").append(toIndentedString(attestations)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -257,6 +288,11 @@ public class RotateRecoveryKeyRequest {
     // add `reason` to the URL query string
     if (getReason() != null) {
       joiner.add(String.format("%sreason%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getReason()))));
+    }
+
+    // add `new_key_signature` to the URL query string
+    if (getNewKeySignature() != null) {
+      joiner.add(String.format("%snew_key_signature%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getNewKeySignature()))));
     }
 
     // add `attestations` to the URL query string

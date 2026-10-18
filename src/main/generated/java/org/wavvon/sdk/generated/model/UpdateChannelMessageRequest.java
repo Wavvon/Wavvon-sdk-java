@@ -24,7 +24,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import org.wavvon.sdk.generated.model.Embed;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -33,18 +36,23 @@ import org.wavvon.sdk.generated.ApiClient;
  * UpdateChannelMessageRequest
  */
 @JsonPropertyOrder({
-  UpdateChannelMessageRequest.JSON_PROPERTY_CONTENT
+  UpdateChannelMessageRequest.JSON_PROPERTY_CONTENT,
+  UpdateChannelMessageRequest.JSON_PROPERTY_EMBEDS
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class UpdateChannelMessageRequest {
   public static final String JSON_PROPERTY_CONTENT = "content";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private String content;
+
+  public static final String JSON_PROPERTY_EMBEDS = "embeds";
+  @jakarta.annotation.Nullable
+  private List<Embed> embeds = new ArrayList<>();
 
   public UpdateChannelMessageRequest() { 
   }
 
-  public UpdateChannelMessageRequest content(@jakarta.annotation.Nullable String content) {
+  public UpdateChannelMessageRequest content(@jakarta.annotation.Nonnull String content) {
     this.content = content;
     return this;
   }
@@ -53,18 +61,50 @@ public class UpdateChannelMessageRequest {
    * Get content
    * @return content
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_CONTENT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getContent() {
     return content;
   }
 
 
   @JsonProperty(JSON_PROPERTY_CONTENT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setContent(@jakarta.annotation.Nullable String content) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setContent(@jakarta.annotation.Nonnull String content) {
     this.content = content;
+  }
+
+
+  public UpdateChannelMessageRequest embeds(@jakarta.annotation.Nullable List<Embed> embeds) {
+    this.embeds = embeds;
+    return this;
+  }
+
+  public UpdateChannelMessageRequest addEmbedsItem(Embed embedsItem) {
+    if (this.embeds == null) {
+      this.embeds = new ArrayList<>();
+    }
+    this.embeds.add(embedsItem);
+    return this;
+  }
+
+  /**
+   * Get embeds
+   * @return embeds
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_EMBEDS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public List<Embed> getEmbeds() {
+    return embeds;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_EMBEDS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setEmbeds(@jakarta.annotation.Nullable List<Embed> embeds) {
+    this.embeds = embeds;
   }
 
 
@@ -80,12 +120,13 @@ public class UpdateChannelMessageRequest {
       return false;
     }
     UpdateChannelMessageRequest updateChannelMessageRequest = (UpdateChannelMessageRequest) o;
-    return Objects.equals(this.content, updateChannelMessageRequest.content);
+    return Objects.equals(this.content, updateChannelMessageRequest.content) &&
+        Objects.equals(this.embeds, updateChannelMessageRequest.embeds);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(content);
+    return Objects.hash(content, embeds);
   }
 
   @Override
@@ -93,6 +134,7 @@ public class UpdateChannelMessageRequest {
     StringBuilder sb = new StringBuilder();
     sb.append("class UpdateChannelMessageRequest {\n");
     sb.append("    content: ").append(toIndentedString(content)).append("\n");
+    sb.append("    embeds: ").append(toIndentedString(embeds)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -143,6 +185,16 @@ public class UpdateChannelMessageRequest {
     // add `content` to the URL query string
     if (getContent() != null) {
       joiner.add(String.format("%scontent%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getContent()))));
+    }
+
+    // add `embeds` to the URL query string
+    if (getEmbeds() != null) {
+      for (int i = 0; i < getEmbeds().size(); i++) {
+        if (getEmbeds().get(i) != null) {
+          joiner.add(getEmbeds().get(i).toUrlQueryString(String.format("%sembeds%s%s", prefix, suffix,
+          "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix))));
+        }
+      }
     }
 
     return joiner.toString();

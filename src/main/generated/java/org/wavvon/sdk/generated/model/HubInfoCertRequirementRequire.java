@@ -40,16 +40,16 @@ import org.wavvon.sdk.generated.ApiClient;
 public class HubInfoCertRequirementRequire {
   public static final String JSON_PROPERTY_MIN_POW_LEVEL = "min_pow_level";
   @jakarta.annotation.Nullable
-  private Long minPowLevel;
+  private Integer minPowLevel;
 
   public static final String JSON_PROPERTY_MIN_MEMBER_SINCE_DAYS = "min_member_since_days";
   @jakarta.annotation.Nullable
-  private Long minMemberSinceDays;
+  private Integer minMemberSinceDays;
 
   public HubInfoCertRequirementRequire() { 
   }
 
-  public HubInfoCertRequirementRequire minPowLevel(@jakarta.annotation.Nullable Long minPowLevel) {
+  public HubInfoCertRequirementRequire minPowLevel(@jakarta.annotation.Nullable Integer minPowLevel) {
     this.minPowLevel = minPowLevel;
     return this;
   }
@@ -61,19 +61,19 @@ public class HubInfoCertRequirementRequire {
   @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_MIN_POW_LEVEL)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public Long getMinPowLevel() {
+  public Integer getMinPowLevel() {
     return minPowLevel;
   }
 
 
   @JsonProperty(JSON_PROPERTY_MIN_POW_LEVEL)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setMinPowLevel(@jakarta.annotation.Nullable Long minPowLevel) {
+  public void setMinPowLevel(@jakarta.annotation.Nullable Integer minPowLevel) {
     this.minPowLevel = minPowLevel;
   }
 
 
-  public HubInfoCertRequirementRequire minMemberSinceDays(@jakarta.annotation.Nullable Long minMemberSinceDays) {
+  public HubInfoCertRequirementRequire minMemberSinceDays(@jakarta.annotation.Nullable Integer minMemberSinceDays) {
     this.minMemberSinceDays = minMemberSinceDays;
     return this;
   }
@@ -85,14 +85,14 @@ public class HubInfoCertRequirementRequire {
   @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_MIN_MEMBER_SINCE_DAYS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public Long getMinMemberSinceDays() {
+  public Integer getMinMemberSinceDays() {
     return minMemberSinceDays;
   }
 
 
   @JsonProperty(JSON_PROPERTY_MIN_MEMBER_SINCE_DAYS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setMinMemberSinceDays(@jakarta.annotation.Nullable Long minMemberSinceDays) {
+  public void setMinMemberSinceDays(@jakarta.annotation.Nullable Integer minMemberSinceDays) {
     this.minMemberSinceDays = minMemberSinceDays;
   }
 

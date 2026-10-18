@@ -39,12 +39,12 @@ import org.wavvon.sdk.generated.ApiClient;
 public class UpdateAdminSettingsPowRequest {
   public static final String JSON_PROPERTY_MIN_POW_LEVEL = "min_pow_level";
   @jakarta.annotation.Nonnull
-  private Long minPowLevel;
+  private Integer minPowLevel;
 
   public UpdateAdminSettingsPowRequest() { 
   }
 
-  public UpdateAdminSettingsPowRequest minPowLevel(@jakarta.annotation.Nonnull Long minPowLevel) {
+  public UpdateAdminSettingsPowRequest minPowLevel(@jakarta.annotation.Nonnull Integer minPowLevel) {
     this.minPowLevel = minPowLevel;
     return this;
   }
@@ -56,14 +56,14 @@ public class UpdateAdminSettingsPowRequest {
   @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_MIN_POW_LEVEL)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public Long getMinPowLevel() {
+  public Integer getMinPowLevel() {
     return minPowLevel;
   }
 
 
   @JsonProperty(JSON_PROPERTY_MIN_POW_LEVEL)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setMinPowLevel(@jakarta.annotation.Nonnull Long minPowLevel) {
+  public void setMinPowLevel(@jakarta.annotation.Nonnull Integer minPowLevel) {
     this.minPowLevel = minPowLevel;
   }
 

@@ -449,7 +449,7 @@ public class SoundboardApi {
    * Broadcast a \&quot;clip played\&quot; attribution event (use_soundboard)
    * Attribution UX only — the hub does not verify the clip was actually mixed into the caller&#39;s outgoing audio; the channel-scoped use_soundboard permission check is the real enforcement.
    * @param id  (required)
-   * @param createAllianceVoiceGrantRequest  (optional)
+   * @param createAllianceVoiceGrantRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void markSoundboardSoundPlayed(String id, CreateAllianceVoiceGrantRequest createAllianceVoiceGrantRequest) throws ApiException {
@@ -460,7 +460,7 @@ public class SoundboardApi {
    * Broadcast a \&quot;clip played\&quot; attribution event (use_soundboard)
    * Attribution UX only — the hub does not verify the clip was actually mixed into the caller&#39;s outgoing audio; the channel-scoped use_soundboard permission check is the real enforcement.
    * @param id  (required)
-   * @param createAllianceVoiceGrantRequest  (optional)
+   * @param createAllianceVoiceGrantRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -502,6 +502,10 @@ public class SoundboardApi {
     // verify the required parameter 'id' is set
     if (id == null) {
       throw new ApiException(400, "Missing the required parameter 'id' when calling markSoundboardSoundPlayed");
+    }
+    // verify the required parameter 'createAllianceVoiceGrantRequest' is set
+    if (createAllianceVoiceGrantRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createAllianceVoiceGrantRequest' when calling markSoundboardSoundPlayed");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();

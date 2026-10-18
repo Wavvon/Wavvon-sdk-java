@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.wavvon.sdk.generated.model.CreateChannelPollRequestOptionsInner;
+import org.wavvon.sdk.generated.model.PollOption;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -49,7 +49,7 @@ public class CreateChannelPollRequest {
 
   public static final String JSON_PROPERTY_OPTIONS = "options";
   @jakarta.annotation.Nonnull
-  private List<CreateChannelPollRequestOptionsInner> options = new ArrayList<>();
+  private List<PollOption> options = new ArrayList<>();
 
   public static final String JSON_PROPERTY_ENDS_AT = "ends_at";
   @jakarta.annotation.Nullable
@@ -86,12 +86,12 @@ public class CreateChannelPollRequest {
   }
 
 
-  public CreateChannelPollRequest options(@jakarta.annotation.Nonnull List<CreateChannelPollRequestOptionsInner> options) {
+  public CreateChannelPollRequest options(@jakarta.annotation.Nonnull List<PollOption> options) {
     this.options = options;
     return this;
   }
 
-  public CreateChannelPollRequest addOptionsItem(CreateChannelPollRequestOptionsInner optionsItem) {
+  public CreateChannelPollRequest addOptionsItem(PollOption optionsItem) {
     if (this.options == null) {
       this.options = new ArrayList<>();
     }
@@ -106,14 +106,14 @@ public class CreateChannelPollRequest {
   @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_OPTIONS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public List<CreateChannelPollRequestOptionsInner> getOptions() {
+  public List<PollOption> getOptions() {
     return options;
   }
 
 
   @JsonProperty(JSON_PROPERTY_OPTIONS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setOptions(@jakarta.annotation.Nonnull List<CreateChannelPollRequestOptionsInner> options) {
+  public void setOptions(@jakarta.annotation.Nonnull List<PollOption> options) {
     this.options = options;
   }
 

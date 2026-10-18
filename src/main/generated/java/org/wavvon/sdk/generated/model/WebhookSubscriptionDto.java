@@ -24,52 +24,91 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * DeleteAdminBanlistSourcesRequest
+ * WebhookSubscriptionDto
  */
 @JsonPropertyOrder({
-  DeleteAdminBanlistSourcesRequest.JSON_PROPERTY_URL
+  WebhookSubscriptionDto.JSON_PROPERTY_EVENT,
+  WebhookSubscriptionDto.JSON_PROPERTY_CHANNELS
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class DeleteAdminBanlistSourcesRequest {
-  public static final String JSON_PROPERTY_URL = "url";
+public class WebhookSubscriptionDto {
+  public static final String JSON_PROPERTY_EVENT = "event";
   @jakarta.annotation.Nonnull
-  private String url;
+  private String event;
 
-  public DeleteAdminBanlistSourcesRequest() { 
+  public static final String JSON_PROPERTY_CHANNELS = "channels";
+  @jakarta.annotation.Nullable
+  private List<String> channels = new ArrayList<>();
+
+  public WebhookSubscriptionDto() { 
   }
 
-  public DeleteAdminBanlistSourcesRequest url(@jakarta.annotation.Nonnull String url) {
-    this.url = url;
+  public WebhookSubscriptionDto event(@jakarta.annotation.Nonnull String event) {
+    this.event = event;
     return this;
   }
 
   /**
-   * Get url
-   * @return url
+   * Get event
+   * @return event
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_URL)
+  @JsonProperty(JSON_PROPERTY_EVENT)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public String getUrl() {
-    return url;
+  public String getEvent() {
+    return event;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_URL)
+  @JsonProperty(JSON_PROPERTY_EVENT)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setUrl(@jakarta.annotation.Nonnull String url) {
-    this.url = url;
+  public void setEvent(@jakarta.annotation.Nonnull String event) {
+    this.event = event;
+  }
+
+
+  public WebhookSubscriptionDto channels(@jakarta.annotation.Nullable List<String> channels) {
+    this.channels = channels;
+    return this;
+  }
+
+  public WebhookSubscriptionDto addChannelsItem(String channelsItem) {
+    if (this.channels == null) {
+      this.channels = new ArrayList<>();
+    }
+    this.channels.add(channelsItem);
+    return this;
+  }
+
+  /**
+   * Get channels
+   * @return channels
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CHANNELS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public List<String> getChannels() {
+    return channels;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_CHANNELS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setChannels(@jakarta.annotation.Nullable List<String> channels) {
+    this.channels = channels;
   }
 
 
   /**
-   * Return true if this deleteAdminBanlistSources_request object is equal to o.
+   * Return true if this WebhookSubscriptionDto object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -79,20 +118,22 @@ public class DeleteAdminBanlistSourcesRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DeleteAdminBanlistSourcesRequest deleteAdminBanlistSourcesRequest = (DeleteAdminBanlistSourcesRequest) o;
-    return Objects.equals(this.url, deleteAdminBanlistSourcesRequest.url);
+    WebhookSubscriptionDto webhookSubscriptionDto = (WebhookSubscriptionDto) o;
+    return Objects.equals(this.event, webhookSubscriptionDto.event) &&
+        Objects.equals(this.channels, webhookSubscriptionDto.channels);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(url);
+    return Objects.hash(event, channels);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DeleteAdminBanlistSourcesRequest {\n");
-    sb.append("    url: ").append(toIndentedString(url)).append("\n");
+    sb.append("class WebhookSubscriptionDto {\n");
+    sb.append("    event: ").append(toIndentedString(event)).append("\n");
+    sb.append("    channels: ").append(toIndentedString(channels)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -140,9 +181,18 @@ public class DeleteAdminBanlistSourcesRequest {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `url` to the URL query string
-    if (getUrl() != null) {
-      joiner.add(String.format("%surl%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getUrl()))));
+    // add `event` to the URL query string
+    if (getEvent() != null) {
+      joiner.add(String.format("%sevent%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getEvent()))));
+    }
+
+    // add `channels` to the URL query string
+    if (getChannels() != null) {
+      for (int i = 0; i < getChannels().size(); i++) {
+        joiner.add(String.format("%schannels%s%s=%s", prefix, suffix,
+            "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix),
+            ApiClient.urlEncode(ApiClient.valueToString(getChannels().get(i)))));
+      }
     }
 
     return joiner.toString();

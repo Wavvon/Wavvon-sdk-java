@@ -27,7 +27,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.wavvon.sdk.generated.model.SetConversationSenderKeysRequestRecipientsInner;
+import org.wavvon.sdk.generated.model.SenderKeyRecipientBlob;
+import org.wavvon.sdk.generated.model.SubkeyCert;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -45,11 +46,11 @@ import org.wavvon.sdk.generated.ApiClient;
 public class SetConversationSenderKeysRequest {
   public static final String JSON_PROPERTY_SENDER_KEY_VERSION = "sender_key_version";
   @jakarta.annotation.Nonnull
-  private Long senderKeyVersion;
+  private Integer senderKeyVersion;
 
   public static final String JSON_PROPERTY_RECIPIENTS = "recipients";
   @jakarta.annotation.Nonnull
-  private List<SetConversationSenderKeysRequestRecipientsInner> recipients = new ArrayList<>();
+  private List<SenderKeyRecipientBlob> recipients = new ArrayList<>();
 
   public static final String JSON_PROPERTY_SIGNATURE_HEX = "signature_hex";
   @jakarta.annotation.Nonnull
@@ -57,12 +58,12 @@ public class SetConversationSenderKeysRequest {
 
   public static final String JSON_PROPERTY_SIGNER_CERT = "signer_cert";
   @jakarta.annotation.Nullable
-  private Object signerCert;
+  private SubkeyCert signerCert;
 
   public SetConversationSenderKeysRequest() { 
   }
 
-  public SetConversationSenderKeysRequest senderKeyVersion(@jakarta.annotation.Nonnull Long senderKeyVersion) {
+  public SetConversationSenderKeysRequest senderKeyVersion(@jakarta.annotation.Nonnull Integer senderKeyVersion) {
     this.senderKeyVersion = senderKeyVersion;
     return this;
   }
@@ -74,24 +75,24 @@ public class SetConversationSenderKeysRequest {
   @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_SENDER_KEY_VERSION)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public Long getSenderKeyVersion() {
+  public Integer getSenderKeyVersion() {
     return senderKeyVersion;
   }
 
 
   @JsonProperty(JSON_PROPERTY_SENDER_KEY_VERSION)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setSenderKeyVersion(@jakarta.annotation.Nonnull Long senderKeyVersion) {
+  public void setSenderKeyVersion(@jakarta.annotation.Nonnull Integer senderKeyVersion) {
     this.senderKeyVersion = senderKeyVersion;
   }
 
 
-  public SetConversationSenderKeysRequest recipients(@jakarta.annotation.Nonnull List<SetConversationSenderKeysRequestRecipientsInner> recipients) {
+  public SetConversationSenderKeysRequest recipients(@jakarta.annotation.Nonnull List<SenderKeyRecipientBlob> recipients) {
     this.recipients = recipients;
     return this;
   }
 
-  public SetConversationSenderKeysRequest addRecipientsItem(SetConversationSenderKeysRequestRecipientsInner recipientsItem) {
+  public SetConversationSenderKeysRequest addRecipientsItem(SenderKeyRecipientBlob recipientsItem) {
     if (this.recipients == null) {
       this.recipients = new ArrayList<>();
     }
@@ -106,14 +107,14 @@ public class SetConversationSenderKeysRequest {
   @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_RECIPIENTS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public List<SetConversationSenderKeysRequestRecipientsInner> getRecipients() {
+  public List<SenderKeyRecipientBlob> getRecipients() {
     return recipients;
   }
 
 
   @JsonProperty(JSON_PROPERTY_RECIPIENTS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setRecipients(@jakarta.annotation.Nonnull List<SetConversationSenderKeysRequestRecipientsInner> recipients) {
+  public void setRecipients(@jakarta.annotation.Nonnull List<SenderKeyRecipientBlob> recipients) {
     this.recipients = recipients;
   }
 
@@ -142,7 +143,7 @@ public class SetConversationSenderKeysRequest {
   }
 
 
-  public SetConversationSenderKeysRequest signerCert(@jakarta.annotation.Nullable Object signerCert) {
+  public SetConversationSenderKeysRequest signerCert(@jakarta.annotation.Nullable SubkeyCert signerCert) {
     this.signerCert = signerCert;
     return this;
   }
@@ -154,14 +155,14 @@ public class SetConversationSenderKeysRequest {
   @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_SIGNER_CERT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Object getSignerCert() {
+  public SubkeyCert getSignerCert() {
     return signerCert;
   }
 
 
   @JsonProperty(JSON_PROPERTY_SIGNER_CERT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setSignerCert(@jakarta.annotation.Nullable Object signerCert) {
+  public void setSignerCert(@jakarta.annotation.Nullable SubkeyCert signerCert) {
     this.signerCert = signerCert;
   }
 
@@ -266,7 +267,7 @@ public class SetConversationSenderKeysRequest {
 
     // add `signer_cert` to the URL query string
     if (getSignerCert() != null) {
-      joiner.add(String.format("%ssigner_cert%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getSignerCert()))));
+      joiner.add(getSignerCert().toUrlQueryString(prefix + "signer_cert" + suffix));
     }
 
     return joiner.toString();

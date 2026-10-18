@@ -24,6 +24,8 @@ import org.wavvon.sdk.generated.model.GetChannelMyPermissions200Response;
 import org.wavvon.sdk.generated.model.ListChannelPermissions200Response;
 import org.wavvon.sdk.generated.model.ListChannelPermissions200ResponseRolesInnerOverwrites;
 import org.wavvon.sdk.generated.model.ListUnreadChannels200ResponseInner;
+import org.wavvon.sdk.generated.model.ReorderChannelsRequest;
+import org.wavvon.sdk.generated.model.UpdateChannelRequest;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -90,7 +92,7 @@ public class ChannelsApi {
   /**
    * Create a channel or category (manage_channels)
    * 
-   * @param createChannelRequest  (optional)
+   * @param createChannelRequest  (required)
    * @return Channel
    * @throws ApiException if fails to make API call
    */
@@ -102,7 +104,7 @@ public class ChannelsApi {
   /**
    * Create a channel or category (manage_channels)
    * 
-   * @param createChannelRequest  (optional)
+   * @param createChannelRequest  (required)
    * @return ApiResponse&lt;Channel&gt;
    * @throws ApiException if fails to make API call
    */
@@ -147,6 +149,10 @@ public class ChannelsApi {
   }
 
   private HttpRequest.Builder createChannelRequestBuilder(CreateChannelRequest createChannelRequest) throws ApiException {
+    // verify the required parameter 'createChannelRequest' is set
+    if (createChannelRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createChannelRequest' when calling createChannel");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -732,20 +738,22 @@ public class ChannelsApi {
   /**
    * Reorder channels (manage_channels)
    * 
+   * @param reorderChannelsRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void reorderChannels() throws ApiException {
-    reorderChannelsWithHttpInfo();
+  public void reorderChannels(ReorderChannelsRequest reorderChannelsRequest) throws ApiException {
+    reorderChannelsWithHttpInfo(reorderChannelsRequest);
   }
 
   /**
    * Reorder channels (manage_channels)
    * 
+   * @param reorderChannelsRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> reorderChannelsWithHttpInfo() throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = reorderChannelsRequestBuilder();
+  public ApiResponse<Void> reorderChannelsWithHttpInfo(ReorderChannelsRequest reorderChannelsRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = reorderChannelsRequestBuilder(reorderChannelsRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -778,7 +786,11 @@ public class ChannelsApi {
     }
   }
 
-  private HttpRequest.Builder reorderChannelsRequestBuilder() throws ApiException {
+  private HttpRequest.Builder reorderChannelsRequestBuilder(ReorderChannelsRequest reorderChannelsRequest) throws ApiException {
+    // verify the required parameter 'reorderChannelsRequest' is set
+    if (reorderChannelsRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'reorderChannelsRequest' when calling reorderChannels");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -786,9 +798,15 @@ public class ChannelsApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(reorderChannelsRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }
@@ -803,7 +821,7 @@ public class ChannelsApi {
    * Cannot grant &#x60;admin&#x60; via an overwrite, cannot edit a role at or above the caller&#39;s own priority, and can only allow permissions the caller effectively holds on the channel.
    * @param channelId  (required)
    * @param roleId  (required)
-   * @param listChannelPermissions200ResponseRolesInnerOverwrites  (optional)
+   * @param listChannelPermissions200ResponseRolesInnerOverwrites  (required)
    * @throws ApiException if fails to make API call
    */
   public void setChannelPermission(String channelId, String roleId, ListChannelPermissions200ResponseRolesInnerOverwrites listChannelPermissions200ResponseRolesInnerOverwrites) throws ApiException {
@@ -815,7 +833,7 @@ public class ChannelsApi {
    * Cannot grant &#x60;admin&#x60; via an overwrite, cannot edit a role at or above the caller&#39;s own priority, and can only allow permissions the caller effectively holds on the channel.
    * @param channelId  (required)
    * @param roleId  (required)
-   * @param listChannelPermissions200ResponseRolesInnerOverwrites  (optional)
+   * @param listChannelPermissions200ResponseRolesInnerOverwrites  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -862,6 +880,10 @@ public class ChannelsApi {
     if (roleId == null) {
       throw new ApiException(400, "Missing the required parameter 'roleId' when calling setChannelPermission");
     }
+    // verify the required parameter 'listChannelPermissions200ResponseRolesInnerOverwrites' is set
+    if (listChannelPermissions200ResponseRolesInnerOverwrites == null) {
+      throw new ApiException(400, "Missing the required parameter 'listChannelPermissions200ResponseRolesInnerOverwrites' when calling setChannelPermission");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -893,21 +915,23 @@ public class ChannelsApi {
    * Update channel (manage_channels)
    * 
    * @param channelId  (required)
+   * @param updateChannelRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void updateChannel(String channelId) throws ApiException {
-    updateChannelWithHttpInfo(channelId);
+  public void updateChannel(String channelId, UpdateChannelRequest updateChannelRequest) throws ApiException {
+    updateChannelWithHttpInfo(channelId, updateChannelRequest);
   }
 
   /**
    * Update channel (manage_channels)
    * 
    * @param channelId  (required)
+   * @param updateChannelRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> updateChannelWithHttpInfo(String channelId) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = updateChannelRequestBuilder(channelId);
+  public ApiResponse<Void> updateChannelWithHttpInfo(String channelId, UpdateChannelRequest updateChannelRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = updateChannelRequestBuilder(channelId, updateChannelRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -940,10 +964,14 @@ public class ChannelsApi {
     }
   }
 
-  private HttpRequest.Builder updateChannelRequestBuilder(String channelId) throws ApiException {
+  private HttpRequest.Builder updateChannelRequestBuilder(String channelId, UpdateChannelRequest updateChannelRequest) throws ApiException {
     // verify the required parameter 'channelId' is set
     if (channelId == null) {
       throw new ApiException(400, "Missing the required parameter 'channelId' when calling updateChannel");
+    }
+    // verify the required parameter 'updateChannelRequest' is set
+    if (updateChannelRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'updateChannelRequest' when calling updateChannel");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -953,9 +981,15 @@ public class ChannelsApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("PATCH", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(updateChannelRequest);
+      localVarRequestBuilder.method("PATCH", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }

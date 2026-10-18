@@ -87,7 +87,7 @@ public class InvitesApi {
   /**
    * Create an invite (manage_invites)
    * With &#x60;bound_pubkey&#x60; set the invite admits that identity and nobody else, and &#x60;max_uses&#x60; is forced to 1 — a code that names its recipient and admits several people is a contradiction. On hubs advertising &#x60;invites.bound&#x60;; an older hub ignores the field and mints an ordinary bearer code, which is why a client must test for the string before offering it.  Redeeming a bound invite also **satisfies the admission challenge**: an admin naming one key is the human act the challenge asks about, so a client with nobody watching its screen can join a hub that has &#x60;challenge_mode&#x60; on. A bearer invite buys no such exemption.
-   * @param createInviteRequest  (optional)
+   * @param createInviteRequest  (required)
    * @return Invite
    * @throws ApiException if fails to make API call
    */
@@ -99,7 +99,7 @@ public class InvitesApi {
   /**
    * Create an invite (manage_invites)
    * With &#x60;bound_pubkey&#x60; set the invite admits that identity and nobody else, and &#x60;max_uses&#x60; is forced to 1 — a code that names its recipient and admits several people is a contradiction. On hubs advertising &#x60;invites.bound&#x60;; an older hub ignores the field and mints an ordinary bearer code, which is why a client must test for the string before offering it.  Redeeming a bound invite also **satisfies the admission challenge**: an admin naming one key is the human act the challenge asks about, so a client with nobody watching its screen can join a hub that has &#x60;challenge_mode&#x60; on. A bearer invite buys no such exemption.
-   * @param createInviteRequest  (optional)
+   * @param createInviteRequest  (required)
    * @return ApiResponse&lt;Invite&gt;
    * @throws ApiException if fails to make API call
    */
@@ -144,6 +144,10 @@ public class InvitesApi {
   }
 
   private HttpRequest.Builder createInviteRequestBuilder(CreateInviteRequest createInviteRequest) throws ApiException {
+    // verify the required parameter 'createInviteRequest' is set
+    if (createInviteRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createInviteRequest' when calling createInvite");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 

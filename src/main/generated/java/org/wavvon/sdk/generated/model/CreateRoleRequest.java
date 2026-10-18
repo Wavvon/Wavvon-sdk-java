@@ -38,7 +38,10 @@ import org.wavvon.sdk.generated.ApiClient;
   CreateRoleRequest.JSON_PROPERTY_NAME,
   CreateRoleRequest.JSON_PROPERTY_PERMISSIONS,
   CreateRoleRequest.JSON_PROPERTY_PRIORITY,
-  CreateRoleRequest.JSON_PROPERTY_DISPLAY_SEPARATELY
+  CreateRoleRequest.JSON_PROPERTY_DISPLAY_SEPARATELY,
+  CreateRoleRequest.JSON_PROPERTY_COLOR,
+  CreateRoleRequest.JSON_PROPERTY_ICON,
+  CreateRoleRequest.JSON_PROPERTY_CATEGORY_ID
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class CreateRoleRequest {
@@ -47,16 +50,28 @@ public class CreateRoleRequest {
   private String name;
 
   public static final String JSON_PROPERTY_PERMISSIONS = "permissions";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private List<String> permissions = new ArrayList<>();
 
   public static final String JSON_PROPERTY_PRIORITY = "priority";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private Long priority;
 
   public static final String JSON_PROPERTY_DISPLAY_SEPARATELY = "display_separately";
   @jakarta.annotation.Nullable
   private Boolean displaySeparately;
+
+  public static final String JSON_PROPERTY_COLOR = "color";
+  @jakarta.annotation.Nullable
+  private String color;
+
+  public static final String JSON_PROPERTY_ICON = "icon";
+  @jakarta.annotation.Nullable
+  private String icon;
+
+  public static final String JSON_PROPERTY_CATEGORY_ID = "category_id";
+  @jakarta.annotation.Nullable
+  private String categoryId;
 
   public CreateRoleRequest() { 
   }
@@ -85,7 +100,7 @@ public class CreateRoleRequest {
   }
 
 
-  public CreateRoleRequest permissions(@jakarta.annotation.Nullable List<String> permissions) {
+  public CreateRoleRequest permissions(@jakarta.annotation.Nonnull List<String> permissions) {
     this.permissions = permissions;
     return this;
   }
@@ -102,22 +117,22 @@ public class CreateRoleRequest {
    * Get permissions
    * @return permissions
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_PERMISSIONS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public List<String> getPermissions() {
     return permissions;
   }
 
 
   @JsonProperty(JSON_PROPERTY_PERMISSIONS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setPermissions(@jakarta.annotation.Nullable List<String> permissions) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setPermissions(@jakarta.annotation.Nonnull List<String> permissions) {
     this.permissions = permissions;
   }
 
 
-  public CreateRoleRequest priority(@jakarta.annotation.Nullable Long priority) {
+  public CreateRoleRequest priority(@jakarta.annotation.Nonnull Long priority) {
     this.priority = priority;
     return this;
   }
@@ -126,17 +141,17 @@ public class CreateRoleRequest {
    * Get priority
    * @return priority
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_PRIORITY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public Long getPriority() {
     return priority;
   }
 
 
   @JsonProperty(JSON_PROPERTY_PRIORITY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setPriority(@jakarta.annotation.Nullable Long priority) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setPriority(@jakarta.annotation.Nonnull Long priority) {
     this.priority = priority;
   }
 
@@ -165,6 +180,78 @@ public class CreateRoleRequest {
   }
 
 
+  public CreateRoleRequest color(@jakarta.annotation.Nullable String color) {
+    this.color = color;
+    return this;
+  }
+
+  /**
+   * Get color
+   * @return color
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_COLOR)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getColor() {
+    return color;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_COLOR)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setColor(@jakarta.annotation.Nullable String color) {
+    this.color = color;
+  }
+
+
+  public CreateRoleRequest icon(@jakarta.annotation.Nullable String icon) {
+    this.icon = icon;
+    return this;
+  }
+
+  /**
+   * Get icon
+   * @return icon
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_ICON)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getIcon() {
+    return icon;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_ICON)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setIcon(@jakarta.annotation.Nullable String icon) {
+    this.icon = icon;
+  }
+
+
+  public CreateRoleRequest categoryId(@jakarta.annotation.Nullable String categoryId) {
+    this.categoryId = categoryId;
+    return this;
+  }
+
+  /**
+   * Get categoryId
+   * @return categoryId
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CATEGORY_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getCategoryId() {
+    return categoryId;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_CATEGORY_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setCategoryId(@jakarta.annotation.Nullable String categoryId) {
+    this.categoryId = categoryId;
+  }
+
+
   /**
    * Return true if this createRole_request object is equal to o.
    */
@@ -180,12 +267,15 @@ public class CreateRoleRequest {
     return Objects.equals(this.name, createRoleRequest.name) &&
         Objects.equals(this.permissions, createRoleRequest.permissions) &&
         Objects.equals(this.priority, createRoleRequest.priority) &&
-        Objects.equals(this.displaySeparately, createRoleRequest.displaySeparately);
+        Objects.equals(this.displaySeparately, createRoleRequest.displaySeparately) &&
+        Objects.equals(this.color, createRoleRequest.color) &&
+        Objects.equals(this.icon, createRoleRequest.icon) &&
+        Objects.equals(this.categoryId, createRoleRequest.categoryId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, permissions, priority, displaySeparately);
+    return Objects.hash(name, permissions, priority, displaySeparately, color, icon, categoryId);
   }
 
   @Override
@@ -196,6 +286,9 @@ public class CreateRoleRequest {
     sb.append("    permissions: ").append(toIndentedString(permissions)).append("\n");
     sb.append("    priority: ").append(toIndentedString(priority)).append("\n");
     sb.append("    displaySeparately: ").append(toIndentedString(displaySeparately)).append("\n");
+    sb.append("    color: ").append(toIndentedString(color)).append("\n");
+    sb.append("    icon: ").append(toIndentedString(icon)).append("\n");
+    sb.append("    categoryId: ").append(toIndentedString(categoryId)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -265,6 +358,21 @@ public class CreateRoleRequest {
     // add `display_separately` to the URL query string
     if (getDisplaySeparately() != null) {
       joiner.add(String.format("%sdisplay_separately%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getDisplaySeparately()))));
+    }
+
+    // add `color` to the URL query string
+    if (getColor() != null) {
+      joiner.add(String.format("%scolor%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getColor()))));
+    }
+
+    // add `icon` to the URL query string
+    if (getIcon() != null) {
+      joiner.add(String.format("%sicon%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getIcon()))));
+    }
+
+    // add `category_id` to the URL query string
+    if (getCategoryId() != null) {
+      joiner.add(String.format("%scategory_id%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCategoryId()))));
     }
 
     return joiner.toString();

@@ -24,7 +24,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -34,7 +36,8 @@ import org.wavvon.sdk.generated.ApiClient;
  */
 @JsonPropertyOrder({
   UpdateChannelPostRequest.JSON_PROPERTY_TITLE,
-  UpdateChannelPostRequest.JSON_PROPERTY_BODY
+  UpdateChannelPostRequest.JSON_PROPERTY_BODY,
+  UpdateChannelPostRequest.JSON_PROPERTY_TAG_IDS
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class UpdateChannelPostRequest {
@@ -45,6 +48,10 @@ public class UpdateChannelPostRequest {
   public static final String JSON_PROPERTY_BODY = "body";
   @jakarta.annotation.Nullable
   private String body;
+
+  public static final String JSON_PROPERTY_TAG_IDS = "tag_ids";
+  @jakarta.annotation.Nullable
+  private List<String> tagIds = new ArrayList<>();
 
   public UpdateChannelPostRequest() { 
   }
@@ -97,6 +104,38 @@ public class UpdateChannelPostRequest {
   }
 
 
+  public UpdateChannelPostRequest tagIds(@jakarta.annotation.Nullable List<String> tagIds) {
+    this.tagIds = tagIds;
+    return this;
+  }
+
+  public UpdateChannelPostRequest addTagIdsItem(String tagIdsItem) {
+    if (this.tagIds == null) {
+      this.tagIds = new ArrayList<>();
+    }
+    this.tagIds.add(tagIdsItem);
+    return this;
+  }
+
+  /**
+   * Get tagIds
+   * @return tagIds
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_TAG_IDS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public List<String> getTagIds() {
+    return tagIds;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_TAG_IDS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setTagIds(@jakarta.annotation.Nullable List<String> tagIds) {
+    this.tagIds = tagIds;
+  }
+
+
   /**
    * Return true if this updateChannelPost_request object is equal to o.
    */
@@ -110,12 +149,13 @@ public class UpdateChannelPostRequest {
     }
     UpdateChannelPostRequest updateChannelPostRequest = (UpdateChannelPostRequest) o;
     return Objects.equals(this.title, updateChannelPostRequest.title) &&
-        Objects.equals(this.body, updateChannelPostRequest.body);
+        Objects.equals(this.body, updateChannelPostRequest.body) &&
+        Objects.equals(this.tagIds, updateChannelPostRequest.tagIds);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(title, body);
+    return Objects.hash(title, body, tagIds);
   }
 
   @Override
@@ -124,6 +164,7 @@ public class UpdateChannelPostRequest {
     sb.append("class UpdateChannelPostRequest {\n");
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
     sb.append("    body: ").append(toIndentedString(body)).append("\n");
+    sb.append("    tagIds: ").append(toIndentedString(tagIds)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -179,6 +220,15 @@ public class UpdateChannelPostRequest {
     // add `body` to the URL query string
     if (getBody() != null) {
       joiner.add(String.format("%sbody%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getBody()))));
+    }
+
+    // add `tag_ids` to the URL query string
+    if (getTagIds() != null) {
+      for (int i = 0; i < getTagIds().size(); i++) {
+        joiner.add(String.format("%stag_ids%s%s=%s", prefix, suffix,
+            "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix),
+            ApiClient.urlEncode(ApiClient.valueToString(getTagIds().get(i)))));
+      }
     }
 
     return joiner.toString();

@@ -232,7 +232,7 @@ public class LobbyApi {
   /**
    * Submit a PoW nonce to increase security level
    * Compute &#x60;SHA256(utf8(public_key_hex) || little_endian_u64(nonce))&#x60; and find a nonce whose hash has ≥ N leading zero bits, then submit here. On promotion, the session scope changes to \&quot;member\&quot;. 
-   * @param submitLobbyPowRequest  (optional)
+   * @param submitLobbyPowRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void submitLobbyPow(SubmitLobbyPowRequest submitLobbyPowRequest) throws ApiException {
@@ -242,7 +242,7 @@ public class LobbyApi {
   /**
    * Submit a PoW nonce to increase security level
    * Compute &#x60;SHA256(utf8(public_key_hex) || little_endian_u64(nonce))&#x60; and find a nonce whose hash has ≥ N leading zero bits, then submit here. On promotion, the session scope changes to \&quot;member\&quot;. 
-   * @param submitLobbyPowRequest  (optional)
+   * @param submitLobbyPowRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -281,6 +281,10 @@ public class LobbyApi {
   }
 
   private HttpRequest.Builder submitLobbyPowRequestBuilder(SubmitLobbyPowRequest submitLobbyPowRequest) throws ApiException {
+    // verify the required parameter 'submitLobbyPowRequest' is set
+    if (submitLobbyPowRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'submitLobbyPowRequest' when calling submitLobbyPow");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 

@@ -33,7 +33,8 @@ import org.wavvon.sdk.generated.ApiClient;
  * RsvpEventRequest
  */
 @JsonPropertyOrder({
-  RsvpEventRequest.JSON_PROPERTY_STATUS
+  RsvpEventRequest.JSON_PROPERTY_STATUS,
+  RsvpEventRequest.JSON_PROPERTY_SLOT_ID
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class RsvpEventRequest {
@@ -78,6 +79,10 @@ public class RsvpEventRequest {
   @jakarta.annotation.Nonnull
   private StatusEnum status;
 
+  public static final String JSON_PROPERTY_SLOT_ID = "slot_id";
+  @jakarta.annotation.Nullable
+  private String slotId;
+
   public RsvpEventRequest() { 
   }
 
@@ -105,6 +110,30 @@ public class RsvpEventRequest {
   }
 
 
+  public RsvpEventRequest slotId(@jakarta.annotation.Nullable String slotId) {
+    this.slotId = slotId;
+    return this;
+  }
+
+  /**
+   * Get slotId
+   * @return slotId
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_SLOT_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getSlotId() {
+    return slotId;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_SLOT_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setSlotId(@jakarta.annotation.Nullable String slotId) {
+    this.slotId = slotId;
+  }
+
+
   /**
    * Return true if this rsvpEvent_request object is equal to o.
    */
@@ -117,12 +146,13 @@ public class RsvpEventRequest {
       return false;
     }
     RsvpEventRequest rsvpEventRequest = (RsvpEventRequest) o;
-    return Objects.equals(this.status, rsvpEventRequest.status);
+    return Objects.equals(this.status, rsvpEventRequest.status) &&
+        Objects.equals(this.slotId, rsvpEventRequest.slotId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(status);
+    return Objects.hash(status, slotId);
   }
 
   @Override
@@ -130,6 +160,7 @@ public class RsvpEventRequest {
     StringBuilder sb = new StringBuilder();
     sb.append("class RsvpEventRequest {\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    slotId: ").append(toIndentedString(slotId)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -180,6 +211,11 @@ public class RsvpEventRequest {
     // add `status` to the URL query string
     if (getStatus() != null) {
       joiner.add(String.format("%sstatus%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getStatus()))));
+    }
+
+    // add `slot_id` to the URL query string
+    if (getSlotId() != null) {
+      joiner.add(String.format("%sslot_id%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getSlotId()))));
     }
 
     return joiner.toString();

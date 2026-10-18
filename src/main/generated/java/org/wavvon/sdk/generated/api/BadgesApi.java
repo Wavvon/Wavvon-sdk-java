@@ -166,7 +166,7 @@ public class BadgesApi {
   /**
    * Receive a badge offer from another hub
    * Hub-to-hub. The Ed25519 signature over the payload is the credential; no Bearer token.
-   * @param createFederationBadgeOfferRequest  (optional)
+   * @param createFederationBadgeOfferRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void createFederationBadgeOffer(CreateFederationBadgeOfferRequest createFederationBadgeOfferRequest) throws ApiException {
@@ -176,7 +176,7 @@ public class BadgesApi {
   /**
    * Receive a badge offer from another hub
    * Hub-to-hub. The Ed25519 signature over the payload is the credential; no Bearer token.
-   * @param createFederationBadgeOfferRequest  (optional)
+   * @param createFederationBadgeOfferRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -215,6 +215,10 @@ public class BadgesApi {
   }
 
   private HttpRequest.Builder createFederationBadgeOfferRequestBuilder(CreateFederationBadgeOfferRequest createFederationBadgeOfferRequest) throws ApiException {
+    // verify the required parameter 'createFederationBadgeOfferRequest' is set
+    if (createFederationBadgeOfferRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createFederationBadgeOfferRequest' when calling createFederationBadgeOffer");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -395,7 +399,7 @@ public class BadgesApi {
   /**
    * Issue a badge to another hub (admin)
    * Fetches the recipient hub&#39;s /info, signs the badge payload with this hub&#39;s keypair, delivers it to the recipient&#39;s /federation/badge-offer, and records it locally.
-   * @param issueAdminBadgeRequest  (optional)
+   * @param issueAdminBadgeRequest  (required)
    * @return IssueAdminBadge201Response
    * @throws ApiException if fails to make API call
    */
@@ -407,7 +411,7 @@ public class BadgesApi {
   /**
    * Issue a badge to another hub (admin)
    * Fetches the recipient hub&#39;s /info, signs the badge payload with this hub&#39;s keypair, delivers it to the recipient&#39;s /federation/badge-offer, and records it locally.
-   * @param issueAdminBadgeRequest  (optional)
+   * @param issueAdminBadgeRequest  (required)
    * @return ApiResponse&lt;IssueAdminBadge201Response&gt;
    * @throws ApiException if fails to make API call
    */
@@ -452,6 +456,10 @@ public class BadgesApi {
   }
 
   private HttpRequest.Builder issueAdminBadgeRequestBuilder(IssueAdminBadgeRequest issueAdminBadgeRequest) throws ApiException {
+    // verify the required parameter 'issueAdminBadgeRequest' is set
+    if (issueAdminBadgeRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'issueAdminBadgeRequest' when calling issueAdminBadge");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 

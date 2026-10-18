@@ -24,7 +24,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import org.wavvon.sdk.generated.model.CreateAllianceChannelPostRequestAttachmentsInner;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -34,7 +37,8 @@ import org.wavvon.sdk.generated.ApiClient;
  */
 @JsonPropertyOrder({
   CreateChannelPostReplyRequest.JSON_PROPERTY_BODY,
-  CreateChannelPostReplyRequest.JSON_PROPERTY_REPLY_TO_ID
+  CreateChannelPostReplyRequest.JSON_PROPERTY_REPLY_TO_ID,
+  CreateChannelPostReplyRequest.JSON_PROPERTY_ATTACHMENTS
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class CreateChannelPostReplyRequest {
@@ -45,6 +49,10 @@ public class CreateChannelPostReplyRequest {
   public static final String JSON_PROPERTY_REPLY_TO_ID = "reply_to_id";
   @jakarta.annotation.Nullable
   private String replyToId;
+
+  public static final String JSON_PROPERTY_ATTACHMENTS = "attachments";
+  @jakarta.annotation.Nullable
+  private List<CreateAllianceChannelPostRequestAttachmentsInner> attachments = new ArrayList<>();
 
   public CreateChannelPostReplyRequest() { 
   }
@@ -97,6 +105,38 @@ public class CreateChannelPostReplyRequest {
   }
 
 
+  public CreateChannelPostReplyRequest attachments(@jakarta.annotation.Nullable List<CreateAllianceChannelPostRequestAttachmentsInner> attachments) {
+    this.attachments = attachments;
+    return this;
+  }
+
+  public CreateChannelPostReplyRequest addAttachmentsItem(CreateAllianceChannelPostRequestAttachmentsInner attachmentsItem) {
+    if (this.attachments == null) {
+      this.attachments = new ArrayList<>();
+    }
+    this.attachments.add(attachmentsItem);
+    return this;
+  }
+
+  /**
+   * Get attachments
+   * @return attachments
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_ATTACHMENTS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public List<CreateAllianceChannelPostRequestAttachmentsInner> getAttachments() {
+    return attachments;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_ATTACHMENTS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setAttachments(@jakarta.annotation.Nullable List<CreateAllianceChannelPostRequestAttachmentsInner> attachments) {
+    this.attachments = attachments;
+  }
+
+
   /**
    * Return true if this createChannelPostReply_request object is equal to o.
    */
@@ -110,12 +150,13 @@ public class CreateChannelPostReplyRequest {
     }
     CreateChannelPostReplyRequest createChannelPostReplyRequest = (CreateChannelPostReplyRequest) o;
     return Objects.equals(this.body, createChannelPostReplyRequest.body) &&
-        Objects.equals(this.replyToId, createChannelPostReplyRequest.replyToId);
+        Objects.equals(this.replyToId, createChannelPostReplyRequest.replyToId) &&
+        Objects.equals(this.attachments, createChannelPostReplyRequest.attachments);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(body, replyToId);
+    return Objects.hash(body, replyToId, attachments);
   }
 
   @Override
@@ -124,6 +165,7 @@ public class CreateChannelPostReplyRequest {
     sb.append("class CreateChannelPostReplyRequest {\n");
     sb.append("    body: ").append(toIndentedString(body)).append("\n");
     sb.append("    replyToId: ").append(toIndentedString(replyToId)).append("\n");
+    sb.append("    attachments: ").append(toIndentedString(attachments)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -179,6 +221,16 @@ public class CreateChannelPostReplyRequest {
     // add `reply_to_id` to the URL query string
     if (getReplyToId() != null) {
       joiner.add(String.format("%sreply_to_id%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getReplyToId()))));
+    }
+
+    // add `attachments` to the URL query string
+    if (getAttachments() != null) {
+      for (int i = 0; i < getAttachments().size(); i++) {
+        if (getAttachments().get(i) != null) {
+          joiner.add(getAttachments().get(i).toUrlQueryString(String.format("%sattachments%s%s", prefix, suffix,
+          "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix))));
+        }
+      }
     }
 
     return joiner.toString();

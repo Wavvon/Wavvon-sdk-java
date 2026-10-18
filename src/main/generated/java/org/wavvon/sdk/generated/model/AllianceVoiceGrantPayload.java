@@ -30,21 +30,21 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * VerifyAuthRequestAllianceVoiceGrantPayload
+ * AllianceVoiceGrantPayload
  */
 @JsonPropertyOrder({
-  VerifyAuthRequestAllianceVoiceGrantPayload.JSON_PROPERTY_ALLIANCE_ID,
-  VerifyAuthRequestAllianceVoiceGrantPayload.JSON_PROPERTY_OWNER_HUB_PUBKEY,
-  VerifyAuthRequestAllianceVoiceGrantPayload.JSON_PROPERTY_CHANNEL_ID,
-  VerifyAuthRequestAllianceVoiceGrantPayload.JSON_PROPERTY_SUBJECT_PUBKEY,
-  VerifyAuthRequestAllianceVoiceGrantPayload.JSON_PROPERTY_ORIGIN_HUB_PUBKEY,
-  VerifyAuthRequestAllianceVoiceGrantPayload.JSON_PROPERTY_ORIGIN_HUB_URL,
-  VerifyAuthRequestAllianceVoiceGrantPayload.JSON_PROPERTY_DISPLAY_NAME,
-  VerifyAuthRequestAllianceVoiceGrantPayload.JSON_PROPERTY_ISSUED_AT,
-  VerifyAuthRequestAllianceVoiceGrantPayload.JSON_PROPERTY_EXPIRES_AT
+  AllianceVoiceGrantPayload.JSON_PROPERTY_ALLIANCE_ID,
+  AllianceVoiceGrantPayload.JSON_PROPERTY_OWNER_HUB_PUBKEY,
+  AllianceVoiceGrantPayload.JSON_PROPERTY_CHANNEL_ID,
+  AllianceVoiceGrantPayload.JSON_PROPERTY_SUBJECT_PUBKEY,
+  AllianceVoiceGrantPayload.JSON_PROPERTY_ORIGIN_HUB_PUBKEY,
+  AllianceVoiceGrantPayload.JSON_PROPERTY_ORIGIN_HUB_URL,
+  AllianceVoiceGrantPayload.JSON_PROPERTY_DISPLAY_NAME,
+  AllianceVoiceGrantPayload.JSON_PROPERTY_ISSUED_AT,
+  AllianceVoiceGrantPayload.JSON_PROPERTY_EXPIRES_AT
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class VerifyAuthRequestAllianceVoiceGrantPayload {
+public class AllianceVoiceGrantPayload {
   public static final String JSON_PROPERTY_ALLIANCE_ID = "alliance_id";
   @jakarta.annotation.Nonnull
   private String allianceId;
@@ -81,10 +81,10 @@ public class VerifyAuthRequestAllianceVoiceGrantPayload {
   @jakarta.annotation.Nonnull
   private Long expiresAt;
 
-  public VerifyAuthRequestAllianceVoiceGrantPayload() { 
+  public AllianceVoiceGrantPayload() { 
   }
 
-  public VerifyAuthRequestAllianceVoiceGrantPayload allianceId(@jakarta.annotation.Nonnull String allianceId) {
+  public AllianceVoiceGrantPayload allianceId(@jakarta.annotation.Nonnull String allianceId) {
     this.allianceId = allianceId;
     return this;
   }
@@ -108,7 +108,7 @@ public class VerifyAuthRequestAllianceVoiceGrantPayload {
   }
 
 
-  public VerifyAuthRequestAllianceVoiceGrantPayload ownerHubPubkey(@jakarta.annotation.Nonnull String ownerHubPubkey) {
+  public AllianceVoiceGrantPayload ownerHubPubkey(@jakarta.annotation.Nonnull String ownerHubPubkey) {
     this.ownerHubPubkey = ownerHubPubkey;
     return this;
   }
@@ -132,7 +132,7 @@ public class VerifyAuthRequestAllianceVoiceGrantPayload {
   }
 
 
-  public VerifyAuthRequestAllianceVoiceGrantPayload channelId(@jakarta.annotation.Nonnull String channelId) {
+  public AllianceVoiceGrantPayload channelId(@jakarta.annotation.Nonnull String channelId) {
     this.channelId = channelId;
     return this;
   }
@@ -156,7 +156,7 @@ public class VerifyAuthRequestAllianceVoiceGrantPayload {
   }
 
 
-  public VerifyAuthRequestAllianceVoiceGrantPayload subjectPubkey(@jakarta.annotation.Nonnull String subjectPubkey) {
+  public AllianceVoiceGrantPayload subjectPubkey(@jakarta.annotation.Nonnull String subjectPubkey) {
     this.subjectPubkey = subjectPubkey;
     return this;
   }
@@ -180,7 +180,7 @@ public class VerifyAuthRequestAllianceVoiceGrantPayload {
   }
 
 
-  public VerifyAuthRequestAllianceVoiceGrantPayload originHubPubkey(@jakarta.annotation.Nonnull String originHubPubkey) {
+  public AllianceVoiceGrantPayload originHubPubkey(@jakarta.annotation.Nonnull String originHubPubkey) {
     this.originHubPubkey = originHubPubkey;
     return this;
   }
@@ -204,7 +204,7 @@ public class VerifyAuthRequestAllianceVoiceGrantPayload {
   }
 
 
-  public VerifyAuthRequestAllianceVoiceGrantPayload originHubUrl(@jakarta.annotation.Nonnull String originHubUrl) {
+  public AllianceVoiceGrantPayload originHubUrl(@jakarta.annotation.Nonnull String originHubUrl) {
     this.originHubUrl = originHubUrl;
     return this;
   }
@@ -228,7 +228,7 @@ public class VerifyAuthRequestAllianceVoiceGrantPayload {
   }
 
 
-  public VerifyAuthRequestAllianceVoiceGrantPayload displayName(@jakarta.annotation.Nullable String displayName) {
+  public AllianceVoiceGrantPayload displayName(@jakarta.annotation.Nullable String displayName) {
     this.displayName = displayName;
     return this;
   }
@@ -252,7 +252,7 @@ public class VerifyAuthRequestAllianceVoiceGrantPayload {
   }
 
 
-  public VerifyAuthRequestAllianceVoiceGrantPayload issuedAt(@jakarta.annotation.Nonnull Long issuedAt) {
+  public AllianceVoiceGrantPayload issuedAt(@jakarta.annotation.Nonnull Long issuedAt) {
     this.issuedAt = issuedAt;
     return this;
   }
@@ -276,7 +276,7 @@ public class VerifyAuthRequestAllianceVoiceGrantPayload {
   }
 
 
-  public VerifyAuthRequestAllianceVoiceGrantPayload expiresAt(@jakarta.annotation.Nonnull Long expiresAt) {
+  public AllianceVoiceGrantPayload expiresAt(@jakarta.annotation.Nonnull Long expiresAt) {
     this.expiresAt = expiresAt;
     return this;
   }
@@ -301,7 +301,7 @@ public class VerifyAuthRequestAllianceVoiceGrantPayload {
 
 
   /**
-   * Return true if this verifyAuth_request_alliance_voice_grant_payload object is equal to o.
+   * Return true if this AllianceVoiceGrantPayload object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -311,16 +311,16 @@ public class VerifyAuthRequestAllianceVoiceGrantPayload {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    VerifyAuthRequestAllianceVoiceGrantPayload verifyAuthRequestAllianceVoiceGrantPayload = (VerifyAuthRequestAllianceVoiceGrantPayload) o;
-    return Objects.equals(this.allianceId, verifyAuthRequestAllianceVoiceGrantPayload.allianceId) &&
-        Objects.equals(this.ownerHubPubkey, verifyAuthRequestAllianceVoiceGrantPayload.ownerHubPubkey) &&
-        Objects.equals(this.channelId, verifyAuthRequestAllianceVoiceGrantPayload.channelId) &&
-        Objects.equals(this.subjectPubkey, verifyAuthRequestAllianceVoiceGrantPayload.subjectPubkey) &&
-        Objects.equals(this.originHubPubkey, verifyAuthRequestAllianceVoiceGrantPayload.originHubPubkey) &&
-        Objects.equals(this.originHubUrl, verifyAuthRequestAllianceVoiceGrantPayload.originHubUrl) &&
-        Objects.equals(this.displayName, verifyAuthRequestAllianceVoiceGrantPayload.displayName) &&
-        Objects.equals(this.issuedAt, verifyAuthRequestAllianceVoiceGrantPayload.issuedAt) &&
-        Objects.equals(this.expiresAt, verifyAuthRequestAllianceVoiceGrantPayload.expiresAt);
+    AllianceVoiceGrantPayload allianceVoiceGrantPayload = (AllianceVoiceGrantPayload) o;
+    return Objects.equals(this.allianceId, allianceVoiceGrantPayload.allianceId) &&
+        Objects.equals(this.ownerHubPubkey, allianceVoiceGrantPayload.ownerHubPubkey) &&
+        Objects.equals(this.channelId, allianceVoiceGrantPayload.channelId) &&
+        Objects.equals(this.subjectPubkey, allianceVoiceGrantPayload.subjectPubkey) &&
+        Objects.equals(this.originHubPubkey, allianceVoiceGrantPayload.originHubPubkey) &&
+        Objects.equals(this.originHubUrl, allianceVoiceGrantPayload.originHubUrl) &&
+        Objects.equals(this.displayName, allianceVoiceGrantPayload.displayName) &&
+        Objects.equals(this.issuedAt, allianceVoiceGrantPayload.issuedAt) &&
+        Objects.equals(this.expiresAt, allianceVoiceGrantPayload.expiresAt);
   }
 
   @Override
@@ -331,7 +331,7 @@ public class VerifyAuthRequestAllianceVoiceGrantPayload {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class VerifyAuthRequestAllianceVoiceGrantPayload {\n");
+    sb.append("class AllianceVoiceGrantPayload {\n");
     sb.append("    allianceId: ").append(toIndentedString(allianceId)).append("\n");
     sb.append("    ownerHubPubkey: ").append(toIndentedString(ownerHubPubkey)).append("\n");
     sb.append("    channelId: ").append(toIndentedString(channelId)).append("\n");

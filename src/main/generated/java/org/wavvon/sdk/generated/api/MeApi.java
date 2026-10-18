@@ -541,7 +541,7 @@ public class MeApi {
   /**
    * Update display name and avatar
    * 
-   * @param updateMeRequest  (optional)
+   * @param updateMeRequest  (required)
    * @return MeInfo
    * @throws ApiException if fails to make API call
    */
@@ -553,7 +553,7 @@ public class MeApi {
   /**
    * Update display name and avatar
    * 
-   * @param updateMeRequest  (optional)
+   * @param updateMeRequest  (required)
    * @return ApiResponse&lt;MeInfo&gt;
    * @throws ApiException if fails to make API call
    */
@@ -598,6 +598,10 @@ public class MeApi {
   }
 
   private HttpRequest.Builder updateMeRequestBuilder(UpdateMeRequest updateMeRequest) throws ApiException {
+    // verify the required parameter 'updateMeRequest' is set
+    if (updateMeRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'updateMeRequest' when calling updateMe");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -627,7 +631,7 @@ public class MeApi {
    * Rename a passkey
    * 
    * @param id  (required)
-   * @param updateMeCredentialRequest  (optional)
+   * @param updateMeCredentialRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void updateMeCredential(String id, UpdateMeCredentialRequest updateMeCredentialRequest) throws ApiException {
@@ -638,7 +642,7 @@ public class MeApi {
    * Rename a passkey
    * 
    * @param id  (required)
-   * @param updateMeCredentialRequest  (optional)
+   * @param updateMeCredentialRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -680,6 +684,10 @@ public class MeApi {
     // verify the required parameter 'id' is set
     if (id == null) {
       throw new ApiException(400, "Missing the required parameter 'id' when calling updateMeCredential");
+    }
+    // verify the required parameter 'updateMeCredentialRequest' is set
+    if (updateMeCredentialRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'updateMeCredentialRequest' when calling updateMeCredential");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();

@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.wavvon.sdk.generated.model.SetMeAppSubscriptionsRequestSubscriptionsInner;
+import org.wavvon.sdk.generated.model.AppSubscription;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -42,17 +42,17 @@ import org.wavvon.sdk.generated.ApiClient;
 public class SetMeAppSubscriptionsRequest {
   public static final String JSON_PROPERTY_SUBSCRIPTIONS = "subscriptions";
   @jakarta.annotation.Nonnull
-  private List<SetMeAppSubscriptionsRequestSubscriptionsInner> subscriptions = new ArrayList<>();
+  private List<AppSubscription> subscriptions = new ArrayList<>();
 
   public SetMeAppSubscriptionsRequest() { 
   }
 
-  public SetMeAppSubscriptionsRequest subscriptions(@jakarta.annotation.Nonnull List<SetMeAppSubscriptionsRequestSubscriptionsInner> subscriptions) {
+  public SetMeAppSubscriptionsRequest subscriptions(@jakarta.annotation.Nonnull List<AppSubscription> subscriptions) {
     this.subscriptions = subscriptions;
     return this;
   }
 
-  public SetMeAppSubscriptionsRequest addSubscriptionsItem(SetMeAppSubscriptionsRequestSubscriptionsInner subscriptionsItem) {
+  public SetMeAppSubscriptionsRequest addSubscriptionsItem(AppSubscription subscriptionsItem) {
     if (this.subscriptions == null) {
       this.subscriptions = new ArrayList<>();
     }
@@ -67,14 +67,14 @@ public class SetMeAppSubscriptionsRequest {
   @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_SUBSCRIPTIONS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public List<SetMeAppSubscriptionsRequestSubscriptionsInner> getSubscriptions() {
+  public List<AppSubscription> getSubscriptions() {
     return subscriptions;
   }
 
 
   @JsonProperty(JSON_PROPERTY_SUBSCRIPTIONS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setSubscriptions(@jakarta.annotation.Nonnull List<SetMeAppSubscriptionsRequestSubscriptionsInner> subscriptions) {
+  public void setSubscriptions(@jakarta.annotation.Nonnull List<AppSubscription> subscriptions) {
     this.subscriptions = subscriptions;
   }
 

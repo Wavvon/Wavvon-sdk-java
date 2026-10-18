@@ -26,7 +26,9 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -35,13 +37,23 @@ import org.wavvon.sdk.generated.ApiClient;
  * CreateConversationRequest
  */
 @JsonPropertyOrder({
-  CreateConversationRequest.JSON_PROPERTY_MEMBERS
+  CreateConversationRequest.JSON_PROPERTY_MEMBERS,
+  CreateConversationRequest.JSON_PROPERTY_MEMBER_HUBS,
+  CreateConversationRequest.JSON_PROPERTY_MEMBER_MASTERS
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class CreateConversationRequest {
   public static final String JSON_PROPERTY_MEMBERS = "members";
   @jakarta.annotation.Nonnull
   private List<String> members = new ArrayList<>();
+
+  public static final String JSON_PROPERTY_MEMBER_HUBS = "member_hubs";
+  @jakarta.annotation.Nullable
+  private Map<String, String> memberHubs = new HashMap<>();
+
+  public static final String JSON_PROPERTY_MEMBER_MASTERS = "member_masters";
+  @jakarta.annotation.Nullable
+  private Map<String, String> memberMasters = new HashMap<>();
 
   public CreateConversationRequest() { 
   }
@@ -78,6 +90,70 @@ public class CreateConversationRequest {
   }
 
 
+  public CreateConversationRequest memberHubs(@jakarta.annotation.Nullable Map<String, String> memberHubs) {
+    this.memberHubs = memberHubs;
+    return this;
+  }
+
+  public CreateConversationRequest putMemberHubsItem(String key, String memberHubsItem) {
+    if (this.memberHubs == null) {
+      this.memberHubs = new HashMap<>();
+    }
+    this.memberHubs.put(key, memberHubsItem);
+    return this;
+  }
+
+  /**
+   * Get memberHubs
+   * @return memberHubs
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_MEMBER_HUBS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Map<String, String> getMemberHubs() {
+    return memberHubs;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_MEMBER_HUBS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setMemberHubs(@jakarta.annotation.Nullable Map<String, String> memberHubs) {
+    this.memberHubs = memberHubs;
+  }
+
+
+  public CreateConversationRequest memberMasters(@jakarta.annotation.Nullable Map<String, String> memberMasters) {
+    this.memberMasters = memberMasters;
+    return this;
+  }
+
+  public CreateConversationRequest putMemberMastersItem(String key, String memberMastersItem) {
+    if (this.memberMasters == null) {
+      this.memberMasters = new HashMap<>();
+    }
+    this.memberMasters.put(key, memberMastersItem);
+    return this;
+  }
+
+  /**
+   * Get memberMasters
+   * @return memberMasters
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_MEMBER_MASTERS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Map<String, String> getMemberMasters() {
+    return memberMasters;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_MEMBER_MASTERS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setMemberMasters(@jakarta.annotation.Nullable Map<String, String> memberMasters) {
+    this.memberMasters = memberMasters;
+  }
+
+
   /**
    * Return true if this createConversation_request object is equal to o.
    */
@@ -90,12 +166,14 @@ public class CreateConversationRequest {
       return false;
     }
     CreateConversationRequest createConversationRequest = (CreateConversationRequest) o;
-    return Objects.equals(this.members, createConversationRequest.members);
+    return Objects.equals(this.members, createConversationRequest.members) &&
+        Objects.equals(this.memberHubs, createConversationRequest.memberHubs) &&
+        Objects.equals(this.memberMasters, createConversationRequest.memberMasters);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(members);
+    return Objects.hash(members, memberHubs, memberMasters);
   }
 
   @Override
@@ -103,6 +181,8 @@ public class CreateConversationRequest {
     StringBuilder sb = new StringBuilder();
     sb.append("class CreateConversationRequest {\n");
     sb.append("    members: ").append(toIndentedString(members)).append("\n");
+    sb.append("    memberHubs: ").append(toIndentedString(memberHubs)).append("\n");
+    sb.append("    memberMasters: ").append(toIndentedString(memberMasters)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -156,6 +236,24 @@ public class CreateConversationRequest {
         joiner.add(String.format("%smembers%s%s=%s", prefix, suffix,
             "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix),
             ApiClient.urlEncode(ApiClient.valueToString(getMembers().get(i)))));
+      }
+    }
+
+    // add `member_hubs` to the URL query string
+    if (getMemberHubs() != null) {
+      for (String _key : getMemberHubs().keySet()) {
+        joiner.add(String.format("%smember_hubs%s%s=%s", prefix, suffix,
+            "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, _key, containerSuffix),
+            getMemberHubs().get(_key), ApiClient.urlEncode(ApiClient.valueToString(getMemberHubs().get(_key)))));
+      }
+    }
+
+    // add `member_masters` to the URL query string
+    if (getMemberMasters() != null) {
+      for (String _key : getMemberMasters().keySet()) {
+        joiner.add(String.format("%smember_masters%s%s=%s", prefix, suffix,
+            "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, _key, containerSuffix),
+            getMemberMasters().get(_key), ApiClient.urlEncode(ApiClient.valueToString(getMemberMasters().get(_key)))));
       }
     }
 

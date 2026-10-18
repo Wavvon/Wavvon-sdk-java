@@ -24,8 +24,8 @@ import org.wavvon.sdk.generated.model.ListAdminOutgoingWebhookDeliveries200Respo
 import org.wavvon.sdk.generated.model.ListAdminOutgoingWebhookSubscriptions200Response;
 import org.wavvon.sdk.generated.model.ListAdminOutgoingWebhooks200ResponseInner;
 import org.wavvon.sdk.generated.model.RotateAdminOutgoingWebhookSecret200Response;
+import org.wavvon.sdk.generated.model.SetAdminOutgoingWebhookSubscriptionsRequest;
 import org.wavvon.sdk.generated.model.SetMeAppSubscriptions200Response;
-import org.wavvon.sdk.generated.model.SetMeAppSubscriptionsRequest;
 import org.wavvon.sdk.generated.model.UpdateAdminOutgoingWebhookRequest;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -93,7 +93,7 @@ public class OutgoingWebhooksApi {
   /**
    * Create an outgoing webhook (admin)
    * &#x60;url&#x60; must be https and must not resolve to a private/loopback address. The returned &#x60;secret&#x60; is shown once and used to derive the persisted HMAC signing key.
-   * @param createAdminOutgoingWebhookRequest  (optional)
+   * @param createAdminOutgoingWebhookRequest  (required)
    * @return CreateAdminOutgoingWebhook201Response
    * @throws ApiException if fails to make API call
    */
@@ -105,7 +105,7 @@ public class OutgoingWebhooksApi {
   /**
    * Create an outgoing webhook (admin)
    * &#x60;url&#x60; must be https and must not resolve to a private/loopback address. The returned &#x60;secret&#x60; is shown once and used to derive the persisted HMAC signing key.
-   * @param createAdminOutgoingWebhookRequest  (optional)
+   * @param createAdminOutgoingWebhookRequest  (required)
    * @return ApiResponse&lt;CreateAdminOutgoingWebhook201Response&gt;
    * @throws ApiException if fails to make API call
    */
@@ -150,6 +150,10 @@ public class OutgoingWebhooksApi {
   }
 
   private HttpRequest.Builder createAdminOutgoingWebhookRequestBuilder(CreateAdminOutgoingWebhookRequest createAdminOutgoingWebhookRequest) throws ApiException {
+    // verify the required parameter 'createAdminOutgoingWebhookRequest' is set
+    if (createAdminOutgoingWebhookRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createAdminOutgoingWebhookRequest' when calling createAdminOutgoingWebhook");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -689,12 +693,12 @@ public class OutgoingWebhooksApi {
    * Replace an outgoing webhook&#39;s event subscriptions (admin)
    * &#x60;message.*&#x60; events (other than &#x60;message.mention_bot&#x60;) require an explicit &#x60;channels&#x60; list.
    * @param id  (required)
-   * @param setMeAppSubscriptionsRequest  (optional)
+   * @param setAdminOutgoingWebhookSubscriptionsRequest  (required)
    * @return SetMeAppSubscriptions200Response
    * @throws ApiException if fails to make API call
    */
-  public SetMeAppSubscriptions200Response setAdminOutgoingWebhookSubscriptions(String id, SetMeAppSubscriptionsRequest setMeAppSubscriptionsRequest) throws ApiException {
-    ApiResponse<SetMeAppSubscriptions200Response> localVarResponse = setAdminOutgoingWebhookSubscriptionsWithHttpInfo(id, setMeAppSubscriptionsRequest);
+  public SetMeAppSubscriptions200Response setAdminOutgoingWebhookSubscriptions(String id, SetAdminOutgoingWebhookSubscriptionsRequest setAdminOutgoingWebhookSubscriptionsRequest) throws ApiException {
+    ApiResponse<SetMeAppSubscriptions200Response> localVarResponse = setAdminOutgoingWebhookSubscriptionsWithHttpInfo(id, setAdminOutgoingWebhookSubscriptionsRequest);
     return localVarResponse.getData();
   }
 
@@ -702,12 +706,12 @@ public class OutgoingWebhooksApi {
    * Replace an outgoing webhook&#39;s event subscriptions (admin)
    * &#x60;message.*&#x60; events (other than &#x60;message.mention_bot&#x60;) require an explicit &#x60;channels&#x60; list.
    * @param id  (required)
-   * @param setMeAppSubscriptionsRequest  (optional)
+   * @param setAdminOutgoingWebhookSubscriptionsRequest  (required)
    * @return ApiResponse&lt;SetMeAppSubscriptions200Response&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<SetMeAppSubscriptions200Response> setAdminOutgoingWebhookSubscriptionsWithHttpInfo(String id, SetMeAppSubscriptionsRequest setMeAppSubscriptionsRequest) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = setAdminOutgoingWebhookSubscriptionsRequestBuilder(id, setMeAppSubscriptionsRequest);
+  public ApiResponse<SetMeAppSubscriptions200Response> setAdminOutgoingWebhookSubscriptionsWithHttpInfo(String id, SetAdminOutgoingWebhookSubscriptionsRequest setAdminOutgoingWebhookSubscriptionsRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = setAdminOutgoingWebhookSubscriptionsRequestBuilder(id, setAdminOutgoingWebhookSubscriptionsRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -746,10 +750,14 @@ public class OutgoingWebhooksApi {
     }
   }
 
-  private HttpRequest.Builder setAdminOutgoingWebhookSubscriptionsRequestBuilder(String id, SetMeAppSubscriptionsRequest setMeAppSubscriptionsRequest) throws ApiException {
+  private HttpRequest.Builder setAdminOutgoingWebhookSubscriptionsRequestBuilder(String id, SetAdminOutgoingWebhookSubscriptionsRequest setAdminOutgoingWebhookSubscriptionsRequest) throws ApiException {
     // verify the required parameter 'id' is set
     if (id == null) {
       throw new ApiException(400, "Missing the required parameter 'id' when calling setAdminOutgoingWebhookSubscriptions");
+    }
+    // verify the required parameter 'setAdminOutgoingWebhookSubscriptionsRequest' is set
+    if (setAdminOutgoingWebhookSubscriptionsRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'setAdminOutgoingWebhookSubscriptionsRequest' when calling setAdminOutgoingWebhookSubscriptions");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -763,7 +771,7 @@ public class OutgoingWebhooksApi {
     localVarRequestBuilder.header("Accept", "application/json");
 
     try {
-      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(setMeAppSubscriptionsRequest);
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(setAdminOutgoingWebhookSubscriptionsRequest);
       localVarRequestBuilder.method("PUT", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
     } catch (IOException e) {
       throw new ApiException(e);
@@ -781,7 +789,7 @@ public class OutgoingWebhooksApi {
    * Update an outgoing webhook&#39;s URL, name, or active state (admin)
    * 
    * @param id  (required)
-   * @param updateAdminOutgoingWebhookRequest  (optional)
+   * @param updateAdminOutgoingWebhookRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void updateAdminOutgoingWebhook(String id, UpdateAdminOutgoingWebhookRequest updateAdminOutgoingWebhookRequest) throws ApiException {
@@ -792,7 +800,7 @@ public class OutgoingWebhooksApi {
    * Update an outgoing webhook&#39;s URL, name, or active state (admin)
    * 
    * @param id  (required)
-   * @param updateAdminOutgoingWebhookRequest  (optional)
+   * @param updateAdminOutgoingWebhookRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -834,6 +842,10 @@ public class OutgoingWebhooksApi {
     // verify the required parameter 'id' is set
     if (id == null) {
       throw new ApiException(400, "Missing the required parameter 'id' when calling updateAdminOutgoingWebhook");
+    }
+    // verify the required parameter 'updateAdminOutgoingWebhookRequest' is set
+    if (updateAdminOutgoingWebhookRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'updateAdminOutgoingWebhookRequest' when calling updateAdminOutgoingWebhook");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();

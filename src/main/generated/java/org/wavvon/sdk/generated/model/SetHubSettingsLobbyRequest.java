@@ -33,19 +33,14 @@ import org.wavvon.sdk.generated.ApiClient;
  * SetHubSettingsLobbyRequest
  */
 @JsonPropertyOrder({
-  SetHubSettingsLobbyRequest.JSON_PROPERTY_ENABLED,
-  SetHubSettingsLobbyRequest.JSON_PROPERTY_MIN_SECURITY_LEVEL,
+  SetHubSettingsLobbyRequest.JSON_PROPERTY_LOBBY_ENABLED,
   SetHubSettingsLobbyRequest.JSON_PROPERTY_WELCOME_MD
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class SetHubSettingsLobbyRequest {
-  public static final String JSON_PROPERTY_ENABLED = "enabled";
-  @jakarta.annotation.Nullable
-  private Boolean enabled;
-
-  public static final String JSON_PROPERTY_MIN_SECURITY_LEVEL = "min_security_level";
-  @jakarta.annotation.Nullable
-  private Long minSecurityLevel;
+  public static final String JSON_PROPERTY_LOBBY_ENABLED = "lobby_enabled";
+  @jakarta.annotation.Nonnull
+  private Boolean lobbyEnabled;
 
   public static final String JSON_PROPERTY_WELCOME_MD = "welcome_md";
   @jakarta.annotation.Nullable
@@ -54,51 +49,27 @@ public class SetHubSettingsLobbyRequest {
   public SetHubSettingsLobbyRequest() { 
   }
 
-  public SetHubSettingsLobbyRequest enabled(@jakarta.annotation.Nullable Boolean enabled) {
-    this.enabled = enabled;
+  public SetHubSettingsLobbyRequest lobbyEnabled(@jakarta.annotation.Nonnull Boolean lobbyEnabled) {
+    this.lobbyEnabled = lobbyEnabled;
     return this;
   }
 
   /**
-   * Get enabled
-   * @return enabled
+   * Get lobbyEnabled
+   * @return lobbyEnabled
    */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_ENABLED)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Boolean getEnabled() {
-    return enabled;
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_LOBBY_ENABLED)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public Boolean getLobbyEnabled() {
+    return lobbyEnabled;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_ENABLED)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setEnabled(@jakarta.annotation.Nullable Boolean enabled) {
-    this.enabled = enabled;
-  }
-
-
-  public SetHubSettingsLobbyRequest minSecurityLevel(@jakarta.annotation.Nullable Long minSecurityLevel) {
-    this.minSecurityLevel = minSecurityLevel;
-    return this;
-  }
-
-  /**
-   * Get minSecurityLevel
-   * @return minSecurityLevel
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_MIN_SECURITY_LEVEL)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Long getMinSecurityLevel() {
-    return minSecurityLevel;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_MIN_SECURITY_LEVEL)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setMinSecurityLevel(@jakarta.annotation.Nullable Long minSecurityLevel) {
-    this.minSecurityLevel = minSecurityLevel;
+  @JsonProperty(JSON_PROPERTY_LOBBY_ENABLED)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setLobbyEnabled(@jakarta.annotation.Nonnull Boolean lobbyEnabled) {
+    this.lobbyEnabled = lobbyEnabled;
   }
 
 
@@ -138,22 +109,20 @@ public class SetHubSettingsLobbyRequest {
       return false;
     }
     SetHubSettingsLobbyRequest setHubSettingsLobbyRequest = (SetHubSettingsLobbyRequest) o;
-    return Objects.equals(this.enabled, setHubSettingsLobbyRequest.enabled) &&
-        Objects.equals(this.minSecurityLevel, setHubSettingsLobbyRequest.minSecurityLevel) &&
+    return Objects.equals(this.lobbyEnabled, setHubSettingsLobbyRequest.lobbyEnabled) &&
         Objects.equals(this.welcomeMd, setHubSettingsLobbyRequest.welcomeMd);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(enabled, minSecurityLevel, welcomeMd);
+    return Objects.hash(lobbyEnabled, welcomeMd);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class SetHubSettingsLobbyRequest {\n");
-    sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
-    sb.append("    minSecurityLevel: ").append(toIndentedString(minSecurityLevel)).append("\n");
+    sb.append("    lobbyEnabled: ").append(toIndentedString(lobbyEnabled)).append("\n");
     sb.append("    welcomeMd: ").append(toIndentedString(welcomeMd)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -202,14 +171,9 @@ public class SetHubSettingsLobbyRequest {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `enabled` to the URL query string
-    if (getEnabled() != null) {
-      joiner.add(String.format("%senabled%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getEnabled()))));
-    }
-
-    // add `min_security_level` to the URL query string
-    if (getMinSecurityLevel() != null) {
-      joiner.add(String.format("%smin_security_level%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getMinSecurityLevel()))));
+    // add `lobby_enabled` to the URL query string
+    if (getLobbyEnabled() != null) {
+      joiner.add(String.format("%slobby_enabled%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getLobbyEnabled()))));
     }
 
     // add `welcome_md` to the URL query string

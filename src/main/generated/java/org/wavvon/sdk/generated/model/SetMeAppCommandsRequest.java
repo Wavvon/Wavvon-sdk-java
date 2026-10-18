@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.wavvon.sdk.generated.model.SetMeAppCommandsRequestCommandsInner;
+import org.wavvon.sdk.generated.model.AppCommandDef;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -42,17 +42,17 @@ import org.wavvon.sdk.generated.ApiClient;
 public class SetMeAppCommandsRequest {
   public static final String JSON_PROPERTY_COMMANDS = "commands";
   @jakarta.annotation.Nonnull
-  private List<SetMeAppCommandsRequestCommandsInner> commands = new ArrayList<>();
+  private List<AppCommandDef> commands = new ArrayList<>();
 
   public SetMeAppCommandsRequest() { 
   }
 
-  public SetMeAppCommandsRequest commands(@jakarta.annotation.Nonnull List<SetMeAppCommandsRequestCommandsInner> commands) {
+  public SetMeAppCommandsRequest commands(@jakarta.annotation.Nonnull List<AppCommandDef> commands) {
     this.commands = commands;
     return this;
   }
 
-  public SetMeAppCommandsRequest addCommandsItem(SetMeAppCommandsRequestCommandsInner commandsItem) {
+  public SetMeAppCommandsRequest addCommandsItem(AppCommandDef commandsItem) {
     if (this.commands == null) {
       this.commands = new ArrayList<>();
     }
@@ -67,14 +67,14 @@ public class SetMeAppCommandsRequest {
   @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_COMMANDS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public List<SetMeAppCommandsRequestCommandsInner> getCommands() {
+  public List<AppCommandDef> getCommands() {
     return commands;
   }
 
 
   @JsonProperty(JSON_PROPERTY_COMMANDS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setCommands(@jakarta.annotation.Nonnull List<SetMeAppCommandsRequestCommandsInner> commands) {
+  public void setCommands(@jakarta.annotation.Nonnull List<AppCommandDef> commands) {
     this.commands = commands;
   }
 

@@ -18,6 +18,7 @@ import org.wavvon.sdk.generated.ApiResponse;
 import org.wavvon.sdk.generated.Configuration;
 import org.wavvon.sdk.generated.Pair;
 
+import org.wavvon.sdk.generated.model.CreateHubIconRequest;
 import org.wavvon.sdk.generated.model.GetAdminSettingsPow200Response;
 import org.wavvon.sdk.generated.model.GetAdminSettingsTags200Response;
 import org.wavvon.sdk.generated.model.MemberAdminInfo;
@@ -27,6 +28,7 @@ import org.wavvon.sdk.generated.model.UpdateAdminSettingsListingRequest;
 import org.wavvon.sdk.generated.model.UpdateAdminSettingsModerationRequest;
 import org.wavvon.sdk.generated.model.UpdateAdminSettingsPowRequest;
 import org.wavvon.sdk.generated.model.UpdateAdminSettingsTagsRequest;
+import org.wavvon.sdk.generated.model.UpdateHubIconRequest;
 import org.wavvon.sdk.generated.model.UpdateHubRequest;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -170,20 +172,22 @@ public class HubApi {
   /**
    * Upload a custom SVG icon (admin)
    * 
+   * @param createHubIconRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void createHubIcon() throws ApiException {
-    createHubIconWithHttpInfo();
+  public void createHubIcon(CreateHubIconRequest createHubIconRequest) throws ApiException {
+    createHubIconWithHttpInfo(createHubIconRequest);
   }
 
   /**
    * Upload a custom SVG icon (admin)
    * 
+   * @param createHubIconRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> createHubIconWithHttpInfo() throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = createHubIconRequestBuilder();
+  public ApiResponse<Void> createHubIconWithHttpInfo(CreateHubIconRequest createHubIconRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = createHubIconRequestBuilder(createHubIconRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -216,7 +220,11 @@ public class HubApi {
     }
   }
 
-  private HttpRequest.Builder createHubIconRequestBuilder() throws ApiException {
+  private HttpRequest.Builder createHubIconRequestBuilder(CreateHubIconRequest createHubIconRequest) throws ApiException {
+    // verify the required parameter 'createHubIconRequest' is set
+    if (createHubIconRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createHubIconRequest' when calling createHubIcon");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -224,9 +232,15 @@ public class HubApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(createHubIconRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }
@@ -774,7 +788,7 @@ public class HubApi {
   /**
    * Update bot-challenge mode (admin)
    * 
-   * @param setHubSettingsChallengeRequest  (optional)
+   * @param setHubSettingsChallengeRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void setHubSettingsChallenge(SetHubSettingsChallengeRequest setHubSettingsChallengeRequest) throws ApiException {
@@ -784,7 +798,7 @@ public class HubApi {
   /**
    * Update bot-challenge mode (admin)
    * 
-   * @param setHubSettingsChallengeRequest  (optional)
+   * @param setHubSettingsChallengeRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -823,6 +837,10 @@ public class HubApi {
   }
 
   private HttpRequest.Builder setHubSettingsChallengeRequestBuilder(SetHubSettingsChallengeRequest setHubSettingsChallengeRequest) throws ApiException {
+    // verify the required parameter 'setHubSettingsChallengeRequest' is set
+    if (setHubSettingsChallengeRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'setHubSettingsChallengeRequest' when calling setHubSettingsChallenge");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -851,7 +869,7 @@ public class HubApi {
   /**
    * Update lobby / security level settings (admin)
    * 
-   * @param setHubSettingsLobbyRequest  (optional)
+   * @param setHubSettingsLobbyRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void setHubSettingsLobby(SetHubSettingsLobbyRequest setHubSettingsLobbyRequest) throws ApiException {
@@ -861,7 +879,7 @@ public class HubApi {
   /**
    * Update lobby / security level settings (admin)
    * 
-   * @param setHubSettingsLobbyRequest  (optional)
+   * @param setHubSettingsLobbyRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -900,6 +918,10 @@ public class HubApi {
   }
 
   private HttpRequest.Builder setHubSettingsLobbyRequestBuilder(SetHubSettingsLobbyRequest setHubSettingsLobbyRequest) throws ApiException {
+    // verify the required parameter 'setHubSettingsLobbyRequest' is set
+    if (setHubSettingsLobbyRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'setHubSettingsLobbyRequest' when calling setHubSettingsLobby");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -928,7 +950,7 @@ public class HubApi {
   /**
    * Toggle whether the hub is listed for discovery (admin)
    * 
-   * @param updateAdminSettingsListingRequest  (optional)
+   * @param updateAdminSettingsListingRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void updateAdminSettingsListing(UpdateAdminSettingsListingRequest updateAdminSettingsListingRequest) throws ApiException {
@@ -938,7 +960,7 @@ public class HubApi {
   /**
    * Toggle whether the hub is listed for discovery (admin)
    * 
-   * @param updateAdminSettingsListingRequest  (optional)
+   * @param updateAdminSettingsListingRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -977,6 +999,10 @@ public class HubApi {
   }
 
   private HttpRequest.Builder updateAdminSettingsListingRequestBuilder(UpdateAdminSettingsListingRequest updateAdminSettingsListingRequest) throws ApiException {
+    // verify the required parameter 'updateAdminSettingsListingRequest' is set
+    if (updateAdminSettingsListingRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'updateAdminSettingsListingRequest' when calling updateAdminSettingsListing");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -1005,7 +1031,7 @@ public class HubApi {
   /**
    * Set the auto-moderation webhook URL and HMAC secret (admin)
    * 
-   * @param updateAdminSettingsModerationRequest  (optional)
+   * @param updateAdminSettingsModerationRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void updateAdminSettingsModeration(UpdateAdminSettingsModerationRequest updateAdminSettingsModerationRequest) throws ApiException {
@@ -1015,7 +1041,7 @@ public class HubApi {
   /**
    * Set the auto-moderation webhook URL and HMAC secret (admin)
    * 
-   * @param updateAdminSettingsModerationRequest  (optional)
+   * @param updateAdminSettingsModerationRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -1054,6 +1080,10 @@ public class HubApi {
   }
 
   private HttpRequest.Builder updateAdminSettingsModerationRequestBuilder(UpdateAdminSettingsModerationRequest updateAdminSettingsModerationRequest) throws ApiException {
+    // verify the required parameter 'updateAdminSettingsModerationRequest' is set
+    if (updateAdminSettingsModerationRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'updateAdminSettingsModerationRequest' when calling updateAdminSettingsModeration");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -1082,7 +1112,7 @@ public class HubApi {
   /**
    * Update the minimum PoW level (admin)
    * 
-   * @param updateAdminSettingsPowRequest  (optional)
+   * @param updateAdminSettingsPowRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void updateAdminSettingsPow(UpdateAdminSettingsPowRequest updateAdminSettingsPowRequest) throws ApiException {
@@ -1092,7 +1122,7 @@ public class HubApi {
   /**
    * Update the minimum PoW level (admin)
    * 
-   * @param updateAdminSettingsPowRequest  (optional)
+   * @param updateAdminSettingsPowRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -1131,6 +1161,10 @@ public class HubApi {
   }
 
   private HttpRequest.Builder updateAdminSettingsPowRequestBuilder(UpdateAdminSettingsPowRequest updateAdminSettingsPowRequest) throws ApiException {
+    // verify the required parameter 'updateAdminSettingsPowRequest' is set
+    if (updateAdminSettingsPowRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'updateAdminSettingsPowRequest' when calling updateAdminSettingsPow");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -1159,7 +1193,7 @@ public class HubApi {
   /**
    * Replace hub self-tags (admin)
    * Max 12 tags, each 1–32 chars of &#x60;a-z0-9-&#x60; after normalisation. Reserved words (verified, certified, official, partner, admin) are rejected. Returns the normalised tag list.
-   * @param updateAdminSettingsTagsRequest  (optional)
+   * @param updateAdminSettingsTagsRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void updateAdminSettingsTags(UpdateAdminSettingsTagsRequest updateAdminSettingsTagsRequest) throws ApiException {
@@ -1169,7 +1203,7 @@ public class HubApi {
   /**
    * Replace hub self-tags (admin)
    * Max 12 tags, each 1–32 chars of &#x60;a-z0-9-&#x60; after normalisation. Reserved words (verified, certified, official, partner, admin) are rejected. Returns the normalised tag list.
-   * @param updateAdminSettingsTagsRequest  (optional)
+   * @param updateAdminSettingsTagsRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -1208,6 +1242,10 @@ public class HubApi {
   }
 
   private HttpRequest.Builder updateAdminSettingsTagsRequestBuilder(UpdateAdminSettingsTagsRequest updateAdminSettingsTagsRequest) throws ApiException {
+    // verify the required parameter 'updateAdminSettingsTagsRequest' is set
+    if (updateAdminSettingsTagsRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'updateAdminSettingsTagsRequest' when calling updateAdminSettingsTags");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -1236,7 +1274,7 @@ public class HubApi {
   /**
    * Update hub name / icon (admin)
    * 
-   * @param updateHubRequest  (optional)
+   * @param updateHubRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void updateHub(UpdateHubRequest updateHubRequest) throws ApiException {
@@ -1246,7 +1284,7 @@ public class HubApi {
   /**
    * Update hub name / icon (admin)
    * 
-   * @param updateHubRequest  (optional)
+   * @param updateHubRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -1285,6 +1323,10 @@ public class HubApi {
   }
 
   private HttpRequest.Builder updateHubRequestBuilder(UpdateHubRequest updateHubRequest) throws ApiException {
+    // verify the required parameter 'updateHubRequest' is set
+    if (updateHubRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'updateHubRequest' when calling updateHub");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -1314,21 +1356,23 @@ public class HubApi {
    * Rename a hub icon (admin)
    * 
    * @param iconId  (required)
+   * @param updateHubIconRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void updateHubIcon(String iconId) throws ApiException {
-    updateHubIconWithHttpInfo(iconId);
+  public void updateHubIcon(String iconId, UpdateHubIconRequest updateHubIconRequest) throws ApiException {
+    updateHubIconWithHttpInfo(iconId, updateHubIconRequest);
   }
 
   /**
    * Rename a hub icon (admin)
    * 
    * @param iconId  (required)
+   * @param updateHubIconRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> updateHubIconWithHttpInfo(String iconId) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = updateHubIconRequestBuilder(iconId);
+  public ApiResponse<Void> updateHubIconWithHttpInfo(String iconId, UpdateHubIconRequest updateHubIconRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = updateHubIconRequestBuilder(iconId, updateHubIconRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -1361,10 +1405,14 @@ public class HubApi {
     }
   }
 
-  private HttpRequest.Builder updateHubIconRequestBuilder(String iconId) throws ApiException {
+  private HttpRequest.Builder updateHubIconRequestBuilder(String iconId, UpdateHubIconRequest updateHubIconRequest) throws ApiException {
     // verify the required parameter 'iconId' is set
     if (iconId == null) {
       throw new ApiException(400, "Missing the required parameter 'iconId' when calling updateHubIcon");
+    }
+    // verify the required parameter 'updateHubIconRequest' is set
+    if (updateHubIconRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'updateHubIconRequest' when calling updateHubIcon");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -1374,9 +1422,15 @@ public class HubApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("PATCH", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(updateHubIconRequest);
+      localVarRequestBuilder.method("PATCH", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }

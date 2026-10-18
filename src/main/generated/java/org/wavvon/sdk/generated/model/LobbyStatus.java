@@ -84,11 +84,11 @@ public class LobbyStatus {
 
   public static final String JSON_PROPERTY_REQUIRED_LEVEL = "required_level";
   @jakarta.annotation.Nullable
-  private Long requiredLevel;
+  private Integer requiredLevel;
 
   public static final String JSON_PROPERTY_CURRENT_LEVEL = "current_level";
   @jakarta.annotation.Nullable
-  private Long currentLevel;
+  private Integer currentLevel;
 
   public static final String JSON_PROPERTY_ENTERED_AT = "entered_at";
   @jakarta.annotation.Nullable
@@ -125,7 +125,7 @@ public class LobbyStatus {
   }
 
 
-  public LobbyStatus requiredLevel(@jakarta.annotation.Nullable Long requiredLevel) {
+  public LobbyStatus requiredLevel(@jakarta.annotation.Nullable Integer requiredLevel) {
     this.requiredLevel = requiredLevel;
     return this;
   }
@@ -137,19 +137,19 @@ public class LobbyStatus {
   @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_REQUIRED_LEVEL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Long getRequiredLevel() {
+  public Integer getRequiredLevel() {
     return requiredLevel;
   }
 
 
   @JsonProperty(JSON_PROPERTY_REQUIRED_LEVEL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setRequiredLevel(@jakarta.annotation.Nullable Long requiredLevel) {
+  public void setRequiredLevel(@jakarta.annotation.Nullable Integer requiredLevel) {
     this.requiredLevel = requiredLevel;
   }
 
 
-  public LobbyStatus currentLevel(@jakarta.annotation.Nullable Long currentLevel) {
+  public LobbyStatus currentLevel(@jakarta.annotation.Nullable Integer currentLevel) {
     this.currentLevel = currentLevel;
     return this;
   }
@@ -161,14 +161,14 @@ public class LobbyStatus {
   @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_CURRENT_LEVEL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Long getCurrentLevel() {
+  public Integer getCurrentLevel() {
     return currentLevel;
   }
 
 
   @JsonProperty(JSON_PROPERTY_CURRENT_LEVEL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCurrentLevel(@jakarta.annotation.Nullable Long currentLevel) {
+  public void setCurrentLevel(@jakarta.annotation.Nullable Integer currentLevel) {
     this.currentLevel = currentLevel;
   }
 

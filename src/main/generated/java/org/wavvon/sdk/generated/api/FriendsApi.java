@@ -161,7 +161,7 @@ public class FriendsApi {
   /**
    * Send a friend request
    * 
-   * @param createFriendRequest  (optional)
+   * @param createFriendRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void createFriend(CreateFriendRequest createFriendRequest) throws ApiException {
@@ -171,7 +171,7 @@ public class FriendsApi {
   /**
    * Send a friend request
    * 
-   * @param createFriendRequest  (optional)
+   * @param createFriendRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -210,6 +210,10 @@ public class FriendsApi {
   }
 
   private HttpRequest.Builder createFriendRequestBuilder(CreateFriendRequest createFriendRequest) throws ApiException {
+    // verify the required parameter 'createFriendRequest' is set
+    if (createFriendRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createFriendRequest' when calling createFriend");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 

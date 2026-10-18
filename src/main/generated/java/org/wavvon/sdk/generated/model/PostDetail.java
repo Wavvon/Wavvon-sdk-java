@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.wavvon.sdk.generated.model.PostSummaryAttachmentsInner;
+import org.wavvon.sdk.generated.model.CreateAllianceChannelPostRequestAttachmentsInner;
 import org.wavvon.sdk.generated.model.PostSummaryTagsInner;
 import org.wavvon.sdk.generated.model.Reaction;
 import org.wavvon.sdk.generated.model.ReplyView;
@@ -115,7 +115,7 @@ public class PostDetail {
 
   public static final String JSON_PROPERTY_ATTACHMENTS = "attachments";
   @jakarta.annotation.Nullable
-  private List<PostSummaryAttachmentsInner> attachments = new ArrayList<>();
+  private List<CreateAllianceChannelPostRequestAttachmentsInner> attachments = new ArrayList<>();
 
   public static final String JSON_PROPERTY_AUTHOR_HUB = "author_hub";
   @jakarta.annotation.Nullable
@@ -460,12 +460,12 @@ public class PostDetail {
   }
 
 
-  public PostDetail attachments(@jakarta.annotation.Nullable List<PostSummaryAttachmentsInner> attachments) {
+  public PostDetail attachments(@jakarta.annotation.Nullable List<CreateAllianceChannelPostRequestAttachmentsInner> attachments) {
     this.attachments = attachments;
     return this;
   }
 
-  public PostDetail addAttachmentsItem(PostSummaryAttachmentsInner attachmentsItem) {
+  public PostDetail addAttachmentsItem(CreateAllianceChannelPostRequestAttachmentsInner attachmentsItem) {
     if (this.attachments == null) {
       this.attachments = new ArrayList<>();
     }
@@ -480,14 +480,14 @@ public class PostDetail {
   @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_ATTACHMENTS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public List<PostSummaryAttachmentsInner> getAttachments() {
+  public List<CreateAllianceChannelPostRequestAttachmentsInner> getAttachments() {
     return attachments;
   }
 
 
   @JsonProperty(JSON_PROPERTY_ATTACHMENTS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setAttachments(@jakarta.annotation.Nullable List<PostSummaryAttachmentsInner> attachments) {
+  public void setAttachments(@jakarta.annotation.Nullable List<CreateAllianceChannelPostRequestAttachmentsInner> attachments) {
     this.attachments = attachments;
   }
 

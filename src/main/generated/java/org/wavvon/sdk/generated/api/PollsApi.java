@@ -89,7 +89,7 @@ public class PollsApi {
    * Create a poll in a channel (send_messages)
    * Also posts a system card message into the channel. At least 2 options required.
    * @param channelId  (required)
-   * @param createChannelPollRequest  (optional)
+   * @param createChannelPollRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void createChannelPoll(String channelId, CreateChannelPollRequest createChannelPollRequest) throws ApiException {
@@ -100,7 +100,7 @@ public class PollsApi {
    * Create a poll in a channel (send_messages)
    * Also posts a system card message into the channel. At least 2 options required.
    * @param channelId  (required)
-   * @param createChannelPollRequest  (optional)
+   * @param createChannelPollRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -142,6 +142,10 @@ public class PollsApi {
     // verify the required parameter 'channelId' is set
     if (channelId == null) {
       throw new ApiException(400, "Missing the required parameter 'channelId' when calling createChannelPoll");
+    }
+    // verify the required parameter 'createChannelPollRequest' is set
+    if (createChannelPollRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createChannelPollRequest' when calling createChannelPoll");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -438,7 +442,7 @@ public class PollsApi {
    * Cast or replace the caller&#39;s vote
    * 
    * @param pollId  (required)
-   * @param votePollRequest  (optional)
+   * @param votePollRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void votePoll(String pollId, VotePollRequest votePollRequest) throws ApiException {
@@ -449,7 +453,7 @@ public class PollsApi {
    * Cast or replace the caller&#39;s vote
    * 
    * @param pollId  (required)
-   * @param votePollRequest  (optional)
+   * @param votePollRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -491,6 +495,10 @@ public class PollsApi {
     // verify the required parameter 'pollId' is set
     if (pollId == null) {
       throw new ApiException(400, "Missing the required parameter 'pollId' when calling votePoll");
+    }
+    // verify the required parameter 'votePollRequest' is set
+    if (votePollRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'votePollRequest' when calling votePoll");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();

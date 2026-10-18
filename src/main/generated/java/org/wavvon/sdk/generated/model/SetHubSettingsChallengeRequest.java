@@ -33,7 +33,8 @@ import org.wavvon.sdk.generated.ApiClient;
  * SetHubSettingsChallengeRequest
  */
 @JsonPropertyOrder({
-  SetHubSettingsChallengeRequest.JSON_PROPERTY_CHALLENGE_MODE
+  SetHubSettingsChallengeRequest.JSON_PROPERTY_CHALLENGE_MODE,
+  SetHubSettingsChallengeRequest.JSON_PROPERTY_CHALLENGE_DIFFICULTY
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class SetHubSettingsChallengeRequest {
@@ -41,7 +42,7 @@ public class SetHubSettingsChallengeRequest {
    * Gets or Sets challengeMode
    */
   public enum ChallengeModeEnum {
-    FALSE(String.valueOf("false")),
+    OFF(String.valueOf("off")),
     
     CLICK(String.valueOf("click")),
     
@@ -77,13 +78,17 @@ public class SetHubSettingsChallengeRequest {
   }
 
   public static final String JSON_PROPERTY_CHALLENGE_MODE = "challenge_mode";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private ChallengeModeEnum challengeMode;
+
+  public static final String JSON_PROPERTY_CHALLENGE_DIFFICULTY = "challenge_difficulty";
+  @jakarta.annotation.Nonnull
+  private String challengeDifficulty;
 
   public SetHubSettingsChallengeRequest() { 
   }
 
-  public SetHubSettingsChallengeRequest challengeMode(@jakarta.annotation.Nullable ChallengeModeEnum challengeMode) {
+  public SetHubSettingsChallengeRequest challengeMode(@jakarta.annotation.Nonnull ChallengeModeEnum challengeMode) {
     this.challengeMode = challengeMode;
     return this;
   }
@@ -92,18 +97,42 @@ public class SetHubSettingsChallengeRequest {
    * Get challengeMode
    * @return challengeMode
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_CHALLENGE_MODE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public ChallengeModeEnum getChallengeMode() {
     return challengeMode;
   }
 
 
   @JsonProperty(JSON_PROPERTY_CHALLENGE_MODE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setChallengeMode(@jakarta.annotation.Nullable ChallengeModeEnum challengeMode) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setChallengeMode(@jakarta.annotation.Nonnull ChallengeModeEnum challengeMode) {
     this.challengeMode = challengeMode;
+  }
+
+
+  public SetHubSettingsChallengeRequest challengeDifficulty(@jakarta.annotation.Nonnull String challengeDifficulty) {
+    this.challengeDifficulty = challengeDifficulty;
+    return this;
+  }
+
+  /**
+   * Get challengeDifficulty
+   * @return challengeDifficulty
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_CHALLENGE_DIFFICULTY)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public String getChallengeDifficulty() {
+    return challengeDifficulty;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_CHALLENGE_DIFFICULTY)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setChallengeDifficulty(@jakarta.annotation.Nonnull String challengeDifficulty) {
+    this.challengeDifficulty = challengeDifficulty;
   }
 
 
@@ -119,12 +148,13 @@ public class SetHubSettingsChallengeRequest {
       return false;
     }
     SetHubSettingsChallengeRequest setHubSettingsChallengeRequest = (SetHubSettingsChallengeRequest) o;
-    return Objects.equals(this.challengeMode, setHubSettingsChallengeRequest.challengeMode);
+    return Objects.equals(this.challengeMode, setHubSettingsChallengeRequest.challengeMode) &&
+        Objects.equals(this.challengeDifficulty, setHubSettingsChallengeRequest.challengeDifficulty);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(challengeMode);
+    return Objects.hash(challengeMode, challengeDifficulty);
   }
 
   @Override
@@ -132,6 +162,7 @@ public class SetHubSettingsChallengeRequest {
     StringBuilder sb = new StringBuilder();
     sb.append("class SetHubSettingsChallengeRequest {\n");
     sb.append("    challengeMode: ").append(toIndentedString(challengeMode)).append("\n");
+    sb.append("    challengeDifficulty: ").append(toIndentedString(challengeDifficulty)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -182,6 +213,11 @@ public class SetHubSettingsChallengeRequest {
     // add `challenge_mode` to the URL query string
     if (getChallengeMode() != null) {
       joiner.add(String.format("%schallenge_mode%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getChallengeMode()))));
+    }
+
+    // add `challenge_difficulty` to the URL query string
+    if (getChallengeDifficulty() != null) {
+      joiner.add(String.format("%schallenge_difficulty%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getChallengeDifficulty()))));
     }
 
     return joiner.toString();

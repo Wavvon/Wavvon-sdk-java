@@ -96,7 +96,7 @@ public class AppsApi {
   /**
    * Acknowledge delivered events
    * 
-   * @param ackMeEventsRequest  (optional)
+   * @param ackMeEventsRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void ackMeEvents(AckMeEventsRequest ackMeEventsRequest) throws ApiException {
@@ -106,7 +106,7 @@ public class AppsApi {
   /**
    * Acknowledge delivered events
    * 
-   * @param ackMeEventsRequest  (optional)
+   * @param ackMeEventsRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -145,6 +145,10 @@ public class AppsApi {
   }
 
   private HttpRequest.Builder ackMeEventsRequestBuilder(AckMeEventsRequest ackMeEventsRequest) throws ApiException {
+    // verify the required parameter 'ackMeEventsRequest' is set
+    if (ackMeEventsRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'ackMeEventsRequest' when calling ackMeEvents");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -502,7 +506,7 @@ public class AppsApi {
   /**
    * Replace the caller&#39;s slash command list (apps.register)
    * 
-   * @param setMeAppCommandsRequest  (optional)
+   * @param setMeAppCommandsRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void setMeAppCommands(SetMeAppCommandsRequest setMeAppCommandsRequest) throws ApiException {
@@ -512,7 +516,7 @@ public class AppsApi {
   /**
    * Replace the caller&#39;s slash command list (apps.register)
    * 
-   * @param setMeAppCommandsRequest  (optional)
+   * @param setMeAppCommandsRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -551,6 +555,10 @@ public class AppsApi {
   }
 
   private HttpRequest.Builder setMeAppCommandsRequestBuilder(SetMeAppCommandsRequest setMeAppCommandsRequest) throws ApiException {
+    // verify the required parameter 'setMeAppCommandsRequest' is set
+    if (setMeAppCommandsRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'setMeAppCommandsRequest' when calling setMeAppCommands");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -579,7 +587,7 @@ public class AppsApi {
   /**
    * Register or replace the caller&#39;s app profile (apps.register)
    * 
-   * @param setMeAppProfileRequest  (optional)
+   * @param setMeAppProfileRequest  (required)
    * @return AppRegistration
    * @throws ApiException if fails to make API call
    */
@@ -591,7 +599,7 @@ public class AppsApi {
   /**
    * Register or replace the caller&#39;s app profile (apps.register)
    * 
-   * @param setMeAppProfileRequest  (optional)
+   * @param setMeAppProfileRequest  (required)
    * @return ApiResponse&lt;AppRegistration&gt;
    * @throws ApiException if fails to make API call
    */
@@ -636,6 +644,10 @@ public class AppsApi {
   }
 
   private HttpRequest.Builder setMeAppProfileRequestBuilder(SetMeAppProfileRequest setMeAppProfileRequest) throws ApiException {
+    // verify the required parameter 'setMeAppProfileRequest' is set
+    if (setMeAppProfileRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'setMeAppProfileRequest' when calling setMeAppProfile");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -664,7 +676,7 @@ public class AppsApi {
   /**
    * Replace the caller&#39;s hub-event subscriptions (apps.register)
    * A &#x60;message.*&#x60; subscription must name its channels; a hub-wide one would be every conversation at once. Delivery is filtered by the subscriber&#39;s own read access to the channel the event happened in. 
-   * @param setMeAppSubscriptionsRequest  (optional)
+   * @param setMeAppSubscriptionsRequest  (required)
    * @return SetMeAppSubscriptions200Response
    * @throws ApiException if fails to make API call
    */
@@ -676,7 +688,7 @@ public class AppsApi {
   /**
    * Replace the caller&#39;s hub-event subscriptions (apps.register)
    * A &#x60;message.*&#x60; subscription must name its channels; a hub-wide one would be every conversation at once. Delivery is filtered by the subscriber&#39;s own read access to the channel the event happened in. 
-   * @param setMeAppSubscriptionsRequest  (optional)
+   * @param setMeAppSubscriptionsRequest  (required)
    * @return ApiResponse&lt;SetMeAppSubscriptions200Response&gt;
    * @throws ApiException if fails to make API call
    */
@@ -721,6 +733,10 @@ public class AppsApi {
   }
 
   private HttpRequest.Builder setMeAppSubscriptionsRequestBuilder(SetMeAppSubscriptionsRequest setMeAppSubscriptionsRequest) throws ApiException {
+    // verify the required parameter 'setMeAppSubscriptionsRequest' is set
+    if (setMeAppSubscriptionsRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'setMeAppSubscriptionsRequest' when calling setMeAppSubscriptions");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 

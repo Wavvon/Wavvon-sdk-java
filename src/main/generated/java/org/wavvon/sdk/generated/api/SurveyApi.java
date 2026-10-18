@@ -18,6 +18,8 @@ import org.wavvon.sdk.generated.ApiResponse;
 import org.wavvon.sdk.generated.Configuration;
 import org.wavvon.sdk.generated.Pair;
 
+import org.wavvon.sdk.generated.model.SetAdminSurveyRequest;
+import org.wavvon.sdk.generated.model.SubmitSurveyRequest;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -373,20 +375,22 @@ public class SurveyApi {
   /**
    * Create or replace the survey (manage_hub)
    * 
+   * @param setAdminSurveyRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void setAdminSurvey() throws ApiException {
-    setAdminSurveyWithHttpInfo();
+  public void setAdminSurvey(SetAdminSurveyRequest setAdminSurveyRequest) throws ApiException {
+    setAdminSurveyWithHttpInfo(setAdminSurveyRequest);
   }
 
   /**
    * Create or replace the survey (manage_hub)
    * 
+   * @param setAdminSurveyRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> setAdminSurveyWithHttpInfo() throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = setAdminSurveyRequestBuilder();
+  public ApiResponse<Void> setAdminSurveyWithHttpInfo(SetAdminSurveyRequest setAdminSurveyRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = setAdminSurveyRequestBuilder(setAdminSurveyRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -419,7 +423,11 @@ public class SurveyApi {
     }
   }
 
-  private HttpRequest.Builder setAdminSurveyRequestBuilder() throws ApiException {
+  private HttpRequest.Builder setAdminSurveyRequestBuilder(SetAdminSurveyRequest setAdminSurveyRequest) throws ApiException {
+    // verify the required parameter 'setAdminSurveyRequest' is set
+    if (setAdminSurveyRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'setAdminSurveyRequest' when calling setAdminSurvey");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -427,9 +435,15 @@ public class SurveyApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("PUT", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(setAdminSurveyRequest);
+      localVarRequestBuilder.method("PUT", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }
@@ -442,20 +456,22 @@ public class SurveyApi {
   /**
    * Submit survey answers
    * Choice answers auto-apply configured roles. Free-text answers route the user to pending approval. Returns the resulting approval state. 
+   * @param submitSurveyRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void submitSurvey() throws ApiException {
-    submitSurveyWithHttpInfo();
+  public void submitSurvey(SubmitSurveyRequest submitSurveyRequest) throws ApiException {
+    submitSurveyWithHttpInfo(submitSurveyRequest);
   }
 
   /**
    * Submit survey answers
    * Choice answers auto-apply configured roles. Free-text answers route the user to pending approval. Returns the resulting approval state. 
+   * @param submitSurveyRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> submitSurveyWithHttpInfo() throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = submitSurveyRequestBuilder();
+  public ApiResponse<Void> submitSurveyWithHttpInfo(SubmitSurveyRequest submitSurveyRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = submitSurveyRequestBuilder(submitSurveyRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -488,7 +504,11 @@ public class SurveyApi {
     }
   }
 
-  private HttpRequest.Builder submitSurveyRequestBuilder() throws ApiException {
+  private HttpRequest.Builder submitSurveyRequestBuilder(SubmitSurveyRequest submitSurveyRequest) throws ApiException {
+    // verify the required parameter 'submitSurveyRequest' is set
+    if (submitSurveyRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'submitSurveyRequest' when calling submitSurvey");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -496,9 +516,15 @@ public class SurveyApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(submitSurveyRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }

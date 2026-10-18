@@ -22,6 +22,8 @@ import org.wavvon.sdk.generated.model.CreateChannelBanRequest;
 import org.wavvon.sdk.generated.model.CreateChannelVoiceMuteRequest;
 import org.wavvon.sdk.generated.model.CreateModerationBan201Response;
 import org.wavvon.sdk.generated.model.CreateModerationBanRequest;
+import org.wavvon.sdk.generated.model.CreateModerationMuteRequest;
+import org.wavvon.sdk.generated.model.KickUserRequest;
 import org.wavvon.sdk.generated.model.ListAdminAuditLog200Response;
 import org.wavvon.sdk.generated.model.ListAdminReports200ResponseInner;
 import org.wavvon.sdk.generated.model.ListChannelBans200ResponseInner;
@@ -30,6 +32,8 @@ import org.wavvon.sdk.generated.model.RaiseChannelHand201Response;
 import org.wavvon.sdk.generated.model.ReindexAdminSearch202Response;
 import org.wavvon.sdk.generated.model.ReportMessageRequest;
 import org.wavvon.sdk.generated.model.ReviewAdminReportRequest;
+import org.wavvon.sdk.generated.model.SetChannelTalkPowerRequest;
+import org.wavvon.sdk.generated.model.TimeoutUserRequest;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -97,7 +101,7 @@ public class ModerationApi {
    * Ban a user from a channel (ban_members)
    * The only channel-ban write path. A duplicate family under /moderation/channels/{id}/bans was folded in on 2026-08-08; this route used to hardcode &#x60;reason&#x60; to null on insert, silently erasing a reason written through the other one. 
    * @param channelId  (required)
-   * @param createChannelBanRequest  (optional)
+   * @param createChannelBanRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void createChannelBan(String channelId, CreateChannelBanRequest createChannelBanRequest) throws ApiException {
@@ -108,7 +112,7 @@ public class ModerationApi {
    * Ban a user from a channel (ban_members)
    * The only channel-ban write path. A duplicate family under /moderation/channels/{id}/bans was folded in on 2026-08-08; this route used to hardcode &#x60;reason&#x60; to null on insert, silently erasing a reason written through the other one. 
    * @param channelId  (required)
-   * @param createChannelBanRequest  (optional)
+   * @param createChannelBanRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -151,6 +155,10 @@ public class ModerationApi {
     if (channelId == null) {
       throw new ApiException(400, "Missing the required parameter 'channelId' when calling createChannelBan");
     }
+    // verify the required parameter 'createChannelBanRequest' is set
+    if (createChannelBanRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createChannelBanRequest' when calling createChannelBan");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -181,7 +189,7 @@ public class ModerationApi {
    * Voice-mute a user in a channel (mute_members)
    * 
    * @param channelId  (required)
-   * @param createChannelVoiceMuteRequest  (optional)
+   * @param createChannelVoiceMuteRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void createChannelVoiceMute(String channelId, CreateChannelVoiceMuteRequest createChannelVoiceMuteRequest) throws ApiException {
@@ -192,7 +200,7 @@ public class ModerationApi {
    * Voice-mute a user in a channel (mute_members)
    * 
    * @param channelId  (required)
-   * @param createChannelVoiceMuteRequest  (optional)
+   * @param createChannelVoiceMuteRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -235,6 +243,10 @@ public class ModerationApi {
     if (channelId == null) {
       throw new ApiException(400, "Missing the required parameter 'channelId' when calling createChannelVoiceMute");
     }
+    // verify the required parameter 'createChannelVoiceMuteRequest' is set
+    if (createChannelVoiceMuteRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createChannelVoiceMuteRequest' when calling createChannelVoiceMute");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -264,7 +276,7 @@ public class ModerationApi {
   /**
    * Ban a user (moderation.ban.temporary or .permanent)
    * Which permission this needs is decided by the request, not the route. &#x60;duration_seconds&#x60; present needs &#x60;moderation.ban.temporary&#x60;; absent needs &#x60;moderation.ban.permanent&#x60;. They are split by irreversibility — an hour is a cooling-off period, forever ends a membership — so a moderator trusted with the first is not thereby trusted with the second.  Both still require out-ranking the target.
-   * @param createModerationBanRequest  (optional)
+   * @param createModerationBanRequest  (required)
    * @return CreateModerationBan201Response
    * @throws ApiException if fails to make API call
    */
@@ -276,7 +288,7 @@ public class ModerationApi {
   /**
    * Ban a user (moderation.ban.temporary or .permanent)
    * Which permission this needs is decided by the request, not the route. &#x60;duration_seconds&#x60; present needs &#x60;moderation.ban.temporary&#x60;; absent needs &#x60;moderation.ban.permanent&#x60;. They are split by irreversibility — an hour is a cooling-off period, forever ends a membership — so a moderator trusted with the first is not thereby trusted with the second.  Both still require out-ranking the target.
-   * @param createModerationBanRequest  (optional)
+   * @param createModerationBanRequest  (required)
    * @return ApiResponse&lt;CreateModerationBan201Response&gt;
    * @throws ApiException if fails to make API call
    */
@@ -321,6 +333,10 @@ public class ModerationApi {
   }
 
   private HttpRequest.Builder createModerationBanRequestBuilder(CreateModerationBanRequest createModerationBanRequest) throws ApiException {
+    // verify the required parameter 'createModerationBanRequest' is set
+    if (createModerationBanRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createModerationBanRequest' when calling createModerationBan");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -349,20 +365,22 @@ public class ModerationApi {
   /**
    * Mute a user (manage_users)
    * 
+   * @param createModerationMuteRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void createModerationMute() throws ApiException {
-    createModerationMuteWithHttpInfo();
+  public void createModerationMute(CreateModerationMuteRequest createModerationMuteRequest) throws ApiException {
+    createModerationMuteWithHttpInfo(createModerationMuteRequest);
   }
 
   /**
    * Mute a user (manage_users)
    * 
+   * @param createModerationMuteRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> createModerationMuteWithHttpInfo() throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = createModerationMuteRequestBuilder();
+  public ApiResponse<Void> createModerationMuteWithHttpInfo(CreateModerationMuteRequest createModerationMuteRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = createModerationMuteRequestBuilder(createModerationMuteRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -395,7 +413,11 @@ public class ModerationApi {
     }
   }
 
-  private HttpRequest.Builder createModerationMuteRequestBuilder() throws ApiException {
+  private HttpRequest.Builder createModerationMuteRequestBuilder(CreateModerationMuteRequest createModerationMuteRequest) throws ApiException {
+    // verify the required parameter 'createModerationMuteRequest' is set
+    if (createModerationMuteRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createModerationMuteRequest' when calling createModerationMute");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -403,9 +425,15 @@ public class ModerationApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(createModerationMuteRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }
@@ -418,20 +446,22 @@ public class ModerationApi {
   /**
    * Voice-mute a user (manage_users)
    * 
+   * @param createModerationMuteRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void createModerationVoiceMute() throws ApiException {
-    createModerationVoiceMuteWithHttpInfo();
+  public void createModerationVoiceMute(CreateModerationMuteRequest createModerationMuteRequest) throws ApiException {
+    createModerationVoiceMuteWithHttpInfo(createModerationMuteRequest);
   }
 
   /**
    * Voice-mute a user (manage_users)
    * 
+   * @param createModerationMuteRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> createModerationVoiceMuteWithHttpInfo() throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = createModerationVoiceMuteRequestBuilder();
+  public ApiResponse<Void> createModerationVoiceMuteWithHttpInfo(CreateModerationMuteRequest createModerationMuteRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = createModerationVoiceMuteRequestBuilder(createModerationMuteRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -464,7 +494,11 @@ public class ModerationApi {
     }
   }
 
-  private HttpRequest.Builder createModerationVoiceMuteRequestBuilder() throws ApiException {
+  private HttpRequest.Builder createModerationVoiceMuteRequestBuilder(CreateModerationMuteRequest createModerationMuteRequest) throws ApiException {
+    // verify the required parameter 'createModerationMuteRequest' is set
+    if (createModerationMuteRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createModerationMuteRequest' when calling createModerationVoiceMute");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -472,9 +506,15 @@ public class ModerationApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(createModerationMuteRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }
@@ -1040,20 +1080,22 @@ public class ModerationApi {
   /**
    * Kick a user (manage_users)
    * 
+   * @param kickUserRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void kickUser() throws ApiException {
-    kickUserWithHttpInfo();
+  public void kickUser(KickUserRequest kickUserRequest) throws ApiException {
+    kickUserWithHttpInfo(kickUserRequest);
   }
 
   /**
    * Kick a user (manage_users)
    * 
+   * @param kickUserRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> kickUserWithHttpInfo() throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = kickUserRequestBuilder();
+  public ApiResponse<Void> kickUserWithHttpInfo(KickUserRequest kickUserRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = kickUserRequestBuilder(kickUserRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -1086,7 +1128,11 @@ public class ModerationApi {
     }
   }
 
-  private HttpRequest.Builder kickUserRequestBuilder() throws ApiException {
+  private HttpRequest.Builder kickUserRequestBuilder(KickUserRequest kickUserRequest) throws ApiException {
+    // verify the required parameter 'kickUserRequest' is set
+    if (kickUserRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'kickUserRequest' when calling kickUser");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -1094,9 +1140,15 @@ public class ModerationApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(kickUserRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }
@@ -2059,7 +2111,7 @@ public class ModerationApi {
    * Report a message for moderator review
    * 
    * @param id  (required)
-   * @param reportMessageRequest  (optional)
+   * @param reportMessageRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void reportMessage(String id, ReportMessageRequest reportMessageRequest) throws ApiException {
@@ -2070,7 +2122,7 @@ public class ModerationApi {
    * Report a message for moderator review
    * 
    * @param id  (required)
-   * @param reportMessageRequest  (optional)
+   * @param reportMessageRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -2113,6 +2165,10 @@ public class ModerationApi {
     if (id == null) {
       throw new ApiException(400, "Missing the required parameter 'id' when calling reportMessage");
     }
+    // verify the required parameter 'reportMessageRequest' is set
+    if (reportMessageRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'reportMessageRequest' when calling reportMessage");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -2143,7 +2199,7 @@ public class ModerationApi {
    * Review a report — dismiss, delete the message, or ban the sender (admin)
    * 
    * @param id  (required)
-   * @param reviewAdminReportRequest  (optional)
+   * @param reviewAdminReportRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void reviewAdminReport(String id, ReviewAdminReportRequest reviewAdminReportRequest) throws ApiException {
@@ -2154,7 +2210,7 @@ public class ModerationApi {
    * Review a report — dismiss, delete the message, or ban the sender (admin)
    * 
    * @param id  (required)
-   * @param reviewAdminReportRequest  (optional)
+   * @param reviewAdminReportRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -2197,6 +2253,10 @@ public class ModerationApi {
     if (id == null) {
       throw new ApiException(400, "Missing the required parameter 'id' when calling reviewAdminReport");
     }
+    // verify the required parameter 'reviewAdminReportRequest' is set
+    if (reviewAdminReportRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'reviewAdminReportRequest' when calling reviewAdminReport");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -2227,21 +2287,23 @@ public class ModerationApi {
    * Set talk-power (manage_channels)
    * 
    * @param channelId  (required)
+   * @param setChannelTalkPowerRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void setChannelTalkPower(String channelId) throws ApiException {
-    setChannelTalkPowerWithHttpInfo(channelId);
+  public void setChannelTalkPower(String channelId, SetChannelTalkPowerRequest setChannelTalkPowerRequest) throws ApiException {
+    setChannelTalkPowerWithHttpInfo(channelId, setChannelTalkPowerRequest);
   }
 
   /**
    * Set talk-power (manage_channels)
    * 
    * @param channelId  (required)
+   * @param setChannelTalkPowerRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> setChannelTalkPowerWithHttpInfo(String channelId) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = setChannelTalkPowerRequestBuilder(channelId);
+  public ApiResponse<Void> setChannelTalkPowerWithHttpInfo(String channelId, SetChannelTalkPowerRequest setChannelTalkPowerRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = setChannelTalkPowerRequestBuilder(channelId, setChannelTalkPowerRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -2274,10 +2336,14 @@ public class ModerationApi {
     }
   }
 
-  private HttpRequest.Builder setChannelTalkPowerRequestBuilder(String channelId) throws ApiException {
+  private HttpRequest.Builder setChannelTalkPowerRequestBuilder(String channelId, SetChannelTalkPowerRequest setChannelTalkPowerRequest) throws ApiException {
     // verify the required parameter 'channelId' is set
     if (channelId == null) {
       throw new ApiException(400, "Missing the required parameter 'channelId' when calling setChannelTalkPower");
+    }
+    // verify the required parameter 'setChannelTalkPowerRequest' is set
+    if (setChannelTalkPowerRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'setChannelTalkPowerRequest' when calling setChannelTalkPower");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -2287,9 +2353,15 @@ public class ModerationApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(setChannelTalkPowerRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }
@@ -2302,20 +2374,22 @@ public class ModerationApi {
   /**
    * Timeout a user (manage_users)
    * 
+   * @param timeoutUserRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void timeoutUser() throws ApiException {
-    timeoutUserWithHttpInfo();
+  public void timeoutUser(TimeoutUserRequest timeoutUserRequest) throws ApiException {
+    timeoutUserWithHttpInfo(timeoutUserRequest);
   }
 
   /**
    * Timeout a user (manage_users)
    * 
+   * @param timeoutUserRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> timeoutUserWithHttpInfo() throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = timeoutUserRequestBuilder();
+  public ApiResponse<Void> timeoutUserWithHttpInfo(TimeoutUserRequest timeoutUserRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = timeoutUserRequestBuilder(timeoutUserRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -2348,7 +2422,11 @@ public class ModerationApi {
     }
   }
 
-  private HttpRequest.Builder timeoutUserRequestBuilder() throws ApiException {
+  private HttpRequest.Builder timeoutUserRequestBuilder(TimeoutUserRequest timeoutUserRequest) throws ApiException {
+    // verify the required parameter 'timeoutUserRequest' is set
+    if (timeoutUserRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'timeoutUserRequest' when calling timeoutUser");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -2356,9 +2434,15 @@ public class ModerationApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(timeoutUserRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }

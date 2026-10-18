@@ -34,9 +34,14 @@ import org.wavvon.sdk.generated.ApiClient;
  */
 @JsonPropertyOrder({
   CreateChannelRequest.JSON_PROPERTY_NAME,
-  CreateChannelRequest.JSON_PROPERTY_IS_CATEGORY,
   CreateChannelRequest.JSON_PROPERTY_PARENT_ID,
-  CreateChannelRequest.JSON_PROPERTY_DESCRIPTION
+  CreateChannelRequest.JSON_PROPERTY_IS_CATEGORY,
+  CreateChannelRequest.JSON_PROPERTY_DESCRIPTION,
+  CreateChannelRequest.JSON_PROPERTY_CHANNEL_TYPE,
+  CreateChannelRequest.JSON_PROPERTY_BANNER_URL,
+  CreateChannelRequest.JSON_PROPERTY_BANNER_FILE_ID,
+  CreateChannelRequest.JSON_PROPERTY_SPAWNER_NAME_TEMPLATE,
+  CreateChannelRequest.JSON_PROPERTY_NSFW
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class CreateChannelRequest {
@@ -44,17 +49,37 @@ public class CreateChannelRequest {
   @jakarta.annotation.Nonnull
   private String name;
 
-  public static final String JSON_PROPERTY_IS_CATEGORY = "is_category";
-  @jakarta.annotation.Nullable
-  private Boolean isCategory;
-
   public static final String JSON_PROPERTY_PARENT_ID = "parent_id";
   @jakarta.annotation.Nullable
   private String parentId;
 
+  public static final String JSON_PROPERTY_IS_CATEGORY = "is_category";
+  @jakarta.annotation.Nullable
+  private Boolean isCategory;
+
   public static final String JSON_PROPERTY_DESCRIPTION = "description";
   @jakarta.annotation.Nullable
   private String description;
+
+  public static final String JSON_PROPERTY_CHANNEL_TYPE = "channel_type";
+  @jakarta.annotation.Nullable
+  private String channelType;
+
+  public static final String JSON_PROPERTY_BANNER_URL = "banner_url";
+  @jakarta.annotation.Nullable
+  private String bannerUrl;
+
+  public static final String JSON_PROPERTY_BANNER_FILE_ID = "banner_file_id";
+  @jakarta.annotation.Nullable
+  private String bannerFileId;
+
+  public static final String JSON_PROPERTY_SPAWNER_NAME_TEMPLATE = "spawner_name_template";
+  @jakarta.annotation.Nullable
+  private String spawnerNameTemplate;
+
+  public static final String JSON_PROPERTY_NSFW = "nsfw";
+  @jakarta.annotation.Nullable
+  private Boolean nsfw;
 
   public CreateChannelRequest() { 
   }
@@ -83,30 +108,6 @@ public class CreateChannelRequest {
   }
 
 
-  public CreateChannelRequest isCategory(@jakarta.annotation.Nullable Boolean isCategory) {
-    this.isCategory = isCategory;
-    return this;
-  }
-
-  /**
-   * Get isCategory
-   * @return isCategory
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_IS_CATEGORY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Boolean getIsCategory() {
-    return isCategory;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_IS_CATEGORY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setIsCategory(@jakarta.annotation.Nullable Boolean isCategory) {
-    this.isCategory = isCategory;
-  }
-
-
   public CreateChannelRequest parentId(@jakarta.annotation.Nullable String parentId) {
     this.parentId = parentId;
     return this;
@@ -128,6 +129,30 @@ public class CreateChannelRequest {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setParentId(@jakarta.annotation.Nullable String parentId) {
     this.parentId = parentId;
+  }
+
+
+  public CreateChannelRequest isCategory(@jakarta.annotation.Nullable Boolean isCategory) {
+    this.isCategory = isCategory;
+    return this;
+  }
+
+  /**
+   * Get isCategory
+   * @return isCategory
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_IS_CATEGORY)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Boolean getIsCategory() {
+    return isCategory;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_IS_CATEGORY)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setIsCategory(@jakarta.annotation.Nullable Boolean isCategory) {
+    this.isCategory = isCategory;
   }
 
 
@@ -155,6 +180,126 @@ public class CreateChannelRequest {
   }
 
 
+  public CreateChannelRequest channelType(@jakarta.annotation.Nullable String channelType) {
+    this.channelType = channelType;
+    return this;
+  }
+
+  /**
+   * Get channelType
+   * @return channelType
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CHANNEL_TYPE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getChannelType() {
+    return channelType;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_CHANNEL_TYPE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setChannelType(@jakarta.annotation.Nullable String channelType) {
+    this.channelType = channelType;
+  }
+
+
+  public CreateChannelRequest bannerUrl(@jakarta.annotation.Nullable String bannerUrl) {
+    this.bannerUrl = bannerUrl;
+    return this;
+  }
+
+  /**
+   * Get bannerUrl
+   * @return bannerUrl
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_BANNER_URL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getBannerUrl() {
+    return bannerUrl;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_BANNER_URL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setBannerUrl(@jakarta.annotation.Nullable String bannerUrl) {
+    this.bannerUrl = bannerUrl;
+  }
+
+
+  public CreateChannelRequest bannerFileId(@jakarta.annotation.Nullable String bannerFileId) {
+    this.bannerFileId = bannerFileId;
+    return this;
+  }
+
+  /**
+   * Get bannerFileId
+   * @return bannerFileId
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_BANNER_FILE_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getBannerFileId() {
+    return bannerFileId;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_BANNER_FILE_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setBannerFileId(@jakarta.annotation.Nullable String bannerFileId) {
+    this.bannerFileId = bannerFileId;
+  }
+
+
+  public CreateChannelRequest spawnerNameTemplate(@jakarta.annotation.Nullable String spawnerNameTemplate) {
+    this.spawnerNameTemplate = spawnerNameTemplate;
+    return this;
+  }
+
+  /**
+   * Get spawnerNameTemplate
+   * @return spawnerNameTemplate
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_SPAWNER_NAME_TEMPLATE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getSpawnerNameTemplate() {
+    return spawnerNameTemplate;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_SPAWNER_NAME_TEMPLATE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setSpawnerNameTemplate(@jakarta.annotation.Nullable String spawnerNameTemplate) {
+    this.spawnerNameTemplate = spawnerNameTemplate;
+  }
+
+
+  public CreateChannelRequest nsfw(@jakarta.annotation.Nullable Boolean nsfw) {
+    this.nsfw = nsfw;
+    return this;
+  }
+
+  /**
+   * Get nsfw
+   * @return nsfw
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_NSFW)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Boolean getNsfw() {
+    return nsfw;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_NSFW)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setNsfw(@jakarta.annotation.Nullable Boolean nsfw) {
+    this.nsfw = nsfw;
+  }
+
+
   /**
    * Return true if this createChannel_request object is equal to o.
    */
@@ -168,14 +313,19 @@ public class CreateChannelRequest {
     }
     CreateChannelRequest createChannelRequest = (CreateChannelRequest) o;
     return Objects.equals(this.name, createChannelRequest.name) &&
-        Objects.equals(this.isCategory, createChannelRequest.isCategory) &&
         Objects.equals(this.parentId, createChannelRequest.parentId) &&
-        Objects.equals(this.description, createChannelRequest.description);
+        Objects.equals(this.isCategory, createChannelRequest.isCategory) &&
+        Objects.equals(this.description, createChannelRequest.description) &&
+        Objects.equals(this.channelType, createChannelRequest.channelType) &&
+        Objects.equals(this.bannerUrl, createChannelRequest.bannerUrl) &&
+        Objects.equals(this.bannerFileId, createChannelRequest.bannerFileId) &&
+        Objects.equals(this.spawnerNameTemplate, createChannelRequest.spawnerNameTemplate) &&
+        Objects.equals(this.nsfw, createChannelRequest.nsfw);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, isCategory, parentId, description);
+    return Objects.hash(name, parentId, isCategory, description, channelType, bannerUrl, bannerFileId, spawnerNameTemplate, nsfw);
   }
 
   @Override
@@ -183,9 +333,14 @@ public class CreateChannelRequest {
     StringBuilder sb = new StringBuilder();
     sb.append("class CreateChannelRequest {\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    isCategory: ").append(toIndentedString(isCategory)).append("\n");
     sb.append("    parentId: ").append(toIndentedString(parentId)).append("\n");
+    sb.append("    isCategory: ").append(toIndentedString(isCategory)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    channelType: ").append(toIndentedString(channelType)).append("\n");
+    sb.append("    bannerUrl: ").append(toIndentedString(bannerUrl)).append("\n");
+    sb.append("    bannerFileId: ").append(toIndentedString(bannerFileId)).append("\n");
+    sb.append("    spawnerNameTemplate: ").append(toIndentedString(spawnerNameTemplate)).append("\n");
+    sb.append("    nsfw: ").append(toIndentedString(nsfw)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -238,19 +393,44 @@ public class CreateChannelRequest {
       joiner.add(String.format("%sname%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getName()))));
     }
 
-    // add `is_category` to the URL query string
-    if (getIsCategory() != null) {
-      joiner.add(String.format("%sis_category%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getIsCategory()))));
-    }
-
     // add `parent_id` to the URL query string
     if (getParentId() != null) {
       joiner.add(String.format("%sparent_id%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getParentId()))));
     }
 
+    // add `is_category` to the URL query string
+    if (getIsCategory() != null) {
+      joiner.add(String.format("%sis_category%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getIsCategory()))));
+    }
+
     // add `description` to the URL query string
     if (getDescription() != null) {
       joiner.add(String.format("%sdescription%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getDescription()))));
+    }
+
+    // add `channel_type` to the URL query string
+    if (getChannelType() != null) {
+      joiner.add(String.format("%schannel_type%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getChannelType()))));
+    }
+
+    // add `banner_url` to the URL query string
+    if (getBannerUrl() != null) {
+      joiner.add(String.format("%sbanner_url%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getBannerUrl()))));
+    }
+
+    // add `banner_file_id` to the URL query string
+    if (getBannerFileId() != null) {
+      joiner.add(String.format("%sbanner_file_id%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getBannerFileId()))));
+    }
+
+    // add `spawner_name_template` to the URL query string
+    if (getSpawnerNameTemplate() != null) {
+      joiner.add(String.format("%sspawner_name_template%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getSpawnerNameTemplate()))));
+    }
+
+    // add `nsfw` to the URL query string
+    if (getNsfw() != null) {
+      joiner.add(String.format("%snsfw%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getNsfw()))));
     }
 
     return joiner.toString();

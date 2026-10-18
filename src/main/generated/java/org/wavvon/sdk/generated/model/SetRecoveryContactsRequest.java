@@ -46,7 +46,7 @@ public class SetRecoveryContactsRequest {
 
   public static final String JSON_PROPERTY_THRESHOLD = "threshold";
   @jakarta.annotation.Nonnull
-  private Long threshold;
+  private Integer threshold;
 
   public SetRecoveryContactsRequest() { 
   }
@@ -83,7 +83,7 @@ public class SetRecoveryContactsRequest {
   }
 
 
-  public SetRecoveryContactsRequest threshold(@jakarta.annotation.Nonnull Long threshold) {
+  public SetRecoveryContactsRequest threshold(@jakarta.annotation.Nonnull Integer threshold) {
     this.threshold = threshold;
     return this;
   }
@@ -95,14 +95,14 @@ public class SetRecoveryContactsRequest {
   @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_THRESHOLD)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public Long getThreshold() {
+  public Integer getThreshold() {
     return threshold;
   }
 
 
   @JsonProperty(JSON_PROPERTY_THRESHOLD)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setThreshold(@jakarta.annotation.Nonnull Long threshold) {
+  public void setThreshold(@jakarta.annotation.Nonnull Integer threshold) {
     this.threshold = threshold;
   }
 

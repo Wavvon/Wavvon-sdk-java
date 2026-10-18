@@ -24,63 +24,188 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.ArrayList;
 import java.util.Arrays;
-import org.wavvon.sdk.generated.model.VerifyAuthRequestAllianceVoiceGrantPayload;
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * Voice in alliance channels: an origin hub&#39;s signed assertion that the caller is its member and the named channel is shared with an alliance this hub belongs to. Minted by &#x60;POST /alliances/{alliance_id}/voice-grant&#x60; on the caller&#39;s own hub.  Admits a **visitor** — a session scoped to &#x60;alliance_voice&#x60;, with no &#x60;users&#x60; row on this hub, no roles and no message access. Ignored for a caller who is already a member here, who gets their normal session.  Requires the &#x60;voice.alliance&#x60; capability on this hub. 
+ * CreateIdentityPairingOfferRequest
  */
 @JsonPropertyOrder({
-  VerifyAuthRequestAllianceVoiceGrant.JSON_PROPERTY_PAYLOAD,
-  VerifyAuthRequestAllianceVoiceGrant.JSON_PROPERTY_SIGNATURE
+  CreateIdentityPairingOfferRequest.JSON_PROPERTY_MASTER_PUBKEY,
+  CreateIdentityPairingOfferRequest.JSON_PROPERTY_HOME_HUBS,
+  CreateIdentityPairingOfferRequest.JSON_PROPERTY_PAIRING_TOKEN,
+  CreateIdentityPairingOfferRequest.JSON_PROPERTY_ISSUED_AT,
+  CreateIdentityPairingOfferRequest.JSON_PROPERTY_EXPIRES_AT,
+  CreateIdentityPairingOfferRequest.JSON_PROPERTY_SIGNATURE
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class VerifyAuthRequestAllianceVoiceGrant {
-  public static final String JSON_PROPERTY_PAYLOAD = "payload";
+public class CreateIdentityPairingOfferRequest {
+  public static final String JSON_PROPERTY_MASTER_PUBKEY = "master_pubkey";
   @jakarta.annotation.Nonnull
-  private VerifyAuthRequestAllianceVoiceGrantPayload payload;
+  private String masterPubkey;
+
+  public static final String JSON_PROPERTY_HOME_HUBS = "home_hubs";
+  @jakarta.annotation.Nonnull
+  private List<String> homeHubs = new ArrayList<>();
+
+  public static final String JSON_PROPERTY_PAIRING_TOKEN = "pairing_token";
+  @jakarta.annotation.Nonnull
+  private String pairingToken;
+
+  public static final String JSON_PROPERTY_ISSUED_AT = "issued_at";
+  @jakarta.annotation.Nonnull
+  private Long issuedAt;
+
+  public static final String JSON_PROPERTY_EXPIRES_AT = "expires_at";
+  @jakarta.annotation.Nonnull
+  private Long expiresAt;
 
   public static final String JSON_PROPERTY_SIGNATURE = "signature";
   @jakarta.annotation.Nonnull
   private String signature;
 
-  public VerifyAuthRequestAllianceVoiceGrant() { 
+  public CreateIdentityPairingOfferRequest() { 
   }
 
-  public VerifyAuthRequestAllianceVoiceGrant payload(@jakarta.annotation.Nonnull VerifyAuthRequestAllianceVoiceGrantPayload payload) {
-    this.payload = payload;
+  public CreateIdentityPairingOfferRequest masterPubkey(@jakarta.annotation.Nonnull String masterPubkey) {
+    this.masterPubkey = masterPubkey;
     return this;
   }
 
   /**
-   * Get payload
-   * @return payload
+   * Get masterPubkey
+   * @return masterPubkey
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_PAYLOAD)
+  @JsonProperty(JSON_PROPERTY_MASTER_PUBKEY)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public VerifyAuthRequestAllianceVoiceGrantPayload getPayload() {
-    return payload;
+  public String getMasterPubkey() {
+    return masterPubkey;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_PAYLOAD)
+  @JsonProperty(JSON_PROPERTY_MASTER_PUBKEY)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setPayload(@jakarta.annotation.Nonnull VerifyAuthRequestAllianceVoiceGrantPayload payload) {
-    this.payload = payload;
+  public void setMasterPubkey(@jakarta.annotation.Nonnull String masterPubkey) {
+    this.masterPubkey = masterPubkey;
   }
 
 
-  public VerifyAuthRequestAllianceVoiceGrant signature(@jakarta.annotation.Nonnull String signature) {
+  public CreateIdentityPairingOfferRequest homeHubs(@jakarta.annotation.Nonnull List<String> homeHubs) {
+    this.homeHubs = homeHubs;
+    return this;
+  }
+
+  public CreateIdentityPairingOfferRequest addHomeHubsItem(String homeHubsItem) {
+    if (this.homeHubs == null) {
+      this.homeHubs = new ArrayList<>();
+    }
+    this.homeHubs.add(homeHubsItem);
+    return this;
+  }
+
+  /**
+   * Get homeHubs
+   * @return homeHubs
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_HOME_HUBS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public List<String> getHomeHubs() {
+    return homeHubs;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_HOME_HUBS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setHomeHubs(@jakarta.annotation.Nonnull List<String> homeHubs) {
+    this.homeHubs = homeHubs;
+  }
+
+
+  public CreateIdentityPairingOfferRequest pairingToken(@jakarta.annotation.Nonnull String pairingToken) {
+    this.pairingToken = pairingToken;
+    return this;
+  }
+
+  /**
+   * Get pairingToken
+   * @return pairingToken
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_PAIRING_TOKEN)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public String getPairingToken() {
+    return pairingToken;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_PAIRING_TOKEN)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setPairingToken(@jakarta.annotation.Nonnull String pairingToken) {
+    this.pairingToken = pairingToken;
+  }
+
+
+  public CreateIdentityPairingOfferRequest issuedAt(@jakarta.annotation.Nonnull Long issuedAt) {
+    this.issuedAt = issuedAt;
+    return this;
+  }
+
+  /**
+   * Get issuedAt
+   * @return issuedAt
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_ISSUED_AT)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public Long getIssuedAt() {
+    return issuedAt;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_ISSUED_AT)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setIssuedAt(@jakarta.annotation.Nonnull Long issuedAt) {
+    this.issuedAt = issuedAt;
+  }
+
+
+  public CreateIdentityPairingOfferRequest expiresAt(@jakarta.annotation.Nonnull Long expiresAt) {
+    this.expiresAt = expiresAt;
+    return this;
+  }
+
+  /**
+   * Get expiresAt
+   * @return expiresAt
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_EXPIRES_AT)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public Long getExpiresAt() {
+    return expiresAt;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_EXPIRES_AT)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setExpiresAt(@jakarta.annotation.Nonnull Long expiresAt) {
+    this.expiresAt = expiresAt;
+  }
+
+
+  public CreateIdentityPairingOfferRequest signature(@jakarta.annotation.Nonnull String signature) {
     this.signature = signature;
     return this;
   }
 
   /**
-   * Hex Ed25519 signature by origin_hub_pubkey over the payload JSON
+   * Get signature
    * @return signature
    */
   @jakarta.annotation.Nonnull
@@ -99,7 +224,7 @@ public class VerifyAuthRequestAllianceVoiceGrant {
 
 
   /**
-   * Return true if this verifyAuth_request_alliance_voice_grant object is equal to o.
+   * Return true if this createIdentityPairingOffer_request object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -109,21 +234,29 @@ public class VerifyAuthRequestAllianceVoiceGrant {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    VerifyAuthRequestAllianceVoiceGrant verifyAuthRequestAllianceVoiceGrant = (VerifyAuthRequestAllianceVoiceGrant) o;
-    return Objects.equals(this.payload, verifyAuthRequestAllianceVoiceGrant.payload) &&
-        Objects.equals(this.signature, verifyAuthRequestAllianceVoiceGrant.signature);
+    CreateIdentityPairingOfferRequest createIdentityPairingOfferRequest = (CreateIdentityPairingOfferRequest) o;
+    return Objects.equals(this.masterPubkey, createIdentityPairingOfferRequest.masterPubkey) &&
+        Objects.equals(this.homeHubs, createIdentityPairingOfferRequest.homeHubs) &&
+        Objects.equals(this.pairingToken, createIdentityPairingOfferRequest.pairingToken) &&
+        Objects.equals(this.issuedAt, createIdentityPairingOfferRequest.issuedAt) &&
+        Objects.equals(this.expiresAt, createIdentityPairingOfferRequest.expiresAt) &&
+        Objects.equals(this.signature, createIdentityPairingOfferRequest.signature);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(payload, signature);
+    return Objects.hash(masterPubkey, homeHubs, pairingToken, issuedAt, expiresAt, signature);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class VerifyAuthRequestAllianceVoiceGrant {\n");
-    sb.append("    payload: ").append(toIndentedString(payload)).append("\n");
+    sb.append("class CreateIdentityPairingOfferRequest {\n");
+    sb.append("    masterPubkey: ").append(toIndentedString(masterPubkey)).append("\n");
+    sb.append("    homeHubs: ").append(toIndentedString(homeHubs)).append("\n");
+    sb.append("    pairingToken: ").append(toIndentedString(pairingToken)).append("\n");
+    sb.append("    issuedAt: ").append(toIndentedString(issuedAt)).append("\n");
+    sb.append("    expiresAt: ").append(toIndentedString(expiresAt)).append("\n");
     sb.append("    signature: ").append(toIndentedString(signature)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -172,9 +305,33 @@ public class VerifyAuthRequestAllianceVoiceGrant {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `payload` to the URL query string
-    if (getPayload() != null) {
-      joiner.add(getPayload().toUrlQueryString(prefix + "payload" + suffix));
+    // add `master_pubkey` to the URL query string
+    if (getMasterPubkey() != null) {
+      joiner.add(String.format("%smaster_pubkey%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getMasterPubkey()))));
+    }
+
+    // add `home_hubs` to the URL query string
+    if (getHomeHubs() != null) {
+      for (int i = 0; i < getHomeHubs().size(); i++) {
+        joiner.add(String.format("%shome_hubs%s%s=%s", prefix, suffix,
+            "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix),
+            ApiClient.urlEncode(ApiClient.valueToString(getHomeHubs().get(i)))));
+      }
+    }
+
+    // add `pairing_token` to the URL query string
+    if (getPairingToken() != null) {
+      joiner.add(String.format("%spairing_token%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getPairingToken()))));
+    }
+
+    // add `issued_at` to the URL query string
+    if (getIssuedAt() != null) {
+      joiner.add(String.format("%sissued_at%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getIssuedAt()))));
+    }
+
+    // add `expires_at` to the URL query string
+    if (getExpiresAt() != null) {
+      joiner.add(String.format("%sexpires_at%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getExpiresAt()))));
     }
 
     // add `signature` to the URL query string

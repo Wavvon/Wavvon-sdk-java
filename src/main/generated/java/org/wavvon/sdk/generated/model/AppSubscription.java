@@ -24,81 +24,91 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * CreateEventSlotRequest
+ * AppSubscription
  */
 @JsonPropertyOrder({
-  CreateEventSlotRequest.JSON_PROPERTY_NAME,
-  CreateEventSlotRequest.JSON_PROPERTY_CAPACITY
+  AppSubscription.JSON_PROPERTY_EVENT,
+  AppSubscription.JSON_PROPERTY_CHANNELS
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class CreateEventSlotRequest {
-  public static final String JSON_PROPERTY_NAME = "name";
+public class AppSubscription {
+  public static final String JSON_PROPERTY_EVENT = "event";
   @jakarta.annotation.Nonnull
-  private String name;
+  private String event;
 
-  public static final String JSON_PROPERTY_CAPACITY = "capacity";
+  public static final String JSON_PROPERTY_CHANNELS = "channels";
   @jakarta.annotation.Nullable
-  private Long capacity;
+  private List<String> channels = new ArrayList<>();
 
-  public CreateEventSlotRequest() { 
+  public AppSubscription() { 
   }
 
-  public CreateEventSlotRequest name(@jakarta.annotation.Nonnull String name) {
-    this.name = name;
+  public AppSubscription event(@jakarta.annotation.Nonnull String event) {
+    this.event = event;
     return this;
   }
 
   /**
-   * Get name
-   * @return name
+   * Get event
+   * @return event
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_NAME)
+  @JsonProperty(JSON_PROPERTY_EVENT)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public String getName() {
-    return name;
+  public String getEvent() {
+    return event;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_NAME)
+  @JsonProperty(JSON_PROPERTY_EVENT)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setName(@jakarta.annotation.Nonnull String name) {
-    this.name = name;
+  public void setEvent(@jakarta.annotation.Nonnull String event) {
+    this.event = event;
   }
 
 
-  public CreateEventSlotRequest capacity(@jakarta.annotation.Nullable Long capacity) {
-    this.capacity = capacity;
+  public AppSubscription channels(@jakarta.annotation.Nullable List<String> channels) {
+    this.channels = channels;
+    return this;
+  }
+
+  public AppSubscription addChannelsItem(String channelsItem) {
+    if (this.channels == null) {
+      this.channels = new ArrayList<>();
+    }
+    this.channels.add(channelsItem);
     return this;
   }
 
   /**
-   * Omit or null &#x3D; unlimited
-   * @return capacity
+   * Get channels
+   * @return channels
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_CAPACITY)
+  @JsonProperty(JSON_PROPERTY_CHANNELS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Long getCapacity() {
-    return capacity;
+  public List<String> getChannels() {
+    return channels;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_CAPACITY)
+  @JsonProperty(JSON_PROPERTY_CHANNELS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCapacity(@jakarta.annotation.Nullable Long capacity) {
-    this.capacity = capacity;
+  public void setChannels(@jakarta.annotation.Nullable List<String> channels) {
+    this.channels = channels;
   }
 
 
   /**
-   * Return true if this createEventSlot_request object is equal to o.
+   * Return true if this AppSubscription object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -108,22 +118,22 @@ public class CreateEventSlotRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CreateEventSlotRequest createEventSlotRequest = (CreateEventSlotRequest) o;
-    return Objects.equals(this.name, createEventSlotRequest.name) &&
-        Objects.equals(this.capacity, createEventSlotRequest.capacity);
+    AppSubscription appSubscription = (AppSubscription) o;
+    return Objects.equals(this.event, appSubscription.event) &&
+        Objects.equals(this.channels, appSubscription.channels);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, capacity);
+    return Objects.hash(event, channels);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CreateEventSlotRequest {\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    capacity: ").append(toIndentedString(capacity)).append("\n");
+    sb.append("class AppSubscription {\n");
+    sb.append("    event: ").append(toIndentedString(event)).append("\n");
+    sb.append("    channels: ").append(toIndentedString(channels)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -171,14 +181,18 @@ public class CreateEventSlotRequest {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `name` to the URL query string
-    if (getName() != null) {
-      joiner.add(String.format("%sname%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getName()))));
+    // add `event` to the URL query string
+    if (getEvent() != null) {
+      joiner.add(String.format("%sevent%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getEvent()))));
     }
 
-    // add `capacity` to the URL query string
-    if (getCapacity() != null) {
-      joiner.add(String.format("%scapacity%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCapacity()))));
+    // add `channels` to the URL query string
+    if (getChannels() != null) {
+      for (int i = 0; i < getChannels().size(); i++) {
+        joiner.add(String.format("%schannels%s%s=%s", prefix, suffix,
+            "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix),
+            ApiClient.urlEncode(ApiClient.valueToString(getChannels().get(i)))));
+      }
     }
 
     return joiner.toString();

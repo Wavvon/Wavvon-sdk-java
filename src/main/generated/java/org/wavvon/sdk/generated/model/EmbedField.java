@@ -30,75 +30,104 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * RotateRecoveryKeyRequestAttestationsInner
+ * EmbedField
  */
 @JsonPropertyOrder({
-  RotateRecoveryKeyRequestAttestationsInner.JSON_PROPERTY_ATTESTER,
-  RotateRecoveryKeyRequestAttestationsInner.JSON_PROPERTY_SIGNATURE
+  EmbedField.JSON_PROPERTY_NAME,
+  EmbedField.JSON_PROPERTY_VALUE,
+  EmbedField.JSON_PROPERTY_INLINE
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class RotateRecoveryKeyRequestAttestationsInner {
-  public static final String JSON_PROPERTY_ATTESTER = "attester";
+public class EmbedField {
+  public static final String JSON_PROPERTY_NAME = "name";
   @jakarta.annotation.Nonnull
-  private String attester;
+  private String name;
 
-  public static final String JSON_PROPERTY_SIGNATURE = "signature";
+  public static final String JSON_PROPERTY_VALUE = "value";
   @jakarta.annotation.Nonnull
-  private String signature;
+  private String value;
 
-  public RotateRecoveryKeyRequestAttestationsInner() { 
+  public static final String JSON_PROPERTY_INLINE = "inline";
+  @jakarta.annotation.Nullable
+  private Boolean inline;
+
+  public EmbedField() { 
   }
 
-  public RotateRecoveryKeyRequestAttestationsInner attester(@jakarta.annotation.Nonnull String attester) {
-    this.attester = attester;
+  public EmbedField name(@jakarta.annotation.Nonnull String name) {
+    this.name = name;
     return this;
   }
 
   /**
-   * Get attester
-   * @return attester
+   * Get name
+   * @return name
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_ATTESTER)
+  @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public String getAttester() {
-    return attester;
+  public String getName() {
+    return name;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_ATTESTER)
+  @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setAttester(@jakarta.annotation.Nonnull String attester) {
-    this.attester = attester;
+  public void setName(@jakarta.annotation.Nonnull String name) {
+    this.name = name;
   }
 
 
-  public RotateRecoveryKeyRequestAttestationsInner signature(@jakarta.annotation.Nonnull String signature) {
-    this.signature = signature;
+  public EmbedField value(@jakarta.annotation.Nonnull String value) {
+    this.value = value;
     return this;
   }
 
   /**
-   * Get signature
-   * @return signature
+   * Get value
+   * @return value
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_SIGNATURE)
+  @JsonProperty(JSON_PROPERTY_VALUE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public String getSignature() {
-    return signature;
+  public String getValue() {
+    return value;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_SIGNATURE)
+  @JsonProperty(JSON_PROPERTY_VALUE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setSignature(@jakarta.annotation.Nonnull String signature) {
-    this.signature = signature;
+  public void setValue(@jakarta.annotation.Nonnull String value) {
+    this.value = value;
+  }
+
+
+  public EmbedField inline(@jakarta.annotation.Nullable Boolean inline) {
+    this.inline = inline;
+    return this;
+  }
+
+  /**
+   * Get inline
+   * @return inline
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_INLINE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Boolean getInline() {
+    return inline;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_INLINE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setInline(@jakarta.annotation.Nullable Boolean inline) {
+    this.inline = inline;
   }
 
 
   /**
-   * Return true if this rotateRecoveryKey_request_attestations_inner object is equal to o.
+   * Return true if this EmbedField object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -108,22 +137,24 @@ public class RotateRecoveryKeyRequestAttestationsInner {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    RotateRecoveryKeyRequestAttestationsInner rotateRecoveryKeyRequestAttestationsInner = (RotateRecoveryKeyRequestAttestationsInner) o;
-    return Objects.equals(this.attester, rotateRecoveryKeyRequestAttestationsInner.attester) &&
-        Objects.equals(this.signature, rotateRecoveryKeyRequestAttestationsInner.signature);
+    EmbedField embedField = (EmbedField) o;
+    return Objects.equals(this.name, embedField.name) &&
+        Objects.equals(this.value, embedField.value) &&
+        Objects.equals(this.inline, embedField.inline);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(attester, signature);
+    return Objects.hash(name, value, inline);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class RotateRecoveryKeyRequestAttestationsInner {\n");
-    sb.append("    attester: ").append(toIndentedString(attester)).append("\n");
-    sb.append("    signature: ").append(toIndentedString(signature)).append("\n");
+    sb.append("class EmbedField {\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    value: ").append(toIndentedString(value)).append("\n");
+    sb.append("    inline: ").append(toIndentedString(inline)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -171,14 +202,19 @@ public class RotateRecoveryKeyRequestAttestationsInner {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `attester` to the URL query string
-    if (getAttester() != null) {
-      joiner.add(String.format("%sattester%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getAttester()))));
+    // add `name` to the URL query string
+    if (getName() != null) {
+      joiner.add(String.format("%sname%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getName()))));
     }
 
-    // add `signature` to the URL query string
-    if (getSignature() != null) {
-      joiner.add(String.format("%ssignature%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getSignature()))));
+    // add `value` to the URL query string
+    if (getValue() != null) {
+      joiner.add(String.format("%svalue%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getValue()))));
+    }
+
+    // add `inline` to the URL query string
+    if (getInline() != null) {
+      joiner.add(String.format("%sinline%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getInline()))));
     }
 
     return joiner.toString();

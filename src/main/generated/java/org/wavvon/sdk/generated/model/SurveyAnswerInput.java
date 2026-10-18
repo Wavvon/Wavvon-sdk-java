@@ -30,46 +30,104 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * CreateAllianceRequest
+ * SurveyAnswerInput
  */
 @JsonPropertyOrder({
-  CreateAllianceRequest.JSON_PROPERTY_NAME
+  SurveyAnswerInput.JSON_PROPERTY_QUESTION_ID,
+  SurveyAnswerInput.JSON_PROPERTY_CHOICE_ID,
+  SurveyAnswerInput.JSON_PROPERTY_TEXT_ANSWER
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class CreateAllianceRequest {
-  public static final String JSON_PROPERTY_NAME = "name";
+public class SurveyAnswerInput {
+  public static final String JSON_PROPERTY_QUESTION_ID = "question_id";
   @jakarta.annotation.Nonnull
-  private String name;
+  private String questionId;
 
-  public CreateAllianceRequest() { 
+  public static final String JSON_PROPERTY_CHOICE_ID = "choice_id";
+  @jakarta.annotation.Nullable
+  private String choiceId;
+
+  public static final String JSON_PROPERTY_TEXT_ANSWER = "text_answer";
+  @jakarta.annotation.Nullable
+  private String textAnswer;
+
+  public SurveyAnswerInput() { 
   }
 
-  public CreateAllianceRequest name(@jakarta.annotation.Nonnull String name) {
-    this.name = name;
+  public SurveyAnswerInput questionId(@jakarta.annotation.Nonnull String questionId) {
+    this.questionId = questionId;
     return this;
   }
 
   /**
-   * Get name
-   * @return name
+   * Get questionId
+   * @return questionId
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_NAME)
+  @JsonProperty(JSON_PROPERTY_QUESTION_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public String getName() {
-    return name;
+  public String getQuestionId() {
+    return questionId;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_NAME)
+  @JsonProperty(JSON_PROPERTY_QUESTION_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setName(@jakarta.annotation.Nonnull String name) {
-    this.name = name;
+  public void setQuestionId(@jakarta.annotation.Nonnull String questionId) {
+    this.questionId = questionId;
+  }
+
+
+  public SurveyAnswerInput choiceId(@jakarta.annotation.Nullable String choiceId) {
+    this.choiceId = choiceId;
+    return this;
+  }
+
+  /**
+   * Get choiceId
+   * @return choiceId
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CHOICE_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getChoiceId() {
+    return choiceId;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_CHOICE_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setChoiceId(@jakarta.annotation.Nullable String choiceId) {
+    this.choiceId = choiceId;
+  }
+
+
+  public SurveyAnswerInput textAnswer(@jakarta.annotation.Nullable String textAnswer) {
+    this.textAnswer = textAnswer;
+    return this;
+  }
+
+  /**
+   * Get textAnswer
+   * @return textAnswer
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_TEXT_ANSWER)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getTextAnswer() {
+    return textAnswer;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_TEXT_ANSWER)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setTextAnswer(@jakarta.annotation.Nullable String textAnswer) {
+    this.textAnswer = textAnswer;
   }
 
 
   /**
-   * Return true if this createAlliance_request object is equal to o.
+   * Return true if this SurveyAnswerInput object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -79,20 +137,24 @@ public class CreateAllianceRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CreateAllianceRequest createAllianceRequest = (CreateAllianceRequest) o;
-    return Objects.equals(this.name, createAllianceRequest.name);
+    SurveyAnswerInput surveyAnswerInput = (SurveyAnswerInput) o;
+    return Objects.equals(this.questionId, surveyAnswerInput.questionId) &&
+        Objects.equals(this.choiceId, surveyAnswerInput.choiceId) &&
+        Objects.equals(this.textAnswer, surveyAnswerInput.textAnswer);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name);
+    return Objects.hash(questionId, choiceId, textAnswer);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CreateAllianceRequest {\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("class SurveyAnswerInput {\n");
+    sb.append("    questionId: ").append(toIndentedString(questionId)).append("\n");
+    sb.append("    choiceId: ").append(toIndentedString(choiceId)).append("\n");
+    sb.append("    textAnswer: ").append(toIndentedString(textAnswer)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -140,9 +202,19 @@ public class CreateAllianceRequest {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `name` to the URL query string
-    if (getName() != null) {
-      joiner.add(String.format("%sname%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getName()))));
+    // add `question_id` to the URL query string
+    if (getQuestionId() != null) {
+      joiner.add(String.format("%squestion_id%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getQuestionId()))));
+    }
+
+    // add `choice_id` to the URL query string
+    if (getChoiceId() != null) {
+      joiner.add(String.format("%schoice_id%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getChoiceId()))));
+    }
+
+    // add `text_answer` to the URL query string
+    if (getTextAnswer() != null) {
+      joiner.add(String.format("%stext_answer%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getTextAnswer()))));
     }
 
     return joiner.toString();

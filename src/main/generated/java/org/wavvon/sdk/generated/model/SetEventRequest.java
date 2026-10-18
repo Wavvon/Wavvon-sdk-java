@@ -37,7 +37,9 @@ import org.wavvon.sdk.generated.ApiClient;
   SetEventRequest.JSON_PROPERTY_DESCRIPTION,
   SetEventRequest.JSON_PROPERTY_STARTS_AT,
   SetEventRequest.JSON_PROPERTY_ENDS_AT,
-  SetEventRequest.JSON_PROPERTY_LOCATION
+  SetEventRequest.JSON_PROPERTY_LOCATION,
+  SetEventRequest.JSON_PROPERTY_REMINDER_MINUTES,
+  SetEventRequest.JSON_PROPERTY_HUB_WIDE
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class SetEventRequest {
@@ -60,6 +62,14 @@ public class SetEventRequest {
   public static final String JSON_PROPERTY_LOCATION = "location";
   @jakarta.annotation.Nullable
   private String location;
+
+  public static final String JSON_PROPERTY_REMINDER_MINUTES = "reminder_minutes";
+  @jakarta.annotation.Nullable
+  private Long reminderMinutes;
+
+  public static final String JSON_PROPERTY_HUB_WIDE = "hub_wide";
+  @jakarta.annotation.Nullable
+  private Boolean hubWide;
 
   public SetEventRequest() { 
   }
@@ -184,6 +194,54 @@ public class SetEventRequest {
   }
 
 
+  public SetEventRequest reminderMinutes(@jakarta.annotation.Nullable Long reminderMinutes) {
+    this.reminderMinutes = reminderMinutes;
+    return this;
+  }
+
+  /**
+   * Get reminderMinutes
+   * @return reminderMinutes
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_REMINDER_MINUTES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Long getReminderMinutes() {
+    return reminderMinutes;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_REMINDER_MINUTES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setReminderMinutes(@jakarta.annotation.Nullable Long reminderMinutes) {
+    this.reminderMinutes = reminderMinutes;
+  }
+
+
+  public SetEventRequest hubWide(@jakarta.annotation.Nullable Boolean hubWide) {
+    this.hubWide = hubWide;
+    return this;
+  }
+
+  /**
+   * Get hubWide
+   * @return hubWide
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_HUB_WIDE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Boolean getHubWide() {
+    return hubWide;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_HUB_WIDE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setHubWide(@jakarta.annotation.Nullable Boolean hubWide) {
+    this.hubWide = hubWide;
+  }
+
+
   /**
    * Return true if this setEvent_request object is equal to o.
    */
@@ -200,12 +258,14 @@ public class SetEventRequest {
         Objects.equals(this.description, setEventRequest.description) &&
         Objects.equals(this.startsAt, setEventRequest.startsAt) &&
         Objects.equals(this.endsAt, setEventRequest.endsAt) &&
-        Objects.equals(this.location, setEventRequest.location);
+        Objects.equals(this.location, setEventRequest.location) &&
+        Objects.equals(this.reminderMinutes, setEventRequest.reminderMinutes) &&
+        Objects.equals(this.hubWide, setEventRequest.hubWide);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(title, description, startsAt, endsAt, location);
+    return Objects.hash(title, description, startsAt, endsAt, location, reminderMinutes, hubWide);
   }
 
   @Override
@@ -217,6 +277,8 @@ public class SetEventRequest {
     sb.append("    startsAt: ").append(toIndentedString(startsAt)).append("\n");
     sb.append("    endsAt: ").append(toIndentedString(endsAt)).append("\n");
     sb.append("    location: ").append(toIndentedString(location)).append("\n");
+    sb.append("    reminderMinutes: ").append(toIndentedString(reminderMinutes)).append("\n");
+    sb.append("    hubWide: ").append(toIndentedString(hubWide)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -287,6 +349,16 @@ public class SetEventRequest {
     // add `location` to the URL query string
     if (getLocation() != null) {
       joiner.add(String.format("%slocation%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getLocation()))));
+    }
+
+    // add `reminder_minutes` to the URL query string
+    if (getReminderMinutes() != null) {
+      joiner.add(String.format("%sreminder_minutes%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getReminderMinutes()))));
+    }
+
+    // add `hub_wide` to the URL query string
+    if (getHubWide() != null) {
+      joiner.add(String.format("%shub_wide%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getHubWide()))));
     }
 
     return joiner.toString();

@@ -33,67 +33,502 @@ import org.wavvon.sdk.generated.ApiClient;
  * UpdateHubRequest
  */
 @JsonPropertyOrder({
-  UpdateHubRequest.JSON_PROPERTY_HUB_NAME,
-  UpdateHubRequest.JSON_PROPERTY_HUB_ICON
+  UpdateHubRequest.JSON_PROPERTY_NAME,
+  UpdateHubRequest.JSON_PROPERTY_DESCRIPTION,
+  UpdateHubRequest.JSON_PROPERTY_ICON,
+  UpdateHubRequest.JSON_PROPERTY_REQUIRE_APPROVAL,
+  UpdateHubRequest.JSON_PROPERTY_MIN_SECURITY_LEVEL,
+  UpdateHubRequest.JSON_PROPERTY_MAX_CHANNEL_DEPTH,
+  UpdateHubRequest.JSON_PROPERTY_WELCOME_LABEL,
+  UpdateHubRequest.JSON_PROPERTY_WELCOME_INVITE_URL,
+  UpdateHubRequest.JSON_PROPERTY_FAREWELL_LABEL,
+  UpdateHubRequest.JSON_PROPERTY_DEFAULT_INVITE_ROLE_ID,
+  UpdateHubRequest.JSON_PROPERTY_TIMEZONE,
+  UpdateHubRequest.JSON_PROPERTY_BIRTHDAYS_ENABLED,
+  UpdateHubRequest.JSON_PROPERTY_AFK_CHANNEL_ID,
+  UpdateHubRequest.JSON_PROPERTY_AFK_TIMEOUT_SECS,
+  UpdateHubRequest.JSON_PROPERTY_MAX_ATTACHMENT_BYTES,
+  UpdateHubRequest.JSON_PROPERTY_MAX_UPLOAD_BYTES,
+  UpdateHubRequest.JSON_PROPERTY_NAME_COLOR_MODE
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class UpdateHubRequest {
-  public static final String JSON_PROPERTY_HUB_NAME = "hub_name";
+  public static final String JSON_PROPERTY_NAME = "name";
   @jakarta.annotation.Nullable
-  private String hubName;
+  private String name;
 
-  public static final String JSON_PROPERTY_HUB_ICON = "hub_icon";
+  public static final String JSON_PROPERTY_DESCRIPTION = "description";
   @jakarta.annotation.Nullable
-  private String hubIcon;
+  private String description;
+
+  public static final String JSON_PROPERTY_ICON = "icon";
+  @jakarta.annotation.Nullable
+  private String icon;
+
+  public static final String JSON_PROPERTY_REQUIRE_APPROVAL = "require_approval";
+  @jakarta.annotation.Nullable
+  private Boolean requireApproval;
+
+  public static final String JSON_PROPERTY_MIN_SECURITY_LEVEL = "min_security_level";
+  @jakarta.annotation.Nullable
+  private Integer minSecurityLevel;
+
+  public static final String JSON_PROPERTY_MAX_CHANNEL_DEPTH = "max_channel_depth";
+  @jakarta.annotation.Nullable
+  private Integer maxChannelDepth;
+
+  public static final String JSON_PROPERTY_WELCOME_LABEL = "welcome_label";
+  @jakarta.annotation.Nullable
+  private String welcomeLabel;
+
+  public static final String JSON_PROPERTY_WELCOME_INVITE_URL = "welcome_invite_url";
+  @jakarta.annotation.Nullable
+  private String welcomeInviteUrl;
+
+  public static final String JSON_PROPERTY_FAREWELL_LABEL = "farewell_label";
+  @jakarta.annotation.Nullable
+  private String farewellLabel;
+
+  public static final String JSON_PROPERTY_DEFAULT_INVITE_ROLE_ID = "default_invite_role_id";
+  @jakarta.annotation.Nullable
+  private String defaultInviteRoleId;
+
+  public static final String JSON_PROPERTY_TIMEZONE = "timezone";
+  @jakarta.annotation.Nullable
+  private String timezone;
+
+  public static final String JSON_PROPERTY_BIRTHDAYS_ENABLED = "birthdays_enabled";
+  @jakarta.annotation.Nullable
+  private Boolean birthdaysEnabled;
+
+  public static final String JSON_PROPERTY_AFK_CHANNEL_ID = "afk_channel_id";
+  @jakarta.annotation.Nullable
+  private String afkChannelId;
+
+  public static final String JSON_PROPERTY_AFK_TIMEOUT_SECS = "afk_timeout_secs";
+  @jakarta.annotation.Nullable
+  private Integer afkTimeoutSecs;
+
+  public static final String JSON_PROPERTY_MAX_ATTACHMENT_BYTES = "max_attachment_bytes";
+  @jakarta.annotation.Nullable
+  private Long maxAttachmentBytes;
+
+  public static final String JSON_PROPERTY_MAX_UPLOAD_BYTES = "max_upload_bytes";
+  @jakarta.annotation.Nullable
+  private Long maxUploadBytes;
+
+  public static final String JSON_PROPERTY_NAME_COLOR_MODE = "name_color_mode";
+  @jakarta.annotation.Nullable
+  private String nameColorMode;
 
   public UpdateHubRequest() { 
   }
 
-  public UpdateHubRequest hubName(@jakarta.annotation.Nullable String hubName) {
-    this.hubName = hubName;
+  public UpdateHubRequest name(@jakarta.annotation.Nullable String name) {
+    this.name = name;
     return this;
   }
 
   /**
-   * Get hubName
-   * @return hubName
+   * Get name
+   * @return name
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_HUB_NAME)
+  @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getHubName() {
-    return hubName;
+  public String getName() {
+    return name;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_HUB_NAME)
+  @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setHubName(@jakarta.annotation.Nullable String hubName) {
-    this.hubName = hubName;
+  public void setName(@jakarta.annotation.Nullable String name) {
+    this.name = name;
   }
 
 
-  public UpdateHubRequest hubIcon(@jakarta.annotation.Nullable String hubIcon) {
-    this.hubIcon = hubIcon;
+  public UpdateHubRequest description(@jakarta.annotation.Nullable String description) {
+    this.description = description;
     return this;
   }
 
   /**
-   * Get hubIcon
-   * @return hubIcon
+   * Get description
+   * @return description
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_HUB_ICON)
+  @JsonProperty(JSON_PROPERTY_DESCRIPTION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getHubIcon() {
-    return hubIcon;
+  public String getDescription() {
+    return description;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_HUB_ICON)
+  @JsonProperty(JSON_PROPERTY_DESCRIPTION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setHubIcon(@jakarta.annotation.Nullable String hubIcon) {
-    this.hubIcon = hubIcon;
+  public void setDescription(@jakarta.annotation.Nullable String description) {
+    this.description = description;
+  }
+
+
+  public UpdateHubRequest icon(@jakarta.annotation.Nullable String icon) {
+    this.icon = icon;
+    return this;
+  }
+
+  /**
+   * Get icon
+   * @return icon
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_ICON)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getIcon() {
+    return icon;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_ICON)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setIcon(@jakarta.annotation.Nullable String icon) {
+    this.icon = icon;
+  }
+
+
+  public UpdateHubRequest requireApproval(@jakarta.annotation.Nullable Boolean requireApproval) {
+    this.requireApproval = requireApproval;
+    return this;
+  }
+
+  /**
+   * Get requireApproval
+   * @return requireApproval
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_REQUIRE_APPROVAL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Boolean getRequireApproval() {
+    return requireApproval;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_REQUIRE_APPROVAL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setRequireApproval(@jakarta.annotation.Nullable Boolean requireApproval) {
+    this.requireApproval = requireApproval;
+  }
+
+
+  public UpdateHubRequest minSecurityLevel(@jakarta.annotation.Nullable Integer minSecurityLevel) {
+    this.minSecurityLevel = minSecurityLevel;
+    return this;
+  }
+
+  /**
+   * Get minSecurityLevel
+   * @return minSecurityLevel
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_MIN_SECURITY_LEVEL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Integer getMinSecurityLevel() {
+    return minSecurityLevel;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_MIN_SECURITY_LEVEL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setMinSecurityLevel(@jakarta.annotation.Nullable Integer minSecurityLevel) {
+    this.minSecurityLevel = minSecurityLevel;
+  }
+
+
+  public UpdateHubRequest maxChannelDepth(@jakarta.annotation.Nullable Integer maxChannelDepth) {
+    this.maxChannelDepth = maxChannelDepth;
+    return this;
+  }
+
+  /**
+   * Get maxChannelDepth
+   * @return maxChannelDepth
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_MAX_CHANNEL_DEPTH)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Integer getMaxChannelDepth() {
+    return maxChannelDepth;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_MAX_CHANNEL_DEPTH)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setMaxChannelDepth(@jakarta.annotation.Nullable Integer maxChannelDepth) {
+    this.maxChannelDepth = maxChannelDepth;
+  }
+
+
+  public UpdateHubRequest welcomeLabel(@jakarta.annotation.Nullable String welcomeLabel) {
+    this.welcomeLabel = welcomeLabel;
+    return this;
+  }
+
+  /**
+   * Get welcomeLabel
+   * @return welcomeLabel
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_WELCOME_LABEL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getWelcomeLabel() {
+    return welcomeLabel;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_WELCOME_LABEL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setWelcomeLabel(@jakarta.annotation.Nullable String welcomeLabel) {
+    this.welcomeLabel = welcomeLabel;
+  }
+
+
+  public UpdateHubRequest welcomeInviteUrl(@jakarta.annotation.Nullable String welcomeInviteUrl) {
+    this.welcomeInviteUrl = welcomeInviteUrl;
+    return this;
+  }
+
+  /**
+   * Get welcomeInviteUrl
+   * @return welcomeInviteUrl
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_WELCOME_INVITE_URL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getWelcomeInviteUrl() {
+    return welcomeInviteUrl;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_WELCOME_INVITE_URL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setWelcomeInviteUrl(@jakarta.annotation.Nullable String welcomeInviteUrl) {
+    this.welcomeInviteUrl = welcomeInviteUrl;
+  }
+
+
+  public UpdateHubRequest farewellLabel(@jakarta.annotation.Nullable String farewellLabel) {
+    this.farewellLabel = farewellLabel;
+    return this;
+  }
+
+  /**
+   * Get farewellLabel
+   * @return farewellLabel
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_FAREWELL_LABEL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getFarewellLabel() {
+    return farewellLabel;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_FAREWELL_LABEL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setFarewellLabel(@jakarta.annotation.Nullable String farewellLabel) {
+    this.farewellLabel = farewellLabel;
+  }
+
+
+  public UpdateHubRequest defaultInviteRoleId(@jakarta.annotation.Nullable String defaultInviteRoleId) {
+    this.defaultInviteRoleId = defaultInviteRoleId;
+    return this;
+  }
+
+  /**
+   * Get defaultInviteRoleId
+   * @return defaultInviteRoleId
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_DEFAULT_INVITE_ROLE_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getDefaultInviteRoleId() {
+    return defaultInviteRoleId;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_DEFAULT_INVITE_ROLE_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setDefaultInviteRoleId(@jakarta.annotation.Nullable String defaultInviteRoleId) {
+    this.defaultInviteRoleId = defaultInviteRoleId;
+  }
+
+
+  public UpdateHubRequest timezone(@jakarta.annotation.Nullable String timezone) {
+    this.timezone = timezone;
+    return this;
+  }
+
+  /**
+   * Get timezone
+   * @return timezone
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_TIMEZONE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getTimezone() {
+    return timezone;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_TIMEZONE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setTimezone(@jakarta.annotation.Nullable String timezone) {
+    this.timezone = timezone;
+  }
+
+
+  public UpdateHubRequest birthdaysEnabled(@jakarta.annotation.Nullable Boolean birthdaysEnabled) {
+    this.birthdaysEnabled = birthdaysEnabled;
+    return this;
+  }
+
+  /**
+   * Get birthdaysEnabled
+   * @return birthdaysEnabled
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_BIRTHDAYS_ENABLED)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Boolean getBirthdaysEnabled() {
+    return birthdaysEnabled;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_BIRTHDAYS_ENABLED)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setBirthdaysEnabled(@jakarta.annotation.Nullable Boolean birthdaysEnabled) {
+    this.birthdaysEnabled = birthdaysEnabled;
+  }
+
+
+  public UpdateHubRequest afkChannelId(@jakarta.annotation.Nullable String afkChannelId) {
+    this.afkChannelId = afkChannelId;
+    return this;
+  }
+
+  /**
+   * Get afkChannelId
+   * @return afkChannelId
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_AFK_CHANNEL_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getAfkChannelId() {
+    return afkChannelId;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_AFK_CHANNEL_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setAfkChannelId(@jakarta.annotation.Nullable String afkChannelId) {
+    this.afkChannelId = afkChannelId;
+  }
+
+
+  public UpdateHubRequest afkTimeoutSecs(@jakarta.annotation.Nullable Integer afkTimeoutSecs) {
+    this.afkTimeoutSecs = afkTimeoutSecs;
+    return this;
+  }
+
+  /**
+   * Get afkTimeoutSecs
+   * @return afkTimeoutSecs
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_AFK_TIMEOUT_SECS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Integer getAfkTimeoutSecs() {
+    return afkTimeoutSecs;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_AFK_TIMEOUT_SECS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setAfkTimeoutSecs(@jakarta.annotation.Nullable Integer afkTimeoutSecs) {
+    this.afkTimeoutSecs = afkTimeoutSecs;
+  }
+
+
+  public UpdateHubRequest maxAttachmentBytes(@jakarta.annotation.Nullable Long maxAttachmentBytes) {
+    this.maxAttachmentBytes = maxAttachmentBytes;
+    return this;
+  }
+
+  /**
+   * Get maxAttachmentBytes
+   * @return maxAttachmentBytes
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_MAX_ATTACHMENT_BYTES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Long getMaxAttachmentBytes() {
+    return maxAttachmentBytes;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_MAX_ATTACHMENT_BYTES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setMaxAttachmentBytes(@jakarta.annotation.Nullable Long maxAttachmentBytes) {
+    this.maxAttachmentBytes = maxAttachmentBytes;
+  }
+
+
+  public UpdateHubRequest maxUploadBytes(@jakarta.annotation.Nullable Long maxUploadBytes) {
+    this.maxUploadBytes = maxUploadBytes;
+    return this;
+  }
+
+  /**
+   * Get maxUploadBytes
+   * @return maxUploadBytes
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_MAX_UPLOAD_BYTES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Long getMaxUploadBytes() {
+    return maxUploadBytes;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_MAX_UPLOAD_BYTES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setMaxUploadBytes(@jakarta.annotation.Nullable Long maxUploadBytes) {
+    this.maxUploadBytes = maxUploadBytes;
+  }
+
+
+  public UpdateHubRequest nameColorMode(@jakarta.annotation.Nullable String nameColorMode) {
+    this.nameColorMode = nameColorMode;
+    return this;
+  }
+
+  /**
+   * Get nameColorMode
+   * @return nameColorMode
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_NAME_COLOR_MODE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getNameColorMode() {
+    return nameColorMode;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_NAME_COLOR_MODE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setNameColorMode(@jakarta.annotation.Nullable String nameColorMode) {
+    this.nameColorMode = nameColorMode;
   }
 
 
@@ -109,21 +544,51 @@ public class UpdateHubRequest {
       return false;
     }
     UpdateHubRequest updateHubRequest = (UpdateHubRequest) o;
-    return Objects.equals(this.hubName, updateHubRequest.hubName) &&
-        Objects.equals(this.hubIcon, updateHubRequest.hubIcon);
+    return Objects.equals(this.name, updateHubRequest.name) &&
+        Objects.equals(this.description, updateHubRequest.description) &&
+        Objects.equals(this.icon, updateHubRequest.icon) &&
+        Objects.equals(this.requireApproval, updateHubRequest.requireApproval) &&
+        Objects.equals(this.minSecurityLevel, updateHubRequest.minSecurityLevel) &&
+        Objects.equals(this.maxChannelDepth, updateHubRequest.maxChannelDepth) &&
+        Objects.equals(this.welcomeLabel, updateHubRequest.welcomeLabel) &&
+        Objects.equals(this.welcomeInviteUrl, updateHubRequest.welcomeInviteUrl) &&
+        Objects.equals(this.farewellLabel, updateHubRequest.farewellLabel) &&
+        Objects.equals(this.defaultInviteRoleId, updateHubRequest.defaultInviteRoleId) &&
+        Objects.equals(this.timezone, updateHubRequest.timezone) &&
+        Objects.equals(this.birthdaysEnabled, updateHubRequest.birthdaysEnabled) &&
+        Objects.equals(this.afkChannelId, updateHubRequest.afkChannelId) &&
+        Objects.equals(this.afkTimeoutSecs, updateHubRequest.afkTimeoutSecs) &&
+        Objects.equals(this.maxAttachmentBytes, updateHubRequest.maxAttachmentBytes) &&
+        Objects.equals(this.maxUploadBytes, updateHubRequest.maxUploadBytes) &&
+        Objects.equals(this.nameColorMode, updateHubRequest.nameColorMode);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(hubName, hubIcon);
+    return Objects.hash(name, description, icon, requireApproval, minSecurityLevel, maxChannelDepth, welcomeLabel, welcomeInviteUrl, farewellLabel, defaultInviteRoleId, timezone, birthdaysEnabled, afkChannelId, afkTimeoutSecs, maxAttachmentBytes, maxUploadBytes, nameColorMode);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class UpdateHubRequest {\n");
-    sb.append("    hubName: ").append(toIndentedString(hubName)).append("\n");
-    sb.append("    hubIcon: ").append(toIndentedString(hubIcon)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    icon: ").append(toIndentedString(icon)).append("\n");
+    sb.append("    requireApproval: ").append(toIndentedString(requireApproval)).append("\n");
+    sb.append("    minSecurityLevel: ").append(toIndentedString(minSecurityLevel)).append("\n");
+    sb.append("    maxChannelDepth: ").append(toIndentedString(maxChannelDepth)).append("\n");
+    sb.append("    welcomeLabel: ").append(toIndentedString(welcomeLabel)).append("\n");
+    sb.append("    welcomeInviteUrl: ").append(toIndentedString(welcomeInviteUrl)).append("\n");
+    sb.append("    farewellLabel: ").append(toIndentedString(farewellLabel)).append("\n");
+    sb.append("    defaultInviteRoleId: ").append(toIndentedString(defaultInviteRoleId)).append("\n");
+    sb.append("    timezone: ").append(toIndentedString(timezone)).append("\n");
+    sb.append("    birthdaysEnabled: ").append(toIndentedString(birthdaysEnabled)).append("\n");
+    sb.append("    afkChannelId: ").append(toIndentedString(afkChannelId)).append("\n");
+    sb.append("    afkTimeoutSecs: ").append(toIndentedString(afkTimeoutSecs)).append("\n");
+    sb.append("    maxAttachmentBytes: ").append(toIndentedString(maxAttachmentBytes)).append("\n");
+    sb.append("    maxUploadBytes: ").append(toIndentedString(maxUploadBytes)).append("\n");
+    sb.append("    nameColorMode: ").append(toIndentedString(nameColorMode)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -171,14 +636,89 @@ public class UpdateHubRequest {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `hub_name` to the URL query string
-    if (getHubName() != null) {
-      joiner.add(String.format("%shub_name%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getHubName()))));
+    // add `name` to the URL query string
+    if (getName() != null) {
+      joiner.add(String.format("%sname%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getName()))));
     }
 
-    // add `hub_icon` to the URL query string
-    if (getHubIcon() != null) {
-      joiner.add(String.format("%shub_icon%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getHubIcon()))));
+    // add `description` to the URL query string
+    if (getDescription() != null) {
+      joiner.add(String.format("%sdescription%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getDescription()))));
+    }
+
+    // add `icon` to the URL query string
+    if (getIcon() != null) {
+      joiner.add(String.format("%sicon%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getIcon()))));
+    }
+
+    // add `require_approval` to the URL query string
+    if (getRequireApproval() != null) {
+      joiner.add(String.format("%srequire_approval%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getRequireApproval()))));
+    }
+
+    // add `min_security_level` to the URL query string
+    if (getMinSecurityLevel() != null) {
+      joiner.add(String.format("%smin_security_level%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getMinSecurityLevel()))));
+    }
+
+    // add `max_channel_depth` to the URL query string
+    if (getMaxChannelDepth() != null) {
+      joiner.add(String.format("%smax_channel_depth%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getMaxChannelDepth()))));
+    }
+
+    // add `welcome_label` to the URL query string
+    if (getWelcomeLabel() != null) {
+      joiner.add(String.format("%swelcome_label%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getWelcomeLabel()))));
+    }
+
+    // add `welcome_invite_url` to the URL query string
+    if (getWelcomeInviteUrl() != null) {
+      joiner.add(String.format("%swelcome_invite_url%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getWelcomeInviteUrl()))));
+    }
+
+    // add `farewell_label` to the URL query string
+    if (getFarewellLabel() != null) {
+      joiner.add(String.format("%sfarewell_label%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getFarewellLabel()))));
+    }
+
+    // add `default_invite_role_id` to the URL query string
+    if (getDefaultInviteRoleId() != null) {
+      joiner.add(String.format("%sdefault_invite_role_id%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getDefaultInviteRoleId()))));
+    }
+
+    // add `timezone` to the URL query string
+    if (getTimezone() != null) {
+      joiner.add(String.format("%stimezone%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getTimezone()))));
+    }
+
+    // add `birthdays_enabled` to the URL query string
+    if (getBirthdaysEnabled() != null) {
+      joiner.add(String.format("%sbirthdays_enabled%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getBirthdaysEnabled()))));
+    }
+
+    // add `afk_channel_id` to the URL query string
+    if (getAfkChannelId() != null) {
+      joiner.add(String.format("%safk_channel_id%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getAfkChannelId()))));
+    }
+
+    // add `afk_timeout_secs` to the URL query string
+    if (getAfkTimeoutSecs() != null) {
+      joiner.add(String.format("%safk_timeout_secs%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getAfkTimeoutSecs()))));
+    }
+
+    // add `max_attachment_bytes` to the URL query string
+    if (getMaxAttachmentBytes() != null) {
+      joiner.add(String.format("%smax_attachment_bytes%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getMaxAttachmentBytes()))));
+    }
+
+    // add `max_upload_bytes` to the URL query string
+    if (getMaxUploadBytes() != null) {
+      joiner.add(String.format("%smax_upload_bytes%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getMaxUploadBytes()))));
+    }
+
+    // add `name_color_mode` to the URL query string
+    if (getNameColorMode() != null) {
+      joiner.add(String.format("%sname_color_mode%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getNameColorMode()))));
     }
 
     return joiner.toString();

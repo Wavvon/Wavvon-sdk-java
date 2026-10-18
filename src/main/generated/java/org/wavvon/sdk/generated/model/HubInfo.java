@@ -105,11 +105,11 @@ public class HubInfo {
 
   public static final String JSON_PROPERTY_MIN_SECURITY_LEVEL = "min_security_level";
   @jakarta.annotation.Nonnull
-  private Long minSecurityLevel;
+  private Integer minSecurityLevel;
 
   public static final String JSON_PROPERTY_MIN_POW_LEVEL = "min_pow_level";
   @jakarta.annotation.Nonnull
-  private Long minPowLevel;
+  private Integer minPowLevel;
 
   /**
    * Gets or Sets challengeMode
@@ -437,7 +437,7 @@ public class HubInfo {
   }
 
 
-  public HubInfo minSecurityLevel(@jakarta.annotation.Nonnull Long minSecurityLevel) {
+  public HubInfo minSecurityLevel(@jakarta.annotation.Nonnull Integer minSecurityLevel) {
     this.minSecurityLevel = minSecurityLevel;
     return this;
   }
@@ -449,19 +449,19 @@ public class HubInfo {
   @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_MIN_SECURITY_LEVEL)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public Long getMinSecurityLevel() {
+  public Integer getMinSecurityLevel() {
     return minSecurityLevel;
   }
 
 
   @JsonProperty(JSON_PROPERTY_MIN_SECURITY_LEVEL)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setMinSecurityLevel(@jakarta.annotation.Nonnull Long minSecurityLevel) {
+  public void setMinSecurityLevel(@jakarta.annotation.Nonnull Integer minSecurityLevel) {
     this.minSecurityLevel = minSecurityLevel;
   }
 
 
-  public HubInfo minPowLevel(@jakarta.annotation.Nonnull Long minPowLevel) {
+  public HubInfo minPowLevel(@jakarta.annotation.Nonnull Integer minPowLevel) {
     this.minPowLevel = minPowLevel;
     return this;
   }
@@ -473,14 +473,14 @@ public class HubInfo {
   @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_MIN_POW_LEVEL)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public Long getMinPowLevel() {
+  public Integer getMinPowLevel() {
     return minPowLevel;
   }
 
 
   @JsonProperty(JSON_PROPERTY_MIN_POW_LEVEL)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setMinPowLevel(@jakarta.annotation.Nonnull Long minPowLevel) {
+  public void setMinPowLevel(@jakarta.annotation.Nonnull Integer minPowLevel) {
     this.minPowLevel = minPowLevel;
   }
 

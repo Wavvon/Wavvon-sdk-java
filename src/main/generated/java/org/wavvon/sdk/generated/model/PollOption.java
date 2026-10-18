@@ -24,91 +24,81 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * SetMeAppSubscriptionsRequestSubscriptionsInner
+ * PollOption
  */
 @JsonPropertyOrder({
-  SetMeAppSubscriptionsRequestSubscriptionsInner.JSON_PROPERTY_EVENT,
-  SetMeAppSubscriptionsRequestSubscriptionsInner.JSON_PROPERTY_CHANNELS
+  PollOption.JSON_PROPERTY_ID,
+  PollOption.JSON_PROPERTY_TEXT
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class SetMeAppSubscriptionsRequestSubscriptionsInner {
-  public static final String JSON_PROPERTY_EVENT = "event";
+public class PollOption {
+  public static final String JSON_PROPERTY_ID = "id";
   @jakarta.annotation.Nonnull
-  private String event;
+  private String id;
 
-  public static final String JSON_PROPERTY_CHANNELS = "channels";
-  @jakarta.annotation.Nullable
-  private List<String> channels = new ArrayList<>();
+  public static final String JSON_PROPERTY_TEXT = "text";
+  @jakarta.annotation.Nonnull
+  private String text;
 
-  public SetMeAppSubscriptionsRequestSubscriptionsInner() { 
+  public PollOption() { 
   }
 
-  public SetMeAppSubscriptionsRequestSubscriptionsInner event(@jakarta.annotation.Nonnull String event) {
-    this.event = event;
+  public PollOption id(@jakarta.annotation.Nonnull String id) {
+    this.id = id;
     return this;
   }
 
   /**
-   * Get event
-   * @return event
+   * Get id
+   * @return id
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_EVENT)
+  @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public String getEvent() {
-    return event;
+  public String getId() {
+    return id;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_EVENT)
+  @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setEvent(@jakarta.annotation.Nonnull String event) {
-    this.event = event;
+  public void setId(@jakarta.annotation.Nonnull String id) {
+    this.id = id;
   }
 
 
-  public SetMeAppSubscriptionsRequestSubscriptionsInner channels(@jakarta.annotation.Nullable List<String> channels) {
-    this.channels = channels;
-    return this;
-  }
-
-  public SetMeAppSubscriptionsRequestSubscriptionsInner addChannelsItem(String channelsItem) {
-    if (this.channels == null) {
-      this.channels = new ArrayList<>();
-    }
-    this.channels.add(channelsItem);
+  public PollOption text(@jakarta.annotation.Nonnull String text) {
+    this.text = text;
     return this;
   }
 
   /**
-   * Get channels
-   * @return channels
+   * Get text
+   * @return text
    */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_CHANNELS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public List<String> getChannels() {
-    return channels;
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_TEXT)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public String getText() {
+    return text;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_CHANNELS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setChannels(@jakarta.annotation.Nullable List<String> channels) {
-    this.channels = channels;
+  @JsonProperty(JSON_PROPERTY_TEXT)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setText(@jakarta.annotation.Nonnull String text) {
+    this.text = text;
   }
 
 
   /**
-   * Return true if this setMeAppSubscriptions_request_subscriptions_inner object is equal to o.
+   * Return true if this PollOption object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -118,22 +108,22 @@ public class SetMeAppSubscriptionsRequestSubscriptionsInner {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SetMeAppSubscriptionsRequestSubscriptionsInner setMeAppSubscriptionsRequestSubscriptionsInner = (SetMeAppSubscriptionsRequestSubscriptionsInner) o;
-    return Objects.equals(this.event, setMeAppSubscriptionsRequestSubscriptionsInner.event) &&
-        Objects.equals(this.channels, setMeAppSubscriptionsRequestSubscriptionsInner.channels);
+    PollOption pollOption = (PollOption) o;
+    return Objects.equals(this.id, pollOption.id) &&
+        Objects.equals(this.text, pollOption.text);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(event, channels);
+    return Objects.hash(id, text);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SetMeAppSubscriptionsRequestSubscriptionsInner {\n");
-    sb.append("    event: ").append(toIndentedString(event)).append("\n");
-    sb.append("    channels: ").append(toIndentedString(channels)).append("\n");
+    sb.append("class PollOption {\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    text: ").append(toIndentedString(text)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -181,18 +171,14 @@ public class SetMeAppSubscriptionsRequestSubscriptionsInner {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `event` to the URL query string
-    if (getEvent() != null) {
-      joiner.add(String.format("%sevent%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getEvent()))));
+    // add `id` to the URL query string
+    if (getId() != null) {
+      joiner.add(String.format("%sid%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getId()))));
     }
 
-    // add `channels` to the URL query string
-    if (getChannels() != null) {
-      for (int i = 0; i < getChannels().size(); i++) {
-        joiner.add(String.format("%schannels%s%s=%s", prefix, suffix,
-            "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix),
-            ApiClient.urlEncode(ApiClient.valueToString(getChannels().get(i)))));
-      }
+    // add `text` to the URL query string
+    if (getText() != null) {
+      joiner.add(String.format("%stext%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getText()))));
     }
 
     return joiner.toString();

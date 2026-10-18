@@ -28,6 +28,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.wavvon.sdk.generated.model.Attachment;
+import org.wavvon.sdk.generated.model.EncryptedDmEnvelope;
+import org.wavvon.sdk.generated.model.GroupEncryptedEnvelope;
+import org.wavvon.sdk.generated.model.SubkeyCert;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -38,23 +41,28 @@ import org.wavvon.sdk.generated.ApiClient;
 @JsonPropertyOrder({
   CreateConversationMessageRequest.JSON_PROPERTY_CONTENT,
   CreateConversationMessageRequest.JSON_PROPERTY_ATTACHMENTS,
-  CreateConversationMessageRequest.JSON_PROPERTY_IS_ENCRYPTED,
+  CreateConversationMessageRequest.JSON_PROPERTY_ENCRYPTED_ENVELOPE,
+  CreateConversationMessageRequest.JSON_PROPERTY_GROUP_ENCRYPTED_ENVELOPE,
   CreateConversationMessageRequest.JSON_PROPERTY_PLAINTEXT_SIGNATURE,
   CreateConversationMessageRequest.JSON_PROPERTY_PLAINTEXT_SIGNER_CERT
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class CreateConversationMessageRequest {
   public static final String JSON_PROPERTY_CONTENT = "content";
-  @jakarta.annotation.Nonnull
+  @jakarta.annotation.Nullable
   private String content;
 
   public static final String JSON_PROPERTY_ATTACHMENTS = "attachments";
   @jakarta.annotation.Nullable
   private List<Attachment> attachments = new ArrayList<>();
 
-  public static final String JSON_PROPERTY_IS_ENCRYPTED = "is_encrypted";
+  public static final String JSON_PROPERTY_ENCRYPTED_ENVELOPE = "encrypted_envelope";
   @jakarta.annotation.Nullable
-  private Boolean isEncrypted;
+  private EncryptedDmEnvelope encryptedEnvelope;
+
+  public static final String JSON_PROPERTY_GROUP_ENCRYPTED_ENVELOPE = "group_encrypted_envelope";
+  @jakarta.annotation.Nullable
+  private GroupEncryptedEnvelope groupEncryptedEnvelope;
 
   public static final String JSON_PROPERTY_PLAINTEXT_SIGNATURE = "plaintext_signature";
   @jakarta.annotation.Nullable
@@ -62,12 +70,12 @@ public class CreateConversationMessageRequest {
 
   public static final String JSON_PROPERTY_PLAINTEXT_SIGNER_CERT = "plaintext_signer_cert";
   @jakarta.annotation.Nullable
-  private Object plaintextSignerCert;
+  private SubkeyCert plaintextSignerCert;
 
   public CreateConversationMessageRequest() { 
   }
 
-  public CreateConversationMessageRequest content(@jakarta.annotation.Nonnull String content) {
+  public CreateConversationMessageRequest content(@jakarta.annotation.Nullable String content) {
     this.content = content;
     return this;
   }
@@ -76,17 +84,17 @@ public class CreateConversationMessageRequest {
    * Get content
    * @return content
    */
-  @jakarta.annotation.Nonnull
+  @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_CONTENT)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getContent() {
     return content;
   }
 
 
   @JsonProperty(JSON_PROPERTY_CONTENT)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setContent(@jakarta.annotation.Nonnull String content) {
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setContent(@jakarta.annotation.Nullable String content) {
     this.content = content;
   }
 
@@ -123,27 +131,51 @@ public class CreateConversationMessageRequest {
   }
 
 
-  public CreateConversationMessageRequest isEncrypted(@jakarta.annotation.Nullable Boolean isEncrypted) {
-    this.isEncrypted = isEncrypted;
+  public CreateConversationMessageRequest encryptedEnvelope(@jakarta.annotation.Nullable EncryptedDmEnvelope encryptedEnvelope) {
+    this.encryptedEnvelope = encryptedEnvelope;
     return this;
   }
 
   /**
-   * Get isEncrypted
-   * @return isEncrypted
+   * Get encryptedEnvelope
+   * @return encryptedEnvelope
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_IS_ENCRYPTED)
+  @JsonProperty(JSON_PROPERTY_ENCRYPTED_ENVELOPE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Boolean getIsEncrypted() {
-    return isEncrypted;
+  public EncryptedDmEnvelope getEncryptedEnvelope() {
+    return encryptedEnvelope;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_IS_ENCRYPTED)
+  @JsonProperty(JSON_PROPERTY_ENCRYPTED_ENVELOPE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setIsEncrypted(@jakarta.annotation.Nullable Boolean isEncrypted) {
-    this.isEncrypted = isEncrypted;
+  public void setEncryptedEnvelope(@jakarta.annotation.Nullable EncryptedDmEnvelope encryptedEnvelope) {
+    this.encryptedEnvelope = encryptedEnvelope;
+  }
+
+
+  public CreateConversationMessageRequest groupEncryptedEnvelope(@jakarta.annotation.Nullable GroupEncryptedEnvelope groupEncryptedEnvelope) {
+    this.groupEncryptedEnvelope = groupEncryptedEnvelope;
+    return this;
+  }
+
+  /**
+   * Get groupEncryptedEnvelope
+   * @return groupEncryptedEnvelope
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_GROUP_ENCRYPTED_ENVELOPE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public GroupEncryptedEnvelope getGroupEncryptedEnvelope() {
+    return groupEncryptedEnvelope;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_GROUP_ENCRYPTED_ENVELOPE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setGroupEncryptedEnvelope(@jakarta.annotation.Nullable GroupEncryptedEnvelope groupEncryptedEnvelope) {
+    this.groupEncryptedEnvelope = groupEncryptedEnvelope;
   }
 
 
@@ -171,7 +203,7 @@ public class CreateConversationMessageRequest {
   }
 
 
-  public CreateConversationMessageRequest plaintextSignerCert(@jakarta.annotation.Nullable Object plaintextSignerCert) {
+  public CreateConversationMessageRequest plaintextSignerCert(@jakarta.annotation.Nullable SubkeyCert plaintextSignerCert) {
     this.plaintextSignerCert = plaintextSignerCert;
     return this;
   }
@@ -183,14 +215,14 @@ public class CreateConversationMessageRequest {
   @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_PLAINTEXT_SIGNER_CERT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Object getPlaintextSignerCert() {
+  public SubkeyCert getPlaintextSignerCert() {
     return plaintextSignerCert;
   }
 
 
   @JsonProperty(JSON_PROPERTY_PLAINTEXT_SIGNER_CERT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setPlaintextSignerCert(@jakarta.annotation.Nullable Object plaintextSignerCert) {
+  public void setPlaintextSignerCert(@jakarta.annotation.Nullable SubkeyCert plaintextSignerCert) {
     this.plaintextSignerCert = plaintextSignerCert;
   }
 
@@ -209,14 +241,15 @@ public class CreateConversationMessageRequest {
     CreateConversationMessageRequest createConversationMessageRequest = (CreateConversationMessageRequest) o;
     return Objects.equals(this.content, createConversationMessageRequest.content) &&
         Objects.equals(this.attachments, createConversationMessageRequest.attachments) &&
-        Objects.equals(this.isEncrypted, createConversationMessageRequest.isEncrypted) &&
+        Objects.equals(this.encryptedEnvelope, createConversationMessageRequest.encryptedEnvelope) &&
+        Objects.equals(this.groupEncryptedEnvelope, createConversationMessageRequest.groupEncryptedEnvelope) &&
         Objects.equals(this.plaintextSignature, createConversationMessageRequest.plaintextSignature) &&
         Objects.equals(this.plaintextSignerCert, createConversationMessageRequest.plaintextSignerCert);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(content, attachments, isEncrypted, plaintextSignature, plaintextSignerCert);
+    return Objects.hash(content, attachments, encryptedEnvelope, groupEncryptedEnvelope, plaintextSignature, plaintextSignerCert);
   }
 
   @Override
@@ -225,7 +258,8 @@ public class CreateConversationMessageRequest {
     sb.append("class CreateConversationMessageRequest {\n");
     sb.append("    content: ").append(toIndentedString(content)).append("\n");
     sb.append("    attachments: ").append(toIndentedString(attachments)).append("\n");
-    sb.append("    isEncrypted: ").append(toIndentedString(isEncrypted)).append("\n");
+    sb.append("    encryptedEnvelope: ").append(toIndentedString(encryptedEnvelope)).append("\n");
+    sb.append("    groupEncryptedEnvelope: ").append(toIndentedString(groupEncryptedEnvelope)).append("\n");
     sb.append("    plaintextSignature: ").append(toIndentedString(plaintextSignature)).append("\n");
     sb.append("    plaintextSignerCert: ").append(toIndentedString(plaintextSignerCert)).append("\n");
     sb.append("}");
@@ -290,9 +324,14 @@ public class CreateConversationMessageRequest {
       }
     }
 
-    // add `is_encrypted` to the URL query string
-    if (getIsEncrypted() != null) {
-      joiner.add(String.format("%sis_encrypted%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getIsEncrypted()))));
+    // add `encrypted_envelope` to the URL query string
+    if (getEncryptedEnvelope() != null) {
+      joiner.add(getEncryptedEnvelope().toUrlQueryString(prefix + "encrypted_envelope" + suffix));
+    }
+
+    // add `group_encrypted_envelope` to the URL query string
+    if (getGroupEncryptedEnvelope() != null) {
+      joiner.add(getGroupEncryptedEnvelope().toUrlQueryString(prefix + "group_encrypted_envelope" + suffix));
     }
 
     // add `plaintext_signature` to the URL query string
@@ -302,7 +341,7 @@ public class CreateConversationMessageRequest {
 
     // add `plaintext_signer_cert` to the URL query string
     if (getPlaintextSignerCert() != null) {
-      joiner.add(String.format("%splaintext_signer_cert%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getPlaintextSignerCert()))));
+      joiner.add(getPlaintextSignerCert().toUrlQueryString(prefix + "plaintext_signer_cert" + suffix));
     }
 
     return joiner.toString();

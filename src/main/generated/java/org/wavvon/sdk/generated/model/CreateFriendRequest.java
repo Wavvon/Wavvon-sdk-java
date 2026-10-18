@@ -25,7 +25,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Arrays;
-import org.wavvon.sdk.generated.model.SignedMemberChange;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -34,72 +33,48 @@ import org.wavvon.sdk.generated.ApiClient;
  * CreateFriendRequest
  */
 @JsonPropertyOrder({
-  CreateFriendRequest.JSON_PROPERTY_PUBLIC_KEY,
-  CreateFriendRequest.JSON_PROPERTY_SIGNED,
-  CreateFriendRequest.JSON_PROPERTY_HUB_URL
+  CreateFriendRequest.JSON_PROPERTY_TARGET_PUBLIC_KEY,
+  CreateFriendRequest.JSON_PROPERTY_HUB_URL,
+  CreateFriendRequest.JSON_PROPERTY_DISPLAY_NAME
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class CreateFriendRequest {
-  public static final String JSON_PROPERTY_PUBLIC_KEY = "public_key";
+  public static final String JSON_PROPERTY_TARGET_PUBLIC_KEY = "target_public_key";
   @jakarta.annotation.Nonnull
-  private String publicKey;
-
-  public static final String JSON_PROPERTY_SIGNED = "signed";
-  @jakarta.annotation.Nullable
-  private SignedMemberChange signed;
+  private String targetPublicKey;
 
   public static final String JSON_PROPERTY_HUB_URL = "hub_url";
   @jakarta.annotation.Nullable
   private String hubUrl;
 
+  public static final String JSON_PROPERTY_DISPLAY_NAME = "display_name";
+  @jakarta.annotation.Nullable
+  private String displayName;
+
   public CreateFriendRequest() { 
   }
 
-  public CreateFriendRequest publicKey(@jakarta.annotation.Nonnull String publicKey) {
-    this.publicKey = publicKey;
+  public CreateFriendRequest targetPublicKey(@jakarta.annotation.Nonnull String targetPublicKey) {
+    this.targetPublicKey = targetPublicKey;
     return this;
   }
 
   /**
-   * Get publicKey
-   * @return publicKey
+   * Get targetPublicKey
+   * @return targetPublicKey
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_PUBLIC_KEY)
+  @JsonProperty(JSON_PROPERTY_TARGET_PUBLIC_KEY)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public String getPublicKey() {
-    return publicKey;
+  public String getTargetPublicKey() {
+    return targetPublicKey;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_PUBLIC_KEY)
+  @JsonProperty(JSON_PROPERTY_TARGET_PUBLIC_KEY)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setPublicKey(@jakarta.annotation.Nonnull String publicKey) {
-    this.publicKey = publicKey;
-  }
-
-
-  public CreateFriendRequest signed(@jakarta.annotation.Nullable SignedMemberChange signed) {
-    this.signed = signed;
-    return this;
-  }
-
-  /**
-   * Get signed
-   * @return signed
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_SIGNED)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public SignedMemberChange getSigned() {
-    return signed;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_SIGNED)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setSigned(@jakarta.annotation.Nullable SignedMemberChange signed) {
-    this.signed = signed;
+  public void setTargetPublicKey(@jakarta.annotation.Nonnull String targetPublicKey) {
+    this.targetPublicKey = targetPublicKey;
   }
 
 
@@ -127,6 +102,30 @@ public class CreateFriendRequest {
   }
 
 
+  public CreateFriendRequest displayName(@jakarta.annotation.Nullable String displayName) {
+    this.displayName = displayName;
+    return this;
+  }
+
+  /**
+   * Get displayName
+   * @return displayName
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_DISPLAY_NAME)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getDisplayName() {
+    return displayName;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_DISPLAY_NAME)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setDisplayName(@jakarta.annotation.Nullable String displayName) {
+    this.displayName = displayName;
+  }
+
+
   /**
    * Return true if this createFriend_request object is equal to o.
    */
@@ -139,23 +138,23 @@ public class CreateFriendRequest {
       return false;
     }
     CreateFriendRequest createFriendRequest = (CreateFriendRequest) o;
-    return Objects.equals(this.publicKey, createFriendRequest.publicKey) &&
-        Objects.equals(this.signed, createFriendRequest.signed) &&
-        Objects.equals(this.hubUrl, createFriendRequest.hubUrl);
+    return Objects.equals(this.targetPublicKey, createFriendRequest.targetPublicKey) &&
+        Objects.equals(this.hubUrl, createFriendRequest.hubUrl) &&
+        Objects.equals(this.displayName, createFriendRequest.displayName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(publicKey, signed, hubUrl);
+    return Objects.hash(targetPublicKey, hubUrl, displayName);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class CreateFriendRequest {\n");
-    sb.append("    publicKey: ").append(toIndentedString(publicKey)).append("\n");
-    sb.append("    signed: ").append(toIndentedString(signed)).append("\n");
+    sb.append("    targetPublicKey: ").append(toIndentedString(targetPublicKey)).append("\n");
     sb.append("    hubUrl: ").append(toIndentedString(hubUrl)).append("\n");
+    sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -203,19 +202,19 @@ public class CreateFriendRequest {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `public_key` to the URL query string
-    if (getPublicKey() != null) {
-      joiner.add(String.format("%spublic_key%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getPublicKey()))));
-    }
-
-    // add `signed` to the URL query string
-    if (getSigned() != null) {
-      joiner.add(getSigned().toUrlQueryString(prefix + "signed" + suffix));
+    // add `target_public_key` to the URL query string
+    if (getTargetPublicKey() != null) {
+      joiner.add(String.format("%starget_public_key%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getTargetPublicKey()))));
     }
 
     // add `hub_url` to the URL query string
     if (getHubUrl() != null) {
       joiner.add(String.format("%shub_url%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getHubUrl()))));
+    }
+
+    // add `display_name` to the URL query string
+    if (getDisplayName() != null) {
+      joiner.add(String.format("%sdisplay_name%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getDisplayName()))));
     }
 
     return joiner.toString();

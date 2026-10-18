@@ -94,7 +94,7 @@ public class WebhooksApi {
   /**
    * Create an incoming webhook for a channel (admin)
    * The returned &#x60;webhook_url&#x60; embeds the secret token and is shown **once** — only its hash is stored.
-   * @param createAdminWebhookRequest  (optional)
+   * @param createAdminWebhookRequest  (required)
    * @return CreateAdminWebhook201Response
    * @throws ApiException if fails to make API call
    */
@@ -106,7 +106,7 @@ public class WebhooksApi {
   /**
    * Create an incoming webhook for a channel (admin)
    * The returned &#x60;webhook_url&#x60; embeds the secret token and is shown **once** — only its hash is stored.
-   * @param createAdminWebhookRequest  (optional)
+   * @param createAdminWebhookRequest  (required)
    * @return ApiResponse&lt;CreateAdminWebhook201Response&gt;
    * @throws ApiException if fails to make API call
    */
@@ -151,6 +151,10 @@ public class WebhooksApi {
   }
 
   private HttpRequest.Builder createAdminWebhookRequestBuilder(CreateAdminWebhookRequest createAdminWebhookRequest) throws ApiException {
+    // verify the required parameter 'createAdminWebhookRequest' is set
+    if (createAdminWebhookRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createAdminWebhookRequest' when calling createAdminWebhook");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -257,7 +261,7 @@ public class WebhooksApi {
    * No Authorization header — the token in the URL is the credential (compared in constant time against the stored hash).
    * @param id  (required)
    * @param token  (required)
-   * @param executeWebhookRequest  (optional)
+   * @param executeWebhookRequest  (required)
    * @return ExecuteWebhook200Response
    * @throws ApiException if fails to make API call
    */
@@ -271,7 +275,7 @@ public class WebhooksApi {
    * No Authorization header — the token in the URL is the credential (compared in constant time against the stored hash).
    * @param id  (required)
    * @param token  (required)
-   * @param executeWebhookRequest  (optional)
+   * @param executeWebhookRequest  (required)
    * @return ApiResponse&lt;ExecuteWebhook200Response&gt;
    * @throws ApiException if fails to make API call
    */
@@ -323,6 +327,10 @@ public class WebhooksApi {
     // verify the required parameter 'token' is set
     if (token == null) {
       throw new ApiException(400, "Missing the required parameter 'token' when calling executeWebhook");
+    }
+    // verify the required parameter 'executeWebhookRequest' is set
+    if (executeWebhookRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'executeWebhookRequest' when calling executeWebhook");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();

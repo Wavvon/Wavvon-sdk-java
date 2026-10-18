@@ -169,7 +169,7 @@ public class RecoveryApi {
    * A recovery contact vouches for an open rotation request
    * The signature is over the canonical &#x60;wavvon/recovery-attestation/v1&#x60; bundle bytes. Signed with the **roster** identity key the hub knows the contact by, never a derived multi-device master key. Deduped per contact; reaching the owner&#39;s threshold flips the request from &#x60;pending&#x60; to &#x60;ready_for_review&#x60; for admin action.
    * @param id  (required)
-   * @param attestRecoveryRotationRequestRequest  (optional)
+   * @param attestRecoveryRotationRequestRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void attestRecoveryRotationRequest(String id, AttestRecoveryRotationRequestRequest attestRecoveryRotationRequestRequest) throws ApiException {
@@ -180,7 +180,7 @@ public class RecoveryApi {
    * A recovery contact vouches for an open rotation request
    * The signature is over the canonical &#x60;wavvon/recovery-attestation/v1&#x60; bundle bytes. Signed with the **roster** identity key the hub knows the contact by, never a derived multi-device master key. Deduped per contact; reaching the owner&#39;s threshold flips the request from &#x60;pending&#x60; to &#x60;ready_for_review&#x60; for admin action.
    * @param id  (required)
-   * @param attestRecoveryRotationRequestRequest  (optional)
+   * @param attestRecoveryRotationRequestRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -222,6 +222,10 @@ public class RecoveryApi {
     // verify the required parameter 'id' is set
     if (id == null) {
       throw new ApiException(400, "Missing the required parameter 'id' when calling attestRecoveryRotationRequest");
+    }
+    // verify the required parameter 'attestRecoveryRotationRequestRequest' is set
+    if (attestRecoveryRotationRequestRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'attestRecoveryRotationRequestRequest' when calling attestRecoveryRotationRequest");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -719,7 +723,7 @@ public class RecoveryApi {
   /**
    * Open a key-rotation request with inline attestations
    * Called by the NEW key — no Bearer token required. Attestations from configured recovery contacts are validated; once the count reaches the owner&#39;s threshold the request flips to &#x60;ready_for_review&#x60; for admin action.
-   * @param rotateRecoveryKeyRequest  (optional)
+   * @param rotateRecoveryKeyRequest  (required)
    * @return RotateRecoveryKey201Response
    * @throws ApiException if fails to make API call
    */
@@ -731,7 +735,7 @@ public class RecoveryApi {
   /**
    * Open a key-rotation request with inline attestations
    * Called by the NEW key — no Bearer token required. Attestations from configured recovery contacts are validated; once the count reaches the owner&#39;s threshold the request flips to &#x60;ready_for_review&#x60; for admin action.
-   * @param rotateRecoveryKeyRequest  (optional)
+   * @param rotateRecoveryKeyRequest  (required)
    * @return ApiResponse&lt;RotateRecoveryKey201Response&gt;
    * @throws ApiException if fails to make API call
    */
@@ -776,6 +780,10 @@ public class RecoveryApi {
   }
 
   private HttpRequest.Builder rotateRecoveryKeyRequestBuilder(RotateRecoveryKeyRequest rotateRecoveryKeyRequest) throws ApiException {
+    // verify the required parameter 'rotateRecoveryKeyRequest' is set
+    if (rotateRecoveryKeyRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'rotateRecoveryKeyRequest' when calling rotateRecoveryKey");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -804,7 +812,7 @@ public class RecoveryApi {
   /**
    * Replace the caller&#39;s recovery contact list
    * Max 5 contacts; threshold must be between 1 and the contact count; the caller cannot be their own contact.
-   * @param setRecoveryContactsRequest  (optional)
+   * @param setRecoveryContactsRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void setRecoveryContacts(SetRecoveryContactsRequest setRecoveryContactsRequest) throws ApiException {
@@ -814,7 +822,7 @@ public class RecoveryApi {
   /**
    * Replace the caller&#39;s recovery contact list
    * Max 5 contacts; threshold must be between 1 and the contact count; the caller cannot be their own contact.
-   * @param setRecoveryContactsRequest  (optional)
+   * @param setRecoveryContactsRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -853,6 +861,10 @@ public class RecoveryApi {
   }
 
   private HttpRequest.Builder setRecoveryContactsRequestBuilder(SetRecoveryContactsRequest setRecoveryContactsRequest) throws ApiException {
+    // verify the required parameter 'setRecoveryContactsRequest' is set
+    if (setRecoveryContactsRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'setRecoveryContactsRequest' when calling setRecoveryContacts");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 

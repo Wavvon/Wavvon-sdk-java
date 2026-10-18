@@ -54,7 +54,7 @@ public class IssueAdminBadgeRequest {
 
   public static final String JSON_PROPERTY_EXPIRES_DAYS = "expires_days";
   @jakarta.annotation.Nullable
-  private Long expiresDays;
+  private Integer expiresDays;
 
   public IssueAdminBadgeRequest() { 
   }
@@ -131,7 +131,7 @@ public class IssueAdminBadgeRequest {
   }
 
 
-  public IssueAdminBadgeRequest expiresDays(@jakarta.annotation.Nullable Long expiresDays) {
+  public IssueAdminBadgeRequest expiresDays(@jakarta.annotation.Nullable Integer expiresDays) {
     this.expiresDays = expiresDays;
     return this;
   }
@@ -143,14 +143,14 @@ public class IssueAdminBadgeRequest {
   @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_EXPIRES_DAYS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Long getExpiresDays() {
+  public Integer getExpiresDays() {
     return expiresDays;
   }
 
 
   @JsonProperty(JSON_PROPERTY_EXPIRES_DAYS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setExpiresDays(@jakarta.annotation.Nullable Long expiresDays) {
+  public void setExpiresDays(@jakarta.annotation.Nullable Integer expiresDays) {
     this.expiresDays = expiresDays;
   }
 

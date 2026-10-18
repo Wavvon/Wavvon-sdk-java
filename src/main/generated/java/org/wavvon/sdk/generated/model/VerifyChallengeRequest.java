@@ -33,14 +33,19 @@ import org.wavvon.sdk.generated.ApiClient;
  * VerifyChallengeRequest
  */
 @JsonPropertyOrder({
-  VerifyChallengeRequest.JSON_PROPERTY_CHALLENGE_ID,
+  VerifyChallengeRequest.JSON_PROPERTY_ID,
+  VerifyChallengeRequest.JSON_PROPERTY_PUBKEY,
   VerifyChallengeRequest.JSON_PROPERTY_ANSWER
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class VerifyChallengeRequest {
-  public static final String JSON_PROPERTY_CHALLENGE_ID = "challenge_id";
+  public static final String JSON_PROPERTY_ID = "id";
   @jakarta.annotation.Nonnull
-  private String challengeId;
+  private String id;
+
+  public static final String JSON_PROPERTY_PUBKEY = "pubkey";
+  @jakarta.annotation.Nonnull
+  private String pubkey;
 
   public static final String JSON_PROPERTY_ANSWER = "answer";
   @jakarta.annotation.Nullable
@@ -49,27 +54,51 @@ public class VerifyChallengeRequest {
   public VerifyChallengeRequest() { 
   }
 
-  public VerifyChallengeRequest challengeId(@jakarta.annotation.Nonnull String challengeId) {
-    this.challengeId = challengeId;
+  public VerifyChallengeRequest id(@jakarta.annotation.Nonnull String id) {
+    this.id = id;
     return this;
   }
 
   /**
-   * Get challengeId
-   * @return challengeId
+   * Get id
+   * @return id
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_CHALLENGE_ID)
+  @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public String getChallengeId() {
-    return challengeId;
+  public String getId() {
+    return id;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_CHALLENGE_ID)
+  @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setChallengeId(@jakarta.annotation.Nonnull String challengeId) {
-    this.challengeId = challengeId;
+  public void setId(@jakarta.annotation.Nonnull String id) {
+    this.id = id;
+  }
+
+
+  public VerifyChallengeRequest pubkey(@jakarta.annotation.Nonnull String pubkey) {
+    this.pubkey = pubkey;
+    return this;
+  }
+
+  /**
+   * Get pubkey
+   * @return pubkey
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_PUBKEY)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public String getPubkey() {
+    return pubkey;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_PUBKEY)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setPubkey(@jakarta.annotation.Nonnull String pubkey) {
+    this.pubkey = pubkey;
   }
 
 
@@ -109,20 +138,22 @@ public class VerifyChallengeRequest {
       return false;
     }
     VerifyChallengeRequest verifyChallengeRequest = (VerifyChallengeRequest) o;
-    return Objects.equals(this.challengeId, verifyChallengeRequest.challengeId) &&
+    return Objects.equals(this.id, verifyChallengeRequest.id) &&
+        Objects.equals(this.pubkey, verifyChallengeRequest.pubkey) &&
         Objects.equals(this.answer, verifyChallengeRequest.answer);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(challengeId, answer);
+    return Objects.hash(id, pubkey, answer);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class VerifyChallengeRequest {\n");
-    sb.append("    challengeId: ").append(toIndentedString(challengeId)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    pubkey: ").append(toIndentedString(pubkey)).append("\n");
     sb.append("    answer: ").append(toIndentedString(answer)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -171,9 +202,14 @@ public class VerifyChallengeRequest {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `challenge_id` to the URL query string
-    if (getChallengeId() != null) {
-      joiner.add(String.format("%schallenge_id%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getChallengeId()))));
+    // add `id` to the URL query string
+    if (getId() != null) {
+      joiner.add(String.format("%sid%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getId()))));
+    }
+
+    // add `pubkey` to the URL query string
+    if (getPubkey() != null) {
+      joiner.add(String.format("%spubkey%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getPubkey()))));
     }
 
     // add `answer` to the URL query string

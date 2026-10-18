@@ -18,17 +18,19 @@ import org.wavvon.sdk.generated.ApiResponse;
 import org.wavvon.sdk.generated.Configuration;
 import org.wavvon.sdk.generated.Pair;
 
+import org.wavvon.sdk.generated.model.AcceptPendingAllianceInviteRequest;
 import org.wavvon.sdk.generated.model.AllianceInfo;
+import org.wavvon.sdk.generated.model.CreateAllianceChannelMessageRequest;
 import org.wavvon.sdk.generated.model.CreateAllianceChannelPostReplyRequest;
 import org.wavvon.sdk.generated.model.CreateAllianceChannelPostRequest;
 import org.wavvon.sdk.generated.model.CreateAllianceChannelRequest;
 import org.wavvon.sdk.generated.model.CreateAlliancePushInviteRequest;
-import org.wavvon.sdk.generated.model.CreateAllianceRequest;
 import org.wavvon.sdk.generated.model.CreateAllianceVoiceGrant200Response;
 import org.wavvon.sdk.generated.model.CreateAllianceVoiceGrantRequest;
 import org.wavvon.sdk.generated.model.CreateChannelMessageReactionRequest;
 import org.wavvon.sdk.generated.model.FederationJoinAlliance200Response;
 import org.wavvon.sdk.generated.model.FederationJoinAllianceRequest;
+import org.wavvon.sdk.generated.model.JoinAllianceWithInviteRequest;
 import org.wavvon.sdk.generated.model.ListAllianceChannelPosts200Response;
 import org.wavvon.sdk.generated.model.ListAllianceManagers200ResponseInner;
 import org.wavvon.sdk.generated.model.ListAlliancePeople200ResponseInner;
@@ -36,6 +38,7 @@ import org.wavvon.sdk.generated.model.Message;
 import org.wavvon.sdk.generated.model.PostDetail;
 import org.wavvon.sdk.generated.model.ReplyView;
 import org.wavvon.sdk.generated.model.SetAlliancePeopleVisibilityRequest;
+import org.wavvon.sdk.generated.model.UpdateHubIconRequest;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -103,21 +106,23 @@ public class AlliancesApi {
    * Accept a pending alliance invite (manage_hub)
    * 
    * @param inviteId  (required)
+   * @param acceptPendingAllianceInviteRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void acceptPendingAllianceInvite(String inviteId) throws ApiException {
-    acceptPendingAllianceInviteWithHttpInfo(inviteId);
+  public void acceptPendingAllianceInvite(String inviteId, AcceptPendingAllianceInviteRequest acceptPendingAllianceInviteRequest) throws ApiException {
+    acceptPendingAllianceInviteWithHttpInfo(inviteId, acceptPendingAllianceInviteRequest);
   }
 
   /**
    * Accept a pending alliance invite (manage_hub)
    * 
    * @param inviteId  (required)
+   * @param acceptPendingAllianceInviteRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> acceptPendingAllianceInviteWithHttpInfo(String inviteId) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = acceptPendingAllianceInviteRequestBuilder(inviteId);
+  public ApiResponse<Void> acceptPendingAllianceInviteWithHttpInfo(String inviteId, AcceptPendingAllianceInviteRequest acceptPendingAllianceInviteRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = acceptPendingAllianceInviteRequestBuilder(inviteId, acceptPendingAllianceInviteRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -150,10 +155,14 @@ public class AlliancesApi {
     }
   }
 
-  private HttpRequest.Builder acceptPendingAllianceInviteRequestBuilder(String inviteId) throws ApiException {
+  private HttpRequest.Builder acceptPendingAllianceInviteRequestBuilder(String inviteId, AcceptPendingAllianceInviteRequest acceptPendingAllianceInviteRequest) throws ApiException {
     // verify the required parameter 'inviteId' is set
     if (inviteId == null) {
       throw new ApiException(400, "Missing the required parameter 'inviteId' when calling acceptPendingAllianceInvite");
+    }
+    // verify the required parameter 'acceptPendingAllianceInviteRequest' is set
+    if (acceptPendingAllianceInviteRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'acceptPendingAllianceInviteRequest' when calling acceptPendingAllianceInvite");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -163,9 +172,15 @@ public class AlliancesApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(acceptPendingAllianceInviteRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }
@@ -178,24 +193,24 @@ public class AlliancesApi {
   /**
    * Create an alliance (manage_hub)
    * 
-   * @param createAllianceRequest  (optional)
+   * @param updateHubIconRequest  (required)
    * @return AllianceInfo
    * @throws ApiException if fails to make API call
    */
-  public AllianceInfo createAlliance(CreateAllianceRequest createAllianceRequest) throws ApiException {
-    ApiResponse<AllianceInfo> localVarResponse = createAllianceWithHttpInfo(createAllianceRequest);
+  public AllianceInfo createAlliance(UpdateHubIconRequest updateHubIconRequest) throws ApiException {
+    ApiResponse<AllianceInfo> localVarResponse = createAllianceWithHttpInfo(updateHubIconRequest);
     return localVarResponse.getData();
   }
 
   /**
    * Create an alliance (manage_hub)
    * 
-   * @param createAllianceRequest  (optional)
+   * @param updateHubIconRequest  (required)
    * @return ApiResponse&lt;AllianceInfo&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<AllianceInfo> createAllianceWithHttpInfo(CreateAllianceRequest createAllianceRequest) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = createAllianceRequestBuilder(createAllianceRequest);
+  public ApiResponse<AllianceInfo> createAllianceWithHttpInfo(UpdateHubIconRequest updateHubIconRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = createAllianceRequestBuilder(updateHubIconRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -234,7 +249,11 @@ public class AlliancesApi {
     }
   }
 
-  private HttpRequest.Builder createAllianceRequestBuilder(CreateAllianceRequest createAllianceRequest) throws ApiException {
+  private HttpRequest.Builder createAllianceRequestBuilder(UpdateHubIconRequest updateHubIconRequest) throws ApiException {
+    // verify the required parameter 'updateHubIconRequest' is set
+    if (updateHubIconRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'updateHubIconRequest' when calling createAlliance");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -246,7 +265,7 @@ public class AlliancesApi {
     localVarRequestBuilder.header("Accept", "application/json");
 
     try {
-      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(createAllianceRequest);
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(updateHubIconRequest);
       localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
     } catch (IOException e) {
       throw new ApiException(e);
@@ -353,11 +372,12 @@ public class AlliancesApi {
    * 
    * @param allianceId  (required)
    * @param channelId  (required)
+   * @param createAllianceChannelMessageRequest  (required)
    * @return Message
    * @throws ApiException if fails to make API call
    */
-  public Message createAllianceChannelMessage(String allianceId, String channelId) throws ApiException {
-    ApiResponse<Message> localVarResponse = createAllianceChannelMessageWithHttpInfo(allianceId, channelId);
+  public Message createAllianceChannelMessage(String allianceId, String channelId, CreateAllianceChannelMessageRequest createAllianceChannelMessageRequest) throws ApiException {
+    ApiResponse<Message> localVarResponse = createAllianceChannelMessageWithHttpInfo(allianceId, channelId, createAllianceChannelMessageRequest);
     return localVarResponse.getData();
   }
 
@@ -366,11 +386,12 @@ public class AlliancesApi {
    * 
    * @param allianceId  (required)
    * @param channelId  (required)
+   * @param createAllianceChannelMessageRequest  (required)
    * @return ApiResponse&lt;Message&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Message> createAllianceChannelMessageWithHttpInfo(String allianceId, String channelId) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = createAllianceChannelMessageRequestBuilder(allianceId, channelId);
+  public ApiResponse<Message> createAllianceChannelMessageWithHttpInfo(String allianceId, String channelId, CreateAllianceChannelMessageRequest createAllianceChannelMessageRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = createAllianceChannelMessageRequestBuilder(allianceId, channelId, createAllianceChannelMessageRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -409,7 +430,7 @@ public class AlliancesApi {
     }
   }
 
-  private HttpRequest.Builder createAllianceChannelMessageRequestBuilder(String allianceId, String channelId) throws ApiException {
+  private HttpRequest.Builder createAllianceChannelMessageRequestBuilder(String allianceId, String channelId, CreateAllianceChannelMessageRequest createAllianceChannelMessageRequest) throws ApiException {
     // verify the required parameter 'allianceId' is set
     if (allianceId == null) {
       throw new ApiException(400, "Missing the required parameter 'allianceId' when calling createAllianceChannelMessage");
@@ -417,6 +438,10 @@ public class AlliancesApi {
     // verify the required parameter 'channelId' is set
     if (channelId == null) {
       throw new ApiException(400, "Missing the required parameter 'channelId' when calling createAllianceChannelMessage");
+    }
+    // verify the required parameter 'createAllianceChannelMessageRequest' is set
+    if (createAllianceChannelMessageRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createAllianceChannelMessageRequest' when calling createAllianceChannelMessage");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -427,9 +452,15 @@ public class AlliancesApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(createAllianceChannelMessageRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }
@@ -444,7 +475,7 @@ public class AlliancesApi {
    * Subject to the owning channel&#39;s &#x60;forum_remote_write&#x60; policy — &#x60;none&#x60;, &#x60;replies_only&#x60; (rejects this) or &#x60;posts_and_replies&#x60;.
    * @param allianceId  (required)
    * @param channelId  (required)
-   * @param createAllianceChannelPostRequest  (optional)
+   * @param createAllianceChannelPostRequest  (required)
    * @return PostDetail
    * @throws ApiException if fails to make API call
    */
@@ -458,7 +489,7 @@ public class AlliancesApi {
    * Subject to the owning channel&#39;s &#x60;forum_remote_write&#x60; policy — &#x60;none&#x60;, &#x60;replies_only&#x60; (rejects this) or &#x60;posts_and_replies&#x60;.
    * @param allianceId  (required)
    * @param channelId  (required)
-   * @param createAllianceChannelPostRequest  (optional)
+   * @param createAllianceChannelPostRequest  (required)
    * @return ApiResponse&lt;PostDetail&gt;
    * @throws ApiException if fails to make API call
    */
@@ -511,6 +542,10 @@ public class AlliancesApi {
     if (channelId == null) {
       throw new ApiException(400, "Missing the required parameter 'channelId' when calling createAllianceChannelPost");
     }
+    // verify the required parameter 'createAllianceChannelPostRequest' is set
+    if (createAllianceChannelPostRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createAllianceChannelPostRequest' when calling createAllianceChannelPost");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -544,7 +579,7 @@ public class AlliancesApi {
    * @param allianceId  (required)
    * @param channelId  (required)
    * @param postId  (required)
-   * @param createChannelMessageReactionRequest  (optional)
+   * @param createChannelMessageReactionRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void createAllianceChannelPostReaction(String allianceId, String channelId, String postId, CreateChannelMessageReactionRequest createChannelMessageReactionRequest) throws ApiException {
@@ -557,7 +592,7 @@ public class AlliancesApi {
    * @param allianceId  (required)
    * @param channelId  (required)
    * @param postId  (required)
-   * @param createChannelMessageReactionRequest  (optional)
+   * @param createChannelMessageReactionRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -608,6 +643,10 @@ public class AlliancesApi {
     if (postId == null) {
       throw new ApiException(400, "Missing the required parameter 'postId' when calling createAllianceChannelPostReaction");
     }
+    // verify the required parameter 'createChannelMessageReactionRequest' is set
+    if (createChannelMessageReactionRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createChannelMessageReactionRequest' when calling createAllianceChannelPostReaction");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -642,7 +681,7 @@ public class AlliancesApi {
    * @param allianceId  (required)
    * @param channelId  (required)
    * @param postId  (required)
-   * @param createAllianceChannelPostReplyRequest  (optional)
+   * @param createAllianceChannelPostReplyRequest  (required)
    * @return ReplyView
    * @throws ApiException if fails to make API call
    */
@@ -657,7 +696,7 @@ public class AlliancesApi {
    * @param allianceId  (required)
    * @param channelId  (required)
    * @param postId  (required)
-   * @param createAllianceChannelPostReplyRequest  (optional)
+   * @param createAllianceChannelPostReplyRequest  (required)
    * @return ApiResponse&lt;ReplyView&gt;
    * @throws ApiException if fails to make API call
    */
@@ -714,6 +753,10 @@ public class AlliancesApi {
     if (postId == null) {
       throw new ApiException(400, "Missing the required parameter 'postId' when calling createAllianceChannelPostReply");
     }
+    // verify the required parameter 'createAllianceChannelPostReplyRequest' is set
+    if (createAllianceChannelPostReplyRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createAllianceChannelPostReplyRequest' when calling createAllianceChannelPostReply");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -746,7 +789,7 @@ public class AlliancesApi {
    * Push a direct alliance invite to another hub (alliance manager)
    * 
    * @param allianceId  (required)
-   * @param createAlliancePushInviteRequest  (optional)
+   * @param createAlliancePushInviteRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void createAlliancePushInvite(String allianceId, CreateAlliancePushInviteRequest createAlliancePushInviteRequest) throws ApiException {
@@ -757,7 +800,7 @@ public class AlliancesApi {
    * Push a direct alliance invite to another hub (alliance manager)
    * 
    * @param allianceId  (required)
-   * @param createAlliancePushInviteRequest  (optional)
+   * @param createAlliancePushInviteRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -799,6 +842,10 @@ public class AlliancesApi {
     // verify the required parameter 'allianceId' is set
     if (allianceId == null) {
       throw new ApiException(400, "Missing the required parameter 'allianceId' when calling createAlliancePushInvite");
+    }
+    // verify the required parameter 'createAlliancePushInviteRequest' is set
+    if (createAlliancePushInviteRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createAlliancePushInviteRequest' when calling createAlliancePushInvite");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -1355,7 +1402,7 @@ public class AlliancesApi {
    * Remote hub joins an alliance with an invite token
    * Hub-to-hub, with the joining hub&#39;s peer session (&#x60;is_hub&#x60; authentication). The invite token is single-use and expires after seven days; hub_url must answer for the authenticated key. Answers with a voucher the new member presents to the other members (&#x60;POST /federation/alliance-member&#x60;).
    * @param allianceId  (required)
-   * @param federationJoinAllianceRequest  (optional)
+   * @param federationJoinAllianceRequest  (required)
    * @return FederationJoinAlliance200Response
    * @throws ApiException if fails to make API call
    */
@@ -1368,7 +1415,7 @@ public class AlliancesApi {
    * Remote hub joins an alliance with an invite token
    * Hub-to-hub, with the joining hub&#39;s peer session (&#x60;is_hub&#x60; authentication). The invite token is single-use and expires after seven days; hub_url must answer for the authenticated key. Answers with a voucher the new member presents to the other members (&#x60;POST /federation/alliance-member&#x60;).
    * @param allianceId  (required)
-   * @param federationJoinAllianceRequest  (optional)
+   * @param federationJoinAllianceRequest  (required)
    * @return ApiResponse&lt;FederationJoinAlliance200Response&gt;
    * @throws ApiException if fails to make API call
    */
@@ -1416,6 +1463,10 @@ public class AlliancesApi {
     // verify the required parameter 'allianceId' is set
     if (allianceId == null) {
       throw new ApiException(400, "Missing the required parameter 'allianceId' when calling federationJoinAlliance");
+    }
+    // verify the required parameter 'federationJoinAllianceRequest' is set
+    if (federationJoinAllianceRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'federationJoinAllianceRequest' when calling federationJoinAlliance");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -1696,20 +1747,22 @@ public class AlliancesApi {
   /**
    * Join an alliance via invite token (manage_hub)
    * 
+   * @param joinAllianceWithInviteRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void joinAllianceWithInvite() throws ApiException {
-    joinAllianceWithInviteWithHttpInfo();
+  public void joinAllianceWithInvite(JoinAllianceWithInviteRequest joinAllianceWithInviteRequest) throws ApiException {
+    joinAllianceWithInviteWithHttpInfo(joinAllianceWithInviteRequest);
   }
 
   /**
    * Join an alliance via invite token (manage_hub)
    * 
+   * @param joinAllianceWithInviteRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> joinAllianceWithInviteWithHttpInfo() throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = joinAllianceWithInviteRequestBuilder();
+  public ApiResponse<Void> joinAllianceWithInviteWithHttpInfo(JoinAllianceWithInviteRequest joinAllianceWithInviteRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = joinAllianceWithInviteRequestBuilder(joinAllianceWithInviteRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -1742,7 +1795,11 @@ public class AlliancesApi {
     }
   }
 
-  private HttpRequest.Builder joinAllianceWithInviteRequestBuilder() throws ApiException {
+  private HttpRequest.Builder joinAllianceWithInviteRequestBuilder(JoinAllianceWithInviteRequest joinAllianceWithInviteRequest) throws ApiException {
+    // verify the required parameter 'joinAllianceWithInviteRequest' is set
+    if (joinAllianceWithInviteRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'joinAllianceWithInviteRequest' when calling joinAllianceWithInvite");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -1750,9 +1807,15 @@ public class AlliancesApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(joinAllianceWithInviteRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }

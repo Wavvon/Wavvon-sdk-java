@@ -24,7 +24,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import org.wavvon.sdk.generated.model.CreateSlotRequest;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -38,7 +41,11 @@ import org.wavvon.sdk.generated.ApiClient;
   CreateEventRequest.JSON_PROPERTY_DESCRIPTION,
   CreateEventRequest.JSON_PROPERTY_STARTS_AT,
   CreateEventRequest.JSON_PROPERTY_ENDS_AT,
-  CreateEventRequest.JSON_PROPERTY_LOCATION
+  CreateEventRequest.JSON_PROPERTY_LOCATION,
+  CreateEventRequest.JSON_PROPERTY_REMINDER_MINUTES,
+  CreateEventRequest.JSON_PROPERTY_SLOTS,
+  CreateEventRequest.JSON_PROPERTY_HUB_WIDE,
+  CreateEventRequest.JSON_PROPERTY_PROPAGATE_TO_CHILDREN
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class CreateEventRequest {
@@ -65,6 +72,22 @@ public class CreateEventRequest {
   public static final String JSON_PROPERTY_LOCATION = "location";
   @jakarta.annotation.Nullable
   private String location;
+
+  public static final String JSON_PROPERTY_REMINDER_MINUTES = "reminder_minutes";
+  @jakarta.annotation.Nullable
+  private Long reminderMinutes;
+
+  public static final String JSON_PROPERTY_SLOTS = "slots";
+  @jakarta.annotation.Nullable
+  private List<CreateSlotRequest> slots = new ArrayList<>();
+
+  public static final String JSON_PROPERTY_HUB_WIDE = "hub_wide";
+  @jakarta.annotation.Nullable
+  private Boolean hubWide;
+
+  public static final String JSON_PROPERTY_PROPAGATE_TO_CHILDREN = "propagate_to_children";
+  @jakarta.annotation.Nullable
+  private Boolean propagateToChildren;
 
   public CreateEventRequest() { 
   }
@@ -213,6 +236,110 @@ public class CreateEventRequest {
   }
 
 
+  public CreateEventRequest reminderMinutes(@jakarta.annotation.Nullable Long reminderMinutes) {
+    this.reminderMinutes = reminderMinutes;
+    return this;
+  }
+
+  /**
+   * Get reminderMinutes
+   * @return reminderMinutes
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_REMINDER_MINUTES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Long getReminderMinutes() {
+    return reminderMinutes;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_REMINDER_MINUTES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setReminderMinutes(@jakarta.annotation.Nullable Long reminderMinutes) {
+    this.reminderMinutes = reminderMinutes;
+  }
+
+
+  public CreateEventRequest slots(@jakarta.annotation.Nullable List<CreateSlotRequest> slots) {
+    this.slots = slots;
+    return this;
+  }
+
+  public CreateEventRequest addSlotsItem(CreateSlotRequest slotsItem) {
+    if (this.slots == null) {
+      this.slots = new ArrayList<>();
+    }
+    this.slots.add(slotsItem);
+    return this;
+  }
+
+  /**
+   * Get slots
+   * @return slots
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_SLOTS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public List<CreateSlotRequest> getSlots() {
+    return slots;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_SLOTS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setSlots(@jakarta.annotation.Nullable List<CreateSlotRequest> slots) {
+    this.slots = slots;
+  }
+
+
+  public CreateEventRequest hubWide(@jakarta.annotation.Nullable Boolean hubWide) {
+    this.hubWide = hubWide;
+    return this;
+  }
+
+  /**
+   * Get hubWide
+   * @return hubWide
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_HUB_WIDE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Boolean getHubWide() {
+    return hubWide;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_HUB_WIDE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setHubWide(@jakarta.annotation.Nullable Boolean hubWide) {
+    this.hubWide = hubWide;
+  }
+
+
+  public CreateEventRequest propagateToChildren(@jakarta.annotation.Nullable Boolean propagateToChildren) {
+    this.propagateToChildren = propagateToChildren;
+    return this;
+  }
+
+  /**
+   * Get propagateToChildren
+   * @return propagateToChildren
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_PROPAGATE_TO_CHILDREN)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Boolean getPropagateToChildren() {
+    return propagateToChildren;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_PROPAGATE_TO_CHILDREN)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setPropagateToChildren(@jakarta.annotation.Nullable Boolean propagateToChildren) {
+    this.propagateToChildren = propagateToChildren;
+  }
+
+
   /**
    * Return true if this createEvent_request object is equal to o.
    */
@@ -230,12 +357,16 @@ public class CreateEventRequest {
         Objects.equals(this.description, createEventRequest.description) &&
         Objects.equals(this.startsAt, createEventRequest.startsAt) &&
         Objects.equals(this.endsAt, createEventRequest.endsAt) &&
-        Objects.equals(this.location, createEventRequest.location);
+        Objects.equals(this.location, createEventRequest.location) &&
+        Objects.equals(this.reminderMinutes, createEventRequest.reminderMinutes) &&
+        Objects.equals(this.slots, createEventRequest.slots) &&
+        Objects.equals(this.hubWide, createEventRequest.hubWide) &&
+        Objects.equals(this.propagateToChildren, createEventRequest.propagateToChildren);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(channelId, title, description, startsAt, endsAt, location);
+    return Objects.hash(channelId, title, description, startsAt, endsAt, location, reminderMinutes, slots, hubWide, propagateToChildren);
   }
 
   @Override
@@ -248,6 +379,10 @@ public class CreateEventRequest {
     sb.append("    startsAt: ").append(toIndentedString(startsAt)).append("\n");
     sb.append("    endsAt: ").append(toIndentedString(endsAt)).append("\n");
     sb.append("    location: ").append(toIndentedString(location)).append("\n");
+    sb.append("    reminderMinutes: ").append(toIndentedString(reminderMinutes)).append("\n");
+    sb.append("    slots: ").append(toIndentedString(slots)).append("\n");
+    sb.append("    hubWide: ").append(toIndentedString(hubWide)).append("\n");
+    sb.append("    propagateToChildren: ").append(toIndentedString(propagateToChildren)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -323,6 +458,31 @@ public class CreateEventRequest {
     // add `location` to the URL query string
     if (getLocation() != null) {
       joiner.add(String.format("%slocation%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getLocation()))));
+    }
+
+    // add `reminder_minutes` to the URL query string
+    if (getReminderMinutes() != null) {
+      joiner.add(String.format("%sreminder_minutes%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getReminderMinutes()))));
+    }
+
+    // add `slots` to the URL query string
+    if (getSlots() != null) {
+      for (int i = 0; i < getSlots().size(); i++) {
+        if (getSlots().get(i) != null) {
+          joiner.add(getSlots().get(i).toUrlQueryString(String.format("%sslots%s%s", prefix, suffix,
+          "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix))));
+        }
+      }
+    }
+
+    // add `hub_wide` to the URL query string
+    if (getHubWide() != null) {
+      joiner.add(String.format("%shub_wide%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getHubWide()))));
+    }
+
+    // add `propagate_to_children` to the URL query string
+    if (getPropagateToChildren() != null) {
+      joiner.add(String.format("%spropagate_to_children%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getPropagateToChildren()))));
     }
 
     return joiner.toString();

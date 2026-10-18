@@ -25,6 +25,7 @@ import org.wavvon.sdk.generated.model.ListPermissions200Response;
 import org.wavvon.sdk.generated.model.Role;
 import org.wavvon.sdk.generated.model.RoleCategory;
 import org.wavvon.sdk.generated.model.UpdateRoleCategoryRequest;
+import org.wavvon.sdk.generated.model.UpdateRoleRequest;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -91,7 +92,7 @@ public class RolesApi {
   /**
    * Create a role (manage_roles)
    * 
-   * @param createRoleRequest  (optional)
+   * @param createRoleRequest  (required)
    * @return Role
    * @throws ApiException if fails to make API call
    */
@@ -103,7 +104,7 @@ public class RolesApi {
   /**
    * Create a role (manage_roles)
    * 
-   * @param createRoleRequest  (optional)
+   * @param createRoleRequest  (required)
    * @return ApiResponse&lt;Role&gt;
    * @throws ApiException if fails to make API call
    */
@@ -148,6 +149,10 @@ public class RolesApi {
   }
 
   private HttpRequest.Builder createRoleRequestBuilder(CreateRoleRequest createRoleRequest) throws ApiException {
+    // verify the required parameter 'createRoleRequest' is set
+    if (createRoleRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createRoleRequest' when calling createRole");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -176,7 +181,7 @@ public class RolesApi {
   /**
    * Create a role category (manage_roles)
    * 
-   * @param createRoleCategoryRequest  (optional)
+   * @param createRoleCategoryRequest  (required)
    * @return RoleCategory
    * @throws ApiException if fails to make API call
    */
@@ -188,7 +193,7 @@ public class RolesApi {
   /**
    * Create a role category (manage_roles)
    * 
-   * @param createRoleCategoryRequest  (optional)
+   * @param createRoleCategoryRequest  (required)
    * @return ApiResponse&lt;RoleCategory&gt;
    * @throws ApiException if fails to make API call
    */
@@ -233,6 +238,10 @@ public class RolesApi {
   }
 
   private HttpRequest.Builder createRoleCategoryRequestBuilder(CreateRoleCategoryRequest createRoleCategoryRequest) throws ApiException {
+    // verify the required parameter 'createRoleCategoryRequest' is set
+    if (createRoleCategoryRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createRoleCategoryRequest' when calling createRoleCategory");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -1088,11 +1097,12 @@ public class RolesApi {
    * Update a role (manage_roles)
    * 
    * @param roleId  (required)
+   * @param updateRoleRequest  (required)
    * @return Role
    * @throws ApiException if fails to make API call
    */
-  public Role updateRole(String roleId) throws ApiException {
-    ApiResponse<Role> localVarResponse = updateRoleWithHttpInfo(roleId);
+  public Role updateRole(String roleId, UpdateRoleRequest updateRoleRequest) throws ApiException {
+    ApiResponse<Role> localVarResponse = updateRoleWithHttpInfo(roleId, updateRoleRequest);
     return localVarResponse.getData();
   }
 
@@ -1100,11 +1110,12 @@ public class RolesApi {
    * Update a role (manage_roles)
    * 
    * @param roleId  (required)
+   * @param updateRoleRequest  (required)
    * @return ApiResponse&lt;Role&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Role> updateRoleWithHttpInfo(String roleId) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = updateRoleRequestBuilder(roleId);
+  public ApiResponse<Role> updateRoleWithHttpInfo(String roleId, UpdateRoleRequest updateRoleRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = updateRoleRequestBuilder(roleId, updateRoleRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -1143,10 +1154,14 @@ public class RolesApi {
     }
   }
 
-  private HttpRequest.Builder updateRoleRequestBuilder(String roleId) throws ApiException {
+  private HttpRequest.Builder updateRoleRequestBuilder(String roleId, UpdateRoleRequest updateRoleRequest) throws ApiException {
     // verify the required parameter 'roleId' is set
     if (roleId == null) {
       throw new ApiException(400, "Missing the required parameter 'roleId' when calling updateRole");
+    }
+    // verify the required parameter 'updateRoleRequest' is set
+    if (updateRoleRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'updateRoleRequest' when calling updateRole");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -1156,9 +1171,15 @@ public class RolesApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("PATCH", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(updateRoleRequest);
+      localVarRequestBuilder.method("PATCH", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }
@@ -1172,7 +1193,7 @@ public class RolesApi {
    * Update a role category (manage_roles)
    * 
    * @param categoryId  (required)
-   * @param updateRoleCategoryRequest  (optional)
+   * @param updateRoleCategoryRequest  (required)
    * @return RoleCategory
    * @throws ApiException if fails to make API call
    */
@@ -1185,7 +1206,7 @@ public class RolesApi {
    * Update a role category (manage_roles)
    * 
    * @param categoryId  (required)
-   * @param updateRoleCategoryRequest  (optional)
+   * @param updateRoleCategoryRequest  (required)
    * @return ApiResponse&lt;RoleCategory&gt;
    * @throws ApiException if fails to make API call
    */
@@ -1233,6 +1254,10 @@ public class RolesApi {
     // verify the required parameter 'categoryId' is set
     if (categoryId == null) {
       throw new ApiException(400, "Missing the required parameter 'categoryId' when calling updateRoleCategory");
+    }
+    // verify the required parameter 'updateRoleCategoryRequest' is set
+    if (updateRoleCategoryRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'updateRoleCategoryRequest' when calling updateRoleCategory");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();

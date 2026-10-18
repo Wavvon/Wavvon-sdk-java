@@ -40,21 +40,21 @@ import org.wavvon.sdk.generated.ApiClient;
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class Attachment {
   public static final String JSON_PROPERTY_NAME = "name";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private String name;
 
   public static final String JSON_PROPERTY_MIME = "mime";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private String mime;
 
   public static final String JSON_PROPERTY_DATA_B64 = "data_b64";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private String dataB64;
 
   public Attachment() { 
   }
 
-  public Attachment name(@jakarta.annotation.Nullable String name) {
+  public Attachment name(@jakarta.annotation.Nonnull String name) {
     this.name = name;
     return this;
   }
@@ -63,22 +63,22 @@ public class Attachment {
    * Get name
    * @return name
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_NAME)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getName() {
     return name;
   }
 
 
   @JsonProperty(JSON_PROPERTY_NAME)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setName(@jakarta.annotation.Nullable String name) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setName(@jakarta.annotation.Nonnull String name) {
     this.name = name;
   }
 
 
-  public Attachment mime(@jakarta.annotation.Nullable String mime) {
+  public Attachment mime(@jakarta.annotation.Nonnull String mime) {
     this.mime = mime;
     return this;
   }
@@ -87,22 +87,22 @@ public class Attachment {
    * Get mime
    * @return mime
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_MIME)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getMime() {
     return mime;
   }
 
 
   @JsonProperty(JSON_PROPERTY_MIME)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setMime(@jakarta.annotation.Nullable String mime) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setMime(@jakarta.annotation.Nonnull String mime) {
     this.mime = mime;
   }
 
 
-  public Attachment dataB64(@jakarta.annotation.Nullable String dataB64) {
+  public Attachment dataB64(@jakarta.annotation.Nonnull String dataB64) {
     this.dataB64 = dataB64;
     return this;
   }
@@ -111,17 +111,17 @@ public class Attachment {
    * Get dataB64
    * @return dataB64
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_DATA_B64)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getDataB64() {
     return dataB64;
   }
 
 
   @JsonProperty(JSON_PROPERTY_DATA_B64)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setDataB64(@jakarta.annotation.Nullable String dataB64) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setDataB64(@jakarta.annotation.Nonnull String dataB64) {
     this.dataB64 = dataB64;
   }
 

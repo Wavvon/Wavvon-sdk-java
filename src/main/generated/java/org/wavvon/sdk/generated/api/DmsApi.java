@@ -92,7 +92,7 @@ public class DmsApi {
   /**
    * Create a DM conversation
    * 
-   * @param createConversationRequest  (optional)
+   * @param createConversationRequest  (required)
    * @return Conversation
    * @throws ApiException if fails to make API call
    */
@@ -104,7 +104,7 @@ public class DmsApi {
   /**
    * Create a DM conversation
    * 
-   * @param createConversationRequest  (optional)
+   * @param createConversationRequest  (required)
    * @return ApiResponse&lt;Conversation&gt;
    * @throws ApiException if fails to make API call
    */
@@ -149,6 +149,10 @@ public class DmsApi {
   }
 
   private HttpRequest.Builder createConversationRequestBuilder(CreateConversationRequest createConversationRequest) throws ApiException {
+    // verify the required parameter 'createConversationRequest' is set
+    if (createConversationRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createConversationRequest' when calling createConversation");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -178,7 +182,7 @@ public class DmsApi {
    * Add a member to a group conversation (members only; not 1-on-1 DMs)
    * 
    * @param conversationId  (required)
-   * @param createConversationMemberRequest  (optional)
+   * @param createConversationMemberRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void createConversationMember(String conversationId, CreateConversationMemberRequest createConversationMemberRequest) throws ApiException {
@@ -189,7 +193,7 @@ public class DmsApi {
    * Add a member to a group conversation (members only; not 1-on-1 DMs)
    * 
    * @param conversationId  (required)
-   * @param createConversationMemberRequest  (optional)
+   * @param createConversationMemberRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -232,6 +236,10 @@ public class DmsApi {
     if (conversationId == null) {
       throw new ApiException(400, "Missing the required parameter 'conversationId' when calling createConversationMember");
     }
+    // verify the required parameter 'createConversationMemberRequest' is set
+    if (createConversationMemberRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createConversationMemberRequest' when calling createConversationMember");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -262,7 +270,7 @@ public class DmsApi {
    * Send a DM
    * 
    * @param conversationId  (required)
-   * @param createConversationMessageRequest  (optional)
+   * @param createConversationMessageRequest  (required)
    * @return DmMessage
    * @throws ApiException if fails to make API call
    */
@@ -275,7 +283,7 @@ public class DmsApi {
    * Send a DM
    * 
    * @param conversationId  (required)
-   * @param createConversationMessageRequest  (optional)
+   * @param createConversationMessageRequest  (required)
    * @return ApiResponse&lt;DmMessage&gt;
    * @throws ApiException if fails to make API call
    */
@@ -323,6 +331,10 @@ public class DmsApi {
     // verify the required parameter 'conversationId' is set
     if (conversationId == null) {
       throw new ApiException(400, "Missing the required parameter 'conversationId' when calling createConversationMessage");
+    }
+    // verify the required parameter 'createConversationMessageRequest' is set
+    if (createConversationMessageRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createConversationMessageRequest' when calling createConversationMessage");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -816,7 +828,7 @@ public class DmsApi {
    * Distribute the caller&#39;s group sender key (group conversations only)
    * 
    * @param conversationId  (required)
-   * @param setConversationSenderKeysRequest  (optional)
+   * @param setConversationSenderKeysRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void setConversationSenderKeys(String conversationId, SetConversationSenderKeysRequest setConversationSenderKeysRequest) throws ApiException {
@@ -827,7 +839,7 @@ public class DmsApi {
    * Distribute the caller&#39;s group sender key (group conversations only)
    * 
    * @param conversationId  (required)
-   * @param setConversationSenderKeysRequest  (optional)
+   * @param setConversationSenderKeysRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -869,6 +881,10 @@ public class DmsApi {
     // verify the required parameter 'conversationId' is set
     if (conversationId == null) {
       throw new ApiException(400, "Missing the required parameter 'conversationId' when calling setConversationSenderKeys");
+    }
+    // verify the required parameter 'setConversationSenderKeysRequest' is set
+    if (setConversationSenderKeysRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'setConversationSenderKeysRequest' when calling setConversationSenderKeys");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();

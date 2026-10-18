@@ -33,67 +33,38 @@ import org.wavvon.sdk.generated.ApiClient;
  * SubmitLobbyPowRequest
  */
 @JsonPropertyOrder({
-  SubmitLobbyPowRequest.JSON_PROPERTY_NONCE,
-  SubmitLobbyPowRequest.JSON_PROPERTY_CLAIMED_LEVEL
+  SubmitLobbyPowRequest.JSON_PROPERTY_POW_PROOF
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class SubmitLobbyPowRequest {
-  public static final String JSON_PROPERTY_NONCE = "nonce";
+  public static final String JSON_PROPERTY_POW_PROOF = "pow_proof";
   @jakarta.annotation.Nonnull
-  private Long nonce;
-
-  public static final String JSON_PROPERTY_CLAIMED_LEVEL = "claimed_level";
-  @jakarta.annotation.Nonnull
-  private Long claimedLevel;
+  private String powProof;
 
   public SubmitLobbyPowRequest() { 
   }
 
-  public SubmitLobbyPowRequest nonce(@jakarta.annotation.Nonnull Long nonce) {
-    this.nonce = nonce;
+  public SubmitLobbyPowRequest powProof(@jakarta.annotation.Nonnull String powProof) {
+    this.powProof = powProof;
     return this;
   }
 
   /**
-   * Get nonce
-   * @return nonce
+   * Get powProof
+   * @return powProof
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_NONCE)
+  @JsonProperty(JSON_PROPERTY_POW_PROOF)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public Long getNonce() {
-    return nonce;
+  public String getPowProof() {
+    return powProof;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_NONCE)
+  @JsonProperty(JSON_PROPERTY_POW_PROOF)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setNonce(@jakarta.annotation.Nonnull Long nonce) {
-    this.nonce = nonce;
-  }
-
-
-  public SubmitLobbyPowRequest claimedLevel(@jakarta.annotation.Nonnull Long claimedLevel) {
-    this.claimedLevel = claimedLevel;
-    return this;
-  }
-
-  /**
-   * Get claimedLevel
-   * @return claimedLevel
-   */
-  @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_CLAIMED_LEVEL)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public Long getClaimedLevel() {
-    return claimedLevel;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_CLAIMED_LEVEL)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setClaimedLevel(@jakarta.annotation.Nonnull Long claimedLevel) {
-    this.claimedLevel = claimedLevel;
+  public void setPowProof(@jakarta.annotation.Nonnull String powProof) {
+    this.powProof = powProof;
   }
 
 
@@ -109,21 +80,19 @@ public class SubmitLobbyPowRequest {
       return false;
     }
     SubmitLobbyPowRequest submitLobbyPowRequest = (SubmitLobbyPowRequest) o;
-    return Objects.equals(this.nonce, submitLobbyPowRequest.nonce) &&
-        Objects.equals(this.claimedLevel, submitLobbyPowRequest.claimedLevel);
+    return Objects.equals(this.powProof, submitLobbyPowRequest.powProof);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(nonce, claimedLevel);
+    return Objects.hash(powProof);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class SubmitLobbyPowRequest {\n");
-    sb.append("    nonce: ").append(toIndentedString(nonce)).append("\n");
-    sb.append("    claimedLevel: ").append(toIndentedString(claimedLevel)).append("\n");
+    sb.append("    powProof: ").append(toIndentedString(powProof)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -171,14 +140,9 @@ public class SubmitLobbyPowRequest {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `nonce` to the URL query string
-    if (getNonce() != null) {
-      joiner.add(String.format("%snonce%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getNonce()))));
-    }
-
-    // add `claimed_level` to the URL query string
-    if (getClaimedLevel() != null) {
-      joiner.add(String.format("%sclaimed_level%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getClaimedLevel()))));
+    // add `pow_proof` to the URL query string
+    if (getPowProof() != null) {
+      joiner.add(String.format("%spow_proof%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getPowProof()))));
     }
 
     return joiner.toString();

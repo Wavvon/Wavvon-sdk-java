@@ -24,7 +24,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import org.wavvon.sdk.generated.model.CreateAllianceChannelPostRequestAttachmentsInner;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -34,7 +37,9 @@ import org.wavvon.sdk.generated.ApiClient;
  */
 @JsonPropertyOrder({
   CreateAllianceChannelPostRequest.JSON_PROPERTY_TITLE,
-  CreateAllianceChannelPostRequest.JSON_PROPERTY_BODY
+  CreateAllianceChannelPostRequest.JSON_PROPERTY_BODY,
+  CreateAllianceChannelPostRequest.JSON_PROPERTY_ATTACHMENTS,
+  CreateAllianceChannelPostRequest.JSON_PROPERTY_TAG_IDS
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class CreateAllianceChannelPostRequest {
@@ -45,6 +50,14 @@ public class CreateAllianceChannelPostRequest {
   public static final String JSON_PROPERTY_BODY = "body";
   @jakarta.annotation.Nonnull
   private String body;
+
+  public static final String JSON_PROPERTY_ATTACHMENTS = "attachments";
+  @jakarta.annotation.Nullable
+  private List<CreateAllianceChannelPostRequestAttachmentsInner> attachments = new ArrayList<>();
+
+  public static final String JSON_PROPERTY_TAG_IDS = "tag_ids";
+  @jakarta.annotation.Nullable
+  private List<String> tagIds = new ArrayList<>();
 
   public CreateAllianceChannelPostRequest() { 
   }
@@ -97,6 +110,70 @@ public class CreateAllianceChannelPostRequest {
   }
 
 
+  public CreateAllianceChannelPostRequest attachments(@jakarta.annotation.Nullable List<CreateAllianceChannelPostRequestAttachmentsInner> attachments) {
+    this.attachments = attachments;
+    return this;
+  }
+
+  public CreateAllianceChannelPostRequest addAttachmentsItem(CreateAllianceChannelPostRequestAttachmentsInner attachmentsItem) {
+    if (this.attachments == null) {
+      this.attachments = new ArrayList<>();
+    }
+    this.attachments.add(attachmentsItem);
+    return this;
+  }
+
+  /**
+   * Get attachments
+   * @return attachments
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_ATTACHMENTS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public List<CreateAllianceChannelPostRequestAttachmentsInner> getAttachments() {
+    return attachments;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_ATTACHMENTS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setAttachments(@jakarta.annotation.Nullable List<CreateAllianceChannelPostRequestAttachmentsInner> attachments) {
+    this.attachments = attachments;
+  }
+
+
+  public CreateAllianceChannelPostRequest tagIds(@jakarta.annotation.Nullable List<String> tagIds) {
+    this.tagIds = tagIds;
+    return this;
+  }
+
+  public CreateAllianceChannelPostRequest addTagIdsItem(String tagIdsItem) {
+    if (this.tagIds == null) {
+      this.tagIds = new ArrayList<>();
+    }
+    this.tagIds.add(tagIdsItem);
+    return this;
+  }
+
+  /**
+   * Get tagIds
+   * @return tagIds
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_TAG_IDS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public List<String> getTagIds() {
+    return tagIds;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_TAG_IDS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setTagIds(@jakarta.annotation.Nullable List<String> tagIds) {
+    this.tagIds = tagIds;
+  }
+
+
   /**
    * Return true if this createAllianceChannelPost_request object is equal to o.
    */
@@ -110,12 +187,14 @@ public class CreateAllianceChannelPostRequest {
     }
     CreateAllianceChannelPostRequest createAllianceChannelPostRequest = (CreateAllianceChannelPostRequest) o;
     return Objects.equals(this.title, createAllianceChannelPostRequest.title) &&
-        Objects.equals(this.body, createAllianceChannelPostRequest.body);
+        Objects.equals(this.body, createAllianceChannelPostRequest.body) &&
+        Objects.equals(this.attachments, createAllianceChannelPostRequest.attachments) &&
+        Objects.equals(this.tagIds, createAllianceChannelPostRequest.tagIds);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(title, body);
+    return Objects.hash(title, body, attachments, tagIds);
   }
 
   @Override
@@ -124,6 +203,8 @@ public class CreateAllianceChannelPostRequest {
     sb.append("class CreateAllianceChannelPostRequest {\n");
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
     sb.append("    body: ").append(toIndentedString(body)).append("\n");
+    sb.append("    attachments: ").append(toIndentedString(attachments)).append("\n");
+    sb.append("    tagIds: ").append(toIndentedString(tagIds)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -179,6 +260,25 @@ public class CreateAllianceChannelPostRequest {
     // add `body` to the URL query string
     if (getBody() != null) {
       joiner.add(String.format("%sbody%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getBody()))));
+    }
+
+    // add `attachments` to the URL query string
+    if (getAttachments() != null) {
+      for (int i = 0; i < getAttachments().size(); i++) {
+        if (getAttachments().get(i) != null) {
+          joiner.add(getAttachments().get(i).toUrlQueryString(String.format("%sattachments%s%s", prefix, suffix,
+          "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix))));
+        }
+      }
+    }
+
+    // add `tag_ids` to the URL query string
+    if (getTagIds() != null) {
+      for (int i = 0; i < getTagIds().size(); i++) {
+        joiner.add(String.format("%stag_ids%s%s=%s", prefix, suffix,
+            "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix),
+            ApiClient.urlEncode(ApiClient.valueToString(getTagIds().get(i)))));
+      }
     }
 
     return joiner.toString();

@@ -24,8 +24,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.ArrayList;
 import java.util.Arrays;
-import org.wavvon.sdk.generated.model.VerifyAuthRequestAllianceVoiceGrant;
+import java.util.List;
+import org.wavvon.sdk.generated.model.AllianceVoiceGrant;
+import org.wavvon.sdk.generated.model.Certification;
+import org.wavvon.sdk.generated.model.PowProof;
+import org.wavvon.sdk.generated.model.SubkeyCert;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -40,9 +45,11 @@ import org.wavvon.sdk.generated.ApiClient;
   VerifyAuthRequest.JSON_PROPERTY_INVITE_CODE,
   VerifyAuthRequest.JSON_PROPERTY_SECURITY_NONCE,
   VerifyAuthRequest.JSON_PROPERTY_SECURITY_LEVEL,
+  VerifyAuthRequest.JSON_PROPERTY_POW_PROOF,
   VerifyAuthRequest.JSON_PROPERTY_SUBKEY_CERT,
   VerifyAuthRequest.JSON_PROPERTY_CHALLENGE_TOKEN,
   VerifyAuthRequest.JSON_PROPERTY_IS_HUB,
+  VerifyAuthRequest.JSON_PROPERTY_CERTIFICATIONS,
   VerifyAuthRequest.JSON_PROPERTY_ALLIANCE_VOICE_GRANT
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
@@ -69,11 +76,15 @@ public class VerifyAuthRequest {
 
   public static final String JSON_PROPERTY_SECURITY_LEVEL = "security_level";
   @jakarta.annotation.Nullable
-  private Long securityLevel;
+  private Integer securityLevel;
+
+  public static final String JSON_PROPERTY_POW_PROOF = "pow_proof";
+  @jakarta.annotation.Nullable
+  private PowProof powProof;
 
   public static final String JSON_PROPERTY_SUBKEY_CERT = "subkey_cert";
   @jakarta.annotation.Nullable
-  private Object subkeyCert;
+  private SubkeyCert subkeyCert;
 
   public static final String JSON_PROPERTY_CHALLENGE_TOKEN = "challenge_token";
   @jakarta.annotation.Nullable
@@ -83,9 +94,13 @@ public class VerifyAuthRequest {
   @jakarta.annotation.Nullable
   private Boolean isHub;
 
+  public static final String JSON_PROPERTY_CERTIFICATIONS = "certifications";
+  @jakarta.annotation.Nullable
+  private List<Certification> certifications = new ArrayList<>();
+
   public static final String JSON_PROPERTY_ALLIANCE_VOICE_GRANT = "alliance_voice_grant";
   @jakarta.annotation.Nullable
-  private VerifyAuthRequestAllianceVoiceGrant allianceVoiceGrant;
+  private AllianceVoiceGrant allianceVoiceGrant;
 
   public VerifyAuthRequest() { 
   }
@@ -210,7 +225,7 @@ public class VerifyAuthRequest {
   }
 
 
-  public VerifyAuthRequest securityLevel(@jakarta.annotation.Nullable Long securityLevel) {
+  public VerifyAuthRequest securityLevel(@jakarta.annotation.Nullable Integer securityLevel) {
     this.securityLevel = securityLevel;
     return this;
   }
@@ -222,19 +237,43 @@ public class VerifyAuthRequest {
   @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_SECURITY_LEVEL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Long getSecurityLevel() {
+  public Integer getSecurityLevel() {
     return securityLevel;
   }
 
 
   @JsonProperty(JSON_PROPERTY_SECURITY_LEVEL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setSecurityLevel(@jakarta.annotation.Nullable Long securityLevel) {
+  public void setSecurityLevel(@jakarta.annotation.Nullable Integer securityLevel) {
     this.securityLevel = securityLevel;
   }
 
 
-  public VerifyAuthRequest subkeyCert(@jakarta.annotation.Nullable Object subkeyCert) {
+  public VerifyAuthRequest powProof(@jakarta.annotation.Nullable PowProof powProof) {
+    this.powProof = powProof;
+    return this;
+  }
+
+  /**
+   * Get powProof
+   * @return powProof
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_POW_PROOF)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public PowProof getPowProof() {
+    return powProof;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_POW_PROOF)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setPowProof(@jakarta.annotation.Nullable PowProof powProof) {
+    this.powProof = powProof;
+  }
+
+
+  public VerifyAuthRequest subkeyCert(@jakarta.annotation.Nullable SubkeyCert subkeyCert) {
     this.subkeyCert = subkeyCert;
     return this;
   }
@@ -246,14 +285,14 @@ public class VerifyAuthRequest {
   @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_SUBKEY_CERT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Object getSubkeyCert() {
+  public SubkeyCert getSubkeyCert() {
     return subkeyCert;
   }
 
 
   @JsonProperty(JSON_PROPERTY_SUBKEY_CERT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setSubkeyCert(@jakarta.annotation.Nullable Object subkeyCert) {
+  public void setSubkeyCert(@jakarta.annotation.Nullable SubkeyCert subkeyCert) {
     this.subkeyCert = subkeyCert;
   }
 
@@ -306,26 +345,58 @@ public class VerifyAuthRequest {
   }
 
 
-  public VerifyAuthRequest allianceVoiceGrant(@jakarta.annotation.Nullable VerifyAuthRequestAllianceVoiceGrant allianceVoiceGrant) {
+  public VerifyAuthRequest certifications(@jakarta.annotation.Nullable List<Certification> certifications) {
+    this.certifications = certifications;
+    return this;
+  }
+
+  public VerifyAuthRequest addCertificationsItem(Certification certificationsItem) {
+    if (this.certifications == null) {
+      this.certifications = new ArrayList<>();
+    }
+    this.certifications.add(certificationsItem);
+    return this;
+  }
+
+  /**
+   * Get certifications
+   * @return certifications
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CERTIFICATIONS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public List<Certification> getCertifications() {
+    return certifications;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_CERTIFICATIONS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setCertifications(@jakarta.annotation.Nullable List<Certification> certifications) {
+    this.certifications = certifications;
+  }
+
+
+  public VerifyAuthRequest allianceVoiceGrant(@jakarta.annotation.Nullable AllianceVoiceGrant allianceVoiceGrant) {
     this.allianceVoiceGrant = allianceVoiceGrant;
     return this;
   }
 
   /**
-   * Get allianceVoiceGrant
+   * Voice in alliance channels: an origin hub&#39;s signed assertion that the caller is its member and the named channel is shared with an alliance this hub belongs to. Minted by &#x60;POST /alliances/{alliance_id}/voice-grant&#x60; on the caller&#39;s own hub.  Admits a **visitor** — a session scoped to &#x60;alliance_voice&#x60;, with no &#x60;users&#x60; row on this hub, no roles and no message access. Ignored for a caller who is already a member here, who gets their normal session.  Requires the &#x60;voice.alliance&#x60; capability on this hub. 
    * @return allianceVoiceGrant
    */
   @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_ALLIANCE_VOICE_GRANT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public VerifyAuthRequestAllianceVoiceGrant getAllianceVoiceGrant() {
+  public AllianceVoiceGrant getAllianceVoiceGrant() {
     return allianceVoiceGrant;
   }
 
 
   @JsonProperty(JSON_PROPERTY_ALLIANCE_VOICE_GRANT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setAllianceVoiceGrant(@jakarta.annotation.Nullable VerifyAuthRequestAllianceVoiceGrant allianceVoiceGrant) {
+  public void setAllianceVoiceGrant(@jakarta.annotation.Nullable AllianceVoiceGrant allianceVoiceGrant) {
     this.allianceVoiceGrant = allianceVoiceGrant;
   }
 
@@ -348,15 +419,17 @@ public class VerifyAuthRequest {
         Objects.equals(this.inviteCode, verifyAuthRequest.inviteCode) &&
         Objects.equals(this.securityNonce, verifyAuthRequest.securityNonce) &&
         Objects.equals(this.securityLevel, verifyAuthRequest.securityLevel) &&
+        Objects.equals(this.powProof, verifyAuthRequest.powProof) &&
         Objects.equals(this.subkeyCert, verifyAuthRequest.subkeyCert) &&
         Objects.equals(this.challengeToken, verifyAuthRequest.challengeToken) &&
         Objects.equals(this.isHub, verifyAuthRequest.isHub) &&
+        Objects.equals(this.certifications, verifyAuthRequest.certifications) &&
         Objects.equals(this.allianceVoiceGrant, verifyAuthRequest.allianceVoiceGrant);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(publicKey, challenge, signature, inviteCode, securityNonce, securityLevel, subkeyCert, challengeToken, isHub, allianceVoiceGrant);
+    return Objects.hash(publicKey, challenge, signature, inviteCode, securityNonce, securityLevel, powProof, subkeyCert, challengeToken, isHub, certifications, allianceVoiceGrant);
   }
 
   @Override
@@ -369,9 +442,11 @@ public class VerifyAuthRequest {
     sb.append("    inviteCode: ").append(toIndentedString(inviteCode)).append("\n");
     sb.append("    securityNonce: ").append(toIndentedString(securityNonce)).append("\n");
     sb.append("    securityLevel: ").append(toIndentedString(securityLevel)).append("\n");
+    sb.append("    powProof: ").append(toIndentedString(powProof)).append("\n");
     sb.append("    subkeyCert: ").append(toIndentedString(subkeyCert)).append("\n");
     sb.append("    challengeToken: ").append(toIndentedString(challengeToken)).append("\n");
     sb.append("    isHub: ").append(toIndentedString(isHub)).append("\n");
+    sb.append("    certifications: ").append(toIndentedString(certifications)).append("\n");
     sb.append("    allianceVoiceGrant: ").append(toIndentedString(allianceVoiceGrant)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -450,9 +525,14 @@ public class VerifyAuthRequest {
       joiner.add(String.format("%ssecurity_level%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getSecurityLevel()))));
     }
 
+    // add `pow_proof` to the URL query string
+    if (getPowProof() != null) {
+      joiner.add(getPowProof().toUrlQueryString(prefix + "pow_proof" + suffix));
+    }
+
     // add `subkey_cert` to the URL query string
     if (getSubkeyCert() != null) {
-      joiner.add(String.format("%ssubkey_cert%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getSubkeyCert()))));
+      joiner.add(getSubkeyCert().toUrlQueryString(prefix + "subkey_cert" + suffix));
     }
 
     // add `challenge_token` to the URL query string
@@ -463,6 +543,16 @@ public class VerifyAuthRequest {
     // add `is_hub` to the URL query string
     if (getIsHub() != null) {
       joiner.add(String.format("%sis_hub%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getIsHub()))));
+    }
+
+    // add `certifications` to the URL query string
+    if (getCertifications() != null) {
+      for (int i = 0; i < getCertifications().size(); i++) {
+        if (getCertifications().get(i) != null) {
+          joiner.add(getCertifications().get(i).toUrlQueryString(String.format("%scertifications%s%s", prefix, suffix,
+          "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix))));
+        }
+      }
     }
 
     // add `alliance_voice_grant` to the URL query string

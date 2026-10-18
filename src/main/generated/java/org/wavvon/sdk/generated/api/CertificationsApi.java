@@ -91,7 +91,7 @@ public class CertificationsApi {
    * Grant a named achievement badge to a user (admin)
    * A badge is a certification carrying a label (+ optional description/icon); it lands in the user&#39;s portfolio and links back to this hub via issuer_url.
    * @param pubkey  (required)
-   * @param createAdminCertBadgeRequest  (optional)
+   * @param createAdminCertBadgeRequest  (required)
    * @return Certification
    * @throws ApiException if fails to make API call
    */
@@ -104,7 +104,7 @@ public class CertificationsApi {
    * Grant a named achievement badge to a user (admin)
    * A badge is a certification carrying a label (+ optional description/icon); it lands in the user&#39;s portfolio and links back to this hub via issuer_url.
    * @param pubkey  (required)
-   * @param createAdminCertBadgeRequest  (optional)
+   * @param createAdminCertBadgeRequest  (required)
    * @return ApiResponse&lt;Certification&gt;
    * @throws ApiException if fails to make API call
    */
@@ -152,6 +152,10 @@ public class CertificationsApi {
     // verify the required parameter 'pubkey' is set
     if (pubkey == null) {
       throw new ApiException(400, "Missing the required parameter 'pubkey' when calling createAdminCertBadge");
+    }
+    // verify the required parameter 'createAdminCertBadgeRequest' is set
+    if (createAdminCertBadgeRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createAdminCertBadgeRequest' when calling createAdminCertBadge");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -674,7 +678,7 @@ public class CertificationsApi {
   /**
    * Update certification settings (admin)
    * All fields optional. Scalars are accepted as strings, booleans or numbers and stored as text; &#x60;cert_min_age_days&#x60; is an accepted alias for &#x60;cert_standing_days&#x60;, which is what GET calls the same setting.
-   * @param updateAdminSettingsCertsRequest  (optional)
+   * @param updateAdminSettingsCertsRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void updateAdminSettingsCerts(UpdateAdminSettingsCertsRequest updateAdminSettingsCertsRequest) throws ApiException {
@@ -684,7 +688,7 @@ public class CertificationsApi {
   /**
    * Update certification settings (admin)
    * All fields optional. Scalars are accepted as strings, booleans or numbers and stored as text; &#x60;cert_min_age_days&#x60; is an accepted alias for &#x60;cert_standing_days&#x60;, which is what GET calls the same setting.
-   * @param updateAdminSettingsCertsRequest  (optional)
+   * @param updateAdminSettingsCertsRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -723,6 +727,10 @@ public class CertificationsApi {
   }
 
   private HttpRequest.Builder updateAdminSettingsCertsRequestBuilder(UpdateAdminSettingsCertsRequest updateAdminSettingsCertsRequest) throws ApiException {
+    // verify the required parameter 'updateAdminSettingsCertsRequest' is set
+    if (updateAdminSettingsCertsRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'updateAdminSettingsCertsRequest' when calling updateAdminSettingsCerts");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 

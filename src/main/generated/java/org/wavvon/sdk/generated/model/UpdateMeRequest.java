@@ -24,7 +24,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import org.wavvon.sdk.generated.model.FavoriteHub;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -35,7 +38,17 @@ import org.wavvon.sdk.generated.ApiClient;
 @JsonPropertyOrder({
   UpdateMeRequest.JSON_PROPERTY_DISPLAY_NAME,
   UpdateMeRequest.JSON_PROPERTY_AVATAR,
-  UpdateMeRequest.JSON_PROPERTY_FINDABLE_BY_ALLIES
+  UpdateMeRequest.JSON_PROPERTY_BIO,
+  UpdateMeRequest.JSON_PROPERTY_PRONOUNS,
+  UpdateMeRequest.JSON_PROPERTY_STATUS_MESSAGE,
+  UpdateMeRequest.JSON_PROPERTY_ACTIVITIES,
+  UpdateMeRequest.JSON_PROPERTY_ACCENT_COLOR,
+  UpdateMeRequest.JSON_PROPERTY_COVER,
+  UpdateMeRequest.JSON_PROPERTY_FAVORITE_HUBS,
+  UpdateMeRequest.JSON_PROPERTY_SHOW_HUBS,
+  UpdateMeRequest.JSON_PROPERTY_FINDABLE_BY_ALLIES,
+  UpdateMeRequest.JSON_PROPERTY_BIRTHDAY,
+  UpdateMeRequest.JSON_PROPERTY_NAME_COLOR
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class UpdateMeRequest {
@@ -47,9 +60,49 @@ public class UpdateMeRequest {
   @jakarta.annotation.Nullable
   private String avatar;
 
+  public static final String JSON_PROPERTY_BIO = "bio";
+  @jakarta.annotation.Nullable
+  private String bio;
+
+  public static final String JSON_PROPERTY_PRONOUNS = "pronouns";
+  @jakarta.annotation.Nullable
+  private String pronouns;
+
+  public static final String JSON_PROPERTY_STATUS_MESSAGE = "status_message";
+  @jakarta.annotation.Nullable
+  private String statusMessage;
+
+  public static final String JSON_PROPERTY_ACTIVITIES = "activities";
+  @jakarta.annotation.Nullable
+  private String activities;
+
+  public static final String JSON_PROPERTY_ACCENT_COLOR = "accent_color";
+  @jakarta.annotation.Nullable
+  private String accentColor;
+
+  public static final String JSON_PROPERTY_COVER = "cover";
+  @jakarta.annotation.Nullable
+  private String cover;
+
+  public static final String JSON_PROPERTY_FAVORITE_HUBS = "favorite_hubs";
+  @jakarta.annotation.Nullable
+  private List<FavoriteHub> favoriteHubs = new ArrayList<>();
+
+  public static final String JSON_PROPERTY_SHOW_HUBS = "show_hubs";
+  @jakarta.annotation.Nullable
+  private Boolean showHubs;
+
   public static final String JSON_PROPERTY_FINDABLE_BY_ALLIES = "findable_by_allies";
   @jakarta.annotation.Nullable
   private Boolean findableByAllies;
+
+  public static final String JSON_PROPERTY_BIRTHDAY = "birthday";
+  @jakarta.annotation.Nullable
+  private String birthday;
+
+  public static final String JSON_PROPERTY_NAME_COLOR = "name_color";
+  @jakarta.annotation.Nullable
+  private String nameColor;
 
   public UpdateMeRequest() { 
   }
@@ -102,6 +155,206 @@ public class UpdateMeRequest {
   }
 
 
+  public UpdateMeRequest bio(@jakarta.annotation.Nullable String bio) {
+    this.bio = bio;
+    return this;
+  }
+
+  /**
+   * Get bio
+   * @return bio
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_BIO)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getBio() {
+    return bio;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_BIO)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setBio(@jakarta.annotation.Nullable String bio) {
+    this.bio = bio;
+  }
+
+
+  public UpdateMeRequest pronouns(@jakarta.annotation.Nullable String pronouns) {
+    this.pronouns = pronouns;
+    return this;
+  }
+
+  /**
+   * Get pronouns
+   * @return pronouns
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_PRONOUNS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getPronouns() {
+    return pronouns;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_PRONOUNS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setPronouns(@jakarta.annotation.Nullable String pronouns) {
+    this.pronouns = pronouns;
+  }
+
+
+  public UpdateMeRequest statusMessage(@jakarta.annotation.Nullable String statusMessage) {
+    this.statusMessage = statusMessage;
+    return this;
+  }
+
+  /**
+   * Get statusMessage
+   * @return statusMessage
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_STATUS_MESSAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getStatusMessage() {
+    return statusMessage;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_STATUS_MESSAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setStatusMessage(@jakarta.annotation.Nullable String statusMessage) {
+    this.statusMessage = statusMessage;
+  }
+
+
+  public UpdateMeRequest activities(@jakarta.annotation.Nullable String activities) {
+    this.activities = activities;
+    return this;
+  }
+
+  /**
+   * Get activities
+   * @return activities
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_ACTIVITIES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getActivities() {
+    return activities;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_ACTIVITIES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setActivities(@jakarta.annotation.Nullable String activities) {
+    this.activities = activities;
+  }
+
+
+  public UpdateMeRequest accentColor(@jakarta.annotation.Nullable String accentColor) {
+    this.accentColor = accentColor;
+    return this;
+  }
+
+  /**
+   * Get accentColor
+   * @return accentColor
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_ACCENT_COLOR)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getAccentColor() {
+    return accentColor;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_ACCENT_COLOR)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setAccentColor(@jakarta.annotation.Nullable String accentColor) {
+    this.accentColor = accentColor;
+  }
+
+
+  public UpdateMeRequest cover(@jakarta.annotation.Nullable String cover) {
+    this.cover = cover;
+    return this;
+  }
+
+  /**
+   * Get cover
+   * @return cover
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_COVER)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getCover() {
+    return cover;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_COVER)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setCover(@jakarta.annotation.Nullable String cover) {
+    this.cover = cover;
+  }
+
+
+  public UpdateMeRequest favoriteHubs(@jakarta.annotation.Nullable List<FavoriteHub> favoriteHubs) {
+    this.favoriteHubs = favoriteHubs;
+    return this;
+  }
+
+  public UpdateMeRequest addFavoriteHubsItem(FavoriteHub favoriteHubsItem) {
+    if (this.favoriteHubs == null) {
+      this.favoriteHubs = new ArrayList<>();
+    }
+    this.favoriteHubs.add(favoriteHubsItem);
+    return this;
+  }
+
+  /**
+   * Get favoriteHubs
+   * @return favoriteHubs
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_FAVORITE_HUBS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public List<FavoriteHub> getFavoriteHubs() {
+    return favoriteHubs;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_FAVORITE_HUBS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setFavoriteHubs(@jakarta.annotation.Nullable List<FavoriteHub> favoriteHubs) {
+    this.favoriteHubs = favoriteHubs;
+  }
+
+
+  public UpdateMeRequest showHubs(@jakarta.annotation.Nullable Boolean showHubs) {
+    this.showHubs = showHubs;
+    return this;
+  }
+
+  /**
+   * Get showHubs
+   * @return showHubs
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_SHOW_HUBS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Boolean getShowHubs() {
+    return showHubs;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_SHOW_HUBS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setShowHubs(@jakarta.annotation.Nullable Boolean showHubs) {
+    this.showHubs = showHubs;
+  }
+
+
   public UpdateMeRequest findableByAllies(@jakarta.annotation.Nullable Boolean findableByAllies) {
     this.findableByAllies = findableByAllies;
     return this;
@@ -126,6 +379,54 @@ public class UpdateMeRequest {
   }
 
 
+  public UpdateMeRequest birthday(@jakarta.annotation.Nullable String birthday) {
+    this.birthday = birthday;
+    return this;
+  }
+
+  /**
+   * Get birthday
+   * @return birthday
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_BIRTHDAY)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getBirthday() {
+    return birthday;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_BIRTHDAY)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setBirthday(@jakarta.annotation.Nullable String birthday) {
+    this.birthday = birthday;
+  }
+
+
+  public UpdateMeRequest nameColor(@jakarta.annotation.Nullable String nameColor) {
+    this.nameColor = nameColor;
+    return this;
+  }
+
+  /**
+   * Get nameColor
+   * @return nameColor
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_NAME_COLOR)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getNameColor() {
+    return nameColor;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_NAME_COLOR)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setNameColor(@jakarta.annotation.Nullable String nameColor) {
+    this.nameColor = nameColor;
+  }
+
+
   /**
    * Return true if this updateMe_request object is equal to o.
    */
@@ -140,12 +441,22 @@ public class UpdateMeRequest {
     UpdateMeRequest updateMeRequest = (UpdateMeRequest) o;
     return Objects.equals(this.displayName, updateMeRequest.displayName) &&
         Objects.equals(this.avatar, updateMeRequest.avatar) &&
-        Objects.equals(this.findableByAllies, updateMeRequest.findableByAllies);
+        Objects.equals(this.bio, updateMeRequest.bio) &&
+        Objects.equals(this.pronouns, updateMeRequest.pronouns) &&
+        Objects.equals(this.statusMessage, updateMeRequest.statusMessage) &&
+        Objects.equals(this.activities, updateMeRequest.activities) &&
+        Objects.equals(this.accentColor, updateMeRequest.accentColor) &&
+        Objects.equals(this.cover, updateMeRequest.cover) &&
+        Objects.equals(this.favoriteHubs, updateMeRequest.favoriteHubs) &&
+        Objects.equals(this.showHubs, updateMeRequest.showHubs) &&
+        Objects.equals(this.findableByAllies, updateMeRequest.findableByAllies) &&
+        Objects.equals(this.birthday, updateMeRequest.birthday) &&
+        Objects.equals(this.nameColor, updateMeRequest.nameColor);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(displayName, avatar, findableByAllies);
+    return Objects.hash(displayName, avatar, bio, pronouns, statusMessage, activities, accentColor, cover, favoriteHubs, showHubs, findableByAllies, birthday, nameColor);
   }
 
   @Override
@@ -154,7 +465,17 @@ public class UpdateMeRequest {
     sb.append("class UpdateMeRequest {\n");
     sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n");
     sb.append("    avatar: ").append(toIndentedString(avatar)).append("\n");
+    sb.append("    bio: ").append(toIndentedString(bio)).append("\n");
+    sb.append("    pronouns: ").append(toIndentedString(pronouns)).append("\n");
+    sb.append("    statusMessage: ").append(toIndentedString(statusMessage)).append("\n");
+    sb.append("    activities: ").append(toIndentedString(activities)).append("\n");
+    sb.append("    accentColor: ").append(toIndentedString(accentColor)).append("\n");
+    sb.append("    cover: ").append(toIndentedString(cover)).append("\n");
+    sb.append("    favoriteHubs: ").append(toIndentedString(favoriteHubs)).append("\n");
+    sb.append("    showHubs: ").append(toIndentedString(showHubs)).append("\n");
     sb.append("    findableByAllies: ").append(toIndentedString(findableByAllies)).append("\n");
+    sb.append("    birthday: ").append(toIndentedString(birthday)).append("\n");
+    sb.append("    nameColor: ").append(toIndentedString(nameColor)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -212,9 +533,64 @@ public class UpdateMeRequest {
       joiner.add(String.format("%savatar%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getAvatar()))));
     }
 
+    // add `bio` to the URL query string
+    if (getBio() != null) {
+      joiner.add(String.format("%sbio%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getBio()))));
+    }
+
+    // add `pronouns` to the URL query string
+    if (getPronouns() != null) {
+      joiner.add(String.format("%spronouns%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getPronouns()))));
+    }
+
+    // add `status_message` to the URL query string
+    if (getStatusMessage() != null) {
+      joiner.add(String.format("%sstatus_message%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getStatusMessage()))));
+    }
+
+    // add `activities` to the URL query string
+    if (getActivities() != null) {
+      joiner.add(String.format("%sactivities%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getActivities()))));
+    }
+
+    // add `accent_color` to the URL query string
+    if (getAccentColor() != null) {
+      joiner.add(String.format("%saccent_color%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getAccentColor()))));
+    }
+
+    // add `cover` to the URL query string
+    if (getCover() != null) {
+      joiner.add(String.format("%scover%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCover()))));
+    }
+
+    // add `favorite_hubs` to the URL query string
+    if (getFavoriteHubs() != null) {
+      for (int i = 0; i < getFavoriteHubs().size(); i++) {
+        if (getFavoriteHubs().get(i) != null) {
+          joiner.add(getFavoriteHubs().get(i).toUrlQueryString(String.format("%sfavorite_hubs%s%s", prefix, suffix,
+          "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix))));
+        }
+      }
+    }
+
+    // add `show_hubs` to the URL query string
+    if (getShowHubs() != null) {
+      joiner.add(String.format("%sshow_hubs%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getShowHubs()))));
+    }
+
     // add `findable_by_allies` to the URL query string
     if (getFindableByAllies() != null) {
       joiner.add(String.format("%sfindable_by_allies%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getFindableByAllies()))));
+    }
+
+    // add `birthday` to the URL query string
+    if (getBirthday() != null) {
+      joiner.add(String.format("%sbirthday%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getBirthday()))));
+    }
+
+    // add `name_color` to the URL query string
+    if (getNameColor() != null) {
+      joiner.add(String.format("%sname_color%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getNameColor()))));
     }
 
     return joiner.toString();

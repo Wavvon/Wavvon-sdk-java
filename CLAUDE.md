@@ -37,12 +37,10 @@ in the commit message.
    openapi-generator (`java` generator, `native` HttpClient library, Jackson)
    output from Wavvon-docs `openapi.yaml`, produced by `scripts/generate`
    through the `generate` Maven profile. Committed; build-helper adds it as a
-   source root. `src/main/generated/SPEC_COMMIT` records the docs commit; a
-   `+Name` suffix means the script patched the spec before generating.
-   `+int64`: every integer without a `format` is widened to int64, because the
-   hub sends i64 (message `created_at` is milliseconds) and the generator reads
-   a bare integer as `Integer`. A missing schema can be patched with
-   `patch_gap`; delete the patch once the spec is fixed. The script also
+   source root. `src/main/generated/SPEC_COMMIT` records the docs commit.
+   The spec is used unpatched: every integer the hub sends as i64 carries
+   `format: int64` there (a bare integer becomes `Integer`), and a spec the
+   generator cannot use is a Wavvon-docs bug. The script only
    rewrites the generated response decoding to UTF-8 (the templates use the
    platform charset). Never edit the generated code by hand.
 2. **Hand-written core** - `src/main/java/org/wavvon/sdk`:

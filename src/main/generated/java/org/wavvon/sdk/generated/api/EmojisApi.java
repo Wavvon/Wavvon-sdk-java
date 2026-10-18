@@ -86,7 +86,7 @@ public class EmojisApi {
   /**
    * Upload a custom emoji (admin)
    * 
-   * @param createAdminEmojiRequest  (optional)
+   * @param createAdminEmojiRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void createAdminEmoji(CreateAdminEmojiRequest createAdminEmojiRequest) throws ApiException {
@@ -96,7 +96,7 @@ public class EmojisApi {
   /**
    * Upload a custom emoji (admin)
    * 
-   * @param createAdminEmojiRequest  (optional)
+   * @param createAdminEmojiRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -135,6 +135,10 @@ public class EmojisApi {
   }
 
   private HttpRequest.Builder createAdminEmojiRequestBuilder(CreateAdminEmojiRequest createAdminEmojiRequest) throws ApiException {
+    // verify the required parameter 'createAdminEmojiRequest' is set
+    if (createAdminEmojiRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createAdminEmojiRequest' when calling createAdminEmoji");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 

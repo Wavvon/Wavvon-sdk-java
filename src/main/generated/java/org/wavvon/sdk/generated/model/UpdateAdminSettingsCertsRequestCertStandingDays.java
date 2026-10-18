@@ -84,30 +84,30 @@ public class UpdateAdminSettingsCertsRequestCertStandingDays extends AbstractOpe
             boolean typeCoercion = ctxt.isEnabled(MapperFeature.ALLOW_COERCION_OF_SCALARS);
             int match = 0;
             JsonToken token = tree.traverse(jp.getCodec()).nextToken();
-            // deserialize Long
+            // deserialize Integer
             try {
                 boolean attemptParsing = true;
                 // ensure that we respect type coercion as set on the client ObjectMapper
-                if (Long.class.equals(Integer.class) || Long.class.equals(Long.class) || Long.class.equals(Float.class) || Long.class.equals(Double.class) || Long.class.equals(Boolean.class) || Long.class.equals(String.class)) {
+                if (Integer.class.equals(Integer.class) || Integer.class.equals(Long.class) || Integer.class.equals(Float.class) || Integer.class.equals(Double.class) || Integer.class.equals(Boolean.class) || Integer.class.equals(String.class)) {
                     attemptParsing = typeCoercion;
                     if (!attemptParsing) {
-                        attemptParsing |= ((Long.class.equals(Integer.class) || Long.class.equals(Long.class)) && token == JsonToken.VALUE_NUMBER_INT);
-                        attemptParsing |= ((Long.class.equals(Float.class) || Long.class.equals(Double.class)) && token == JsonToken.VALUE_NUMBER_FLOAT);
-                        attemptParsing |= (Long.class.equals(Boolean.class) && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
-                        attemptParsing |= (Long.class.equals(String.class) && token == JsonToken.VALUE_STRING);
+                        attemptParsing |= ((Integer.class.equals(Integer.class) || Integer.class.equals(Long.class)) && token == JsonToken.VALUE_NUMBER_INT);
+                        attemptParsing |= ((Integer.class.equals(Float.class) || Integer.class.equals(Double.class)) && token == JsonToken.VALUE_NUMBER_FLOAT);
+                        attemptParsing |= (Integer.class.equals(Boolean.class) && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
+                        attemptParsing |= (Integer.class.equals(String.class) && token == JsonToken.VALUE_STRING);
                     }
                 }
                 if (attemptParsing) {
-                    deserialized = tree.traverse(jp.getCodec()).readValueAs(Long.class);
+                    deserialized = tree.traverse(jp.getCodec()).readValueAs(Integer.class);
                     // TODO: there is no validation against JSON schema constraints
                     // (min, max, enum, pattern...), this does not perform a strict JSON
                     // validation, which means the 'match' count may be higher than it should be.
                     match++;
-                    log.log(Level.FINER, "Input data matches schema 'Long'");
+                    log.log(Level.FINER, "Input data matches schema 'Integer'");
                 }
             } catch (Exception e) {
                 // deserialization failed, continue
-                log.log(Level.FINER, "Input data does not match schema 'Long'", e);
+                log.log(Level.FINER, "Input data does not match schema 'Integer'", e);
             }
 
             // deserialize String
@@ -160,7 +160,7 @@ public class UpdateAdminSettingsCertsRequestCertStandingDays extends AbstractOpe
         super("oneOf", Boolean.FALSE);
     }
 
-    public UpdateAdminSettingsCertsRequestCertStandingDays(Long o) {
+    public UpdateAdminSettingsCertsRequestCertStandingDays(Integer o) {
         super("oneOf", Boolean.FALSE);
         setActualInstance(o);
     }
@@ -171,7 +171,7 @@ public class UpdateAdminSettingsCertsRequestCertStandingDays extends AbstractOpe
     }
 
     static {
-        schemas.put("Long", Long.class);
+        schemas.put("Integer", Integer.class);
         schemas.put("String", String.class);
         JSON.registerDescendants(UpdateAdminSettingsCertsRequestCertStandingDays.class, Collections.unmodifiableMap(schemas));
     }
@@ -184,14 +184,14 @@ public class UpdateAdminSettingsCertsRequestCertStandingDays extends AbstractOpe
     /**
      * Set the instance that matches the oneOf child schema, check
      * the instance parameter is valid against the oneOf child schemas:
-     * Long, String
+     * Integer, String
      *
      * It could be an instance of the 'oneOf' schemas.
      * The oneOf child schemas may themselves be a composed schema (allOf, anyOf, oneOf).
      */
     @Override
     public void setActualInstance(Object instance) {
-        if (JSON.isInstanceOf(Long.class, instance, new HashSet<Class<?>>())) {
+        if (JSON.isInstanceOf(Integer.class, instance, new HashSet<Class<?>>())) {
             super.setActualInstance(instance);
             return;
         }
@@ -201,14 +201,14 @@ public class UpdateAdminSettingsCertsRequestCertStandingDays extends AbstractOpe
             return;
         }
 
-        throw new RuntimeException("Invalid instance type. Must be Long, String");
+        throw new RuntimeException("Invalid instance type. Must be Integer, String");
     }
 
     /**
      * Get the actual instance, which can be the following:
-     * Long, String
+     * Integer, String
      *
-     * @return The actual instance (Long, String)
+     * @return The actual instance (Integer, String)
      */
     @Override
     public Object getActualInstance() {
@@ -216,14 +216,14 @@ public class UpdateAdminSettingsCertsRequestCertStandingDays extends AbstractOpe
     }
 
     /**
-     * Get the actual instance of `Long`. If the actual instance is not `Long`,
+     * Get the actual instance of `Integer`. If the actual instance is not `Integer`,
      * the ClassCastException will be thrown.
      *
-     * @return The actual instance of `Long`
-     * @throws ClassCastException if the instance is not `Long`
+     * @return The actual instance of `Integer`
+     * @throws ClassCastException if the instance is not `Integer`
      */
-    public Long getLong() throws ClassCastException {
-        return (Long)super.getActualInstance();
+    public Integer getInteger() throws ClassCastException {
+        return (Integer)super.getActualInstance();
     }
 
     /**
@@ -277,7 +277,7 @@ public class UpdateAdminSettingsCertsRequestCertStandingDays extends AbstractOpe
         }
         return joiner.toString();
     }
-    if (getActualInstance() instanceof Long) {
+    if (getActualInstance() instanceof Integer) {
         if (getActualInstance() != null) {
           joiner.add(String.format("%sone_of_1%s=%s", prefix, suffix, ApiClient.urlEncode(String.valueOf(getActualInstance()))));
         }

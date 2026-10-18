@@ -112,7 +112,7 @@ public class CertPayload {
 
   public static final String JSON_PROPERTY_POW_LEVEL = "pow_level";
   @jakarta.annotation.Nullable
-  private Long powLevel;
+  private Integer powLevel;
 
   public static final String JSON_PROPERTY_ISSUED_AT = "issued_at";
   @jakarta.annotation.Nullable
@@ -285,7 +285,7 @@ public class CertPayload {
   }
 
 
-  public CertPayload powLevel(@jakarta.annotation.Nullable Long powLevel) {
+  public CertPayload powLevel(@jakarta.annotation.Nullable Integer powLevel) {
     this.powLevel = powLevel;
     return this;
   }
@@ -297,14 +297,14 @@ public class CertPayload {
   @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_POW_LEVEL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Long getPowLevel() {
+  public Integer getPowLevel() {
     return powLevel;
   }
 
 
   @JsonProperty(JSON_PROPERTY_POW_LEVEL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setPowLevel(@jakarta.annotation.Nullable Long powLevel) {
+  public void setPowLevel(@jakarta.annotation.Nullable Integer powLevel) {
     this.powLevel = powLevel;
   }
 

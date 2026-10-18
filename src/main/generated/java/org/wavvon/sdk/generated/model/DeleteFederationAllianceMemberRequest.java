@@ -30,133 +30,46 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * PostSummaryAttachmentsInner
+ * DeleteFederationAllianceMemberRequest
  */
 @JsonPropertyOrder({
-  PostSummaryAttachmentsInner.JSON_PROPERTY_URL,
-  PostSummaryAttachmentsInner.JSON_PROPERTY_NAME,
-  PostSummaryAttachmentsInner.JSON_PROPERTY_MIME,
-  PostSummaryAttachmentsInner.JSON_PROPERTY_SIZE
+  DeleteFederationAllianceMemberRequest.JSON_PROPERTY_ALLIANCE_ID
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class PostSummaryAttachmentsInner {
-  public static final String JSON_PROPERTY_URL = "url";
+public class DeleteFederationAllianceMemberRequest {
+  public static final String JSON_PROPERTY_ALLIANCE_ID = "alliance_id";
   @jakarta.annotation.Nonnull
-  private String url;
+  private String allianceId;
 
-  public static final String JSON_PROPERTY_NAME = "name";
-  @jakarta.annotation.Nonnull
-  private String name;
-
-  public static final String JSON_PROPERTY_MIME = "mime";
-  @jakarta.annotation.Nonnull
-  private String mime;
-
-  public static final String JSON_PROPERTY_SIZE = "size";
-  @jakarta.annotation.Nonnull
-  private Long size;
-
-  public PostSummaryAttachmentsInner() { 
+  public DeleteFederationAllianceMemberRequest() { 
   }
 
-  public PostSummaryAttachmentsInner url(@jakarta.annotation.Nonnull String url) {
-    this.url = url;
+  public DeleteFederationAllianceMemberRequest allianceId(@jakarta.annotation.Nonnull String allianceId) {
+    this.allianceId = allianceId;
     return this;
   }
 
   /**
-   * Get url
-   * @return url
+   * Get allianceId
+   * @return allianceId
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_URL)
+  @JsonProperty(JSON_PROPERTY_ALLIANCE_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public String getUrl() {
-    return url;
+  public String getAllianceId() {
+    return allianceId;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_URL)
+  @JsonProperty(JSON_PROPERTY_ALLIANCE_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setUrl(@jakarta.annotation.Nonnull String url) {
-    this.url = url;
-  }
-
-
-  public PostSummaryAttachmentsInner name(@jakarta.annotation.Nonnull String name) {
-    this.name = name;
-    return this;
-  }
-
-  /**
-   * Get name
-   * @return name
-   */
-  @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_NAME)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public String getName() {
-    return name;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_NAME)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setName(@jakarta.annotation.Nonnull String name) {
-    this.name = name;
-  }
-
-
-  public PostSummaryAttachmentsInner mime(@jakarta.annotation.Nonnull String mime) {
-    this.mime = mime;
-    return this;
-  }
-
-  /**
-   * Get mime
-   * @return mime
-   */
-  @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_MIME)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public String getMime() {
-    return mime;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_MIME)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setMime(@jakarta.annotation.Nonnull String mime) {
-    this.mime = mime;
-  }
-
-
-  public PostSummaryAttachmentsInner size(@jakarta.annotation.Nonnull Long size) {
-    this.size = size;
-    return this;
-  }
-
-  /**
-   * Get size
-   * @return size
-   */
-  @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_SIZE)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public Long getSize() {
-    return size;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_SIZE)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setSize(@jakarta.annotation.Nonnull Long size) {
-    this.size = size;
+  public void setAllianceId(@jakarta.annotation.Nonnull String allianceId) {
+    this.allianceId = allianceId;
   }
 
 
   /**
-   * Return true if this PostSummary_attachments_inner object is equal to o.
+   * Return true if this deleteFederationAllianceMember_request object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -166,26 +79,20 @@ public class PostSummaryAttachmentsInner {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    PostSummaryAttachmentsInner postSummaryAttachmentsInner = (PostSummaryAttachmentsInner) o;
-    return Objects.equals(this.url, postSummaryAttachmentsInner.url) &&
-        Objects.equals(this.name, postSummaryAttachmentsInner.name) &&
-        Objects.equals(this.mime, postSummaryAttachmentsInner.mime) &&
-        Objects.equals(this.size, postSummaryAttachmentsInner.size);
+    DeleteFederationAllianceMemberRequest deleteFederationAllianceMemberRequest = (DeleteFederationAllianceMemberRequest) o;
+    return Objects.equals(this.allianceId, deleteFederationAllianceMemberRequest.allianceId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(url, name, mime, size);
+    return Objects.hash(allianceId);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class PostSummaryAttachmentsInner {\n");
-    sb.append("    url: ").append(toIndentedString(url)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    mime: ").append(toIndentedString(mime)).append("\n");
-    sb.append("    size: ").append(toIndentedString(size)).append("\n");
+    sb.append("class DeleteFederationAllianceMemberRequest {\n");
+    sb.append("    allianceId: ").append(toIndentedString(allianceId)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -233,24 +140,9 @@ public class PostSummaryAttachmentsInner {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `url` to the URL query string
-    if (getUrl() != null) {
-      joiner.add(String.format("%surl%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getUrl()))));
-    }
-
-    // add `name` to the URL query string
-    if (getName() != null) {
-      joiner.add(String.format("%sname%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getName()))));
-    }
-
-    // add `mime` to the URL query string
-    if (getMime() != null) {
-      joiner.add(String.format("%smime%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getMime()))));
-    }
-
-    // add `size` to the URL query string
-    if (getSize() != null) {
-      joiner.add(String.format("%ssize%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getSize()))));
+    // add `alliance_id` to the URL query string
+    if (getAllianceId() != null) {
+      joiner.add(String.format("%salliance_id%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getAllianceId()))));
     }
 
     return joiner.toString();

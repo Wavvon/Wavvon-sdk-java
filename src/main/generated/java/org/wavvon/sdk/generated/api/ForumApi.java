@@ -104,7 +104,7 @@ public class ForumApi {
    * Subject to the owning channel&#39;s &#x60;forum_remote_write&#x60; policy — &#x60;none&#x60;, &#x60;replies_only&#x60; (rejects this) or &#x60;posts_and_replies&#x60;.
    * @param allianceId  (required)
    * @param channelId  (required)
-   * @param createAllianceChannelPostRequest  (optional)
+   * @param createAllianceChannelPostRequest  (required)
    * @return PostDetail
    * @throws ApiException if fails to make API call
    */
@@ -118,7 +118,7 @@ public class ForumApi {
    * Subject to the owning channel&#39;s &#x60;forum_remote_write&#x60; policy — &#x60;none&#x60;, &#x60;replies_only&#x60; (rejects this) or &#x60;posts_and_replies&#x60;.
    * @param allianceId  (required)
    * @param channelId  (required)
-   * @param createAllianceChannelPostRequest  (optional)
+   * @param createAllianceChannelPostRequest  (required)
    * @return ApiResponse&lt;PostDetail&gt;
    * @throws ApiException if fails to make API call
    */
@@ -171,6 +171,10 @@ public class ForumApi {
     if (channelId == null) {
       throw new ApiException(400, "Missing the required parameter 'channelId' when calling createAllianceChannelPost");
     }
+    // verify the required parameter 'createAllianceChannelPostRequest' is set
+    if (createAllianceChannelPostRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createAllianceChannelPostRequest' when calling createAllianceChannelPost");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -204,7 +208,7 @@ public class ForumApi {
    * @param allianceId  (required)
    * @param channelId  (required)
    * @param postId  (required)
-   * @param createChannelMessageReactionRequest  (optional)
+   * @param createChannelMessageReactionRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void createAllianceChannelPostReaction(String allianceId, String channelId, String postId, CreateChannelMessageReactionRequest createChannelMessageReactionRequest) throws ApiException {
@@ -217,7 +221,7 @@ public class ForumApi {
    * @param allianceId  (required)
    * @param channelId  (required)
    * @param postId  (required)
-   * @param createChannelMessageReactionRequest  (optional)
+   * @param createChannelMessageReactionRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -268,6 +272,10 @@ public class ForumApi {
     if (postId == null) {
       throw new ApiException(400, "Missing the required parameter 'postId' when calling createAllianceChannelPostReaction");
     }
+    // verify the required parameter 'createChannelMessageReactionRequest' is set
+    if (createChannelMessageReactionRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createChannelMessageReactionRequest' when calling createAllianceChannelPostReaction");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -302,7 +310,7 @@ public class ForumApi {
    * @param allianceId  (required)
    * @param channelId  (required)
    * @param postId  (required)
-   * @param createAllianceChannelPostReplyRequest  (optional)
+   * @param createAllianceChannelPostReplyRequest  (required)
    * @return ReplyView
    * @throws ApiException if fails to make API call
    */
@@ -317,7 +325,7 @@ public class ForumApi {
    * @param allianceId  (required)
    * @param channelId  (required)
    * @param postId  (required)
-   * @param createAllianceChannelPostReplyRequest  (optional)
+   * @param createAllianceChannelPostReplyRequest  (required)
    * @return ApiResponse&lt;ReplyView&gt;
    * @throws ApiException if fails to make API call
    */
@@ -374,6 +382,10 @@ public class ForumApi {
     if (postId == null) {
       throw new ApiException(400, "Missing the required parameter 'postId' when calling createAllianceChannelPostReply");
     }
+    // verify the required parameter 'createAllianceChannelPostReplyRequest' is set
+    if (createAllianceChannelPostReplyRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createAllianceChannelPostReplyRequest' when calling createAllianceChannelPostReply");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -406,7 +418,7 @@ public class ForumApi {
    * Create a post (create_posts)
    * 
    * @param channelId  (required)
-   * @param createAllianceChannelPostRequest  (optional)
+   * @param createAllianceChannelPostRequest  (required)
    * @return PostDetail
    * @throws ApiException if fails to make API call
    */
@@ -419,7 +431,7 @@ public class ForumApi {
    * Create a post (create_posts)
    * 
    * @param channelId  (required)
-   * @param createAllianceChannelPostRequest  (optional)
+   * @param createAllianceChannelPostRequest  (required)
    * @return ApiResponse&lt;PostDetail&gt;
    * @throws ApiException if fails to make API call
    */
@@ -468,6 +480,10 @@ public class ForumApi {
     if (channelId == null) {
       throw new ApiException(400, "Missing the required parameter 'channelId' when calling createChannelPost");
     }
+    // verify the required parameter 'createAllianceChannelPostRequest' is set
+    if (createAllianceChannelPostRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createAllianceChannelPostRequest' when calling createChannelPost");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -499,7 +515,7 @@ public class ForumApi {
    * 
    * @param channelId  (required)
    * @param postId  (required)
-   * @param createChannelPostReactionRequest  (optional)
+   * @param createChannelPostReactionRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void createChannelPostReaction(String channelId, String postId, CreateChannelPostReactionRequest createChannelPostReactionRequest) throws ApiException {
@@ -511,7 +527,7 @@ public class ForumApi {
    * 
    * @param channelId  (required)
    * @param postId  (required)
-   * @param createChannelPostReactionRequest  (optional)
+   * @param createChannelPostReactionRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -558,6 +574,10 @@ public class ForumApi {
     if (postId == null) {
       throw new ApiException(400, "Missing the required parameter 'postId' when calling createChannelPostReaction");
     }
+    // verify the required parameter 'createChannelPostReactionRequest' is set
+    if (createChannelPostReactionRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createChannelPostReactionRequest' when calling createChannelPostReaction");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -590,7 +610,7 @@ public class ForumApi {
    * 
    * @param channelId  (required)
    * @param postId  (required)
-   * @param createChannelPostReplyRequest  (optional)
+   * @param createChannelPostReplyRequest  (required)
    * @return ReplyView
    * @throws ApiException if fails to make API call
    */
@@ -604,7 +624,7 @@ public class ForumApi {
    * 
    * @param channelId  (required)
    * @param postId  (required)
-   * @param createChannelPostReplyRequest  (optional)
+   * @param createChannelPostReplyRequest  (required)
    * @return ApiResponse&lt;ReplyView&gt;
    * @throws ApiException if fails to make API call
    */
@@ -657,6 +677,10 @@ public class ForumApi {
     if (postId == null) {
       throw new ApiException(400, "Missing the required parameter 'postId' when calling createChannelPostReply");
     }
+    // verify the required parameter 'createChannelPostReplyRequest' is set
+    if (createChannelPostReplyRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createChannelPostReplyRequest' when calling createChannelPostReply");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -690,7 +714,7 @@ public class ForumApi {
    * @param channelId  (required)
    * @param postId  (required)
    * @param replyId  (required)
-   * @param createChannelPostReactionRequest  (optional)
+   * @param createChannelPostReactionRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void createChannelPostReplyReaction(String channelId, String postId, String replyId, CreateChannelPostReactionRequest createChannelPostReactionRequest) throws ApiException {
@@ -703,7 +727,7 @@ public class ForumApi {
    * @param channelId  (required)
    * @param postId  (required)
    * @param replyId  (required)
-   * @param createChannelPostReactionRequest  (optional)
+   * @param createChannelPostReactionRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -754,6 +778,10 @@ public class ForumApi {
     if (replyId == null) {
       throw new ApiException(400, "Missing the required parameter 'replyId' when calling createChannelPostReplyReaction");
     }
+    // verify the required parameter 'createChannelPostReactionRequest' is set
+    if (createChannelPostReactionRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createChannelPostReactionRequest' when calling createChannelPostReplyReaction");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -786,7 +814,7 @@ public class ForumApi {
    * Create a tag definition (manage_posts)
    * 
    * @param channelId  (required)
-   * @param createChannelTagRequest  (optional)
+   * @param createChannelTagRequest  (required)
    * @return ForumTag
    * @throws ApiException if fails to make API call
    */
@@ -799,7 +827,7 @@ public class ForumApi {
    * Create a tag definition (manage_posts)
    * 
    * @param channelId  (required)
-   * @param createChannelTagRequest  (optional)
+   * @param createChannelTagRequest  (required)
    * @return ApiResponse&lt;ForumTag&gt;
    * @throws ApiException if fails to make API call
    */
@@ -848,6 +876,10 @@ public class ForumApi {
     if (channelId == null) {
       throw new ApiException(400, "Missing the required parameter 'channelId' when calling createChannelTag");
     }
+    // verify the required parameter 'createChannelTagRequest' is set
+    if (createChannelTagRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createChannelTagRequest' when calling createChannelTag");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -878,7 +910,7 @@ public class ForumApi {
    * A peer hub creates a post in a shared forum channel
    * Requires &#x60;forum_remote_write &#x3D; posts_and_replies&#x60;.
    * @param channelId  (required)
-   * @param createFederationForumChannelPostRequest  (optional)
+   * @param createFederationForumChannelPostRequest  (required)
    * @return PostDetail
    * @throws ApiException if fails to make API call
    */
@@ -891,7 +923,7 @@ public class ForumApi {
    * A peer hub creates a post in a shared forum channel
    * Requires &#x60;forum_remote_write &#x3D; posts_and_replies&#x60;.
    * @param channelId  (required)
-   * @param createFederationForumChannelPostRequest  (optional)
+   * @param createFederationForumChannelPostRequest  (required)
    * @return ApiResponse&lt;PostDetail&gt;
    * @throws ApiException if fails to make API call
    */
@@ -940,6 +972,10 @@ public class ForumApi {
     if (channelId == null) {
       throw new ApiException(400, "Missing the required parameter 'channelId' when calling createFederationForumChannelPost");
     }
+    // verify the required parameter 'createFederationForumChannelPostRequest' is set
+    if (createFederationForumChannelPostRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createFederationForumChannelPostRequest' when calling createFederationForumChannelPost");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -971,7 +1007,7 @@ public class ForumApi {
    * 
    * @param channelId  (required)
    * @param postId  (required)
-   * @param createFederationForumChannelPostReactionRequest  (optional)
+   * @param createFederationForumChannelPostReactionRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void createFederationForumChannelPostReaction(String channelId, String postId, CreateFederationForumChannelPostReactionRequest createFederationForumChannelPostReactionRequest) throws ApiException {
@@ -983,7 +1019,7 @@ public class ForumApi {
    * 
    * @param channelId  (required)
    * @param postId  (required)
-   * @param createFederationForumChannelPostReactionRequest  (optional)
+   * @param createFederationForumChannelPostReactionRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -1030,6 +1066,10 @@ public class ForumApi {
     if (postId == null) {
       throw new ApiException(400, "Missing the required parameter 'postId' when calling createFederationForumChannelPostReaction");
     }
+    // verify the required parameter 'createFederationForumChannelPostReactionRequest' is set
+    if (createFederationForumChannelPostReactionRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createFederationForumChannelPostReactionRequest' when calling createFederationForumChannelPostReaction");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -1062,7 +1102,7 @@ public class ForumApi {
    * Allowed under &#x60;replies_only&#x60; as well as &#x60;posts_and_replies&#x60;.
    * @param channelId  (required)
    * @param postId  (required)
-   * @param createFederationForumChannelPostReplyRequest  (optional)
+   * @param createFederationForumChannelPostReplyRequest  (required)
    * @return ReplyView
    * @throws ApiException if fails to make API call
    */
@@ -1076,7 +1116,7 @@ public class ForumApi {
    * Allowed under &#x60;replies_only&#x60; as well as &#x60;posts_and_replies&#x60;.
    * @param channelId  (required)
    * @param postId  (required)
-   * @param createFederationForumChannelPostReplyRequest  (optional)
+   * @param createFederationForumChannelPostReplyRequest  (required)
    * @return ApiResponse&lt;ReplyView&gt;
    * @throws ApiException if fails to make API call
    */
@@ -1128,6 +1168,10 @@ public class ForumApi {
     // verify the required parameter 'postId' is set
     if (postId == null) {
       throw new ApiException(400, "Missing the required parameter 'postId' when calling createFederationForumChannelPostReply");
+    }
+    // verify the required parameter 'createFederationForumChannelPostReplyRequest' is set
+    if (createFederationForumChannelPostReplyRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createFederationForumChannelPostReplyRequest' when calling createFederationForumChannelPostReply");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -1708,7 +1752,7 @@ public class ForumApi {
    * Honoured only when the post&#39;s &#x60;author_hub&#x60; matches the calling peer **and** its &#x60;author_pubkey&#x60; matches the assertion — a hub can retract its own users&#39; content, never anyone else&#39;s.
    * @param channelId  (required)
    * @param postId  (required)
-   * @param deleteFederationForumChannelPostRequest  (optional)
+   * @param deleteFederationForumChannelPostRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void deleteFederationForumChannelPost(String channelId, String postId, DeleteFederationForumChannelPostRequest deleteFederationForumChannelPostRequest) throws ApiException {
@@ -1720,7 +1764,7 @@ public class ForumApi {
    * Honoured only when the post&#39;s &#x60;author_hub&#x60; matches the calling peer **and** its &#x60;author_pubkey&#x60; matches the assertion — a hub can retract its own users&#39; content, never anyone else&#39;s.
    * @param channelId  (required)
    * @param postId  (required)
-   * @param deleteFederationForumChannelPostRequest  (optional)
+   * @param deleteFederationForumChannelPostRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -1767,6 +1811,10 @@ public class ForumApi {
     if (postId == null) {
       throw new ApiException(400, "Missing the required parameter 'postId' when calling deleteFederationForumChannelPost");
     }
+    // verify the required parameter 'deleteFederationForumChannelPostRequest' is set
+    if (deleteFederationForumChannelPostRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'deleteFederationForumChannelPostRequest' when calling deleteFederationForumChannelPost");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -1800,7 +1848,7 @@ public class ForumApi {
    * @param channelId  (required)
    * @param postId  (required)
    * @param replyId  (required)
-   * @param deleteFederationForumChannelPostRequest  (optional)
+   * @param deleteFederationForumChannelPostRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void deleteFederationForumChannelPostReply(String channelId, String postId, String replyId, DeleteFederationForumChannelPostRequest deleteFederationForumChannelPostRequest) throws ApiException {
@@ -1813,7 +1861,7 @@ public class ForumApi {
    * @param channelId  (required)
    * @param postId  (required)
    * @param replyId  (required)
-   * @param deleteFederationForumChannelPostRequest  (optional)
+   * @param deleteFederationForumChannelPostRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -1863,6 +1911,10 @@ public class ForumApi {
     // verify the required parameter 'replyId' is set
     if (replyId == null) {
       throw new ApiException(400, "Missing the required parameter 'replyId' when calling deleteFederationForumChannelPostReply");
+    }
+    // verify the required parameter 'deleteFederationForumChannelPostRequest' is set
+    if (deleteFederationForumChannelPostRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'deleteFederationForumChannelPostRequest' when calling deleteFederationForumChannelPostReply");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -3004,7 +3056,7 @@ public class ForumApi {
    * 
    * @param channelId  (required)
    * @param postId  (required)
-   * @param updateChannelPostRequest  (optional)
+   * @param updateChannelPostRequest  (required)
    * @return PostDetail
    * @throws ApiException if fails to make API call
    */
@@ -3018,7 +3070,7 @@ public class ForumApi {
    * 
    * @param channelId  (required)
    * @param postId  (required)
-   * @param updateChannelPostRequest  (optional)
+   * @param updateChannelPostRequest  (required)
    * @return ApiResponse&lt;PostDetail&gt;
    * @throws ApiException if fails to make API call
    */
@@ -3071,6 +3123,10 @@ public class ForumApi {
     if (postId == null) {
       throw new ApiException(400, "Missing the required parameter 'postId' when calling updateChannelPost");
     }
+    // verify the required parameter 'updateChannelPostRequest' is set
+    if (updateChannelPostRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'updateChannelPostRequest' when calling updateChannelPost");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -3104,7 +3160,7 @@ public class ForumApi {
    * @param channelId  (required)
    * @param postId  (required)
    * @param replyId  (required)
-   * @param updateChannelPostReplyRequest  (optional)
+   * @param updateChannelPostReplyRequest  (required)
    * @return ReplyView
    * @throws ApiException if fails to make API call
    */
@@ -3119,7 +3175,7 @@ public class ForumApi {
    * @param channelId  (required)
    * @param postId  (required)
    * @param replyId  (required)
-   * @param updateChannelPostReplyRequest  (optional)
+   * @param updateChannelPostReplyRequest  (required)
    * @return ApiResponse&lt;ReplyView&gt;
    * @throws ApiException if fails to make API call
    */
@@ -3176,6 +3232,10 @@ public class ForumApi {
     if (replyId == null) {
       throw new ApiException(400, "Missing the required parameter 'replyId' when calling updateChannelPostReply");
     }
+    // verify the required parameter 'updateChannelPostReplyRequest' is set
+    if (updateChannelPostReplyRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'updateChannelPostReplyRequest' when calling updateChannelPostReply");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -3208,7 +3268,7 @@ public class ForumApi {
    * Edit a tag definition (manage_posts)
    * No channel in the path — it is resolved from the tag row. &#x60;label&#x60; and &#x60;position&#x60; follow the usual \&quot;absent means unchanged\&quot; rule; &#x60;color&#x60; is tri-state, so omitting it leaves the colour alone while sending &#x60;null&#x60; clears it.
    * @param tagId  (required)
-   * @param updateTagRequest  (optional)
+   * @param updateTagRequest  (required)
    * @return ForumTag
    * @throws ApiException if fails to make API call
    */
@@ -3221,7 +3281,7 @@ public class ForumApi {
    * Edit a tag definition (manage_posts)
    * No channel in the path — it is resolved from the tag row. &#x60;label&#x60; and &#x60;position&#x60; follow the usual \&quot;absent means unchanged\&quot; rule; &#x60;color&#x60; is tri-state, so omitting it leaves the colour alone while sending &#x60;null&#x60; clears it.
    * @param tagId  (required)
-   * @param updateTagRequest  (optional)
+   * @param updateTagRequest  (required)
    * @return ApiResponse&lt;ForumTag&gt;
    * @throws ApiException if fails to make API call
    */
@@ -3269,6 +3329,10 @@ public class ForumApi {
     // verify the required parameter 'tagId' is set
     if (tagId == null) {
       throw new ApiException(400, "Missing the required parameter 'tagId' when calling updateTag");
+    }
+    // verify the required parameter 'updateTagRequest' is set
+    if (updateTagRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'updateTagRequest' when calling updateTag");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();

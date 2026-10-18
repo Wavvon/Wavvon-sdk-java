@@ -22,11 +22,15 @@ import org.wavvon.sdk.generated.model.CreateAdminBanlistOverride201Response;
 import org.wavvon.sdk.generated.model.CreateAdminBanlistOverrideRequest;
 import org.wavvon.sdk.generated.model.CreateAdminBanlistSource201Response;
 import org.wavvon.sdk.generated.model.CreateAdminBanlistSourceRequest;
+import org.wavvon.sdk.generated.model.CreateFederationAllianceInviteRequest;
+import org.wavvon.sdk.generated.model.CreateFederationAllianceMemberRequest;
 import org.wavvon.sdk.generated.model.CreateFederationDmMemberChangeRequest;
+import org.wavvon.sdk.generated.model.CreateFederationDmRequest;
 import org.wavvon.sdk.generated.model.CreateFederationForumChannelPostReactionRequest;
 import org.wavvon.sdk.generated.model.CreateFederationForumChannelPostReplyRequest;
 import org.wavvon.sdk.generated.model.CreateFederationForumChannelPostRequest;
-import org.wavvon.sdk.generated.model.DeleteAdminBanlistSourcesRequest;
+import org.wavvon.sdk.generated.model.CreateFederationPeerRequest;
+import org.wavvon.sdk.generated.model.DeleteFederationAllianceMemberRequest;
 import org.wavvon.sdk.generated.model.DeleteFederationForumChannelPostRequest;
 import org.wavvon.sdk.generated.model.GetAdminSettingsBanlist200Response;
 import org.wavvon.sdk.generated.model.GetFederationBanlist200Response;
@@ -37,6 +41,7 @@ import org.wavvon.sdk.generated.model.ListAdminBanlistOverrides200ResponseInner;
 import org.wavvon.sdk.generated.model.ListAdminBanlistSources200ResponseInner;
 import org.wavvon.sdk.generated.model.PostDetail;
 import org.wavvon.sdk.generated.model.ReplyView;
+import org.wavvon.sdk.generated.model.SignAdminDirectoryListingRequest;
 import org.wavvon.sdk.generated.model.UpdateAdminBanlistSourcesRequest;
 import org.wavvon.sdk.generated.model.UpdateAdminSettingsBanlistRequest;
 
@@ -105,7 +110,7 @@ public class FederationApi {
   /**
    * Add a local whitelist/blacklist override (admin)
    * 
-   * @param createAdminBanlistOverrideRequest  (optional)
+   * @param createAdminBanlistOverrideRequest  (required)
    * @return CreateAdminBanlistOverride201Response
    * @throws ApiException if fails to make API call
    */
@@ -117,7 +122,7 @@ public class FederationApi {
   /**
    * Add a local whitelist/blacklist override (admin)
    * 
-   * @param createAdminBanlistOverrideRequest  (optional)
+   * @param createAdminBanlistOverrideRequest  (required)
    * @return ApiResponse&lt;CreateAdminBanlistOverride201Response&gt;
    * @throws ApiException if fails to make API call
    */
@@ -162,6 +167,10 @@ public class FederationApi {
   }
 
   private HttpRequest.Builder createAdminBanlistOverrideRequestBuilder(CreateAdminBanlistOverrideRequest createAdminBanlistOverrideRequest) throws ApiException {
+    // verify the required parameter 'createAdminBanlistOverrideRequest' is set
+    if (createAdminBanlistOverrideRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createAdminBanlistOverrideRequest' when calling createAdminBanlistOverride");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -190,7 +199,7 @@ public class FederationApi {
   /**
    * Add a ban list source and trigger an immediate sync (admin)
    * 
-   * @param createAdminBanlistSourceRequest  (optional)
+   * @param createAdminBanlistSourceRequest  (required)
    * @return CreateAdminBanlistSource201Response
    * @throws ApiException if fails to make API call
    */
@@ -202,7 +211,7 @@ public class FederationApi {
   /**
    * Add a ban list source and trigger an immediate sync (admin)
    * 
-   * @param createAdminBanlistSourceRequest  (optional)
+   * @param createAdminBanlistSourceRequest  (required)
    * @return ApiResponse&lt;CreateAdminBanlistSource201Response&gt;
    * @throws ApiException if fails to make API call
    */
@@ -247,6 +256,10 @@ public class FederationApi {
   }
 
   private HttpRequest.Builder createAdminBanlistSourceRequestBuilder(CreateAdminBanlistSourceRequest createAdminBanlistSourceRequest) throws ApiException {
+    // verify the required parameter 'createAdminBanlistSourceRequest' is set
+    if (createAdminBanlistSourceRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createAdminBanlistSourceRequest' when calling createAdminBanlistSource");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -275,20 +288,22 @@ public class FederationApi {
   /**
    * Receive an alliance invite push from a peer hub
    * 
+   * @param createFederationAllianceInviteRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void createFederationAllianceInvite() throws ApiException {
-    createFederationAllianceInviteWithHttpInfo();
+  public void createFederationAllianceInvite(CreateFederationAllianceInviteRequest createFederationAllianceInviteRequest) throws ApiException {
+    createFederationAllianceInviteWithHttpInfo(createFederationAllianceInviteRequest);
   }
 
   /**
    * Receive an alliance invite push from a peer hub
    * 
+   * @param createFederationAllianceInviteRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> createFederationAllianceInviteWithHttpInfo() throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = createFederationAllianceInviteRequestBuilder();
+  public ApiResponse<Void> createFederationAllianceInviteWithHttpInfo(CreateFederationAllianceInviteRequest createFederationAllianceInviteRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = createFederationAllianceInviteRequestBuilder(createFederationAllianceInviteRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -321,7 +336,11 @@ public class FederationApi {
     }
   }
 
-  private HttpRequest.Builder createFederationAllianceInviteRequestBuilder() throws ApiException {
+  private HttpRequest.Builder createFederationAllianceInviteRequestBuilder(CreateFederationAllianceInviteRequest createFederationAllianceInviteRequest) throws ApiException {
+    // verify the required parameter 'createFederationAllianceInviteRequest' is set
+    if (createFederationAllianceInviteRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createFederationAllianceInviteRequest' when calling createFederationAllianceInvite");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -329,9 +348,15 @@ public class FederationApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(createFederationAllianceInviteRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }
@@ -344,20 +369,22 @@ public class FederationApi {
   /**
    * A hub that just joined an alliance announces itself to the other members
    * Sent with the announcing hub&#39;s own peer session. Carries the voucher the inviter returned from the join: its signature over \&quot;wavvon/alliance-member/v1\\0\&quot; + alliance id + \&quot;\\0\&quot; + the new member&#39;s key. The receiver verifies it against a hub already in its own member list and against the key that authenticated, and checks that hub_url answers for that key. Without this only the inviter learns of a new member, and an alliance of three never converges.
+   * @param createFederationAllianceMemberRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void createFederationAllianceMember() throws ApiException {
-    createFederationAllianceMemberWithHttpInfo();
+  public void createFederationAllianceMember(CreateFederationAllianceMemberRequest createFederationAllianceMemberRequest) throws ApiException {
+    createFederationAllianceMemberWithHttpInfo(createFederationAllianceMemberRequest);
   }
 
   /**
    * A hub that just joined an alliance announces itself to the other members
    * Sent with the announcing hub&#39;s own peer session. Carries the voucher the inviter returned from the join: its signature over \&quot;wavvon/alliance-member/v1\\0\&quot; + alliance id + \&quot;\\0\&quot; + the new member&#39;s key. The receiver verifies it against a hub already in its own member list and against the key that authenticated, and checks that hub_url answers for that key. Without this only the inviter learns of a new member, and an alliance of three never converges.
+   * @param createFederationAllianceMemberRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> createFederationAllianceMemberWithHttpInfo() throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = createFederationAllianceMemberRequestBuilder();
+  public ApiResponse<Void> createFederationAllianceMemberWithHttpInfo(CreateFederationAllianceMemberRequest createFederationAllianceMemberRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = createFederationAllianceMemberRequestBuilder(createFederationAllianceMemberRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -390,7 +417,11 @@ public class FederationApi {
     }
   }
 
-  private HttpRequest.Builder createFederationAllianceMemberRequestBuilder() throws ApiException {
+  private HttpRequest.Builder createFederationAllianceMemberRequestBuilder(CreateFederationAllianceMemberRequest createFederationAllianceMemberRequest) throws ApiException {
+    // verify the required parameter 'createFederationAllianceMemberRequest' is set
+    if (createFederationAllianceMemberRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createFederationAllianceMemberRequest' when calling createFederationAllianceMember");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -398,9 +429,15 @@ public class FederationApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(createFederationAllianceMemberRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }
@@ -413,20 +450,22 @@ public class FederationApi {
   /**
    * Receive a federated DM from a peer hub
    * Called hub-to-hub, authenticated with the sending hub&#39;s Ed25519 key. For a conversation this hub already holds, the sender must be on the stored roster (403 otherwise) and the block check reads that roster, never the &#x60;members&#x60; the request carries; &#x60;members&#x60; only seeds a conversation seen for the first time, and must then include the sender.
+   * @param createFederationDmRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void createFederationDm() throws ApiException {
-    createFederationDmWithHttpInfo();
+  public void createFederationDm(CreateFederationDmRequest createFederationDmRequest) throws ApiException {
+    createFederationDmWithHttpInfo(createFederationDmRequest);
   }
 
   /**
    * Receive a federated DM from a peer hub
    * Called hub-to-hub, authenticated with the sending hub&#39;s Ed25519 key. For a conversation this hub already holds, the sender must be on the stored roster (403 otherwise) and the block check reads that roster, never the &#x60;members&#x60; the request carries; &#x60;members&#x60; only seeds a conversation seen for the first time, and must then include the sender.
+   * @param createFederationDmRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> createFederationDmWithHttpInfo() throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = createFederationDmRequestBuilder();
+  public ApiResponse<Void> createFederationDmWithHttpInfo(CreateFederationDmRequest createFederationDmRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = createFederationDmRequestBuilder(createFederationDmRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -459,7 +498,11 @@ public class FederationApi {
     }
   }
 
-  private HttpRequest.Builder createFederationDmRequestBuilder() throws ApiException {
+  private HttpRequest.Builder createFederationDmRequestBuilder(CreateFederationDmRequest createFederationDmRequest) throws ApiException {
+    // verify the required parameter 'createFederationDmRequest' is set
+    if (createFederationDmRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createFederationDmRequest' when calling createFederationDm");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -467,9 +510,15 @@ public class FederationApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(createFederationDmRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }
@@ -482,7 +531,7 @@ public class FederationApi {
   /**
    * Receive a signed group membership change from a peer hub
    * The actor&#39;s signature over &#x60;wavvon/dm-member-change/v1&#x60; (see wire-format.md). Applied only for a group this hub holds, from an actor already on its roster, removing nobody but the actor, and only when newer than the last change applied for that member; an older one answers 200 and changes nothing. A conversation this hub has never seen also answers 200: its first DM brings the current roster.
-   * @param createFederationDmMemberChangeRequest  (optional)
+   * @param createFederationDmMemberChangeRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void createFederationDmMemberChange(CreateFederationDmMemberChangeRequest createFederationDmMemberChangeRequest) throws ApiException {
@@ -492,7 +541,7 @@ public class FederationApi {
   /**
    * Receive a signed group membership change from a peer hub
    * The actor&#39;s signature over &#x60;wavvon/dm-member-change/v1&#x60; (see wire-format.md). Applied only for a group this hub holds, from an actor already on its roster, removing nobody but the actor, and only when newer than the last change applied for that member; an older one answers 200 and changes nothing. A conversation this hub has never seen also answers 200: its first DM brings the current roster.
-   * @param createFederationDmMemberChangeRequest  (optional)
+   * @param createFederationDmMemberChangeRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -531,6 +580,10 @@ public class FederationApi {
   }
 
   private HttpRequest.Builder createFederationDmMemberChangeRequestBuilder(CreateFederationDmMemberChangeRequest createFederationDmMemberChangeRequest) throws ApiException {
+    // verify the required parameter 'createFederationDmMemberChangeRequest' is set
+    if (createFederationDmMemberChangeRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createFederationDmMemberChangeRequest' when calling createFederationDmMemberChange");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -560,7 +613,7 @@ public class FederationApi {
    * A peer hub creates a post in a shared forum channel
    * Requires &#x60;forum_remote_write &#x3D; posts_and_replies&#x60;.
    * @param channelId  (required)
-   * @param createFederationForumChannelPostRequest  (optional)
+   * @param createFederationForumChannelPostRequest  (required)
    * @return PostDetail
    * @throws ApiException if fails to make API call
    */
@@ -573,7 +626,7 @@ public class FederationApi {
    * A peer hub creates a post in a shared forum channel
    * Requires &#x60;forum_remote_write &#x3D; posts_and_replies&#x60;.
    * @param channelId  (required)
-   * @param createFederationForumChannelPostRequest  (optional)
+   * @param createFederationForumChannelPostRequest  (required)
    * @return ApiResponse&lt;PostDetail&gt;
    * @throws ApiException if fails to make API call
    */
@@ -622,6 +675,10 @@ public class FederationApi {
     if (channelId == null) {
       throw new ApiException(400, "Missing the required parameter 'channelId' when calling createFederationForumChannelPost");
     }
+    // verify the required parameter 'createFederationForumChannelPostRequest' is set
+    if (createFederationForumChannelPostRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createFederationForumChannelPostRequest' when calling createFederationForumChannelPost");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -653,7 +710,7 @@ public class FederationApi {
    * 
    * @param channelId  (required)
    * @param postId  (required)
-   * @param createFederationForumChannelPostReactionRequest  (optional)
+   * @param createFederationForumChannelPostReactionRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void createFederationForumChannelPostReaction(String channelId, String postId, CreateFederationForumChannelPostReactionRequest createFederationForumChannelPostReactionRequest) throws ApiException {
@@ -665,7 +722,7 @@ public class FederationApi {
    * 
    * @param channelId  (required)
    * @param postId  (required)
-   * @param createFederationForumChannelPostReactionRequest  (optional)
+   * @param createFederationForumChannelPostReactionRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -712,6 +769,10 @@ public class FederationApi {
     if (postId == null) {
       throw new ApiException(400, "Missing the required parameter 'postId' when calling createFederationForumChannelPostReaction");
     }
+    // verify the required parameter 'createFederationForumChannelPostReactionRequest' is set
+    if (createFederationForumChannelPostReactionRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createFederationForumChannelPostReactionRequest' when calling createFederationForumChannelPostReaction");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -744,7 +805,7 @@ public class FederationApi {
    * Allowed under &#x60;replies_only&#x60; as well as &#x60;posts_and_replies&#x60;.
    * @param channelId  (required)
    * @param postId  (required)
-   * @param createFederationForumChannelPostReplyRequest  (optional)
+   * @param createFederationForumChannelPostReplyRequest  (required)
    * @return ReplyView
    * @throws ApiException if fails to make API call
    */
@@ -758,7 +819,7 @@ public class FederationApi {
    * Allowed under &#x60;replies_only&#x60; as well as &#x60;posts_and_replies&#x60;.
    * @param channelId  (required)
    * @param postId  (required)
-   * @param createFederationForumChannelPostReplyRequest  (optional)
+   * @param createFederationForumChannelPostReplyRequest  (required)
    * @return ApiResponse&lt;ReplyView&gt;
    * @throws ApiException if fails to make API call
    */
@@ -811,6 +872,10 @@ public class FederationApi {
     if (postId == null) {
       throw new ApiException(400, "Missing the required parameter 'postId' when calling createFederationForumChannelPostReply");
     }
+    // verify the required parameter 'createFederationForumChannelPostReplyRequest' is set
+    if (createFederationForumChannelPostReplyRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createFederationForumChannelPostReplyRequest' when calling createFederationForumChannelPostReply");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -841,20 +906,22 @@ public class FederationApi {
   /**
    * Add a federation peer
    * 
+   * @param createFederationPeerRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void createFederationPeer() throws ApiException {
-    createFederationPeerWithHttpInfo();
+  public void createFederationPeer(CreateFederationPeerRequest createFederationPeerRequest) throws ApiException {
+    createFederationPeerWithHttpInfo(createFederationPeerRequest);
   }
 
   /**
    * Add a federation peer
    * 
+   * @param createFederationPeerRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> createFederationPeerWithHttpInfo() throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = createFederationPeerRequestBuilder();
+  public ApiResponse<Void> createFederationPeerWithHttpInfo(CreateFederationPeerRequest createFederationPeerRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = createFederationPeerRequestBuilder(createFederationPeerRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -887,7 +954,11 @@ public class FederationApi {
     }
   }
 
-  private HttpRequest.Builder createFederationPeerRequestBuilder() throws ApiException {
+  private HttpRequest.Builder createFederationPeerRequestBuilder(CreateFederationPeerRequest createFederationPeerRequest) throws ApiException {
+    // verify the required parameter 'createFederationPeerRequest' is set
+    if (createFederationPeerRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createFederationPeerRequest' when calling createFederationPeer");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -895,9 +966,15 @@ public class FederationApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(createFederationPeerRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }
@@ -986,22 +1063,22 @@ public class FederationApi {
   /**
    * Remove a ban list source and its synced entries (admin)
    * 
-   * @param deleteAdminBanlistSourcesRequest  (optional)
+   * @param createFederationPeerRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void deleteAdminBanlistSources(DeleteAdminBanlistSourcesRequest deleteAdminBanlistSourcesRequest) throws ApiException {
-    deleteAdminBanlistSourcesWithHttpInfo(deleteAdminBanlistSourcesRequest);
+  public void deleteAdminBanlistSources(CreateFederationPeerRequest createFederationPeerRequest) throws ApiException {
+    deleteAdminBanlistSourcesWithHttpInfo(createFederationPeerRequest);
   }
 
   /**
    * Remove a ban list source and its synced entries (admin)
    * 
-   * @param deleteAdminBanlistSourcesRequest  (optional)
+   * @param createFederationPeerRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> deleteAdminBanlistSourcesWithHttpInfo(DeleteAdminBanlistSourcesRequest deleteAdminBanlistSourcesRequest) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = deleteAdminBanlistSourcesRequestBuilder(deleteAdminBanlistSourcesRequest);
+  public ApiResponse<Void> deleteAdminBanlistSourcesWithHttpInfo(CreateFederationPeerRequest createFederationPeerRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = deleteAdminBanlistSourcesRequestBuilder(createFederationPeerRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -1034,7 +1111,11 @@ public class FederationApi {
     }
   }
 
-  private HttpRequest.Builder deleteAdminBanlistSourcesRequestBuilder(DeleteAdminBanlistSourcesRequest deleteAdminBanlistSourcesRequest) throws ApiException {
+  private HttpRequest.Builder deleteAdminBanlistSourcesRequestBuilder(CreateFederationPeerRequest createFederationPeerRequest) throws ApiException {
+    // verify the required parameter 'createFederationPeerRequest' is set
+    if (createFederationPeerRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createFederationPeerRequest' when calling deleteAdminBanlistSources");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -1046,7 +1127,7 @@ public class FederationApi {
     localVarRequestBuilder.header("Accept", "application/json");
 
     try {
-      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(deleteAdminBanlistSourcesRequest);
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(createFederationPeerRequest);
       localVarRequestBuilder.method("DELETE", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
     } catch (IOException e) {
       throw new ApiException(e);
@@ -1063,20 +1144,22 @@ public class FederationApi {
   /**
    * A hub tells the other members that it is leaving the alliance
    * Removes the **calling** hub&#39;s own membership row and nothing else, so the authenticated peer is the whole authorisation. Without it a departure was local: the partners kept the row, kept calling the hub, and kept letting it read what the alliance shares.
+   * @param deleteFederationAllianceMemberRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void deleteFederationAllianceMember() throws ApiException {
-    deleteFederationAllianceMemberWithHttpInfo();
+  public void deleteFederationAllianceMember(DeleteFederationAllianceMemberRequest deleteFederationAllianceMemberRequest) throws ApiException {
+    deleteFederationAllianceMemberWithHttpInfo(deleteFederationAllianceMemberRequest);
   }
 
   /**
    * A hub tells the other members that it is leaving the alliance
    * Removes the **calling** hub&#39;s own membership row and nothing else, so the authenticated peer is the whole authorisation. Without it a departure was local: the partners kept the row, kept calling the hub, and kept letting it read what the alliance shares.
+   * @param deleteFederationAllianceMemberRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> deleteFederationAllianceMemberWithHttpInfo() throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = deleteFederationAllianceMemberRequestBuilder();
+  public ApiResponse<Void> deleteFederationAllianceMemberWithHttpInfo(DeleteFederationAllianceMemberRequest deleteFederationAllianceMemberRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = deleteFederationAllianceMemberRequestBuilder(deleteFederationAllianceMemberRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -1109,7 +1192,11 @@ public class FederationApi {
     }
   }
 
-  private HttpRequest.Builder deleteFederationAllianceMemberRequestBuilder() throws ApiException {
+  private HttpRequest.Builder deleteFederationAllianceMemberRequestBuilder(DeleteFederationAllianceMemberRequest deleteFederationAllianceMemberRequest) throws ApiException {
+    // verify the required parameter 'deleteFederationAllianceMemberRequest' is set
+    if (deleteFederationAllianceMemberRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'deleteFederationAllianceMemberRequest' when calling deleteFederationAllianceMember");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -1117,9 +1204,15 @@ public class FederationApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("DELETE", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(deleteFederationAllianceMemberRequest);
+      localVarRequestBuilder.method("DELETE", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }
@@ -1134,7 +1227,7 @@ public class FederationApi {
    * Honoured only when the post&#39;s &#x60;author_hub&#x60; matches the calling peer **and** its &#x60;author_pubkey&#x60; matches the assertion — a hub can retract its own users&#39; content, never anyone else&#39;s.
    * @param channelId  (required)
    * @param postId  (required)
-   * @param deleteFederationForumChannelPostRequest  (optional)
+   * @param deleteFederationForumChannelPostRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void deleteFederationForumChannelPost(String channelId, String postId, DeleteFederationForumChannelPostRequest deleteFederationForumChannelPostRequest) throws ApiException {
@@ -1146,7 +1239,7 @@ public class FederationApi {
    * Honoured only when the post&#39;s &#x60;author_hub&#x60; matches the calling peer **and** its &#x60;author_pubkey&#x60; matches the assertion — a hub can retract its own users&#39; content, never anyone else&#39;s.
    * @param channelId  (required)
    * @param postId  (required)
-   * @param deleteFederationForumChannelPostRequest  (optional)
+   * @param deleteFederationForumChannelPostRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -1193,6 +1286,10 @@ public class FederationApi {
     if (postId == null) {
       throw new ApiException(400, "Missing the required parameter 'postId' when calling deleteFederationForumChannelPost");
     }
+    // verify the required parameter 'deleteFederationForumChannelPostRequest' is set
+    if (deleteFederationForumChannelPostRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'deleteFederationForumChannelPostRequest' when calling deleteFederationForumChannelPost");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -1226,7 +1323,7 @@ public class FederationApi {
    * @param channelId  (required)
    * @param postId  (required)
    * @param replyId  (required)
-   * @param deleteFederationForumChannelPostRequest  (optional)
+   * @param deleteFederationForumChannelPostRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void deleteFederationForumChannelPostReply(String channelId, String postId, String replyId, DeleteFederationForumChannelPostRequest deleteFederationForumChannelPostRequest) throws ApiException {
@@ -1239,7 +1336,7 @@ public class FederationApi {
    * @param channelId  (required)
    * @param postId  (required)
    * @param replyId  (required)
-   * @param deleteFederationForumChannelPostRequest  (optional)
+   * @param deleteFederationForumChannelPostRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -1289,6 +1386,10 @@ public class FederationApi {
     // verify the required parameter 'replyId' is set
     if (replyId == null) {
       throw new ApiException(400, "Missing the required parameter 'replyId' when calling deleteFederationForumChannelPostReply");
+    }
+    // verify the required parameter 'deleteFederationForumChannelPostRequest' is set
+    if (deleteFederationForumChannelPostRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'deleteFederationForumChannelPostRequest' when calling deleteFederationForumChannelPostReply");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -2022,20 +2123,22 @@ public class FederationApi {
   /**
    * Sign a directory entry for the hub discovery service
    * 
+   * @param signAdminDirectoryListingRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void signAdminDirectoryListing() throws ApiException {
-    signAdminDirectoryListingWithHttpInfo();
+  public void signAdminDirectoryListing(SignAdminDirectoryListingRequest signAdminDirectoryListingRequest) throws ApiException {
+    signAdminDirectoryListingWithHttpInfo(signAdminDirectoryListingRequest);
   }
 
   /**
    * Sign a directory entry for the hub discovery service
    * 
+   * @param signAdminDirectoryListingRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> signAdminDirectoryListingWithHttpInfo() throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = signAdminDirectoryListingRequestBuilder();
+  public ApiResponse<Void> signAdminDirectoryListingWithHttpInfo(SignAdminDirectoryListingRequest signAdminDirectoryListingRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = signAdminDirectoryListingRequestBuilder(signAdminDirectoryListingRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -2068,7 +2171,11 @@ public class FederationApi {
     }
   }
 
-  private HttpRequest.Builder signAdminDirectoryListingRequestBuilder() throws ApiException {
+  private HttpRequest.Builder signAdminDirectoryListingRequestBuilder(SignAdminDirectoryListingRequest signAdminDirectoryListingRequest) throws ApiException {
+    // verify the required parameter 'signAdminDirectoryListingRequest' is set
+    if (signAdminDirectoryListingRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'signAdminDirectoryListingRequest' when calling signAdminDirectoryListing");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -2076,9 +2183,15 @@ public class FederationApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(signAdminDirectoryListingRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }
@@ -2091,7 +2204,7 @@ public class FederationApi {
   /**
    * Update the policy on an existing ban list source (admin)
    * 
-   * @param updateAdminBanlistSourcesRequest  (optional)
+   * @param updateAdminBanlistSourcesRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void updateAdminBanlistSources(UpdateAdminBanlistSourcesRequest updateAdminBanlistSourcesRequest) throws ApiException {
@@ -2101,7 +2214,7 @@ public class FederationApi {
   /**
    * Update the policy on an existing ban list source (admin)
    * 
-   * @param updateAdminBanlistSourcesRequest  (optional)
+   * @param updateAdminBanlistSourcesRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -2140,6 +2253,10 @@ public class FederationApi {
   }
 
   private HttpRequest.Builder updateAdminBanlistSourcesRequestBuilder(UpdateAdminBanlistSourcesRequest updateAdminBanlistSourcesRequest) throws ApiException {
+    // verify the required parameter 'updateAdminBanlistSourcesRequest' is set
+    if (updateAdminBanlistSourcesRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'updateAdminBanlistSourcesRequest' when calling updateAdminBanlistSources");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -2168,7 +2285,7 @@ public class FederationApi {
   /**
    * Toggle whether this hub publishes its ban list (admin)
    * 
-   * @param updateAdminSettingsBanlistRequest  (optional)
+   * @param updateAdminSettingsBanlistRequest  (required)
    * @throws ApiException if fails to make API call
    */
   public void updateAdminSettingsBanlist(UpdateAdminSettingsBanlistRequest updateAdminSettingsBanlistRequest) throws ApiException {
@@ -2178,7 +2295,7 @@ public class FederationApi {
   /**
    * Toggle whether this hub publishes its ban list (admin)
    * 
-   * @param updateAdminSettingsBanlistRequest  (optional)
+   * @param updateAdminSettingsBanlistRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -2217,6 +2334,10 @@ public class FederationApi {
   }
 
   private HttpRequest.Builder updateAdminSettingsBanlistRequestBuilder(UpdateAdminSettingsBanlistRequest updateAdminSettingsBanlistRequest) throws ApiException {
+    // verify the required parameter 'updateAdminSettingsBanlistRequest' is set
+    if (updateAdminSettingsBanlistRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'updateAdminSettingsBanlistRequest' when calling updateAdminSettingsBanlist");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 

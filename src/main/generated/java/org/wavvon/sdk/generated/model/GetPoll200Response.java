@@ -84,7 +84,7 @@ public class GetPoll200Response {
 
   public static final String JSON_PROPERTY_TOTALS = "totals";
   @jakarta.annotation.Nullable
-  private Map<String, Long> totals = new HashMap<>();
+  private Map<String, Integer> totals = new HashMap<>();
 
   public static final String JSON_PROPERTY_YOUR_VOTE = "your_vote";
   @jakarta.annotation.Nullable
@@ -285,12 +285,12 @@ public class GetPoll200Response {
   }
 
 
-  public GetPoll200Response totals(@jakarta.annotation.Nullable Map<String, Long> totals) {
+  public GetPoll200Response totals(@jakarta.annotation.Nullable Map<String, Integer> totals) {
     this.totals = totals;
     return this;
   }
 
-  public GetPoll200Response putTotalsItem(String key, Long totalsItem) {
+  public GetPoll200Response putTotalsItem(String key, Integer totalsItem) {
     if (this.totals == null) {
       this.totals = new HashMap<>();
     }
@@ -305,14 +305,14 @@ public class GetPoll200Response {
   @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_TOTALS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Map<String, Long> getTotals() {
+  public Map<String, Integer> getTotals() {
     return totals;
   }
 
 
   @JsonProperty(JSON_PROPERTY_TOTALS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setTotals(@jakarta.annotation.Nullable Map<String, Long> totals) {
+  public void setTotals(@jakarta.annotation.Nullable Map<String, Integer> totals) {
     this.totals = totals;
   }
 

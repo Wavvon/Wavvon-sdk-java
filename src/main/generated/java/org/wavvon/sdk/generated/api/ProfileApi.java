@@ -18,6 +18,7 @@ import org.wavvon.sdk.generated.ApiResponse;
 import org.wavvon.sdk.generated.Configuration;
 import org.wavvon.sdk.generated.Pair;
 
+import org.wavvon.sdk.generated.model.SetProfileRequest;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -161,21 +162,23 @@ public class ProfileApi {
    * Publish own public hub-list profile
    * 
    * @param pubkey  (required)
+   * @param setProfileRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void setProfile(String pubkey) throws ApiException {
-    setProfileWithHttpInfo(pubkey);
+  public void setProfile(String pubkey, SetProfileRequest setProfileRequest) throws ApiException {
+    setProfileWithHttpInfo(pubkey, setProfileRequest);
   }
 
   /**
    * Publish own public hub-list profile
    * 
    * @param pubkey  (required)
+   * @param setProfileRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> setProfileWithHttpInfo(String pubkey) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = setProfileRequestBuilder(pubkey);
+  public ApiResponse<Void> setProfileWithHttpInfo(String pubkey, SetProfileRequest setProfileRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = setProfileRequestBuilder(pubkey, setProfileRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -208,10 +211,14 @@ public class ProfileApi {
     }
   }
 
-  private HttpRequest.Builder setProfileRequestBuilder(String pubkey) throws ApiException {
+  private HttpRequest.Builder setProfileRequestBuilder(String pubkey, SetProfileRequest setProfileRequest) throws ApiException {
     // verify the required parameter 'pubkey' is set
     if (pubkey == null) {
       throw new ApiException(400, "Missing the required parameter 'pubkey' when calling setProfile");
+    }
+    // verify the required parameter 'setProfileRequest' is set
+    if (setProfileRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'setProfileRequest' when calling setProfile");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -221,9 +228,15 @@ public class ProfileApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("PUT", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(setProfileRequest);
+      localVarRequestBuilder.method("PUT", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }

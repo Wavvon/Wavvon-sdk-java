@@ -72,15 +72,15 @@ public class DmMessageEncryptedEnvelope {
 
   public static final String JSON_PROPERTY_V = "v";
   @jakarta.annotation.Nonnull
-  private Long v;
+  private Integer v;
 
   public static final String JSON_PROPERTY_MESSAGE_INDEX = "message_index";
   @jakarta.annotation.Nullable
-  private Long messageIndex;
+  private Integer messageIndex;
 
   public static final String JSON_PROPERTY_PREV_COUNT = "prev_count";
   @jakarta.annotation.Nullable
-  private Long prevCount;
+  private Integer prevCount;
 
   public static final String JSON_PROPERTY_SIGNER_CERT = "signer_cert";
   @jakarta.annotation.Nullable
@@ -233,7 +233,7 @@ public class DmMessageEncryptedEnvelope {
   }
 
 
-  public DmMessageEncryptedEnvelope v(@jakarta.annotation.Nonnull Long v) {
+  public DmMessageEncryptedEnvelope v(@jakarta.annotation.Nonnull Integer v) {
     this.v = v;
     return this;
   }
@@ -245,19 +245,19 @@ public class DmMessageEncryptedEnvelope {
   @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_V)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public Long getV() {
+  public Integer getV() {
     return v;
   }
 
 
   @JsonProperty(JSON_PROPERTY_V)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setV(@jakarta.annotation.Nonnull Long v) {
+  public void setV(@jakarta.annotation.Nonnull Integer v) {
     this.v = v;
   }
 
 
-  public DmMessageEncryptedEnvelope messageIndex(@jakarta.annotation.Nullable Long messageIndex) {
+  public DmMessageEncryptedEnvelope messageIndex(@jakarta.annotation.Nullable Integer messageIndex) {
     this.messageIndex = messageIndex;
     return this;
   }
@@ -269,19 +269,19 @@ public class DmMessageEncryptedEnvelope {
   @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_MESSAGE_INDEX)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Long getMessageIndex() {
+  public Integer getMessageIndex() {
     return messageIndex;
   }
 
 
   @JsonProperty(JSON_PROPERTY_MESSAGE_INDEX)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setMessageIndex(@jakarta.annotation.Nullable Long messageIndex) {
+  public void setMessageIndex(@jakarta.annotation.Nullable Integer messageIndex) {
     this.messageIndex = messageIndex;
   }
 
 
-  public DmMessageEncryptedEnvelope prevCount(@jakarta.annotation.Nullable Long prevCount) {
+  public DmMessageEncryptedEnvelope prevCount(@jakarta.annotation.Nullable Integer prevCount) {
     this.prevCount = prevCount;
     return this;
   }
@@ -293,14 +293,14 @@ public class DmMessageEncryptedEnvelope {
   @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_PREV_COUNT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Long getPrevCount() {
+  public Integer getPrevCount() {
     return prevCount;
   }
 
 
   @JsonProperty(JSON_PROPERTY_PREV_COUNT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setPrevCount(@jakarta.annotation.Nullable Long prevCount) {
+  public void setPrevCount(@jakarta.annotation.Nullable Integer prevCount) {
     this.prevCount = prevCount;
   }
 

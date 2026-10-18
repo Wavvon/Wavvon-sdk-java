@@ -54,11 +54,11 @@ public class DmMessageGroupEncryptedEnvelope {
 
   public static final String JSON_PROPERTY_SENDER_KEY_VERSION = "sender_key_version";
   @jakarta.annotation.Nonnull
-  private Long senderKeyVersion;
+  private Integer senderKeyVersion;
 
   public static final String JSON_PROPERTY_ITERATION = "iteration";
   @jakarta.annotation.Nonnull
-  private Long iteration;
+  private Integer iteration;
 
   public static final String JSON_PROPERTY_CIPHERTEXT_HEX = "ciphertext_hex";
   @jakarta.annotation.Nonnull
@@ -127,7 +127,7 @@ public class DmMessageGroupEncryptedEnvelope {
   }
 
 
-  public DmMessageGroupEncryptedEnvelope senderKeyVersion(@jakarta.annotation.Nonnull Long senderKeyVersion) {
+  public DmMessageGroupEncryptedEnvelope senderKeyVersion(@jakarta.annotation.Nonnull Integer senderKeyVersion) {
     this.senderKeyVersion = senderKeyVersion;
     return this;
   }
@@ -139,19 +139,19 @@ public class DmMessageGroupEncryptedEnvelope {
   @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_SENDER_KEY_VERSION)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public Long getSenderKeyVersion() {
+  public Integer getSenderKeyVersion() {
     return senderKeyVersion;
   }
 
 
   @JsonProperty(JSON_PROPERTY_SENDER_KEY_VERSION)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setSenderKeyVersion(@jakarta.annotation.Nonnull Long senderKeyVersion) {
+  public void setSenderKeyVersion(@jakarta.annotation.Nonnull Integer senderKeyVersion) {
     this.senderKeyVersion = senderKeyVersion;
   }
 
 
-  public DmMessageGroupEncryptedEnvelope iteration(@jakarta.annotation.Nonnull Long iteration) {
+  public DmMessageGroupEncryptedEnvelope iteration(@jakarta.annotation.Nonnull Integer iteration) {
     this.iteration = iteration;
     return this;
   }
@@ -163,14 +163,14 @@ public class DmMessageGroupEncryptedEnvelope {
   @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_ITERATION)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public Long getIteration() {
+  public Integer getIteration() {
     return iteration;
   }
 
 
   @JsonProperty(JSON_PROPERTY_ITERATION)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setIteration(@jakarta.annotation.Nonnull Long iteration) {
+  public void setIteration(@jakarta.annotation.Nonnull Integer iteration) {
     this.iteration = iteration;
   }
 
