@@ -70,7 +70,7 @@ public class FriendsApi {
   }
 
   protected ApiException getApiException(String operationId, HttpResponse<InputStream> response) throws IOException {
-    String body = response.body() == null ? null : new String(response.body().readAllBytes());
+    String body = response.body() == null ? null : new String(response.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
     String message = formatExceptionMessage(operationId, response.statusCode(), body);
     return new ApiException(response.statusCode(), message, response.headers(), body);
   }

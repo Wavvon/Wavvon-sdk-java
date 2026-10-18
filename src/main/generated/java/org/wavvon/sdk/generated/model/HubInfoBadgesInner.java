@@ -25,167 +25,81 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Arrays;
+import org.wavvon.sdk.generated.model.BadgePayload;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * User
+ * HubInfoBadgesInner
  */
 @JsonPropertyOrder({
-  User.JSON_PROPERTY_PUBLIC_KEY,
-  User.JSON_PROPERTY_DISPLAY_NAME,
-  User.JSON_PROPERTY_AVATAR,
-  User.JSON_PROPERTY_ONLINE,
-  User.JSON_PROPERTY_GROUP_ROLE
+  HubInfoBadgesInner.JSON_PROPERTY_PAYLOAD,
+  HubInfoBadgesInner.JSON_PROPERTY_SIGNATURE
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class User {
-  public static final String JSON_PROPERTY_PUBLIC_KEY = "public_key";
-  @jakarta.annotation.Nullable
-  private String publicKey;
+public class HubInfoBadgesInner {
+  public static final String JSON_PROPERTY_PAYLOAD = "payload";
+  @jakarta.annotation.Nonnull
+  private BadgePayload payload;
 
-  public static final String JSON_PROPERTY_DISPLAY_NAME = "display_name";
-  @jakarta.annotation.Nullable
-  private String displayName;
+  public static final String JSON_PROPERTY_SIGNATURE = "signature";
+  @jakarta.annotation.Nonnull
+  private String signature;
 
-  public static final String JSON_PROPERTY_AVATAR = "avatar";
-  @jakarta.annotation.Nullable
-  private String avatar;
-
-  public static final String JSON_PROPERTY_ONLINE = "online";
-  @jakarta.annotation.Nullable
-  private Boolean online;
-
-  public static final String JSON_PROPERTY_GROUP_ROLE = "group_role";
-  @jakarta.annotation.Nullable
-  private String groupRole;
-
-  public User() { 
+  public HubInfoBadgesInner() { 
   }
 
-  public User publicKey(@jakarta.annotation.Nullable String publicKey) {
-    this.publicKey = publicKey;
+  public HubInfoBadgesInner payload(@jakarta.annotation.Nonnull BadgePayload payload) {
+    this.payload = payload;
     return this;
   }
 
   /**
-   * Get publicKey
-   * @return publicKey
+   * Get payload
+   * @return payload
    */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_PUBLIC_KEY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getPublicKey() {
-    return publicKey;
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_PAYLOAD)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public BadgePayload getPayload() {
+    return payload;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_PUBLIC_KEY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setPublicKey(@jakarta.annotation.Nullable String publicKey) {
-    this.publicKey = publicKey;
+  @JsonProperty(JSON_PROPERTY_PAYLOAD)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setPayload(@jakarta.annotation.Nonnull BadgePayload payload) {
+    this.payload = payload;
   }
 
 
-  public User displayName(@jakarta.annotation.Nullable String displayName) {
-    this.displayName = displayName;
+  public HubInfoBadgesInner signature(@jakarta.annotation.Nonnull String signature) {
+    this.signature = signature;
     return this;
   }
 
   /**
-   * Get displayName
-   * @return displayName
+   * Get signature
+   * @return signature
    */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_DISPLAY_NAME)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getDisplayName() {
-    return displayName;
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_SIGNATURE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public String getSignature() {
+    return signature;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_DISPLAY_NAME)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setDisplayName(@jakarta.annotation.Nullable String displayName) {
-    this.displayName = displayName;
-  }
-
-
-  public User avatar(@jakarta.annotation.Nullable String avatar) {
-    this.avatar = avatar;
-    return this;
-  }
-
-  /**
-   * Base64-encoded image
-   * @return avatar
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_AVATAR)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getAvatar() {
-    return avatar;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_AVATAR)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setAvatar(@jakarta.annotation.Nullable String avatar) {
-    this.avatar = avatar;
-  }
-
-
-  public User online(@jakarta.annotation.Nullable Boolean online) {
-    this.online = online;
-    return this;
-  }
-
-  /**
-   * Get online
-   * @return online
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_ONLINE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Boolean getOnline() {
-    return online;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_ONLINE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setOnline(@jakarta.annotation.Nullable Boolean online) {
-    this.online = online;
-  }
-
-
-  public User groupRole(@jakarta.annotation.Nullable String groupRole) {
-    this.groupRole = groupRole;
-    return this;
-  }
-
-  /**
-   * Get groupRole
-   * @return groupRole
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_GROUP_ROLE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getGroupRole() {
-    return groupRole;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_GROUP_ROLE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setGroupRole(@jakarta.annotation.Nullable String groupRole) {
-    this.groupRole = groupRole;
+  @JsonProperty(JSON_PROPERTY_SIGNATURE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setSignature(@jakarta.annotation.Nonnull String signature) {
+    this.signature = signature;
   }
 
 
   /**
-   * Return true if this User object is equal to o.
+   * Return true if this HubInfo_badges_inner object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -195,28 +109,22 @@ public class User {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    User user = (User) o;
-    return Objects.equals(this.publicKey, user.publicKey) &&
-        Objects.equals(this.displayName, user.displayName) &&
-        Objects.equals(this.avatar, user.avatar) &&
-        Objects.equals(this.online, user.online) &&
-        Objects.equals(this.groupRole, user.groupRole);
+    HubInfoBadgesInner hubInfoBadgesInner = (HubInfoBadgesInner) o;
+    return Objects.equals(this.payload, hubInfoBadgesInner.payload) &&
+        Objects.equals(this.signature, hubInfoBadgesInner.signature);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(publicKey, displayName, avatar, online, groupRole);
+    return Objects.hash(payload, signature);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class User {\n");
-    sb.append("    publicKey: ").append(toIndentedString(publicKey)).append("\n");
-    sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n");
-    sb.append("    avatar: ").append(toIndentedString(avatar)).append("\n");
-    sb.append("    online: ").append(toIndentedString(online)).append("\n");
-    sb.append("    groupRole: ").append(toIndentedString(groupRole)).append("\n");
+    sb.append("class HubInfoBadgesInner {\n");
+    sb.append("    payload: ").append(toIndentedString(payload)).append("\n");
+    sb.append("    signature: ").append(toIndentedString(signature)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -264,29 +172,14 @@ public class User {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `public_key` to the URL query string
-    if (getPublicKey() != null) {
-      joiner.add(String.format("%spublic_key%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getPublicKey()))));
+    // add `payload` to the URL query string
+    if (getPayload() != null) {
+      joiner.add(getPayload().toUrlQueryString(prefix + "payload" + suffix));
     }
 
-    // add `display_name` to the URL query string
-    if (getDisplayName() != null) {
-      joiner.add(String.format("%sdisplay_name%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getDisplayName()))));
-    }
-
-    // add `avatar` to the URL query string
-    if (getAvatar() != null) {
-      joiner.add(String.format("%savatar%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getAvatar()))));
-    }
-
-    // add `online` to the URL query string
-    if (getOnline() != null) {
-      joiner.add(String.format("%sonline%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getOnline()))));
-    }
-
-    // add `group_role` to the URL query string
-    if (getGroupRole() != null) {
-      joiner.add(String.format("%sgroup_role%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getGroupRole()))));
+    // add `signature` to the URL query string
+    if (getSignature() != null) {
+      joiner.add(String.format("%ssignature%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getSignature()))));
     }
 
     return joiner.toString();

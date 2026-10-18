@@ -11,7 +11,14 @@ import java.util.List;
  * @param capabilities the features this hub supports
  */
 public record HubInfo(String name, String publicKey, String version, List<String> capabilities) {
-  /** Never null. */
+  /**
+   * Normalises a missing capability list to an empty one.
+   *
+   * @param name the hub's name
+   * @param publicKey the hub's key
+   * @param version informational only
+   * @param capabilities may be null
+   */
   public HubInfo {
     capabilities = capabilities == null ? List.of() : List.copyOf(capabilities);
   }

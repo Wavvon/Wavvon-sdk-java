@@ -78,7 +78,7 @@ public class OutgoingWebhooksApi {
   }
 
   protected ApiException getApiException(String operationId, HttpResponse<InputStream> response) throws IOException {
-    String body = response.body() == null ? null : new String(response.body().readAllBytes());
+    String body = response.body() == null ? null : new String(response.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
     String message = formatExceptionMessage(operationId, response.statusCode(), body);
     return new ApiException(response.statusCode(), message, response.headers(), body);
   }
@@ -130,7 +130,7 @@ public class OutgoingWebhooksApi {
           );
         }
 
-        String responseBody = new String(localVarResponse.body().readAllBytes());
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
         return new ApiResponse<CreateAdminOutgoingWebhook201Response>(
@@ -375,7 +375,7 @@ public class OutgoingWebhooksApi {
           );
         }
 
-        String responseBody = new String(localVarResponse.body().readAllBytes());
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
         return new ApiResponse<List<ListAdminOutgoingWebhookDeliveries200ResponseInner>>(
@@ -480,7 +480,7 @@ public class OutgoingWebhooksApi {
           );
         }
 
-        String responseBody = new String(localVarResponse.body().readAllBytes());
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
         return new ApiResponse<ListAdminOutgoingWebhookSubscriptions200Response>(
@@ -562,7 +562,7 @@ public class OutgoingWebhooksApi {
           );
         }
 
-        String responseBody = new String(localVarResponse.body().readAllBytes());
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
         return new ApiResponse<List<ListAdminOutgoingWebhooks200ResponseInner>>(
@@ -641,7 +641,7 @@ public class OutgoingWebhooksApi {
           );
         }
 
-        String responseBody = new String(localVarResponse.body().readAllBytes());
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
         return new ApiResponse<RotateAdminOutgoingWebhookSecret200Response>(
@@ -727,7 +727,7 @@ public class OutgoingWebhooksApi {
           );
         }
 
-        String responseBody = new String(localVarResponse.body().readAllBytes());
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
         return new ApiResponse<SetMeAppSubscriptions200Response>(

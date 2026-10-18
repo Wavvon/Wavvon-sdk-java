@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.wavvon.sdk.generated.model.Attachment;
+import org.wavvon.sdk.generated.model.DmMessageEncryptedEnvelope;
+import org.wavvon.sdk.generated.model.DmMessageGroupEncryptedEnvelope;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -43,21 +45,23 @@ import org.wavvon.sdk.generated.ApiClient;
   DmMessage.JSON_PROPERTY_CONTENT,
   DmMessage.JSON_PROPERTY_CREATED_AT,
   DmMessage.JSON_PROPERTY_ATTACHMENTS,
+  DmMessage.JSON_PROPERTY_DELIVERY_FAILED,
   DmMessage.JSON_PROPERTY_IS_ENCRYPTED,
-  DmMessage.JSON_PROPERTY_DELIVERY_FAILED
+  DmMessage.JSON_PROPERTY_ENCRYPTED_ENVELOPE,
+  DmMessage.JSON_PROPERTY_GROUP_ENCRYPTED_ENVELOPE
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class DmMessage {
   public static final String JSON_PROPERTY_ID = "id";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private String id;
 
   public static final String JSON_PROPERTY_CONVERSATION_ID = "conversation_id";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private String conversationId;
 
   public static final String JSON_PROPERTY_SENDER = "sender";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private String sender;
 
   public static final String JSON_PROPERTY_SENDER_NAME = "sender_name";
@@ -69,25 +73,33 @@ public class DmMessage {
   private String content;
 
   public static final String JSON_PROPERTY_CREATED_AT = "created_at";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private Long createdAt;
 
   public static final String JSON_PROPERTY_ATTACHMENTS = "attachments";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private List<Attachment> attachments = new ArrayList<>();
 
+  public static final String JSON_PROPERTY_DELIVERY_FAILED = "delivery_failed";
+  @jakarta.annotation.Nonnull
+  private Boolean deliveryFailed;
+
   public static final String JSON_PROPERTY_IS_ENCRYPTED = "is_encrypted";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private Boolean isEncrypted;
 
-  public static final String JSON_PROPERTY_DELIVERY_FAILED = "delivery_failed";
+  public static final String JSON_PROPERTY_ENCRYPTED_ENVELOPE = "encrypted_envelope";
   @jakarta.annotation.Nullable
-  private Boolean deliveryFailed;
+  private DmMessageEncryptedEnvelope encryptedEnvelope;
+
+  public static final String JSON_PROPERTY_GROUP_ENCRYPTED_ENVELOPE = "group_encrypted_envelope";
+  @jakarta.annotation.Nullable
+  private DmMessageGroupEncryptedEnvelope groupEncryptedEnvelope;
 
   public DmMessage() { 
   }
 
-  public DmMessage id(@jakarta.annotation.Nullable String id) {
+  public DmMessage id(@jakarta.annotation.Nonnull String id) {
     this.id = id;
     return this;
   }
@@ -96,22 +108,22 @@ public class DmMessage {
    * Get id
    * @return id
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getId() {
     return id;
   }
 
 
   @JsonProperty(JSON_PROPERTY_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setId(@jakarta.annotation.Nullable String id) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setId(@jakarta.annotation.Nonnull String id) {
     this.id = id;
   }
 
 
-  public DmMessage conversationId(@jakarta.annotation.Nullable String conversationId) {
+  public DmMessage conversationId(@jakarta.annotation.Nonnull String conversationId) {
     this.conversationId = conversationId;
     return this;
   }
@@ -120,22 +132,22 @@ public class DmMessage {
    * Get conversationId
    * @return conversationId
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_CONVERSATION_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getConversationId() {
     return conversationId;
   }
 
 
   @JsonProperty(JSON_PROPERTY_CONVERSATION_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setConversationId(@jakarta.annotation.Nullable String conversationId) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setConversationId(@jakarta.annotation.Nonnull String conversationId) {
     this.conversationId = conversationId;
   }
 
 
-  public DmMessage sender(@jakarta.annotation.Nullable String sender) {
+  public DmMessage sender(@jakarta.annotation.Nonnull String sender) {
     this.sender = sender;
     return this;
   }
@@ -144,17 +156,17 @@ public class DmMessage {
    * Get sender
    * @return sender
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_SENDER)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getSender() {
     return sender;
   }
 
 
   @JsonProperty(JSON_PROPERTY_SENDER)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setSender(@jakarta.annotation.Nullable String sender) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setSender(@jakarta.annotation.Nonnull String sender) {
     this.sender = sender;
   }
 
@@ -170,14 +182,14 @@ public class DmMessage {
    */
   @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_SENDER_NAME)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getSenderName() {
     return senderName;
   }
 
 
   @JsonProperty(JSON_PROPERTY_SENDER_NAME)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setSenderName(@jakarta.annotation.Nullable String senderName) {
     this.senderName = senderName;
   }
@@ -194,20 +206,20 @@ public class DmMessage {
    */
   @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_CONTENT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getContent() {
     return content;
   }
 
 
   @JsonProperty(JSON_PROPERTY_CONTENT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setContent(@jakarta.annotation.Nullable String content) {
     this.content = content;
   }
 
 
-  public DmMessage createdAt(@jakarta.annotation.Nullable Long createdAt) {
+  public DmMessage createdAt(@jakarta.annotation.Nonnull Long createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -216,22 +228,22 @@ public class DmMessage {
    * Get createdAt
    * @return createdAt
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_CREATED_AT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public Long getCreatedAt() {
     return createdAt;
   }
 
 
   @JsonProperty(JSON_PROPERTY_CREATED_AT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCreatedAt(@jakarta.annotation.Nullable Long createdAt) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setCreatedAt(@jakarta.annotation.Nonnull Long createdAt) {
     this.createdAt = createdAt;
   }
 
 
-  public DmMessage attachments(@jakarta.annotation.Nullable List<Attachment> attachments) {
+  public DmMessage attachments(@jakarta.annotation.Nonnull List<Attachment> attachments) {
     this.attachments = attachments;
     return this;
   }
@@ -248,46 +260,22 @@ public class DmMessage {
    * Get attachments
    * @return attachments
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_ATTACHMENTS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public List<Attachment> getAttachments() {
     return attachments;
   }
 
 
   @JsonProperty(JSON_PROPERTY_ATTACHMENTS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setAttachments(@jakarta.annotation.Nullable List<Attachment> attachments) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setAttachments(@jakarta.annotation.Nonnull List<Attachment> attachments) {
     this.attachments = attachments;
   }
 
 
-  public DmMessage isEncrypted(@jakarta.annotation.Nullable Boolean isEncrypted) {
-    this.isEncrypted = isEncrypted;
-    return this;
-  }
-
-  /**
-   * Get isEncrypted
-   * @return isEncrypted
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_IS_ENCRYPTED)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Boolean getIsEncrypted() {
-    return isEncrypted;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_IS_ENCRYPTED)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setIsEncrypted(@jakarta.annotation.Nullable Boolean isEncrypted) {
-    this.isEncrypted = isEncrypted;
-  }
-
-
-  public DmMessage deliveryFailed(@jakarta.annotation.Nullable Boolean deliveryFailed) {
+  public DmMessage deliveryFailed(@jakarta.annotation.Nonnull Boolean deliveryFailed) {
     this.deliveryFailed = deliveryFailed;
     return this;
   }
@@ -296,18 +284,90 @@ public class DmMessage {
    * Get deliveryFailed
    * @return deliveryFailed
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_DELIVERY_FAILED)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public Boolean getDeliveryFailed() {
     return deliveryFailed;
   }
 
 
   @JsonProperty(JSON_PROPERTY_DELIVERY_FAILED)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setDeliveryFailed(@jakarta.annotation.Nullable Boolean deliveryFailed) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setDeliveryFailed(@jakarta.annotation.Nonnull Boolean deliveryFailed) {
     this.deliveryFailed = deliveryFailed;
+  }
+
+
+  public DmMessage isEncrypted(@jakarta.annotation.Nonnull Boolean isEncrypted) {
+    this.isEncrypted = isEncrypted;
+    return this;
+  }
+
+  /**
+   * Get isEncrypted
+   * @return isEncrypted
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_IS_ENCRYPTED)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public Boolean getIsEncrypted() {
+    return isEncrypted;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_IS_ENCRYPTED)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setIsEncrypted(@jakarta.annotation.Nonnull Boolean isEncrypted) {
+    this.isEncrypted = isEncrypted;
+  }
+
+
+  public DmMessage encryptedEnvelope(@jakarta.annotation.Nullable DmMessageEncryptedEnvelope encryptedEnvelope) {
+    this.encryptedEnvelope = encryptedEnvelope;
+    return this;
+  }
+
+  /**
+   * Get encryptedEnvelope
+   * @return encryptedEnvelope
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_ENCRYPTED_ENVELOPE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public DmMessageEncryptedEnvelope getEncryptedEnvelope() {
+    return encryptedEnvelope;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_ENCRYPTED_ENVELOPE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setEncryptedEnvelope(@jakarta.annotation.Nullable DmMessageEncryptedEnvelope encryptedEnvelope) {
+    this.encryptedEnvelope = encryptedEnvelope;
+  }
+
+
+  public DmMessage groupEncryptedEnvelope(@jakarta.annotation.Nullable DmMessageGroupEncryptedEnvelope groupEncryptedEnvelope) {
+    this.groupEncryptedEnvelope = groupEncryptedEnvelope;
+    return this;
+  }
+
+  /**
+   * Get groupEncryptedEnvelope
+   * @return groupEncryptedEnvelope
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_GROUP_ENCRYPTED_ENVELOPE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public DmMessageGroupEncryptedEnvelope getGroupEncryptedEnvelope() {
+    return groupEncryptedEnvelope;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_GROUP_ENCRYPTED_ENVELOPE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setGroupEncryptedEnvelope(@jakarta.annotation.Nullable DmMessageGroupEncryptedEnvelope groupEncryptedEnvelope) {
+    this.groupEncryptedEnvelope = groupEncryptedEnvelope;
   }
 
 
@@ -330,13 +390,15 @@ public class DmMessage {
         Objects.equals(this.content, dmMessage.content) &&
         Objects.equals(this.createdAt, dmMessage.createdAt) &&
         Objects.equals(this.attachments, dmMessage.attachments) &&
+        Objects.equals(this.deliveryFailed, dmMessage.deliveryFailed) &&
         Objects.equals(this.isEncrypted, dmMessage.isEncrypted) &&
-        Objects.equals(this.deliveryFailed, dmMessage.deliveryFailed);
+        Objects.equals(this.encryptedEnvelope, dmMessage.encryptedEnvelope) &&
+        Objects.equals(this.groupEncryptedEnvelope, dmMessage.groupEncryptedEnvelope);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, conversationId, sender, senderName, content, createdAt, attachments, isEncrypted, deliveryFailed);
+    return Objects.hash(id, conversationId, sender, senderName, content, createdAt, attachments, deliveryFailed, isEncrypted, encryptedEnvelope, groupEncryptedEnvelope);
   }
 
   @Override
@@ -350,8 +412,10 @@ public class DmMessage {
     sb.append("    content: ").append(toIndentedString(content)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    attachments: ").append(toIndentedString(attachments)).append("\n");
-    sb.append("    isEncrypted: ").append(toIndentedString(isEncrypted)).append("\n");
     sb.append("    deliveryFailed: ").append(toIndentedString(deliveryFailed)).append("\n");
+    sb.append("    isEncrypted: ").append(toIndentedString(isEncrypted)).append("\n");
+    sb.append("    encryptedEnvelope: ").append(toIndentedString(encryptedEnvelope)).append("\n");
+    sb.append("    groupEncryptedEnvelope: ").append(toIndentedString(groupEncryptedEnvelope)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -439,14 +503,24 @@ public class DmMessage {
       }
     }
 
+    // add `delivery_failed` to the URL query string
+    if (getDeliveryFailed() != null) {
+      joiner.add(String.format("%sdelivery_failed%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getDeliveryFailed()))));
+    }
+
     // add `is_encrypted` to the URL query string
     if (getIsEncrypted() != null) {
       joiner.add(String.format("%sis_encrypted%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getIsEncrypted()))));
     }
 
-    // add `delivery_failed` to the URL query string
-    if (getDeliveryFailed() != null) {
-      joiner.add(String.format("%sdelivery_failed%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getDeliveryFailed()))));
+    // add `encrypted_envelope` to the URL query string
+    if (getEncryptedEnvelope() != null) {
+      joiner.add(getEncryptedEnvelope().toUrlQueryString(prefix + "encrypted_envelope" + suffix));
+    }
+
+    // add `group_encrypted_envelope` to the URL query string
+    if (getGroupEncryptedEnvelope() != null) {
+      joiner.add(getGroupEncryptedEnvelope().toUrlQueryString(prefix + "group_encrypted_envelope" + suffix));
     }
 
     return joiner.toString();

@@ -27,15 +27,18 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.wavvon.sdk.generated.model.HubInfoBadgesInner;
+import org.wavvon.sdk.generated.model.HubInfoCertRequirement;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * Only the fields clients branch on are listed; &#x60;/info&#x60; carries more (badges, LAN trust material, welcome banner, voice endpoint…) and is additive by rule, so ignore what you do not recognise. 
+ * &#x60;GET /info&#x60;. Additive by rule: ignore fields you do not recognise. 
  */
 @JsonPropertyOrder({
   HubInfo.JSON_PROPERTY_NAME,
+  HubInfo.JSON_PROPERTY_DESCRIPTION,
   HubInfo.JSON_PROPERTY_ICON,
   HubInfo.JSON_PROPERTY_PUBLIC_KEY,
   HubInfo.JSON_PROPERTY_VERSION,
@@ -45,28 +48,51 @@ import org.wavvon.sdk.generated.ApiClient;
   HubInfo.JSON_PROPERTY_MIN_SECURITY_LEVEL,
   HubInfo.JSON_PROPERTY_MIN_POW_LEVEL,
   HubInfo.JSON_PROPERTY_CHALLENGE_MODE,
-  HubInfo.JSON_PROPERTY_FARM_URL
+  HubInfo.JSON_PROPERTY_FARM_URL,
+  HubInfo.JSON_PROPERTY_SELF_TAGS,
+  HubInfo.JSON_PROPERTY_NSFW,
+  HubInfo.JSON_PROPERTY_BADGES,
+  HubInfo.JSON_PROPERTY_CERT_REQUIREMENT,
+  HubInfo.JSON_PROPERTY_SCREEN_SHARE_V2,
+  HubInfo.JSON_PROPERTY_SFU_URL,
+  HubInfo.JSON_PROPERTY_EMOJI_COUNT,
+  HubInfo.JSON_PROPERTY_ROTATION,
+  HubInfo.JSON_PROPERTY_LAN_MODE,
+  HubInfo.JSON_PROPERTY_LAN_TLS,
+  HubInfo.JSON_PROPERTY_LAN_FINGERPRINT,
+  HubInfo.JSON_PROPERTY_WELCOME_LABEL,
+  HubInfo.JSON_PROPERTY_WELCOME_INVITE_URL,
+  HubInfo.JSON_PROPERTY_FAREWELL_LABEL,
+  HubInfo.JSON_PROPERTY_VOICE_WT_URL,
+  HubInfo.JSON_PROPERTY_VOICE_CERT_HASH,
+  HubInfo.JSON_PROPERTY_TIMEZONE,
+  HubInfo.JSON_PROPERTY_BIRTHDAYS_ENABLED,
+  HubInfo.JSON_PROPERTY_MAX_ATTACHMENT_BYTES
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class HubInfo {
   public static final String JSON_PROPERTY_NAME = "name";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private String name;
+
+  public static final String JSON_PROPERTY_DESCRIPTION = "description";
+  @jakarta.annotation.Nullable
+  private String description;
 
   public static final String JSON_PROPERTY_ICON = "icon";
   @jakarta.annotation.Nullable
   private String icon;
 
   public static final String JSON_PROPERTY_PUBLIC_KEY = "public_key";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private String publicKey;
 
   public static final String JSON_PROPERTY_VERSION = "version";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private String version;
 
   public static final String JSON_PROPERTY_CAPABILITIES = "capabilities";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private List<String> capabilities = new ArrayList<>();
 
   public static final String JSON_PROPERTY_CANONICAL_URL = "canonical_url";
@@ -74,15 +100,15 @@ public class HubInfo {
   private String canonicalUrl;
 
   public static final String JSON_PROPERTY_INVITE_ONLY = "invite_only";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private Boolean inviteOnly;
 
   public static final String JSON_PROPERTY_MIN_SECURITY_LEVEL = "min_security_level";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private Long minSecurityLevel;
 
   public static final String JSON_PROPERTY_MIN_POW_LEVEL = "min_pow_level";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private Long minPowLevel;
 
   /**
@@ -125,17 +151,93 @@ public class HubInfo {
   }
 
   public static final String JSON_PROPERTY_CHALLENGE_MODE = "challenge_mode";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private ChallengeModeEnum challengeMode;
 
   public static final String JSON_PROPERTY_FARM_URL = "farm_url";
   @jakarta.annotation.Nullable
   private String farmUrl;
 
+  public static final String JSON_PROPERTY_SELF_TAGS = "self_tags";
+  @jakarta.annotation.Nonnull
+  private List<String> selfTags = new ArrayList<>();
+
+  public static final String JSON_PROPERTY_NSFW = "nsfw";
+  @jakarta.annotation.Nonnull
+  private Boolean nsfw;
+
+  public static final String JSON_PROPERTY_BADGES = "badges";
+  @jakarta.annotation.Nonnull
+  private List<HubInfoBadgesInner> badges = new ArrayList<>();
+
+  public static final String JSON_PROPERTY_CERT_REQUIREMENT = "cert_requirement";
+  @jakarta.annotation.Nullable
+  private HubInfoCertRequirement certRequirement;
+
+  public static final String JSON_PROPERTY_SCREEN_SHARE_V2 = "screen_share_v2";
+  @jakarta.annotation.Nonnull
+  private Boolean screenShareV2;
+
+  public static final String JSON_PROPERTY_SFU_URL = "sfu_url";
+  @jakarta.annotation.Nullable
+  private String sfuUrl;
+
+  public static final String JSON_PROPERTY_EMOJI_COUNT = "emoji_count";
+  @jakarta.annotation.Nonnull
+  private Long emojiCount;
+
+  public static final String JSON_PROPERTY_ROTATION = "rotation";
+  @jakarta.annotation.Nullable
+  private Object rotation;
+
+  public static final String JSON_PROPERTY_LAN_MODE = "lan_mode";
+  @jakarta.annotation.Nonnull
+  private Boolean lanMode;
+
+  public static final String JSON_PROPERTY_LAN_TLS = "lan_tls";
+  @jakarta.annotation.Nullable
+  private String lanTls;
+
+  public static final String JSON_PROPERTY_LAN_FINGERPRINT = "lan_fingerprint";
+  @jakarta.annotation.Nullable
+  private String lanFingerprint;
+
+  public static final String JSON_PROPERTY_WELCOME_LABEL = "welcome_label";
+  @jakarta.annotation.Nullable
+  private String welcomeLabel;
+
+  public static final String JSON_PROPERTY_WELCOME_INVITE_URL = "welcome_invite_url";
+  @jakarta.annotation.Nullable
+  private String welcomeInviteUrl;
+
+  public static final String JSON_PROPERTY_FAREWELL_LABEL = "farewell_label";
+  @jakarta.annotation.Nullable
+  private String farewellLabel;
+
+  public static final String JSON_PROPERTY_VOICE_WT_URL = "voice_wt_url";
+  @jakarta.annotation.Nullable
+  private String voiceWtUrl;
+
+  public static final String JSON_PROPERTY_VOICE_CERT_HASH = "voice_cert_hash";
+  @jakarta.annotation.Nullable
+  private String voiceCertHash;
+
+  public static final String JSON_PROPERTY_TIMEZONE = "timezone";
+  @jakarta.annotation.Nullable
+  private String timezone;
+
+  public static final String JSON_PROPERTY_BIRTHDAYS_ENABLED = "birthdays_enabled";
+  @jakarta.annotation.Nonnull
+  private Boolean birthdaysEnabled;
+
+  public static final String JSON_PROPERTY_MAX_ATTACHMENT_BYTES = "max_attachment_bytes";
+  @jakarta.annotation.Nonnull
+  private Long maxAttachmentBytes;
+
   public HubInfo() { 
   }
 
-  public HubInfo name(@jakarta.annotation.Nullable String name) {
+  public HubInfo name(@jakarta.annotation.Nonnull String name) {
     this.name = name;
     return this;
   }
@@ -144,18 +246,42 @@ public class HubInfo {
    * Get name
    * @return name
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_NAME)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getName() {
     return name;
   }
 
 
   @JsonProperty(JSON_PROPERTY_NAME)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setName(@jakarta.annotation.Nullable String name) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setName(@jakarta.annotation.Nonnull String name) {
     this.name = name;
+  }
+
+
+  public HubInfo description(@jakarta.annotation.Nullable String description) {
+    this.description = description;
+    return this;
+  }
+
+  /**
+   * Get description
+   * @return description
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_DESCRIPTION)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public String getDescription() {
+    return description;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_DESCRIPTION)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setDescription(@jakarta.annotation.Nullable String description) {
+    this.description = description;
   }
 
 
@@ -170,20 +296,20 @@ public class HubInfo {
    */
   @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_ICON)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getIcon() {
     return icon;
   }
 
 
   @JsonProperty(JSON_PROPERTY_ICON)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setIcon(@jakarta.annotation.Nullable String icon) {
     this.icon = icon;
   }
 
 
-  public HubInfo publicKey(@jakarta.annotation.Nullable String publicKey) {
+  public HubInfo publicKey(@jakarta.annotation.Nonnull String publicKey) {
     this.publicKey = publicKey;
     return this;
   }
@@ -192,22 +318,22 @@ public class HubInfo {
    * The hub&#39;s Ed25519 identity, hex. This is the hub&#39;s ID.
    * @return publicKey
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_PUBLIC_KEY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getPublicKey() {
     return publicKey;
   }
 
 
   @JsonProperty(JSON_PROPERTY_PUBLIC_KEY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setPublicKey(@jakarta.annotation.Nullable String publicKey) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setPublicKey(@jakarta.annotation.Nonnull String publicKey) {
     this.publicKey = publicKey;
   }
 
 
-  public HubInfo version(@jakarta.annotation.Nullable String version) {
+  public HubInfo version(@jakarta.annotation.Nonnull String version) {
     this.version = version;
     return this;
   }
@@ -216,22 +342,22 @@ public class HubInfo {
    * For display and \&quot;this hub is very old\&quot; warnings **only**. Never decide whether a feature exists by comparing this — use &#x60;capabilities&#x60;. 
    * @return version
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_VERSION)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getVersion() {
     return version;
   }
 
 
   @JsonProperty(JSON_PROPERTY_VERSION)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setVersion(@jakarta.annotation.Nullable String version) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setVersion(@jakarta.annotation.Nonnull String version) {
     this.version = version;
   }
 
 
-  public HubInfo capabilities(@jakarta.annotation.Nullable List<String> capabilities) {
+  public HubInfo capabilities(@jakarta.annotation.Nonnull List<String> capabilities) {
     this.capabilities = capabilities;
     return this;
   }
@@ -248,17 +374,17 @@ public class HubInfo {
    * What this hub can do, e.g. &#x60;voice.wt&#x60;, &#x60;list.cursor&#x60;. Test membership to decide what to offer; absent or empty means a hub predating capability advertising, which reads correctly as \&quot;knows nothing\&quot;. The list only ever grows — a string never changes spelling or meaning once published. 
    * @return capabilities
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_CAPABILITIES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public List<String> getCapabilities() {
     return capabilities;
   }
 
 
   @JsonProperty(JSON_PROPERTY_CAPABILITIES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCapabilities(@jakarta.annotation.Nullable List<String> capabilities) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setCapabilities(@jakarta.annotation.Nonnull List<String> capabilities) {
     this.capabilities = capabilities;
   }
 
@@ -287,7 +413,7 @@ public class HubInfo {
   }
 
 
-  public HubInfo inviteOnly(@jakarta.annotation.Nullable Boolean inviteOnly) {
+  public HubInfo inviteOnly(@jakarta.annotation.Nonnull Boolean inviteOnly) {
     this.inviteOnly = inviteOnly;
     return this;
   }
@@ -296,22 +422,22 @@ public class HubInfo {
    * Get inviteOnly
    * @return inviteOnly
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_INVITE_ONLY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public Boolean getInviteOnly() {
     return inviteOnly;
   }
 
 
   @JsonProperty(JSON_PROPERTY_INVITE_ONLY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setInviteOnly(@jakarta.annotation.Nullable Boolean inviteOnly) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setInviteOnly(@jakarta.annotation.Nonnull Boolean inviteOnly) {
     this.inviteOnly = inviteOnly;
   }
 
 
-  public HubInfo minSecurityLevel(@jakarta.annotation.Nullable Long minSecurityLevel) {
+  public HubInfo minSecurityLevel(@jakarta.annotation.Nonnull Long minSecurityLevel) {
     this.minSecurityLevel = minSecurityLevel;
     return this;
   }
@@ -320,22 +446,22 @@ public class HubInfo {
    * Get minSecurityLevel
    * @return minSecurityLevel
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_MIN_SECURITY_LEVEL)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public Long getMinSecurityLevel() {
     return minSecurityLevel;
   }
 
 
   @JsonProperty(JSON_PROPERTY_MIN_SECURITY_LEVEL)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setMinSecurityLevel(@jakarta.annotation.Nullable Long minSecurityLevel) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setMinSecurityLevel(@jakarta.annotation.Nonnull Long minSecurityLevel) {
     this.minSecurityLevel = minSecurityLevel;
   }
 
 
-  public HubInfo minPowLevel(@jakarta.annotation.Nullable Long minPowLevel) {
+  public HubInfo minPowLevel(@jakarta.annotation.Nonnull Long minPowLevel) {
     this.minPowLevel = minPowLevel;
     return this;
   }
@@ -344,22 +470,22 @@ public class HubInfo {
    * Get minPowLevel
    * @return minPowLevel
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_MIN_POW_LEVEL)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public Long getMinPowLevel() {
     return minPowLevel;
   }
 
 
   @JsonProperty(JSON_PROPERTY_MIN_POW_LEVEL)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setMinPowLevel(@jakarta.annotation.Nullable Long minPowLevel) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setMinPowLevel(@jakarta.annotation.Nonnull Long minPowLevel) {
     this.minPowLevel = minPowLevel;
   }
 
 
-  public HubInfo challengeMode(@jakarta.annotation.Nullable ChallengeModeEnum challengeMode) {
+  public HubInfo challengeMode(@jakarta.annotation.Nonnull ChallengeModeEnum challengeMode) {
     this.challengeMode = challengeMode;
     return this;
   }
@@ -368,17 +494,17 @@ public class HubInfo {
    * Get challengeMode
    * @return challengeMode
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_CHALLENGE_MODE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public ChallengeModeEnum getChallengeMode() {
     return challengeMode;
   }
 
 
   @JsonProperty(JSON_PROPERTY_CHALLENGE_MODE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setChallengeMode(@jakarta.annotation.Nullable ChallengeModeEnum challengeMode) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setChallengeMode(@jakarta.annotation.Nonnull ChallengeModeEnum challengeMode) {
     this.challengeMode = challengeMode;
   }
 
@@ -389,7 +515,7 @@ public class HubInfo {
   }
 
   /**
-   * When set, send &#x60;/auth/_*&#x60; here instead of to the hub.
+   * When present, send &#x60;/auth/_*&#x60; here instead of to the hub. Omitted unless set.
    * @return farmUrl
    */
   @jakarta.annotation.Nullable
@@ -407,6 +533,478 @@ public class HubInfo {
   }
 
 
+  public HubInfo selfTags(@jakarta.annotation.Nonnull List<String> selfTags) {
+    this.selfTags = selfTags;
+    return this;
+  }
+
+  public HubInfo addSelfTagsItem(String selfTagsItem) {
+    if (this.selfTags == null) {
+      this.selfTags = new ArrayList<>();
+    }
+    this.selfTags.add(selfTagsItem);
+    return this;
+  }
+
+  /**
+   * Get selfTags
+   * @return selfTags
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_SELF_TAGS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public List<String> getSelfTags() {
+    return selfTags;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_SELF_TAGS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setSelfTags(@jakarta.annotation.Nonnull List<String> selfTags) {
+    this.selfTags = selfTags;
+  }
+
+
+  public HubInfo nsfw(@jakarta.annotation.Nonnull Boolean nsfw) {
+    this.nsfw = nsfw;
+    return this;
+  }
+
+  /**
+   * Get nsfw
+   * @return nsfw
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_NSFW)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public Boolean getNsfw() {
+    return nsfw;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_NSFW)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setNsfw(@jakarta.annotation.Nonnull Boolean nsfw) {
+    this.nsfw = nsfw;
+  }
+
+
+  public HubInfo badges(@jakarta.annotation.Nonnull List<HubInfoBadgesInner> badges) {
+    this.badges = badges;
+    return this;
+  }
+
+  public HubInfo addBadgesItem(HubInfoBadgesInner badgesItem) {
+    if (this.badges == null) {
+      this.badges = new ArrayList<>();
+    }
+    this.badges.add(badgesItem);
+    return this;
+  }
+
+  /**
+   * Badges other hubs issued to this hub.
+   * @return badges
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_BADGES)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public List<HubInfoBadgesInner> getBadges() {
+    return badges;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_BADGES)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setBadges(@jakarta.annotation.Nonnull List<HubInfoBadgesInner> badges) {
+    this.badges = badges;
+  }
+
+
+  public HubInfo certRequirement(@jakarta.annotation.Nullable HubInfoCertRequirement certRequirement) {
+    this.certRequirement = certRequirement;
+    return this;
+  }
+
+  /**
+   * Get certRequirement
+   * @return certRequirement
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CERT_REQUIREMENT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public HubInfoCertRequirement getCertRequirement() {
+    return certRequirement;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_CERT_REQUIREMENT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setCertRequirement(@jakarta.annotation.Nullable HubInfoCertRequirement certRequirement) {
+    this.certRequirement = certRequirement;
+  }
+
+
+  public HubInfo screenShareV2(@jakarta.annotation.Nonnull Boolean screenShareV2) {
+    this.screenShareV2 = screenShareV2;
+    return this;
+  }
+
+  /**
+   * Get screenShareV2
+   * @return screenShareV2
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_SCREEN_SHARE_V2)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public Boolean getScreenShareV2() {
+    return screenShareV2;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_SCREEN_SHARE_V2)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setScreenShareV2(@jakarta.annotation.Nonnull Boolean screenShareV2) {
+    this.screenShareV2 = screenShareV2;
+  }
+
+
+  public HubInfo sfuUrl(@jakarta.annotation.Nullable String sfuUrl) {
+    this.sfuUrl = sfuUrl;
+    return this;
+  }
+
+  /**
+   * Omitted unless the hub runs an SFU.
+   * @return sfuUrl
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_SFU_URL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getSfuUrl() {
+    return sfuUrl;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_SFU_URL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setSfuUrl(@jakarta.annotation.Nullable String sfuUrl) {
+    this.sfuUrl = sfuUrl;
+  }
+
+
+  public HubInfo emojiCount(@jakarta.annotation.Nonnull Long emojiCount) {
+    this.emojiCount = emojiCount;
+    return this;
+  }
+
+  /**
+   * Get emojiCount
+   * @return emojiCount
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_EMOJI_COUNT)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public Long getEmojiCount() {
+    return emojiCount;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_EMOJI_COUNT)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setEmojiCount(@jakarta.annotation.Nonnull Long emojiCount) {
+    this.emojiCount = emojiCount;
+  }
+
+
+  public HubInfo rotation(@jakarta.annotation.Nullable Object rotation) {
+    this.rotation = rotation;
+    return this;
+  }
+
+  /**
+   * Hub key rotation payload during the transition window after a rotate-key ceremony (see &#x60;GET /key-rotation&#x60;). Omitted when no rotation is in progress.
+   * @return rotation
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_ROTATION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Object getRotation() {
+    return rotation;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_ROTATION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setRotation(@jakarta.annotation.Nullable Object rotation) {
+    this.rotation = rotation;
+  }
+
+
+  public HubInfo lanMode(@jakarta.annotation.Nonnull Boolean lanMode) {
+    this.lanMode = lanMode;
+    return this;
+  }
+
+  /**
+   * Get lanMode
+   * @return lanMode
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_LAN_MODE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public Boolean getLanMode() {
+    return lanMode;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_LAN_MODE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setLanMode(@jakarta.annotation.Nonnull Boolean lanMode) {
+    this.lanMode = lanMode;
+  }
+
+
+  public HubInfo lanTls(@jakarta.annotation.Nullable String lanTls) {
+    this.lanTls = lanTls;
+    return this;
+  }
+
+  /**
+   * Omitted unless set.
+   * @return lanTls
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_LAN_TLS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getLanTls() {
+    return lanTls;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_LAN_TLS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setLanTls(@jakarta.annotation.Nullable String lanTls) {
+    this.lanTls = lanTls;
+  }
+
+
+  public HubInfo lanFingerprint(@jakarta.annotation.Nullable String lanFingerprint) {
+    this.lanFingerprint = lanFingerprint;
+    return this;
+  }
+
+  /**
+   * Omitted unless set.
+   * @return lanFingerprint
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_LAN_FINGERPRINT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getLanFingerprint() {
+    return lanFingerprint;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_LAN_FINGERPRINT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setLanFingerprint(@jakarta.annotation.Nullable String lanFingerprint) {
+    this.lanFingerprint = lanFingerprint;
+  }
+
+
+  public HubInfo welcomeLabel(@jakarta.annotation.Nullable String welcomeLabel) {
+    this.welcomeLabel = welcomeLabel;
+    return this;
+  }
+
+  /**
+   * Omitted unless set.
+   * @return welcomeLabel
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_WELCOME_LABEL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getWelcomeLabel() {
+    return welcomeLabel;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_WELCOME_LABEL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setWelcomeLabel(@jakarta.annotation.Nullable String welcomeLabel) {
+    this.welcomeLabel = welcomeLabel;
+  }
+
+
+  public HubInfo welcomeInviteUrl(@jakarta.annotation.Nullable String welcomeInviteUrl) {
+    this.welcomeInviteUrl = welcomeInviteUrl;
+    return this;
+  }
+
+  /**
+   * Omitted unless set.
+   * @return welcomeInviteUrl
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_WELCOME_INVITE_URL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getWelcomeInviteUrl() {
+    return welcomeInviteUrl;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_WELCOME_INVITE_URL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setWelcomeInviteUrl(@jakarta.annotation.Nullable String welcomeInviteUrl) {
+    this.welcomeInviteUrl = welcomeInviteUrl;
+  }
+
+
+  public HubInfo farewellLabel(@jakarta.annotation.Nullable String farewellLabel) {
+    this.farewellLabel = farewellLabel;
+    return this;
+  }
+
+  /**
+   * Omitted unless set.
+   * @return farewellLabel
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_FAREWELL_LABEL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getFarewellLabel() {
+    return farewellLabel;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_FAREWELL_LABEL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setFarewellLabel(@jakarta.annotation.Nullable String farewellLabel) {
+    this.farewellLabel = farewellLabel;
+  }
+
+
+  public HubInfo voiceWtUrl(@jakarta.annotation.Nullable String voiceWtUrl) {
+    this.voiceWtUrl = voiceWtUrl;
+    return this;
+  }
+
+  /**
+   * WebTransport voice endpoint. Omitted unless set.
+   * @return voiceWtUrl
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_VOICE_WT_URL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getVoiceWtUrl() {
+    return voiceWtUrl;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_VOICE_WT_URL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setVoiceWtUrl(@jakarta.annotation.Nullable String voiceWtUrl) {
+    this.voiceWtUrl = voiceWtUrl;
+  }
+
+
+  public HubInfo voiceCertHash(@jakarta.annotation.Nullable String voiceCertHash) {
+    this.voiceCertHash = voiceCertHash;
+    return this;
+  }
+
+  /**
+   * Omitted unless set.
+   * @return voiceCertHash
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_VOICE_CERT_HASH)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getVoiceCertHash() {
+    return voiceCertHash;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_VOICE_CERT_HASH)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setVoiceCertHash(@jakarta.annotation.Nullable String voiceCertHash) {
+    this.voiceCertHash = voiceCertHash;
+  }
+
+
+  public HubInfo timezone(@jakarta.annotation.Nullable String timezone) {
+    this.timezone = timezone;
+    return this;
+  }
+
+  /**
+   * Omitted unless set.
+   * @return timezone
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_TIMEZONE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getTimezone() {
+    return timezone;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_TIMEZONE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setTimezone(@jakarta.annotation.Nullable String timezone) {
+    this.timezone = timezone;
+  }
+
+
+  public HubInfo birthdaysEnabled(@jakarta.annotation.Nonnull Boolean birthdaysEnabled) {
+    this.birthdaysEnabled = birthdaysEnabled;
+    return this;
+  }
+
+  /**
+   * Get birthdaysEnabled
+   * @return birthdaysEnabled
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_BIRTHDAYS_ENABLED)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public Boolean getBirthdaysEnabled() {
+    return birthdaysEnabled;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_BIRTHDAYS_ENABLED)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setBirthdaysEnabled(@jakarta.annotation.Nonnull Boolean birthdaysEnabled) {
+    this.birthdaysEnabled = birthdaysEnabled;
+  }
+
+
+  public HubInfo maxAttachmentBytes(@jakarta.annotation.Nonnull Long maxAttachmentBytes) {
+    this.maxAttachmentBytes = maxAttachmentBytes;
+    return this;
+  }
+
+  /**
+   * Get maxAttachmentBytes
+   * @return maxAttachmentBytes
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_MAX_ATTACHMENT_BYTES)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public Long getMaxAttachmentBytes() {
+    return maxAttachmentBytes;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_MAX_ATTACHMENT_BYTES)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setMaxAttachmentBytes(@jakarta.annotation.Nonnull Long maxAttachmentBytes) {
+    this.maxAttachmentBytes = maxAttachmentBytes;
+  }
+
+
   /**
    * Return true if this HubInfo object is equal to o.
    */
@@ -420,6 +1018,7 @@ public class HubInfo {
     }
     HubInfo hubInfo = (HubInfo) o;
     return Objects.equals(this.name, hubInfo.name) &&
+        Objects.equals(this.description, hubInfo.description) &&
         Objects.equals(this.icon, hubInfo.icon) &&
         Objects.equals(this.publicKey, hubInfo.publicKey) &&
         Objects.equals(this.version, hubInfo.version) &&
@@ -429,12 +1028,31 @@ public class HubInfo {
         Objects.equals(this.minSecurityLevel, hubInfo.minSecurityLevel) &&
         Objects.equals(this.minPowLevel, hubInfo.minPowLevel) &&
         Objects.equals(this.challengeMode, hubInfo.challengeMode) &&
-        Objects.equals(this.farmUrl, hubInfo.farmUrl);
+        Objects.equals(this.farmUrl, hubInfo.farmUrl) &&
+        Objects.equals(this.selfTags, hubInfo.selfTags) &&
+        Objects.equals(this.nsfw, hubInfo.nsfw) &&
+        Objects.equals(this.badges, hubInfo.badges) &&
+        Objects.equals(this.certRequirement, hubInfo.certRequirement) &&
+        Objects.equals(this.screenShareV2, hubInfo.screenShareV2) &&
+        Objects.equals(this.sfuUrl, hubInfo.sfuUrl) &&
+        Objects.equals(this.emojiCount, hubInfo.emojiCount) &&
+        Objects.equals(this.rotation, hubInfo.rotation) &&
+        Objects.equals(this.lanMode, hubInfo.lanMode) &&
+        Objects.equals(this.lanTls, hubInfo.lanTls) &&
+        Objects.equals(this.lanFingerprint, hubInfo.lanFingerprint) &&
+        Objects.equals(this.welcomeLabel, hubInfo.welcomeLabel) &&
+        Objects.equals(this.welcomeInviteUrl, hubInfo.welcomeInviteUrl) &&
+        Objects.equals(this.farewellLabel, hubInfo.farewellLabel) &&
+        Objects.equals(this.voiceWtUrl, hubInfo.voiceWtUrl) &&
+        Objects.equals(this.voiceCertHash, hubInfo.voiceCertHash) &&
+        Objects.equals(this.timezone, hubInfo.timezone) &&
+        Objects.equals(this.birthdaysEnabled, hubInfo.birthdaysEnabled) &&
+        Objects.equals(this.maxAttachmentBytes, hubInfo.maxAttachmentBytes);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, icon, publicKey, version, capabilities, canonicalUrl, inviteOnly, minSecurityLevel, minPowLevel, challengeMode, farmUrl);
+    return Objects.hash(name, description, icon, publicKey, version, capabilities, canonicalUrl, inviteOnly, minSecurityLevel, minPowLevel, challengeMode, farmUrl, selfTags, nsfw, badges, certRequirement, screenShareV2, sfuUrl, emojiCount, rotation, lanMode, lanTls, lanFingerprint, welcomeLabel, welcomeInviteUrl, farewellLabel, voiceWtUrl, voiceCertHash, timezone, birthdaysEnabled, maxAttachmentBytes);
   }
 
   @Override
@@ -442,6 +1060,7 @@ public class HubInfo {
     StringBuilder sb = new StringBuilder();
     sb.append("class HubInfo {\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    icon: ").append(toIndentedString(icon)).append("\n");
     sb.append("    publicKey: ").append(toIndentedString(publicKey)).append("\n");
     sb.append("    version: ").append(toIndentedString(version)).append("\n");
@@ -452,6 +1071,25 @@ public class HubInfo {
     sb.append("    minPowLevel: ").append(toIndentedString(minPowLevel)).append("\n");
     sb.append("    challengeMode: ").append(toIndentedString(challengeMode)).append("\n");
     sb.append("    farmUrl: ").append(toIndentedString(farmUrl)).append("\n");
+    sb.append("    selfTags: ").append(toIndentedString(selfTags)).append("\n");
+    sb.append("    nsfw: ").append(toIndentedString(nsfw)).append("\n");
+    sb.append("    badges: ").append(toIndentedString(badges)).append("\n");
+    sb.append("    certRequirement: ").append(toIndentedString(certRequirement)).append("\n");
+    sb.append("    screenShareV2: ").append(toIndentedString(screenShareV2)).append("\n");
+    sb.append("    sfuUrl: ").append(toIndentedString(sfuUrl)).append("\n");
+    sb.append("    emojiCount: ").append(toIndentedString(emojiCount)).append("\n");
+    sb.append("    rotation: ").append(toIndentedString(rotation)).append("\n");
+    sb.append("    lanMode: ").append(toIndentedString(lanMode)).append("\n");
+    sb.append("    lanTls: ").append(toIndentedString(lanTls)).append("\n");
+    sb.append("    lanFingerprint: ").append(toIndentedString(lanFingerprint)).append("\n");
+    sb.append("    welcomeLabel: ").append(toIndentedString(welcomeLabel)).append("\n");
+    sb.append("    welcomeInviteUrl: ").append(toIndentedString(welcomeInviteUrl)).append("\n");
+    sb.append("    farewellLabel: ").append(toIndentedString(farewellLabel)).append("\n");
+    sb.append("    voiceWtUrl: ").append(toIndentedString(voiceWtUrl)).append("\n");
+    sb.append("    voiceCertHash: ").append(toIndentedString(voiceCertHash)).append("\n");
+    sb.append("    timezone: ").append(toIndentedString(timezone)).append("\n");
+    sb.append("    birthdaysEnabled: ").append(toIndentedString(birthdaysEnabled)).append("\n");
+    sb.append("    maxAttachmentBytes: ").append(toIndentedString(maxAttachmentBytes)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -502,6 +1140,11 @@ public class HubInfo {
     // add `name` to the URL query string
     if (getName() != null) {
       joiner.add(String.format("%sname%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getName()))));
+    }
+
+    // add `description` to the URL query string
+    if (getDescription() != null) {
+      joiner.add(String.format("%sdescription%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getDescription()))));
     }
 
     // add `icon` to the URL query string
@@ -556,6 +1199,110 @@ public class HubInfo {
     // add `farm_url` to the URL query string
     if (getFarmUrl() != null) {
       joiner.add(String.format("%sfarm_url%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getFarmUrl()))));
+    }
+
+    // add `self_tags` to the URL query string
+    if (getSelfTags() != null) {
+      for (int i = 0; i < getSelfTags().size(); i++) {
+        joiner.add(String.format("%sself_tags%s%s=%s", prefix, suffix,
+            "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix),
+            ApiClient.urlEncode(ApiClient.valueToString(getSelfTags().get(i)))));
+      }
+    }
+
+    // add `nsfw` to the URL query string
+    if (getNsfw() != null) {
+      joiner.add(String.format("%snsfw%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getNsfw()))));
+    }
+
+    // add `badges` to the URL query string
+    if (getBadges() != null) {
+      for (int i = 0; i < getBadges().size(); i++) {
+        if (getBadges().get(i) != null) {
+          joiner.add(getBadges().get(i).toUrlQueryString(String.format("%sbadges%s%s", prefix, suffix,
+          "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix))));
+        }
+      }
+    }
+
+    // add `cert_requirement` to the URL query string
+    if (getCertRequirement() != null) {
+      joiner.add(getCertRequirement().toUrlQueryString(prefix + "cert_requirement" + suffix));
+    }
+
+    // add `screen_share_v2` to the URL query string
+    if (getScreenShareV2() != null) {
+      joiner.add(String.format("%sscreen_share_v2%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getScreenShareV2()))));
+    }
+
+    // add `sfu_url` to the URL query string
+    if (getSfuUrl() != null) {
+      joiner.add(String.format("%ssfu_url%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getSfuUrl()))));
+    }
+
+    // add `emoji_count` to the URL query string
+    if (getEmojiCount() != null) {
+      joiner.add(String.format("%semoji_count%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getEmojiCount()))));
+    }
+
+    // add `rotation` to the URL query string
+    if (getRotation() != null) {
+      joiner.add(String.format("%srotation%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getRotation()))));
+    }
+
+    // add `lan_mode` to the URL query string
+    if (getLanMode() != null) {
+      joiner.add(String.format("%slan_mode%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getLanMode()))));
+    }
+
+    // add `lan_tls` to the URL query string
+    if (getLanTls() != null) {
+      joiner.add(String.format("%slan_tls%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getLanTls()))));
+    }
+
+    // add `lan_fingerprint` to the URL query string
+    if (getLanFingerprint() != null) {
+      joiner.add(String.format("%slan_fingerprint%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getLanFingerprint()))));
+    }
+
+    // add `welcome_label` to the URL query string
+    if (getWelcomeLabel() != null) {
+      joiner.add(String.format("%swelcome_label%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getWelcomeLabel()))));
+    }
+
+    // add `welcome_invite_url` to the URL query string
+    if (getWelcomeInviteUrl() != null) {
+      joiner.add(String.format("%swelcome_invite_url%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getWelcomeInviteUrl()))));
+    }
+
+    // add `farewell_label` to the URL query string
+    if (getFarewellLabel() != null) {
+      joiner.add(String.format("%sfarewell_label%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getFarewellLabel()))));
+    }
+
+    // add `voice_wt_url` to the URL query string
+    if (getVoiceWtUrl() != null) {
+      joiner.add(String.format("%svoice_wt_url%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getVoiceWtUrl()))));
+    }
+
+    // add `voice_cert_hash` to the URL query string
+    if (getVoiceCertHash() != null) {
+      joiner.add(String.format("%svoice_cert_hash%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getVoiceCertHash()))));
+    }
+
+    // add `timezone` to the URL query string
+    if (getTimezone() != null) {
+      joiner.add(String.format("%stimezone%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getTimezone()))));
+    }
+
+    // add `birthdays_enabled` to the URL query string
+    if (getBirthdaysEnabled() != null) {
+      joiner.add(String.format("%sbirthdays_enabled%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getBirthdaysEnabled()))));
+    }
+
+    // add `max_attachment_bytes` to the URL query string
+    if (getMaxAttachmentBytes() != null) {
+      joiner.add(String.format("%smax_attachment_bytes%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getMaxAttachmentBytes()))));
     }
 
     return joiner.toString();

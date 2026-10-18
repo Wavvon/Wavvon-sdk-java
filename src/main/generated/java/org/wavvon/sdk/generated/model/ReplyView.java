@@ -24,7 +24,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import org.wavvon.sdk.generated.model.PostSummaryAttachmentsInner;
+import org.wavvon.sdk.generated.model.Reaction;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -40,16 +44,19 @@ import org.wavvon.sdk.generated.ApiClient;
   ReplyView.JSON_PROPERTY_CREATED_AT,
   ReplyView.JSON_PROPERTY_EDITED_AT,
   ReplyView.JSON_PROPERTY_REPLY_TO_ID,
-  ReplyView.JSON_PROPERTY_IS_DELETED
+  ReplyView.JSON_PROPERTY_IS_DELETED,
+  ReplyView.JSON_PROPERTY_REACTIONS,
+  ReplyView.JSON_PROPERTY_ATTACHMENTS,
+  ReplyView.JSON_PROPERTY_AUTHOR_HUB
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class ReplyView {
   public static final String JSON_PROPERTY_ID = "id";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private String id;
 
   public static final String JSON_PROPERTY_POST_ID = "post_id";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private String postId;
 
   public static final String JSON_PROPERTY_AUTHOR_PUBKEY = "author_pubkey";
@@ -61,7 +68,7 @@ public class ReplyView {
   private String body;
 
   public static final String JSON_PROPERTY_CREATED_AT = "created_at";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private Long createdAt;
 
   public static final String JSON_PROPERTY_EDITED_AT = "edited_at";
@@ -73,13 +80,25 @@ public class ReplyView {
   private String replyToId;
 
   public static final String JSON_PROPERTY_IS_DELETED = "is_deleted";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private Boolean isDeleted;
+
+  public static final String JSON_PROPERTY_REACTIONS = "reactions";
+  @jakarta.annotation.Nonnull
+  private List<Reaction> reactions = new ArrayList<>();
+
+  public static final String JSON_PROPERTY_ATTACHMENTS = "attachments";
+  @jakarta.annotation.Nonnull
+  private List<PostSummaryAttachmentsInner> attachments = new ArrayList<>();
+
+  public static final String JSON_PROPERTY_AUTHOR_HUB = "author_hub";
+  @jakarta.annotation.Nullable
+  private String authorHub;
 
   public ReplyView() { 
   }
 
-  public ReplyView id(@jakarta.annotation.Nullable String id) {
+  public ReplyView id(@jakarta.annotation.Nonnull String id) {
     this.id = id;
     return this;
   }
@@ -88,22 +107,22 @@ public class ReplyView {
    * Get id
    * @return id
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getId() {
     return id;
   }
 
 
   @JsonProperty(JSON_PROPERTY_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setId(@jakarta.annotation.Nullable String id) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setId(@jakarta.annotation.Nonnull String id) {
     this.id = id;
   }
 
 
-  public ReplyView postId(@jakarta.annotation.Nullable String postId) {
+  public ReplyView postId(@jakarta.annotation.Nonnull String postId) {
     this.postId = postId;
     return this;
   }
@@ -112,17 +131,17 @@ public class ReplyView {
    * Get postId
    * @return postId
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_POST_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getPostId() {
     return postId;
   }
 
 
   @JsonProperty(JSON_PROPERTY_POST_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setPostId(@jakarta.annotation.Nullable String postId) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setPostId(@jakarta.annotation.Nonnull String postId) {
     this.postId = postId;
   }
 
@@ -138,14 +157,14 @@ public class ReplyView {
    */
   @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_AUTHOR_PUBKEY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getAuthorPubkey() {
     return authorPubkey;
   }
 
 
   @JsonProperty(JSON_PROPERTY_AUTHOR_PUBKEY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setAuthorPubkey(@jakarta.annotation.Nullable String authorPubkey) {
     this.authorPubkey = authorPubkey;
   }
@@ -162,20 +181,20 @@ public class ReplyView {
    */
   @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_BODY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getBody() {
     return body;
   }
 
 
   @JsonProperty(JSON_PROPERTY_BODY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setBody(@jakarta.annotation.Nullable String body) {
     this.body = body;
   }
 
 
-  public ReplyView createdAt(@jakarta.annotation.Nullable Long createdAt) {
+  public ReplyView createdAt(@jakarta.annotation.Nonnull Long createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -184,17 +203,17 @@ public class ReplyView {
    * Get createdAt
    * @return createdAt
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_CREATED_AT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public Long getCreatedAt() {
     return createdAt;
   }
 
 
   @JsonProperty(JSON_PROPERTY_CREATED_AT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCreatedAt(@jakarta.annotation.Nullable Long createdAt) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setCreatedAt(@jakarta.annotation.Nonnull Long createdAt) {
     this.createdAt = createdAt;
   }
 
@@ -247,7 +266,7 @@ public class ReplyView {
   }
 
 
-  public ReplyView isDeleted(@jakarta.annotation.Nullable Boolean isDeleted) {
+  public ReplyView isDeleted(@jakarta.annotation.Nonnull Boolean isDeleted) {
     this.isDeleted = isDeleted;
     return this;
   }
@@ -256,18 +275,106 @@ public class ReplyView {
    * Get isDeleted
    * @return isDeleted
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_IS_DELETED)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public Boolean getIsDeleted() {
     return isDeleted;
   }
 
 
   @JsonProperty(JSON_PROPERTY_IS_DELETED)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setIsDeleted(@jakarta.annotation.Nullable Boolean isDeleted) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setIsDeleted(@jakarta.annotation.Nonnull Boolean isDeleted) {
     this.isDeleted = isDeleted;
+  }
+
+
+  public ReplyView reactions(@jakarta.annotation.Nonnull List<Reaction> reactions) {
+    this.reactions = reactions;
+    return this;
+  }
+
+  public ReplyView addReactionsItem(Reaction reactionsItem) {
+    if (this.reactions == null) {
+      this.reactions = new ArrayList<>();
+    }
+    this.reactions.add(reactionsItem);
+    return this;
+  }
+
+  /**
+   * Get reactions
+   * @return reactions
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_REACTIONS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public List<Reaction> getReactions() {
+    return reactions;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_REACTIONS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setReactions(@jakarta.annotation.Nonnull List<Reaction> reactions) {
+    this.reactions = reactions;
+  }
+
+
+  public ReplyView attachments(@jakarta.annotation.Nonnull List<PostSummaryAttachmentsInner> attachments) {
+    this.attachments = attachments;
+    return this;
+  }
+
+  public ReplyView addAttachmentsItem(PostSummaryAttachmentsInner attachmentsItem) {
+    if (this.attachments == null) {
+      this.attachments = new ArrayList<>();
+    }
+    this.attachments.add(attachmentsItem);
+    return this;
+  }
+
+  /**
+   * Get attachments
+   * @return attachments
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_ATTACHMENTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public List<PostSummaryAttachmentsInner> getAttachments() {
+    return attachments;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_ATTACHMENTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setAttachments(@jakarta.annotation.Nonnull List<PostSummaryAttachmentsInner> attachments) {
+    this.attachments = attachments;
+  }
+
+
+  public ReplyView authorHub(@jakarta.annotation.Nullable String authorHub) {
+    this.authorHub = authorHub;
+    return this;
+  }
+
+  /**
+   * Origin hub public key (hex) when authored through the alliance forum write-proxy. Omitted for local replies.
+   * @return authorHub
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_AUTHOR_HUB)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getAuthorHub() {
+    return authorHub;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_AUTHOR_HUB)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setAuthorHub(@jakarta.annotation.Nullable String authorHub) {
+    this.authorHub = authorHub;
   }
 
 
@@ -290,12 +397,15 @@ public class ReplyView {
         Objects.equals(this.createdAt, replyView.createdAt) &&
         Objects.equals(this.editedAt, replyView.editedAt) &&
         Objects.equals(this.replyToId, replyView.replyToId) &&
-        Objects.equals(this.isDeleted, replyView.isDeleted);
+        Objects.equals(this.isDeleted, replyView.isDeleted) &&
+        Objects.equals(this.reactions, replyView.reactions) &&
+        Objects.equals(this.attachments, replyView.attachments) &&
+        Objects.equals(this.authorHub, replyView.authorHub);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, postId, authorPubkey, body, createdAt, editedAt, replyToId, isDeleted);
+    return Objects.hash(id, postId, authorPubkey, body, createdAt, editedAt, replyToId, isDeleted, reactions, attachments, authorHub);
   }
 
   @Override
@@ -310,6 +420,9 @@ public class ReplyView {
     sb.append("    editedAt: ").append(toIndentedString(editedAt)).append("\n");
     sb.append("    replyToId: ").append(toIndentedString(replyToId)).append("\n");
     sb.append("    isDeleted: ").append(toIndentedString(isDeleted)).append("\n");
+    sb.append("    reactions: ").append(toIndentedString(reactions)).append("\n");
+    sb.append("    attachments: ").append(toIndentedString(attachments)).append("\n");
+    sb.append("    authorHub: ").append(toIndentedString(authorHub)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -395,6 +508,31 @@ public class ReplyView {
     // add `is_deleted` to the URL query string
     if (getIsDeleted() != null) {
       joiner.add(String.format("%sis_deleted%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getIsDeleted()))));
+    }
+
+    // add `reactions` to the URL query string
+    if (getReactions() != null) {
+      for (int i = 0; i < getReactions().size(); i++) {
+        if (getReactions().get(i) != null) {
+          joiner.add(getReactions().get(i).toUrlQueryString(String.format("%sreactions%s%s", prefix, suffix,
+          "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix))));
+        }
+      }
+    }
+
+    // add `attachments` to the URL query string
+    if (getAttachments() != null) {
+      for (int i = 0; i < getAttachments().size(); i++) {
+        if (getAttachments().get(i) != null) {
+          joiner.add(getAttachments().get(i).toUrlQueryString(String.format("%sattachments%s%s", prefix, suffix,
+          "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix))));
+        }
+      }
+    }
+
+    // add `author_hub` to the URL query string
+    if (getAuthorHub() != null) {
+      joiner.add(String.format("%sauthor_hub%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getAuthorHub()))));
     }
 
     return joiner.toString();

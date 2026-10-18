@@ -28,6 +28,7 @@
     <junit.version>5.10.3</junit.version>
     <openapi-generator.version>7.12.0</openapi-generator.version>
     <spec>${project.build.directory}/spec/openapi.yaml</spec>
+    <spec.skipValidate>false</spec.skipValidate>
   </properties>
 
   <dependencies>
@@ -184,7 +185,7 @@
                 </goals>
                 <configuration>
                   <inputSpec>${spec}</inputSpec>
-                  <skipValidateSpec>true</skipValidateSpec>
+                  <skipValidateSpec>${spec.skipValidate}</skipValidateSpec>
                   <generatorName>java</generatorName>
                   <library>native</library>
                   <output>${project.build.directory}/openapi</output>

@@ -75,7 +75,7 @@ public class CertificationsApi {
   }
 
   protected ApiException getApiException(String operationId, HttpResponse<InputStream> response) throws IOException {
-    String body = response.body() == null ? null : new String(response.body().readAllBytes());
+    String body = response.body() == null ? null : new String(response.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
     String message = formatExceptionMessage(operationId, response.statusCode(), body);
     return new ApiException(response.statusCode(), message, response.headers(), body);
   }
@@ -129,7 +129,7 @@ public class CertificationsApi {
           );
         }
 
-        String responseBody = new String(localVarResponse.body().readAllBytes());
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
         return new ApiResponse<Certification>(
@@ -219,7 +219,7 @@ public class CertificationsApi {
           );
         }
 
-        String responseBody = new String(localVarResponse.body().readAllBytes());
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
         return new ApiResponse<Certification>(
@@ -301,7 +301,7 @@ public class CertificationsApi {
           );
         }
 
-        String responseBody = new String(localVarResponse.body().readAllBytes());
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
         return new ApiResponse<List<ListAdminCerts200ResponseInner>>(
@@ -378,7 +378,7 @@ public class CertificationsApi {
           );
         }
 
-        String responseBody = new String(localVarResponse.body().readAllBytes());
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
         return new ApiResponse<ListAdminSettingsCerts200Response>(
@@ -457,7 +457,7 @@ public class CertificationsApi {
           );
         }
 
-        String responseBody = new String(localVarResponse.body().readAllBytes());
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
         return new ApiResponse<List<ListCertsRevocations200ResponseInner>>(
@@ -551,7 +551,7 @@ public class CertificationsApi {
           );
         }
 
-        String responseBody = new String(localVarResponse.body().readAllBytes());
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
         return new ApiResponse<List<Certification>>(

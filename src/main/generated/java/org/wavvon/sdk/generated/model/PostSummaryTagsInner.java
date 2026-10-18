@@ -24,91 +24,110 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * BotChannelScope
+ * PostSummaryTagsInner
  */
 @JsonPropertyOrder({
-  BotChannelScope.JSON_PROPERTY_BOT_PUBKEY,
-  BotChannelScope.JSON_PROPERTY_CHANNEL_IDS
+  PostSummaryTagsInner.JSON_PROPERTY_ID,
+  PostSummaryTagsInner.JSON_PROPERTY_LABEL,
+  PostSummaryTagsInner.JSON_PROPERTY_COLOR
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class BotChannelScope {
-  public static final String JSON_PROPERTY_BOT_PUBKEY = "bot_pubkey";
-  @jakarta.annotation.Nullable
-  private String botPubkey;
+public class PostSummaryTagsInner {
+  public static final String JSON_PROPERTY_ID = "id";
+  @jakarta.annotation.Nonnull
+  private String id;
 
-  public static final String JSON_PROPERTY_CHANNEL_IDS = "channel_ids";
-  @jakarta.annotation.Nullable
-  private List<String> channelIds = new ArrayList<>();
+  public static final String JSON_PROPERTY_LABEL = "label";
+  @jakarta.annotation.Nonnull
+  private String label;
 
-  public BotChannelScope() { 
+  public static final String JSON_PROPERTY_COLOR = "color";
+  @jakarta.annotation.Nullable
+  private String color;
+
+  public PostSummaryTagsInner() { 
   }
 
-  public BotChannelScope botPubkey(@jakarta.annotation.Nullable String botPubkey) {
-    this.botPubkey = botPubkey;
+  public PostSummaryTagsInner id(@jakarta.annotation.Nonnull String id) {
+    this.id = id;
     return this;
   }
 
   /**
-   * Get botPubkey
-   * @return botPubkey
+   * Get id
+   * @return id
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_ID)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public String getId() {
+    return id;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_ID)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setId(@jakarta.annotation.Nonnull String id) {
+    this.id = id;
+  }
+
+
+  public PostSummaryTagsInner label(@jakarta.annotation.Nonnull String label) {
+    this.label = label;
+    return this;
+  }
+
+  /**
+   * Get label
+   * @return label
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_LABEL)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public String getLabel() {
+    return label;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_LABEL)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setLabel(@jakarta.annotation.Nonnull String label) {
+    this.label = label;
+  }
+
+
+  public PostSummaryTagsInner color(@jakarta.annotation.Nullable String color) {
+    this.color = color;
+    return this;
+  }
+
+  /**
+   * Omitted unless set.
+   * @return color
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_BOT_PUBKEY)
+  @JsonProperty(JSON_PROPERTY_COLOR)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getBotPubkey() {
-    return botPubkey;
+  public String getColor() {
+    return color;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_BOT_PUBKEY)
+  @JsonProperty(JSON_PROPERTY_COLOR)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setBotPubkey(@jakarta.annotation.Nullable String botPubkey) {
-    this.botPubkey = botPubkey;
-  }
-
-
-  public BotChannelScope channelIds(@jakarta.annotation.Nullable List<String> channelIds) {
-    this.channelIds = channelIds;
-    return this;
-  }
-
-  public BotChannelScope addChannelIdsItem(String channelIdsItem) {
-    if (this.channelIds == null) {
-      this.channelIds = new ArrayList<>();
-    }
-    this.channelIds.add(channelIdsItem);
-    return this;
-  }
-
-  /**
-   * Empty means hub-wide access.
-   * @return channelIds
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_CHANNEL_IDS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public List<String> getChannelIds() {
-    return channelIds;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_CHANNEL_IDS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setChannelIds(@jakarta.annotation.Nullable List<String> channelIds) {
-    this.channelIds = channelIds;
+  public void setColor(@jakarta.annotation.Nullable String color) {
+    this.color = color;
   }
 
 
   /**
-   * Return true if this BotChannelScope object is equal to o.
+   * Return true if this PostSummary_tags_inner object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -118,22 +137,24 @@ public class BotChannelScope {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BotChannelScope botChannelScope = (BotChannelScope) o;
-    return Objects.equals(this.botPubkey, botChannelScope.botPubkey) &&
-        Objects.equals(this.channelIds, botChannelScope.channelIds);
+    PostSummaryTagsInner postSummaryTagsInner = (PostSummaryTagsInner) o;
+    return Objects.equals(this.id, postSummaryTagsInner.id) &&
+        Objects.equals(this.label, postSummaryTagsInner.label) &&
+        Objects.equals(this.color, postSummaryTagsInner.color);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(botPubkey, channelIds);
+    return Objects.hash(id, label, color);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class BotChannelScope {\n");
-    sb.append("    botPubkey: ").append(toIndentedString(botPubkey)).append("\n");
-    sb.append("    channelIds: ").append(toIndentedString(channelIds)).append("\n");
+    sb.append("class PostSummaryTagsInner {\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    label: ").append(toIndentedString(label)).append("\n");
+    sb.append("    color: ").append(toIndentedString(color)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -181,18 +202,19 @@ public class BotChannelScope {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `bot_pubkey` to the URL query string
-    if (getBotPubkey() != null) {
-      joiner.add(String.format("%sbot_pubkey%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getBotPubkey()))));
+    // add `id` to the URL query string
+    if (getId() != null) {
+      joiner.add(String.format("%sid%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getId()))));
     }
 
-    // add `channel_ids` to the URL query string
-    if (getChannelIds() != null) {
-      for (int i = 0; i < getChannelIds().size(); i++) {
-        joiner.add(String.format("%schannel_ids%s%s=%s", prefix, suffix,
-            "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix),
-            ApiClient.urlEncode(ApiClient.valueToString(getChannelIds().get(i)))));
-      }
+    // add `label` to the URL query string
+    if (getLabel() != null) {
+      joiner.add(String.format("%slabel%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getLabel()))));
+    }
+
+    // add `color` to the URL query string
+    if (getColor() != null) {
+      joiner.add(String.format("%scolor%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getColor()))));
     }
 
     return joiner.toString();

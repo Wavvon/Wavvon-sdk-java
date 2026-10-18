@@ -19,7 +19,7 @@ import org.wavvon.sdk.generated.Configuration;
 import org.wavvon.sdk.generated.Pair;
 
 import org.wavvon.sdk.generated.model.GetUserProfile200Response;
-import org.wavvon.sdk.generated.model.User;
+import org.wavvon.sdk.generated.model.UserInfo;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -77,7 +77,7 @@ public class UsersApi {
   }
 
   protected ApiException getApiException(String operationId, HttpResponse<InputStream> response) throws IOException {
-    String body = response.body() == null ? null : new String(response.body().readAllBytes());
+    String body = response.body() == null ? null : new String(response.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
     String message = formatExceptionMessage(operationId, response.statusCode(), body);
     return new ApiException(response.statusCode(), message, response.headers(), body);
   }
@@ -129,7 +129,7 @@ public class UsersApi {
           );
         }
 
-        String responseBody = new String(localVarResponse.body().readAllBytes());
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
         return new ApiResponse<GetUserProfile200Response>(
@@ -179,11 +179,11 @@ public class UsersApi {
    * @param q Substring match on display name or public key (max 64 chars). (optional)
    * @param limit Page size, clamped to 1..500. (optional, default to 200)
    * @param cursor Keyset cursor — the &#x60;public_key&#x60; of the previous page&#39;s last row. (optional)
-   * @return List&lt;User&gt;
+   * @return List&lt;UserInfo&gt;
    * @throws ApiException if fails to make API call
    */
-  public List<User> listUsers(String q, Long limit, String cursor) throws ApiException {
-    ApiResponse<List<User>> localVarResponse = listUsersWithHttpInfo(q, limit, cursor);
+  public List<UserInfo> listUsers(String q, Long limit, String cursor) throws ApiException {
+    ApiResponse<List<UserInfo>> localVarResponse = listUsersWithHttpInfo(q, limit, cursor);
     return localVarResponse.getData();
   }
 
@@ -193,10 +193,10 @@ public class UsersApi {
    * @param q Substring match on display name or public key (max 64 chars). (optional)
    * @param limit Page size, clamped to 1..500. (optional, default to 200)
    * @param cursor Keyset cursor — the &#x60;public_key&#x60; of the previous page&#39;s last row. (optional)
-   * @return ApiResponse&lt;List&lt;User&gt;&gt;
+   * @return ApiResponse&lt;List&lt;UserInfo&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<List<User>> listUsersWithHttpInfo(String q, Long limit, String cursor) throws ApiException {
+  public ApiResponse<List<UserInfo>> listUsersWithHttpInfo(String q, Long limit, String cursor) throws ApiException {
     HttpRequest.Builder localVarRequestBuilder = listUsersRequestBuilder(q, limit, cursor);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
@@ -210,20 +210,20 @@ public class UsersApi {
           throw getApiException("listUsers", localVarResponse);
         }
         if (localVarResponse.body() == null) {
-          return new ApiResponse<List<User>>(
+          return new ApiResponse<List<UserInfo>>(
               localVarResponse.statusCode(),
               localVarResponse.headers().map(),
               null
           );
         }
 
-        String responseBody = new String(localVarResponse.body().readAllBytes());
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
-        return new ApiResponse<List<User>>(
+        return new ApiResponse<List<UserInfo>>(
             localVarResponse.statusCode(),
             localVarResponse.headers().map(),
-            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<List<User>>() {})
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<List<UserInfo>>() {})
         );
       } finally {
       }

@@ -44,7 +44,10 @@ import org.wavvon.sdk.generated.ApiClient;
   CertPayload.JSON_PROPERTY_POW_LEVEL,
   CertPayload.JSON_PROPERTY_ISSUED_AT,
   CertPayload.JSON_PROPERTY_EXPIRES_AT,
-  CertPayload.JSON_PROPERTY_CAPABILITIES
+  CertPayload.JSON_PROPERTY_CAPABILITIES,
+  CertPayload.JSON_PROPERTY_LABEL,
+  CertPayload.JSON_PROPERTY_DESCRIPTION,
+  CertPayload.JSON_PROPERTY_ICON
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class CertPayload {
@@ -122,6 +125,18 @@ public class CertPayload {
   public static final String JSON_PROPERTY_CAPABILITIES = "capabilities";
   @jakarta.annotation.Nullable
   private List<String> capabilities = new ArrayList<>();
+
+  public static final String JSON_PROPERTY_LABEL = "label";
+  @jakarta.annotation.Nullable
+  private String label;
+
+  public static final String JSON_PROPERTY_DESCRIPTION = "description";
+  @jakarta.annotation.Nullable
+  private String description;
+
+  public static final String JSON_PROPERTY_ICON = "icon";
+  @jakarta.annotation.Nullable
+  private String icon;
 
   public CertPayload() { 
   }
@@ -374,6 +389,78 @@ public class CertPayload {
   }
 
 
+  public CertPayload label(@jakarta.annotation.Nullable String label) {
+    this.label = label;
+    return this;
+  }
+
+  /**
+   * Badge display name; present means this cert is an achievement badge. Omitted unless set.
+   * @return label
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_LABEL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getLabel() {
+    return label;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_LABEL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setLabel(@jakarta.annotation.Nullable String label) {
+    this.label = label;
+  }
+
+
+  public CertPayload description(@jakarta.annotation.Nullable String description) {
+    this.description = description;
+    return this;
+  }
+
+  /**
+   * Omitted unless set.
+   * @return description
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_DESCRIPTION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getDescription() {
+    return description;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_DESCRIPTION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setDescription(@jakarta.annotation.Nullable String description) {
+    this.description = description;
+  }
+
+
+  public CertPayload icon(@jakarta.annotation.Nullable String icon) {
+    this.icon = icon;
+    return this;
+  }
+
+  /**
+   * Emoji or short icon for the badge. Omitted unless set.
+   * @return icon
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_ICON)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getIcon() {
+    return icon;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_ICON)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setIcon(@jakarta.annotation.Nullable String icon) {
+    this.icon = icon;
+  }
+
+
   /**
    * Return true if this CertPayload object is equal to o.
    */
@@ -395,12 +482,15 @@ public class CertPayload {
         Objects.equals(this.powLevel, certPayload.powLevel) &&
         Objects.equals(this.issuedAt, certPayload.issuedAt) &&
         Objects.equals(this.expiresAt, certPayload.expiresAt) &&
-        Objects.equals(this.capabilities, certPayload.capabilities);
+        Objects.equals(this.capabilities, certPayload.capabilities) &&
+        Objects.equals(this.label, certPayload.label) &&
+        Objects.equals(this.description, certPayload.description) &&
+        Objects.equals(this.icon, certPayload.icon);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(subjectKind, issuerPubkey, issuerUrl, subjectPubkey, memberSince, standing, powLevel, issuedAt, expiresAt, capabilities);
+    return Objects.hash(subjectKind, issuerPubkey, issuerUrl, subjectPubkey, memberSince, standing, powLevel, issuedAt, expiresAt, capabilities, label, description, icon);
   }
 
   @Override
@@ -417,6 +507,9 @@ public class CertPayload {
     sb.append("    issuedAt: ").append(toIndentedString(issuedAt)).append("\n");
     sb.append("    expiresAt: ").append(toIndentedString(expiresAt)).append("\n");
     sb.append("    capabilities: ").append(toIndentedString(capabilities)).append("\n");
+    sb.append("    label: ").append(toIndentedString(label)).append("\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    icon: ").append(toIndentedString(icon)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -516,6 +609,21 @@ public class CertPayload {
             "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix),
             ApiClient.urlEncode(ApiClient.valueToString(getCapabilities().get(i)))));
       }
+    }
+
+    // add `label` to the URL query string
+    if (getLabel() != null) {
+      joiner.add(String.format("%slabel%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getLabel()))));
+    }
+
+    // add `description` to the URL query string
+    if (getDescription() != null) {
+      joiner.add(String.format("%sdescription%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getDescription()))));
+    }
+
+    // add `icon` to the URL query string
+    if (getIcon() != null) {
+      joiner.add(String.format("%sicon%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getIcon()))));
     }
 
     return joiner.toString();

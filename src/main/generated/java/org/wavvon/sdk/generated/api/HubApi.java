@@ -20,6 +20,7 @@ import org.wavvon.sdk.generated.Pair;
 
 import org.wavvon.sdk.generated.model.GetAdminSettingsPow200Response;
 import org.wavvon.sdk.generated.model.GetAdminSettingsTags200Response;
+import org.wavvon.sdk.generated.model.MemberAdminInfo;
 import org.wavvon.sdk.generated.model.SetHubSettingsChallengeRequest;
 import org.wavvon.sdk.generated.model.SetHubSettingsLobbyRequest;
 import org.wavvon.sdk.generated.model.UpdateAdminSettingsListingRequest;
@@ -27,7 +28,6 @@ import org.wavvon.sdk.generated.model.UpdateAdminSettingsModerationRequest;
 import org.wavvon.sdk.generated.model.UpdateAdminSettingsPowRequest;
 import org.wavvon.sdk.generated.model.UpdateAdminSettingsTagsRequest;
 import org.wavvon.sdk.generated.model.UpdateHubRequest;
-import org.wavvon.sdk.generated.model.User;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -79,7 +79,7 @@ public class HubApi {
   }
 
   protected ApiException getApiException(String operationId, HttpResponse<InputStream> response) throws IOException {
-    String body = response.body() == null ? null : new String(response.body().readAllBytes());
+    String body = response.body() == null ? null : new String(response.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
     String message = formatExceptionMessage(operationId, response.statusCode(), body);
     return new ApiException(response.statusCode(), message, response.headers(), body);
   }
@@ -350,7 +350,7 @@ public class HubApi {
           );
         }
 
-        String responseBody = new String(localVarResponse.body().readAllBytes());
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
         return new ApiResponse<GetAdminSettingsPow200Response>(
@@ -427,7 +427,7 @@ public class HubApi {
           );
         }
 
-        String responseBody = new String(localVarResponse.body().readAllBytes());
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
         return new ApiResponse<GetAdminSettingsTags200Response>(
@@ -607,21 +607,21 @@ public class HubApi {
   /**
    * List all hub members
    * 
-   * @return List&lt;User&gt;
+   * @return List&lt;MemberAdminInfo&gt;
    * @throws ApiException if fails to make API call
    */
-  public List<User> listHubMembers() throws ApiException {
-    ApiResponse<List<User>> localVarResponse = listHubMembersWithHttpInfo();
+  public List<MemberAdminInfo> listHubMembers() throws ApiException {
+    ApiResponse<List<MemberAdminInfo>> localVarResponse = listHubMembersWithHttpInfo();
     return localVarResponse.getData();
   }
 
   /**
    * List all hub members
    * 
-   * @return ApiResponse&lt;List&lt;User&gt;&gt;
+   * @return ApiResponse&lt;List&lt;MemberAdminInfo&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<List<User>> listHubMembersWithHttpInfo() throws ApiException {
+  public ApiResponse<List<MemberAdminInfo>> listHubMembersWithHttpInfo() throws ApiException {
     HttpRequest.Builder localVarRequestBuilder = listHubMembersRequestBuilder();
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
@@ -635,20 +635,20 @@ public class HubApi {
           throw getApiException("listHubMembers", localVarResponse);
         }
         if (localVarResponse.body() == null) {
-          return new ApiResponse<List<User>>(
+          return new ApiResponse<List<MemberAdminInfo>>(
               localVarResponse.statusCode(),
               localVarResponse.headers().map(),
               null
           );
         }
 
-        String responseBody = new String(localVarResponse.body().readAllBytes());
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
-        return new ApiResponse<List<User>>(
+        return new ApiResponse<List<MemberAdminInfo>>(
             localVarResponse.statusCode(),
             localVarResponse.headers().map(),
-            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<List<User>>() {})
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<List<MemberAdminInfo>>() {})
         );
       } finally {
       }

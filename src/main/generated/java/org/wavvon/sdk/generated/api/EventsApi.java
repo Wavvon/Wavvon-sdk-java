@@ -80,7 +80,7 @@ public class EventsApi {
   }
 
   protected ApiException getApiException(String operationId, HttpResponse<InputStream> response) throws IOException {
-    String body = response.body() == null ? null : new String(response.body().readAllBytes());
+    String body = response.body() == null ? null : new String(response.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
     String message = formatExceptionMessage(operationId, response.statusCode(), body);
     return new ApiException(response.statusCode(), message, response.headers(), body);
   }
@@ -211,7 +211,7 @@ public class EventsApi {
           );
         }
 
-        String responseBody = new String(localVarResponse.body().readAllBytes());
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
         return new ApiResponse<CreateEventSlot201Response>(
@@ -303,7 +303,7 @@ public class EventsApi {
           );
         }
 
-        String responseBody = new String(localVarResponse.body().readAllBytes());
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
         return new ApiResponse<List<Channel>>(
@@ -628,7 +628,7 @@ public class EventsApi {
           );
         }
 
-        String responseBody = new String(localVarResponse.body().readAllBytes());
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
         return new ApiResponse<List<ListEventAssignments200ResponseInner>>(
@@ -712,7 +712,7 @@ public class EventsApi {
           );
         }
 
-        String responseBody = new String(localVarResponse.body().readAllBytes());
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
         return new ApiResponse<List<ListEventRsvps200ResponseInner>>(
@@ -800,7 +800,7 @@ public class EventsApi {
           );
         }
 
-        String responseBody = new String(localVarResponse.body().readAllBytes());
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
         return new ApiResponse<List<ListEvents200ResponseInner>>(
@@ -1070,7 +1070,7 @@ public class EventsApi {
           );
         }
 
-        String responseBody = new String(localVarResponse.body().readAllBytes());
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
         return new ApiResponse<CreateEventSlot201Response>(

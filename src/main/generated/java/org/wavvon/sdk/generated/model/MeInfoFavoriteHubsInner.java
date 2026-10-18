@@ -30,46 +30,104 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * Error
+ * MeInfoFavoriteHubsInner
  */
 @JsonPropertyOrder({
-  Error.JSON_PROPERTY_ERROR
+  MeInfoFavoriteHubsInner.JSON_PROPERTY_URL,
+  MeInfoFavoriteHubsInner.JSON_PROPERTY_NAME,
+  MeInfoFavoriteHubsInner.JSON_PROPERTY_ICON
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class Error {
-  public static final String JSON_PROPERTY_ERROR = "error";
-  @jakarta.annotation.Nullable
-  private String error;
+public class MeInfoFavoriteHubsInner {
+  public static final String JSON_PROPERTY_URL = "url";
+  @jakarta.annotation.Nonnull
+  private String url;
 
-  public Error() { 
+  public static final String JSON_PROPERTY_NAME = "name";
+  @jakarta.annotation.Nonnull
+  private String name;
+
+  public static final String JSON_PROPERTY_ICON = "icon";
+  @jakarta.annotation.Nullable
+  private String icon;
+
+  public MeInfoFavoriteHubsInner() { 
   }
 
-  public Error error(@jakarta.annotation.Nullable String error) {
-    this.error = error;
+  public MeInfoFavoriteHubsInner url(@jakarta.annotation.Nonnull String url) {
+    this.url = url;
     return this;
   }
 
   /**
-   * Get error
-   * @return error
+   * Get url
+   * @return url
    */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_ERROR)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getError() {
-    return error;
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_URL)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public String getUrl() {
+    return url;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_ERROR)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setError(@jakarta.annotation.Nullable String error) {
-    this.error = error;
+  @JsonProperty(JSON_PROPERTY_URL)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setUrl(@jakarta.annotation.Nonnull String url) {
+    this.url = url;
+  }
+
+
+  public MeInfoFavoriteHubsInner name(@jakarta.annotation.Nonnull String name) {
+    this.name = name;
+    return this;
+  }
+
+  /**
+   * Get name
+   * @return name
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_NAME)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public String getName() {
+    return name;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_NAME)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setName(@jakarta.annotation.Nonnull String name) {
+    this.name = name;
+  }
+
+
+  public MeInfoFavoriteHubsInner icon(@jakarta.annotation.Nullable String icon) {
+    this.icon = icon;
+    return this;
+  }
+
+  /**
+   * Get icon
+   * @return icon
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_ICON)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public String getIcon() {
+    return icon;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_ICON)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setIcon(@jakarta.annotation.Nullable String icon) {
+    this.icon = icon;
   }
 
 
   /**
-   * Return true if this Error object is equal to o.
+   * Return true if this MeInfo_favorite_hubs_inner object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -79,20 +137,24 @@ public class Error {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Error error = (Error) o;
-    return Objects.equals(this.error, error.error);
+    MeInfoFavoriteHubsInner meInfoFavoriteHubsInner = (MeInfoFavoriteHubsInner) o;
+    return Objects.equals(this.url, meInfoFavoriteHubsInner.url) &&
+        Objects.equals(this.name, meInfoFavoriteHubsInner.name) &&
+        Objects.equals(this.icon, meInfoFavoriteHubsInner.icon);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(error);
+    return Objects.hash(url, name, icon);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Error {\n");
-    sb.append("    error: ").append(toIndentedString(error)).append("\n");
+    sb.append("class MeInfoFavoriteHubsInner {\n");
+    sb.append("    url: ").append(toIndentedString(url)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    icon: ").append(toIndentedString(icon)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -140,9 +202,19 @@ public class Error {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `error` to the URL query string
-    if (getError() != null) {
-      joiner.add(String.format("%serror%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getError()))));
+    // add `url` to the URL query string
+    if (getUrl() != null) {
+      joiner.add(String.format("%surl%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getUrl()))));
+    }
+
+    // add `name` to the URL query string
+    if (getName() != null) {
+      joiner.add(String.format("%sname%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getName()))));
+    }
+
+    // add `icon` to the URL query string
+    if (getIcon() != null) {
+      joiner.add(String.format("%sicon%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getIcon()))));
     }
 
     return joiner.toString();

@@ -68,11 +68,21 @@ patch_gap AppRegistration "$work/AppRegistration.yaml"
 # but most spec integers carry no format, which the generator reads as Integer:
 # a message's created_at would overflow. Widen every format-less integer.
 awk '
-  /format:/ { print; next }
-  /^ *type: integer *$/ { print; match($0, /^ */); print substr($0, 1, RLENGTH) "format: int64"; widened++; next }
-  /type: integer *[,}]/ { sub(/type: integer */, "type: integer, format: int64"); sub(/int64 *, *}/, "int64 }"); widened++ }
-  { print }
-  END { if (widened) exit 3 }
+  function flush() {
+    if (pending != "" && $0 !~ /^ *format:/) { print pending "format: int64"; widened++ }
+    pending = ""
+  }
+  { flush() }
+  /^ *type: integer *$/ {
+    print
+    match($0, /^ */)
+    if (prev !~ /^ *format:/) pending = substr($0, 1, RLENGTH)
+    prev = $0
+    next
+  }
+  /type: integer *[,}]/ && !/format:/ { sub(/type: integer */, "type: integer, format: int64"); sub(/int64 *, *}/, "int64 }"); widened++ }
+  { print; prev = $0 }
+  END { flush(); if (widened) exit 3 }
 ' "$spec" >"$work/widened.yaml" || {
   [ $? -eq 3 ] || exit 1
   echo "PATCH: widened format-less integers to int64" >&2
@@ -81,13 +91,14 @@ awk '
 mv "$work/widened.yaml" "$spec"
 
 cd "$root"
-# The spec does not pass openapi-generator validation (operations without
-# responses, responses without descriptions); generation tolerates it.
-echo "NOTE: generating with validation skipped; the spec has validation errors" >&2
 rm -rf target/openapi
 ./mvnw -B -q -Pgenerate initialize -Dspec="$spec"
 rm -rf "$out/java"
 mkdir -p "$out"
 cp -r target/openapi/src/main/java "$out/java"
+# The native templates decode response bodies with the platform charset, which
+# is not UTF-8 on Java 17 under Windows; the hub always sends UTF-8.
+echo "PATCH: decoding generated response bodies as UTF-8" >&2
+find "$out/java" -name "*.java" -exec sed -i "s/new String(\([a-zA-Z]*\)\.body()\.readAllBytes())/new String(\1.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8)/g" {} +
 echo "$commit" >"$out/SPEC_COMMIT"
 echo "generated from Wavvon-docs $commit"

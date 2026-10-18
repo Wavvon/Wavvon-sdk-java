@@ -27,6 +27,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.wavvon.sdk.generated.model.PostSummaryAttachmentsInner;
+import org.wavvon.sdk.generated.model.PostSummaryTagsInner;
+import org.wavvon.sdk.generated.model.Reaction;
 import org.wavvon.sdk.generated.model.ReplyView;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
@@ -48,6 +51,10 @@ import org.wavvon.sdk.generated.ApiClient;
   PostDetail.JSON_PROPERTY_LAST_ACTIVITY_AT,
   PostDetail.JSON_PROPERTY_IS_DELETED,
   PostDetail.JSON_PROPERTY_UNREAD_REPLY_COUNT,
+  PostDetail.JSON_PROPERTY_REACTIONS,
+  PostDetail.JSON_PROPERTY_ATTACHMENTS,
+  PostDetail.JSON_PROPERTY_AUTHOR_HUB,
+  PostDetail.JSON_PROPERTY_TAGS,
   PostDetail.JSON_PROPERTY_BODY,
   PostDetail.JSON_PROPERTY_REPLIES,
   PostDetail.JSON_PROPERTY_REPLY_CURSOR
@@ -101,6 +108,22 @@ public class PostDetail {
   public static final String JSON_PROPERTY_UNREAD_REPLY_COUNT = "unread_reply_count";
   @jakarta.annotation.Nullable
   private Long unreadReplyCount;
+
+  public static final String JSON_PROPERTY_REACTIONS = "reactions";
+  @jakarta.annotation.Nullable
+  private List<Reaction> reactions = new ArrayList<>();
+
+  public static final String JSON_PROPERTY_ATTACHMENTS = "attachments";
+  @jakarta.annotation.Nullable
+  private List<PostSummaryAttachmentsInner> attachments = new ArrayList<>();
+
+  public static final String JSON_PROPERTY_AUTHOR_HUB = "author_hub";
+  @jakarta.annotation.Nullable
+  private String authorHub;
+
+  public static final String JSON_PROPERTY_TAGS = "tags";
+  @jakarta.annotation.Nullable
+  private List<PostSummaryTagsInner> tags = new ArrayList<>();
 
   public static final String JSON_PROPERTY_BODY = "body";
   @jakarta.annotation.Nullable
@@ -405,6 +428,126 @@ public class PostDetail {
   }
 
 
+  public PostDetail reactions(@jakarta.annotation.Nullable List<Reaction> reactions) {
+    this.reactions = reactions;
+    return this;
+  }
+
+  public PostDetail addReactionsItem(Reaction reactionsItem) {
+    if (this.reactions == null) {
+      this.reactions = new ArrayList<>();
+    }
+    this.reactions.add(reactionsItem);
+    return this;
+  }
+
+  /**
+   * Get reactions
+   * @return reactions
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_REACTIONS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public List<Reaction> getReactions() {
+    return reactions;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_REACTIONS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setReactions(@jakarta.annotation.Nullable List<Reaction> reactions) {
+    this.reactions = reactions;
+  }
+
+
+  public PostDetail attachments(@jakarta.annotation.Nullable List<PostSummaryAttachmentsInner> attachments) {
+    this.attachments = attachments;
+    return this;
+  }
+
+  public PostDetail addAttachmentsItem(PostSummaryAttachmentsInner attachmentsItem) {
+    if (this.attachments == null) {
+      this.attachments = new ArrayList<>();
+    }
+    this.attachments.add(attachmentsItem);
+    return this;
+  }
+
+  /**
+   * Get attachments
+   * @return attachments
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_ATTACHMENTS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public List<PostSummaryAttachmentsInner> getAttachments() {
+    return attachments;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_ATTACHMENTS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setAttachments(@jakarta.annotation.Nullable List<PostSummaryAttachmentsInner> attachments) {
+    this.attachments = attachments;
+  }
+
+
+  public PostDetail authorHub(@jakarta.annotation.Nullable String authorHub) {
+    this.authorHub = authorHub;
+    return this;
+  }
+
+  /**
+   * Origin hub public key (hex) when the post came in through the alliance forum write-proxy. Hub-asserted, not proven: render it as mediated (\&quot;via HubName\&quot;). Omitted for local posts.
+   * @return authorHub
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_AUTHOR_HUB)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getAuthorHub() {
+    return authorHub;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_AUTHOR_HUB)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setAuthorHub(@jakarta.annotation.Nullable String authorHub) {
+    this.authorHub = authorHub;
+  }
+
+
+  public PostDetail tags(@jakarta.annotation.Nullable List<PostSummaryTagsInner> tags) {
+    this.tags = tags;
+    return this;
+  }
+
+  public PostDetail addTagsItem(PostSummaryTagsInner tagsItem) {
+    if (this.tags == null) {
+      this.tags = new ArrayList<>();
+    }
+    this.tags.add(tagsItem);
+    return this;
+  }
+
+  /**
+   * Get tags
+   * @return tags
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_TAGS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public List<PostSummaryTagsInner> getTags() {
+    return tags;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_TAGS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setTags(@jakarta.annotation.Nullable List<PostSummaryTagsInner> tags) {
+    this.tags = tags;
+  }
+
+
   public PostDetail body(@jakarta.annotation.Nullable String body) {
     this.body = body;
     return this;
@@ -509,6 +652,10 @@ public class PostDetail {
         Objects.equals(this.lastActivityAt, postDetail.lastActivityAt) &&
         Objects.equals(this.isDeleted, postDetail.isDeleted) &&
         Objects.equals(this.unreadReplyCount, postDetail.unreadReplyCount) &&
+        Objects.equals(this.reactions, postDetail.reactions) &&
+        Objects.equals(this.attachments, postDetail.attachments) &&
+        Objects.equals(this.authorHub, postDetail.authorHub) &&
+        Objects.equals(this.tags, postDetail.tags) &&
         Objects.equals(this.body, postDetail.body) &&
         Objects.equals(this.replies, postDetail.replies) &&
         Objects.equals(this.replyCursor, postDetail.replyCursor);
@@ -516,7 +663,7 @@ public class PostDetail {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, channelId, authorPubkey, title, createdAt, editedAt, isPinned, isLocked, replyCount, lastActivityAt, isDeleted, unreadReplyCount, body, replies, replyCursor);
+    return Objects.hash(id, channelId, authorPubkey, title, createdAt, editedAt, isPinned, isLocked, replyCount, lastActivityAt, isDeleted, unreadReplyCount, reactions, attachments, authorHub, tags, body, replies, replyCursor);
   }
 
   @Override
@@ -535,6 +682,10 @@ public class PostDetail {
     sb.append("    lastActivityAt: ").append(toIndentedString(lastActivityAt)).append("\n");
     sb.append("    isDeleted: ").append(toIndentedString(isDeleted)).append("\n");
     sb.append("    unreadReplyCount: ").append(toIndentedString(unreadReplyCount)).append("\n");
+    sb.append("    reactions: ").append(toIndentedString(reactions)).append("\n");
+    sb.append("    attachments: ").append(toIndentedString(attachments)).append("\n");
+    sb.append("    authorHub: ").append(toIndentedString(authorHub)).append("\n");
+    sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
     sb.append("    body: ").append(toIndentedString(body)).append("\n");
     sb.append("    replies: ").append(toIndentedString(replies)).append("\n");
     sb.append("    replyCursor: ").append(toIndentedString(replyCursor)).append("\n");
@@ -643,6 +794,41 @@ public class PostDetail {
     // add `unread_reply_count` to the URL query string
     if (getUnreadReplyCount() != null) {
       joiner.add(String.format("%sunread_reply_count%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getUnreadReplyCount()))));
+    }
+
+    // add `reactions` to the URL query string
+    if (getReactions() != null) {
+      for (int i = 0; i < getReactions().size(); i++) {
+        if (getReactions().get(i) != null) {
+          joiner.add(getReactions().get(i).toUrlQueryString(String.format("%sreactions%s%s", prefix, suffix,
+          "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix))));
+        }
+      }
+    }
+
+    // add `attachments` to the URL query string
+    if (getAttachments() != null) {
+      for (int i = 0; i < getAttachments().size(); i++) {
+        if (getAttachments().get(i) != null) {
+          joiner.add(getAttachments().get(i).toUrlQueryString(String.format("%sattachments%s%s", prefix, suffix,
+          "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix))));
+        }
+      }
+    }
+
+    // add `author_hub` to the URL query string
+    if (getAuthorHub() != null) {
+      joiner.add(String.format("%sauthor_hub%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getAuthorHub()))));
+    }
+
+    // add `tags` to the URL query string
+    if (getTags() != null) {
+      for (int i = 0; i < getTags().size(); i++) {
+        if (getTags().get(i) != null) {
+          joiner.add(getTags().get(i).toUrlQueryString(String.format("%stags%s%s", prefix, suffix,
+          "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix))));
+        }
+      }
     }
 
     // add `body` to the URL query string
