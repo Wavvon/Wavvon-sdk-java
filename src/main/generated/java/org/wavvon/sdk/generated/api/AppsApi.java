@@ -18,11 +18,11 @@ import org.wavvon.sdk.generated.ApiResponse;
 import org.wavvon.sdk.generated.Configuration;
 import org.wavvon.sdk.generated.Pair;
 
-import org.wavvon.sdk.generated.model.AckMeEventsRequest;
 import org.wavvon.sdk.generated.model.AppRegistration;
 import org.wavvon.sdk.generated.model.CreateAllianceVoiceGrantRequest;
+import org.wavvon.sdk.generated.model.HubEvent;
 import org.wavvon.sdk.generated.model.ListApps200ResponseInner;
-import org.wavvon.sdk.generated.model.ListMeEvents200Response;
+import org.wavvon.sdk.generated.model.ListMeEvents410Response;
 import org.wavvon.sdk.generated.model.SetMeAppCommandsRequest;
 import org.wavvon.sdk.generated.model.SetMeAppProfileRequest;
 import org.wavvon.sdk.generated.model.SetMeAppSubscriptions200Response;
@@ -91,87 +91,6 @@ public class AppsApi {
       body = "[no body]";
     }
     return operationId + " call failed with: " + statusCode + " - " + body;
-  }
-
-  /**
-   * Acknowledge delivered events
-   * 
-   * @param ackMeEventsRequest  (required)
-   * @throws ApiException if fails to make API call
-   */
-  public void ackMeEvents(AckMeEventsRequest ackMeEventsRequest) throws ApiException {
-    ackMeEventsWithHttpInfo(ackMeEventsRequest);
-  }
-
-  /**
-   * Acknowledge delivered events
-   * 
-   * @param ackMeEventsRequest  (required)
-   * @return ApiResponse&lt;Void&gt;
-   * @throws ApiException if fails to make API call
-   */
-  public ApiResponse<Void> ackMeEventsWithHttpInfo(AckMeEventsRequest ackMeEventsRequest) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = ackMeEventsRequestBuilder(ackMeEventsRequest);
-    try {
-      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
-          localVarRequestBuilder.build(),
-          HttpResponse.BodyHandlers.ofInputStream());
-      if (memberVarResponseInterceptor != null) {
-        memberVarResponseInterceptor.accept(localVarResponse);
-      }
-      try {
-        if (localVarResponse.statusCode()/ 100 != 2) {
-          throw getApiException("ackMeEvents", localVarResponse);
-        }
-        return new ApiResponse<>(
-            localVarResponse.statusCode(),
-            localVarResponse.headers().map(),
-            null
-        );
-      } finally {
-        // Drain the InputStream
-        while (localVarResponse.body().read() != -1) {
-          // Ignore
-        }
-        localVarResponse.body().close();
-      }
-    } catch (IOException e) {
-      throw new ApiException(e);
-    }
-    catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-      throw new ApiException(e);
-    }
-  }
-
-  private HttpRequest.Builder ackMeEventsRequestBuilder(AckMeEventsRequest ackMeEventsRequest) throws ApiException {
-    // verify the required parameter 'ackMeEventsRequest' is set
-    if (ackMeEventsRequest == null) {
-      throw new ApiException(400, "Missing the required parameter 'ackMeEventsRequest' when calling ackMeEvents");
-    }
-
-    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
-
-    String localVarPath = "/me/events";
-
-    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
-
-    localVarRequestBuilder.header("Content-Type", "application/json");
-    localVarRequestBuilder.header("Accept", "application/json");
-
-    try {
-      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(ackMeEventsRequest);
-      localVarRequestBuilder.method("DELETE", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
-    } catch (IOException e) {
-      throw new ApiException(e);
-    }
-    if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }
-    return localVarRequestBuilder;
   }
 
   /**
@@ -410,26 +329,28 @@ public class AppsApi {
   }
 
   /**
-   * Poll the caller&#39;s undelivered queued events
-   * The polling transport for a client holding no WebSocket: rows queued for the caller&#39;s own identity and not yet acknowledged, oldest first, at most 100 per call. After a full page, acknowledge with DELETE and poll again: &#x60;since&#x60; is strict on a whole-second timestamp, so paging by the last row&#39;s &#x60;created_at&#x60; skips rows that share its second.
-   * @param since A &#x60;created_at&#x60; value (Unix seconds); only rows created strictly after it are returned. (optional)
-   * @return ListMeEvents200Response
+   * Poll the hub events the caller subscribed to
+   * The polling transport for a program holding no WebSocket. It reads the audit log that WebSocket &#x60;Resume&#x60; replays, so each item is the same &#x60;hub_event&#x60; envelope the socket pushes: events of the caller&#39;s subscribed types after &#x60;cursor&#x60;, in channels it can read, oldest first. Nothing is queued or acknowledged; pass the last &#x60;seq&#x60; seen as &#x60;cursor&#x60;. Without one, the poll starts at the beginning of the 72-hour window.
+   * @param cursor The &#x60;seq&#x60; of the last event seen; only later events are returned. (optional)
+   * @param limit  (optional, default to 100)
+   * @return List&lt;HubEvent&gt;
    * @throws ApiException if fails to make API call
    */
-  public ListMeEvents200Response listMeEvents(Long since) throws ApiException {
-    ApiResponse<ListMeEvents200Response> localVarResponse = listMeEventsWithHttpInfo(since);
+  public List<HubEvent> listMeEvents(Long cursor, Integer limit) throws ApiException {
+    ApiResponse<List<HubEvent>> localVarResponse = listMeEventsWithHttpInfo(cursor, limit);
     return localVarResponse.getData();
   }
 
   /**
-   * Poll the caller&#39;s undelivered queued events
-   * The polling transport for a client holding no WebSocket: rows queued for the caller&#39;s own identity and not yet acknowledged, oldest first, at most 100 per call. After a full page, acknowledge with DELETE and poll again: &#x60;since&#x60; is strict on a whole-second timestamp, so paging by the last row&#39;s &#x60;created_at&#x60; skips rows that share its second.
-   * @param since A &#x60;created_at&#x60; value (Unix seconds); only rows created strictly after it are returned. (optional)
-   * @return ApiResponse&lt;ListMeEvents200Response&gt;
+   * Poll the hub events the caller subscribed to
+   * The polling transport for a program holding no WebSocket. It reads the audit log that WebSocket &#x60;Resume&#x60; replays, so each item is the same &#x60;hub_event&#x60; envelope the socket pushes: events of the caller&#39;s subscribed types after &#x60;cursor&#x60;, in channels it can read, oldest first. Nothing is queued or acknowledged; pass the last &#x60;seq&#x60; seen as &#x60;cursor&#x60;. Without one, the poll starts at the beginning of the 72-hour window.
+   * @param cursor The &#x60;seq&#x60; of the last event seen; only later events are returned. (optional)
+   * @param limit  (optional, default to 100)
+   * @return ApiResponse&lt;List&lt;HubEvent&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<ListMeEvents200Response> listMeEventsWithHttpInfo(Long since) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = listMeEventsRequestBuilder(since);
+  public ApiResponse<List<HubEvent>> listMeEventsWithHttpInfo(Long cursor, Integer limit) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = listMeEventsRequestBuilder(cursor, limit);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -442,7 +363,7 @@ public class AppsApi {
           throw getApiException("listMeEvents", localVarResponse);
         }
         if (localVarResponse.body() == null) {
-          return new ApiResponse<ListMeEvents200Response>(
+          return new ApiResponse<List<HubEvent>>(
               localVarResponse.statusCode(),
               localVarResponse.headers().map(),
               null
@@ -452,10 +373,10 @@ public class AppsApi {
         String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
-        return new ApiResponse<ListMeEvents200Response>(
+        return new ApiResponse<List<HubEvent>>(
             localVarResponse.statusCode(),
             localVarResponse.headers().map(),
-            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<ListMeEvents200Response>() {})
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<List<HubEvent>>() {})
         );
       } finally {
       }
@@ -468,7 +389,7 @@ public class AppsApi {
     }
   }
 
-  private HttpRequest.Builder listMeEventsRequestBuilder(Long since) throws ApiException {
+  private HttpRequest.Builder listMeEventsRequestBuilder(Long cursor, Integer limit) throws ApiException {
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -477,8 +398,10 @@ public class AppsApi {
     List<Pair> localVarQueryParams = new ArrayList<>();
     StringJoiner localVarQueryStringJoiner = new StringJoiner("&");
     String localVarQueryParameterBaseName;
-    localVarQueryParameterBaseName = "since";
-    localVarQueryParams.addAll(ApiClient.parameterToPairs("since", since));
+    localVarQueryParameterBaseName = "cursor";
+    localVarQueryParams.addAll(ApiClient.parameterToPairs("cursor", cursor));
+    localVarQueryParameterBaseName = "limit";
+    localVarQueryParams.addAll(ApiClient.parameterToPairs("limit", limit));
 
     if (!localVarQueryParams.isEmpty() || localVarQueryStringJoiner.length() != 0) {
       StringJoiner queryJoiner = new StringJoiner("&");

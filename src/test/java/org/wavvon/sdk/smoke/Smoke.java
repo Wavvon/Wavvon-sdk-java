@@ -25,6 +25,7 @@ import java.util.stream.Stream;
 import org.wavvon.sdk.AppCommand;
 import org.wavvon.sdk.AppProfile;
 import org.wavvon.sdk.AppResponse;
+import org.wavvon.sdk.AppSubscription;
 import org.wavvon.sdk.Dispatch;
 import org.wavvon.sdk.DispatchHandler;
 import org.wavvon.sdk.EventStream;
@@ -55,7 +56,8 @@ import org.wavvon.sdk.generated.model.Message;
  * runs the smoke, then kills only that hub and drops the database.
  *
  * <p>Authenticates as a fresh identity, posts a message, registers a slash command, invokes it, and
- * checks that the verified invocation's reply lands in the channel.
+ * checks that the verified invocation's reply lands in the channel, then polls the message back
+ * from {@code GET /me/events}.
  */
 public final class Smoke {
   private static final String DB = "wavvon_sdk_java_smoke";
@@ -273,6 +275,9 @@ public final class Smoke {
                     .orElseThrow(() -> new IllegalStateException("no text channel to post in"));
       }
 
+      client.setAppSubscriptions(
+          List.of(new AppSubscription("message.created", List.of(channelId))));
+
       MessagesApi messages = new MessagesApi(client.api());
       String text = "hello from wavvon-sdk (Java) " + System.currentTimeMillis();
       messages.createChannelMessage(channelId, new CreateChannelMessageRequest().content(text));
@@ -290,6 +295,19 @@ public final class Smoke {
         throw new IllegalStateException("reply sent by " + reply.getSender());
       }
       step("verified the invocation and the reply landed");
+
+      List<WsEvent.HubEvent> polled = client.pollEvents(null, null);
+      WsEvent.HubEvent ours =
+          polled.stream()
+              .filter(e -> e.event().equals("message.created"))
+              .filter(e -> text.equals(e.payload().path("content").asText()))
+              .findFirst()
+              .orElseThrow(() -> new IllegalStateException("polling did not return our message"));
+      long last = polled.get(polled.size() - 1).seq();
+      if (client.pollEvents(last, null).stream().anyMatch(e -> e.seq() <= last)) {
+        throw new IllegalStateException("the cursor did not page forward");
+      }
+      step("polled " + polled.size() + " events, ours at seq " + ours.seq());
 
       if (!unknown.isEmpty()) {
         step("frames this SDK does not model (delivered as unknown): " + Set.copyOf(unknown));

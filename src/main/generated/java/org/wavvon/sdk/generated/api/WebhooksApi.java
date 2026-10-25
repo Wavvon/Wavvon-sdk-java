@@ -22,6 +22,8 @@ import org.wavvon.sdk.generated.model.CreateAdminWebhook201Response;
 import org.wavvon.sdk.generated.model.CreateAdminWebhookRequest;
 import org.wavvon.sdk.generated.model.ExecuteWebhook200Response;
 import org.wavvon.sdk.generated.model.ExecuteWebhookRequest;
+import org.wavvon.sdk.generated.model.ListAdminWebhooks200ResponseInner;
+import org.wavvon.sdk.generated.model.RegenerateAdminWebhook200Response;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -350,6 +352,167 @@ public class WebhooksApi {
     } catch (IOException e) {
       throw new ApiException(e);
     }
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * List incoming webhooks (webhooks.incoming.manage)
+   * 
+   * @return List&lt;ListAdminWebhooks200ResponseInner&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public List<ListAdminWebhooks200ResponseInner> listAdminWebhooks() throws ApiException {
+    ApiResponse<List<ListAdminWebhooks200ResponseInner>> localVarResponse = listAdminWebhooksWithHttpInfo();
+    return localVarResponse.getData();
+  }
+
+  /**
+   * List incoming webhooks (webhooks.incoming.manage)
+   * 
+   * @return ApiResponse&lt;List&lt;ListAdminWebhooks200ResponseInner&gt;&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<List<ListAdminWebhooks200ResponseInner>> listAdminWebhooksWithHttpInfo() throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = listAdminWebhooksRequestBuilder();
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("listAdminWebhooks", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<List<ListAdminWebhooks200ResponseInner>>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        localVarResponse.body().close();
+
+        return new ApiResponse<List<ListAdminWebhooks200ResponseInner>>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<List<ListAdminWebhooks200ResponseInner>>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder listAdminWebhooksRequestBuilder() throws ApiException {
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/admin/webhooks";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Issue a fresh token for a webhook (webhooks.incoming.manage)
+   * The old URL stops working. The returned &#x60;webhook_url&#x60; embeds the new secret token and is shown **once**.
+   * @param id  (required)
+   * @return RegenerateAdminWebhook200Response
+   * @throws ApiException if fails to make API call
+   */
+  public RegenerateAdminWebhook200Response regenerateAdminWebhook(String id) throws ApiException {
+    ApiResponse<RegenerateAdminWebhook200Response> localVarResponse = regenerateAdminWebhookWithHttpInfo(id);
+    return localVarResponse.getData();
+  }
+
+  /**
+   * Issue a fresh token for a webhook (webhooks.incoming.manage)
+   * The old URL stops working. The returned &#x60;webhook_url&#x60; embeds the new secret token and is shown **once**.
+   * @param id  (required)
+   * @return ApiResponse&lt;RegenerateAdminWebhook200Response&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<RegenerateAdminWebhook200Response> regenerateAdminWebhookWithHttpInfo(String id) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = regenerateAdminWebhookRequestBuilder(id);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("regenerateAdminWebhook", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<RegenerateAdminWebhook200Response>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        localVarResponse.body().close();
+
+        return new ApiResponse<RegenerateAdminWebhook200Response>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<RegenerateAdminWebhook200Response>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder regenerateAdminWebhookRequestBuilder(String id) throws ApiException {
+    // verify the required parameter 'id' is set
+    if (id == null) {
+      throw new ApiException(400, "Missing the required parameter 'id' when calling regenerateAdminWebhook");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/admin/webhooks/{id}"
+        .replace("{id}", ApiClient.urlEncode(id.toString()));
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("PATCH", HttpRequest.BodyPublishers.noBody());
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }

@@ -27,60 +27,122 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.wavvon.sdk.generated.model.ListMeEvents200ResponseEventsInner;
+import org.wavvon.sdk.generated.model.MessageComponent;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * ListMeEvents200Response
+ * ComponentRow
  */
 @JsonPropertyOrder({
-  ListMeEvents200Response.JSON_PROPERTY_EVENTS
+  ComponentRow.JSON_PROPERTY_TYPE,
+  ComponentRow.JSON_PROPERTY_COMPONENTS
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class ListMeEvents200Response {
-  public static final String JSON_PROPERTY_EVENTS = "events";
-  @jakarta.annotation.Nonnull
-  private List<ListMeEvents200ResponseEventsInner> events = new ArrayList<>();
+public class ComponentRow {
+  /**
+   * Gets or Sets type
+   */
+  public enum TypeEnum {
+    ROW(String.valueOf("row"));
 
-  public ListMeEvents200Response() { 
-  }
+    private String value;
 
-  public ListMeEvents200Response events(@jakarta.annotation.Nonnull List<ListMeEvents200ResponseEventsInner> events) {
-    this.events = events;
-    return this;
-  }
-
-  public ListMeEvents200Response addEventsItem(ListMeEvents200ResponseEventsInner eventsItem) {
-    if (this.events == null) {
-      this.events = new ArrayList<>();
+    TypeEnum(String value) {
+      this.value = value;
     }
-    this.events.add(eventsItem);
+
+    @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static TypeEnum fromValue(String value) {
+      for (TypeEnum b : TypeEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+  }
+
+  public static final String JSON_PROPERTY_TYPE = "type";
+  @jakarta.annotation.Nonnull
+  private TypeEnum type;
+
+  public static final String JSON_PROPERTY_COMPONENTS = "components";
+  @jakarta.annotation.Nonnull
+  private List<MessageComponent> components = new ArrayList<>();
+
+  public ComponentRow() { 
+  }
+
+  public ComponentRow type(@jakarta.annotation.Nonnull TypeEnum type) {
+    this.type = type;
     return this;
   }
 
   /**
-   * Get events
-   * @return events
+   * Get type
+   * @return type
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_EVENTS)
+  @JsonProperty(JSON_PROPERTY_TYPE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public List<ListMeEvents200ResponseEventsInner> getEvents() {
-    return events;
+  public TypeEnum getType() {
+    return type;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_EVENTS)
+  @JsonProperty(JSON_PROPERTY_TYPE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setEvents(@jakarta.annotation.Nonnull List<ListMeEvents200ResponseEventsInner> events) {
-    this.events = events;
+  public void setType(@jakarta.annotation.Nonnull TypeEnum type) {
+    this.type = type;
+  }
+
+
+  public ComponentRow components(@jakarta.annotation.Nonnull List<MessageComponent> components) {
+    this.components = components;
+    return this;
+  }
+
+  public ComponentRow addComponentsItem(MessageComponent componentsItem) {
+    if (this.components == null) {
+      this.components = new ArrayList<>();
+    }
+    this.components.add(componentsItem);
+    return this;
+  }
+
+  /**
+   * Get components
+   * @return components
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_COMPONENTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public List<MessageComponent> getComponents() {
+    return components;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_COMPONENTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setComponents(@jakarta.annotation.Nonnull List<MessageComponent> components) {
+    this.components = components;
   }
 
 
   /**
-   * Return true if this listMeEvents_200_response object is equal to o.
+   * Return true if this ComponentRow object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -90,20 +152,22 @@ public class ListMeEvents200Response {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ListMeEvents200Response listMeEvents200Response = (ListMeEvents200Response) o;
-    return Objects.equals(this.events, listMeEvents200Response.events);
+    ComponentRow componentRow = (ComponentRow) o;
+    return Objects.equals(this.type, componentRow.type) &&
+        Objects.equals(this.components, componentRow.components);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(events);
+    return Objects.hash(type, components);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ListMeEvents200Response {\n");
-    sb.append("    events: ").append(toIndentedString(events)).append("\n");
+    sb.append("class ComponentRow {\n");
+    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    components: ").append(toIndentedString(components)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -151,11 +215,16 @@ public class ListMeEvents200Response {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `events` to the URL query string
-    if (getEvents() != null) {
-      for (int i = 0; i < getEvents().size(); i++) {
-        if (getEvents().get(i) != null) {
-          joiner.add(getEvents().get(i).toUrlQueryString(String.format("%sevents%s%s", prefix, suffix,
+    // add `type` to the URL query string
+    if (getType() != null) {
+      joiner.add(String.format("%stype%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getType()))));
+    }
+
+    // add `components` to the URL query string
+    if (getComponents() != null) {
+      for (int i = 0; i < getComponents().size(); i++) {
+        if (getComponents().get(i) != null) {
+          joiner.add(getComponents().get(i).toUrlQueryString(String.format("%scomponents%s%s", prefix, suffix,
           "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix))));
         }
       }

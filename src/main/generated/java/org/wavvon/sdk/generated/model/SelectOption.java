@@ -24,62 +24,110 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * AckMeEventsRequest
+ * SelectOption
  */
 @JsonPropertyOrder({
-  AckMeEventsRequest.JSON_PROPERTY_IDS
+  SelectOption.JSON_PROPERTY_LABEL,
+  SelectOption.JSON_PROPERTY_VALUE,
+  SelectOption.JSON_PROPERTY_DESCRIPTION
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class AckMeEventsRequest {
-  public static final String JSON_PROPERTY_IDS = "ids";
+public class SelectOption {
+  public static final String JSON_PROPERTY_LABEL = "label";
   @jakarta.annotation.Nonnull
-  private List<String> ids = new ArrayList<>();
+  private String label;
 
-  public AckMeEventsRequest() { 
+  public static final String JSON_PROPERTY_VALUE = "value";
+  @jakarta.annotation.Nonnull
+  private String value;
+
+  public static final String JSON_PROPERTY_DESCRIPTION = "description";
+  @jakarta.annotation.Nullable
+  private String description;
+
+  public SelectOption() { 
   }
 
-  public AckMeEventsRequest ids(@jakarta.annotation.Nonnull List<String> ids) {
-    this.ids = ids;
-    return this;
-  }
-
-  public AckMeEventsRequest addIdsItem(String idsItem) {
-    if (this.ids == null) {
-      this.ids = new ArrayList<>();
-    }
-    this.ids.add(idsItem);
+  public SelectOption label(@jakarta.annotation.Nonnull String label) {
+    this.label = label;
     return this;
   }
 
   /**
-   * Get ids
-   * @return ids
+   * Get label
+   * @return label
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_IDS)
+  @JsonProperty(JSON_PROPERTY_LABEL)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public List<String> getIds() {
-    return ids;
+  public String getLabel() {
+    return label;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_IDS)
+  @JsonProperty(JSON_PROPERTY_LABEL)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setIds(@jakarta.annotation.Nonnull List<String> ids) {
-    this.ids = ids;
+  public void setLabel(@jakarta.annotation.Nonnull String label) {
+    this.label = label;
+  }
+
+
+  public SelectOption value(@jakarta.annotation.Nonnull String value) {
+    this.value = value;
+    return this;
+  }
+
+  /**
+   * Get value
+   * @return value
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_VALUE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public String getValue() {
+    return value;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_VALUE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setValue(@jakarta.annotation.Nonnull String value) {
+    this.value = value;
+  }
+
+
+  public SelectOption description(@jakarta.annotation.Nullable String description) {
+    this.description = description;
+    return this;
+  }
+
+  /**
+   * Get description
+   * @return description
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_DESCRIPTION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getDescription() {
+    return description;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_DESCRIPTION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setDescription(@jakarta.annotation.Nullable String description) {
+    this.description = description;
   }
 
 
   /**
-   * Return true if this ackMeEvents_request object is equal to o.
+   * Return true if this SelectOption object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -89,20 +137,24 @@ public class AckMeEventsRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AckMeEventsRequest ackMeEventsRequest = (AckMeEventsRequest) o;
-    return Objects.equals(this.ids, ackMeEventsRequest.ids);
+    SelectOption selectOption = (SelectOption) o;
+    return Objects.equals(this.label, selectOption.label) &&
+        Objects.equals(this.value, selectOption.value) &&
+        Objects.equals(this.description, selectOption.description);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(ids);
+    return Objects.hash(label, value, description);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AckMeEventsRequest {\n");
-    sb.append("    ids: ").append(toIndentedString(ids)).append("\n");
+    sb.append("class SelectOption {\n");
+    sb.append("    label: ").append(toIndentedString(label)).append("\n");
+    sb.append("    value: ").append(toIndentedString(value)).append("\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -150,13 +202,19 @@ public class AckMeEventsRequest {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `ids` to the URL query string
-    if (getIds() != null) {
-      for (int i = 0; i < getIds().size(); i++) {
-        joiner.add(String.format("%sids%s%s=%s", prefix, suffix,
-            "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix),
-            ApiClient.urlEncode(ApiClient.valueToString(getIds().get(i)))));
-      }
+    // add `label` to the URL query string
+    if (getLabel() != null) {
+      joiner.add(String.format("%slabel%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getLabel()))));
+    }
+
+    // add `value` to the URL query string
+    if (getValue() != null) {
+      joiner.add(String.format("%svalue%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getValue()))));
+    }
+
+    // add `description` to the URL query string
+    if (getDescription() != null) {
+      joiner.add(String.format("%sdescription%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getDescription()))));
     }
 
     return joiner.toString();
