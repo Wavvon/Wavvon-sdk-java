@@ -28,6 +28,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.wavvon.sdk.generated.model.Attachment;
+import org.wavvon.sdk.generated.model.ComponentRow;
+import org.wavvon.sdk.generated.model.Embed;
+import org.wavvon.sdk.generated.model.GameLaunchCard;
 import org.wavvon.sdk.generated.model.Reaction;
 import org.wavvon.sdk.generated.model.ReplyContext;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -51,7 +54,8 @@ import org.wavvon.sdk.generated.ApiClient;
   Message.JSON_PROPERTY_VISIBLE_TO_PUBKEY,
   Message.JSON_PROPERTY_REPLY_COUNT,
   Message.JSON_PROPERTY_EMBEDS,
-  Message.JSON_PROPERTY_GAME
+  Message.JSON_PROPERTY_GAME,
+  Message.JSON_PROPERTY_COMPONENTS
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class Message {
@@ -105,11 +109,15 @@ public class Message {
 
   public static final String JSON_PROPERTY_EMBEDS = "embeds";
   @jakarta.annotation.Nullable
-  private List<Object> embeds = new ArrayList<>();
+  private List<Embed> embeds = new ArrayList<>();
 
   public static final String JSON_PROPERTY_GAME = "game";
   @jakarta.annotation.Nullable
-  private Object game;
+  private GameLaunchCard game;
+
+  public static final String JSON_PROPERTY_COMPONENTS = "components";
+  @jakarta.annotation.Nullable
+  private List<ComponentRow> components = new ArrayList<>();
 
   public Message() { 
   }
@@ -418,12 +426,12 @@ public class Message {
   }
 
 
-  public Message embeds(@jakarta.annotation.Nullable List<Object> embeds) {
+  public Message embeds(@jakarta.annotation.Nullable List<Embed> embeds) {
     this.embeds = embeds;
     return this;
   }
 
-  public Message addEmbedsItem(Object embedsItem) {
+  public Message addEmbedsItem(Embed embedsItem) {
     if (this.embeds == null) {
       this.embeds = new ArrayList<>();
     }
@@ -438,19 +446,19 @@ public class Message {
   @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_EMBEDS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public List<Object> getEmbeds() {
+  public List<Embed> getEmbeds() {
     return embeds;
   }
 
 
   @JsonProperty(JSON_PROPERTY_EMBEDS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setEmbeds(@jakarta.annotation.Nullable List<Object> embeds) {
+  public void setEmbeds(@jakarta.annotation.Nullable List<Embed> embeds) {
     this.embeds = embeds;
   }
 
 
-  public Message game(@jakarta.annotation.Nullable Object game) {
+  public Message game(@jakarta.annotation.Nullable GameLaunchCard game) {
     this.game = game;
     return this;
   }
@@ -462,15 +470,47 @@ public class Message {
   @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_GAME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Object getGame() {
+  public GameLaunchCard getGame() {
     return game;
   }
 
 
   @JsonProperty(JSON_PROPERTY_GAME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setGame(@jakarta.annotation.Nullable Object game) {
+  public void setGame(@jakarta.annotation.Nullable GameLaunchCard game) {
     this.game = game;
+  }
+
+
+  public Message components(@jakarta.annotation.Nullable List<ComponentRow> components) {
+    this.components = components;
+    return this;
+  }
+
+  public Message addComponentsItem(ComponentRow componentsItem) {
+    if (this.components == null) {
+      this.components = new ArrayList<>();
+    }
+    this.components.add(componentsItem);
+    return this;
+  }
+
+  /**
+   * Omitted unless set. Buttons and selects authored by an app; a click is sent back as &#x60;component_interaction&#x60; (docs/apps.md).
+   * @return components
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_COMPONENTS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public List<ComponentRow> getComponents() {
+    return components;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_COMPONENTS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setComponents(@jakarta.annotation.Nullable List<ComponentRow> components) {
+    this.components = components;
   }
 
 
@@ -499,12 +539,13 @@ public class Message {
         Objects.equals(this.visibleToPubkey, message.visibleToPubkey) &&
         Objects.equals(this.replyCount, message.replyCount) &&
         Objects.equals(this.embeds, message.embeds) &&
-        Objects.equals(this.game, message.game);
+        Objects.equals(this.game, message.game) &&
+        Objects.equals(this.components, message.components);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, channelId, sender, senderName, content, createdAt, editedAt, attachments, reactions, replyTo, visibleToPubkey, replyCount, embeds, game);
+    return Objects.hash(id, channelId, sender, senderName, content, createdAt, editedAt, attachments, reactions, replyTo, visibleToPubkey, replyCount, embeds, game, components);
   }
 
   @Override
@@ -525,6 +566,7 @@ public class Message {
     sb.append("    replyCount: ").append(toIndentedString(replyCount)).append("\n");
     sb.append("    embeds: ").append(toIndentedString(embeds)).append("\n");
     sb.append("    game: ").append(toIndentedString(game)).append("\n");
+    sb.append("    components: ").append(toIndentedString(components)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -645,15 +687,26 @@ public class Message {
     // add `embeds` to the URL query string
     if (getEmbeds() != null) {
       for (int i = 0; i < getEmbeds().size(); i++) {
-        joiner.add(String.format("%sembeds%s%s=%s", prefix, suffix,
-            "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix),
-            ApiClient.urlEncode(ApiClient.valueToString(getEmbeds().get(i)))));
+        if (getEmbeds().get(i) != null) {
+          joiner.add(getEmbeds().get(i).toUrlQueryString(String.format("%sembeds%s%s", prefix, suffix,
+          "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix))));
+        }
       }
     }
 
     // add `game` to the URL query string
     if (getGame() != null) {
-      joiner.add(String.format("%sgame%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getGame()))));
+      joiner.add(getGame().toUrlQueryString(prefix + "game" + suffix));
+    }
+
+    // add `components` to the URL query string
+    if (getComponents() != null) {
+      for (int i = 0; i < getComponents().size(); i++) {
+        if (getComponents().get(i) != null) {
+          joiner.add(getComponents().get(i).toUrlQueryString(String.format("%scomponents%s%s", prefix, suffix,
+          "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix))));
+        }
+      }
     }
 
     return joiner.toString();

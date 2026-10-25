@@ -75,7 +75,7 @@ A fuller one is [examples/.../EchoBot.java](examples/org/wavvon/sdk/examples/Ech
 | Capability checks | `client.hasCapability`, `client.requireCapability` |
 | Keyset paging to the end of a list | `Pager` (an `Iterable`, and `stream()`) |
 | WebSocket events with resume after reconnect | `client.connect()` -> `EventStream` |
-| HTTP polling instead of a socket | `client.pollEvents`, `client.ackEvents` |
+| HTTP polling instead of a socket | `client.pollEvents(cursor, limit)` |
 | App registration | `setAppProfile`, `setAppCommands`, `setAppSubscriptions` |
 | Slash command and button webhooks | `DispatchHandler`, `Webhooks.verifyDispatch` |
 | Outgoing webhook receiver | `Webhooks.verifyOutgoingWebhook` |
@@ -119,9 +119,6 @@ Login, REST, the socket and polling need no capability.
   the hub only pushes and replays events on a socket opened by a registered
   app.
 - **The seed stays with you.** No call sends a seed or private key anywhere.
-
-`GET /me/events` polling is implemented, but the hub does not fill that queue
-yet ([Wavvon-server#170](https://github.com/Wavvon/Wavvon-server/issues/170)).
 
 ## Conformance
 

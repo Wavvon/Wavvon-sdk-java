@@ -542,12 +542,13 @@ public class DmsApi {
    * Newest &#x60;limit&#x60; messages, returned oldest-first. Page backwards with &#x60;before&#x60; &#x3D; the &#x60;id&#x60; of the oldest row you already have. Before 2026-08-08 this took no query params and returned the entire history on every call, though both clients were already sending these two. 
    * @param conversationId  (required)
    * @param limit Page size, clamped to 1..100. (optional, default to 50)
-   * @param before Keyset cursor — the &#x60;id&#x60; of the oldest message already held. (optional)
+   * @param cursor Keyset cursor — the &#x60;id&#x60; of the oldest message already held. (optional)
+   * @param before The former name of &#x60;cursor&#x60;, still accepted for older clients. (optional)
    * @return List&lt;DmMessage&gt;
    * @throws ApiException if fails to make API call
    */
-  public List<DmMessage> listConversationMessages(String conversationId, Long limit, String before) throws ApiException {
-    ApiResponse<List<DmMessage>> localVarResponse = listConversationMessagesWithHttpInfo(conversationId, limit, before);
+  public List<DmMessage> listConversationMessages(String conversationId, Long limit, String cursor, String before) throws ApiException {
+    ApiResponse<List<DmMessage>> localVarResponse = listConversationMessagesWithHttpInfo(conversationId, limit, cursor, before);
     return localVarResponse.getData();
   }
 
@@ -556,12 +557,13 @@ public class DmsApi {
    * Newest &#x60;limit&#x60; messages, returned oldest-first. Page backwards with &#x60;before&#x60; &#x3D; the &#x60;id&#x60; of the oldest row you already have. Before 2026-08-08 this took no query params and returned the entire history on every call, though both clients were already sending these two. 
    * @param conversationId  (required)
    * @param limit Page size, clamped to 1..100. (optional, default to 50)
-   * @param before Keyset cursor — the &#x60;id&#x60; of the oldest message already held. (optional)
+   * @param cursor Keyset cursor — the &#x60;id&#x60; of the oldest message already held. (optional)
+   * @param before The former name of &#x60;cursor&#x60;, still accepted for older clients. (optional)
    * @return ApiResponse&lt;List&lt;DmMessage&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<List<DmMessage>> listConversationMessagesWithHttpInfo(String conversationId, Long limit, String before) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = listConversationMessagesRequestBuilder(conversationId, limit, before);
+  public ApiResponse<List<DmMessage>> listConversationMessagesWithHttpInfo(String conversationId, Long limit, String cursor, String before) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = listConversationMessagesRequestBuilder(conversationId, limit, cursor, before);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -600,7 +602,7 @@ public class DmsApi {
     }
   }
 
-  private HttpRequest.Builder listConversationMessagesRequestBuilder(String conversationId, Long limit, String before) throws ApiException {
+  private HttpRequest.Builder listConversationMessagesRequestBuilder(String conversationId, Long limit, String cursor, String before) throws ApiException {
     // verify the required parameter 'conversationId' is set
     if (conversationId == null) {
       throw new ApiException(400, "Missing the required parameter 'conversationId' when calling listConversationMessages");
@@ -616,6 +618,8 @@ public class DmsApi {
     String localVarQueryParameterBaseName;
     localVarQueryParameterBaseName = "limit";
     localVarQueryParams.addAll(ApiClient.parameterToPairs("limit", limit));
+    localVarQueryParameterBaseName = "cursor";
+    localVarQueryParams.addAll(ApiClient.parameterToPairs("cursor", cursor));
     localVarQueryParameterBaseName = "before";
     localVarQueryParams.addAll(ApiClient.parameterToPairs("before", before));
 

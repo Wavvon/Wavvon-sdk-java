@@ -30,36 +30,31 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * ListMeEvents200ResponseEventsInner
+ * RegenerateAdminWebhook200Response
  */
 @JsonPropertyOrder({
-  ListMeEvents200ResponseEventsInner.JSON_PROPERTY_ID,
-  ListMeEvents200ResponseEventsInner.JSON_PROPERTY_EVENT_TYPE,
-  ListMeEvents200ResponseEventsInner.JSON_PROPERTY_PAYLOAD,
-  ListMeEvents200ResponseEventsInner.JSON_PROPERTY_CREATED_AT
+  RegenerateAdminWebhook200Response.JSON_PROPERTY_ID,
+  RegenerateAdminWebhook200Response.JSON_PROPERTY_WEBHOOK_URL,
+  RegenerateAdminWebhook200Response.JSON_PROPERTY_DISPLAY_NAME
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class ListMeEvents200ResponseEventsInner {
+public class RegenerateAdminWebhook200Response {
   public static final String JSON_PROPERTY_ID = "id";
   @jakarta.annotation.Nonnull
   private String id;
 
-  public static final String JSON_PROPERTY_EVENT_TYPE = "event_type";
+  public static final String JSON_PROPERTY_WEBHOOK_URL = "webhook_url";
   @jakarta.annotation.Nonnull
-  private String eventType;
+  private String webhookUrl;
 
-  public static final String JSON_PROPERTY_PAYLOAD = "payload";
+  public static final String JSON_PROPERTY_DISPLAY_NAME = "display_name";
   @jakarta.annotation.Nonnull
-  private String payload;
+  private String displayName;
 
-  public static final String JSON_PROPERTY_CREATED_AT = "created_at";
-  @jakarta.annotation.Nonnull
-  private Long createdAt;
-
-  public ListMeEvents200ResponseEventsInner() { 
+  public RegenerateAdminWebhook200Response() { 
   }
 
-  public ListMeEvents200ResponseEventsInner id(@jakarta.annotation.Nonnull String id) {
+  public RegenerateAdminWebhook200Response id(@jakarta.annotation.Nonnull String id) {
     this.id = id;
     return this;
   }
@@ -83,80 +78,56 @@ public class ListMeEvents200ResponseEventsInner {
   }
 
 
-  public ListMeEvents200ResponseEventsInner eventType(@jakarta.annotation.Nonnull String eventType) {
-    this.eventType = eventType;
+  public RegenerateAdminWebhook200Response webhookUrl(@jakarta.annotation.Nonnull String webhookUrl) {
+    this.webhookUrl = webhookUrl;
     return this;
   }
 
   /**
-   * Get eventType
-   * @return eventType
+   * Get webhookUrl
+   * @return webhookUrl
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_EVENT_TYPE)
+  @JsonProperty(JSON_PROPERTY_WEBHOOK_URL)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public String getEventType() {
-    return eventType;
+  public String getWebhookUrl() {
+    return webhookUrl;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_EVENT_TYPE)
+  @JsonProperty(JSON_PROPERTY_WEBHOOK_URL)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setEventType(@jakarta.annotation.Nonnull String eventType) {
-    this.eventType = eventType;
+  public void setWebhookUrl(@jakarta.annotation.Nonnull String webhookUrl) {
+    this.webhookUrl = webhookUrl;
   }
 
 
-  public ListMeEvents200ResponseEventsInner payload(@jakarta.annotation.Nonnull String payload) {
-    this.payload = payload;
+  public RegenerateAdminWebhook200Response displayName(@jakarta.annotation.Nonnull String displayName) {
+    this.displayName = displayName;
     return this;
   }
 
   /**
-   * The event payload as a JSON-encoded string; parse it
-   * @return payload
+   * Get displayName
+   * @return displayName
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_PAYLOAD)
+  @JsonProperty(JSON_PROPERTY_DISPLAY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public String getPayload() {
-    return payload;
+  public String getDisplayName() {
+    return displayName;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_PAYLOAD)
+  @JsonProperty(JSON_PROPERTY_DISPLAY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setPayload(@jakarta.annotation.Nonnull String payload) {
-    this.payload = payload;
-  }
-
-
-  public ListMeEvents200ResponseEventsInner createdAt(@jakarta.annotation.Nonnull Long createdAt) {
-    this.createdAt = createdAt;
-    return this;
-  }
-
-  /**
-   * Unix seconds
-   * @return createdAt
-   */
-  @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_CREATED_AT)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public Long getCreatedAt() {
-    return createdAt;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_CREATED_AT)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setCreatedAt(@jakarta.annotation.Nonnull Long createdAt) {
-    this.createdAt = createdAt;
+  public void setDisplayName(@jakarta.annotation.Nonnull String displayName) {
+    this.displayName = displayName;
   }
 
 
   /**
-   * Return true if this listMeEvents_200_response_events_inner object is equal to o.
+   * Return true if this regenerateAdminWebhook_200_response object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -166,26 +137,24 @@ public class ListMeEvents200ResponseEventsInner {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ListMeEvents200ResponseEventsInner listMeEvents200ResponseEventsInner = (ListMeEvents200ResponseEventsInner) o;
-    return Objects.equals(this.id, listMeEvents200ResponseEventsInner.id) &&
-        Objects.equals(this.eventType, listMeEvents200ResponseEventsInner.eventType) &&
-        Objects.equals(this.payload, listMeEvents200ResponseEventsInner.payload) &&
-        Objects.equals(this.createdAt, listMeEvents200ResponseEventsInner.createdAt);
+    RegenerateAdminWebhook200Response regenerateAdminWebhook200Response = (RegenerateAdminWebhook200Response) o;
+    return Objects.equals(this.id, regenerateAdminWebhook200Response.id) &&
+        Objects.equals(this.webhookUrl, regenerateAdminWebhook200Response.webhookUrl) &&
+        Objects.equals(this.displayName, regenerateAdminWebhook200Response.displayName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, eventType, payload, createdAt);
+    return Objects.hash(id, webhookUrl, displayName);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ListMeEvents200ResponseEventsInner {\n");
+    sb.append("class RegenerateAdminWebhook200Response {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    eventType: ").append(toIndentedString(eventType)).append("\n");
-    sb.append("    payload: ").append(toIndentedString(payload)).append("\n");
-    sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
+    sb.append("    webhookUrl: ").append(toIndentedString(webhookUrl)).append("\n");
+    sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -238,19 +207,14 @@ public class ListMeEvents200ResponseEventsInner {
       joiner.add(String.format("%sid%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getId()))));
     }
 
-    // add `event_type` to the URL query string
-    if (getEventType() != null) {
-      joiner.add(String.format("%sevent_type%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getEventType()))));
+    // add `webhook_url` to the URL query string
+    if (getWebhookUrl() != null) {
+      joiner.add(String.format("%swebhook_url%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getWebhookUrl()))));
     }
 
-    // add `payload` to the URL query string
-    if (getPayload() != null) {
-      joiner.add(String.format("%spayload%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getPayload()))));
-    }
-
-    // add `created_at` to the URL query string
-    if (getCreatedAt() != null) {
-      joiner.add(String.format("%screated_at%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCreatedAt()))));
+    // add `display_name` to the URL query string
+    if (getDisplayName() != null) {
+      joiner.add(String.format("%sdisplay_name%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getDisplayName()))));
     }
 
     return joiner.toString();

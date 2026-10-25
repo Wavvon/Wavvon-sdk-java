@@ -1,7 +1,6 @@
 package org.wavvon.sdk;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.TextNode;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URLEncoder;
@@ -379,45 +378,47 @@ public final class WavvonClient {
   }
 
   /**
-   * {@code GET /me/events}: the polling transport, for a program that holds no socket. The hub does
-   * not fill this queue yet (Wavvon-server#170); do not rely on it.
+   * {@code GET /me/events}: the polling transport, for a program that holds no socket. Returns the
+   * same {@code hub_event} envelopes the socket replays, oldest first. Nothing is acknowledged:
+   * pass the last {@link WsEvent.HubEvent#seq} handled as {@code cursor}.
    *
-   * @param since only rows created strictly after this Unix second; null for all
-   * @return the undelivered events, oldest first
+   * @param cursor only events after this seq; null starts at the beginning of the hub's 72-hour
+   *     window
+   * @param limit page size; null for the hub default
+   * @return the events, oldest first
+   * @throws ReplayUnavailableException the cursor is older than the window
    */
-  public List<PolledEvent> pollEvents(Long since) {
-    JsonNode res = send("GET", "/me/events" + (since == null ? "" : "?since=" + since), null);
-    JsonNode rows = res == null ? null : res.get("events");
-    if (rows == null || !rows.isArray()) {
-      throw new HubException(200, "GET /me/events answered without an events array");
-    }
-    List<PolledEvent> out = new ArrayList<>();
-    for (JsonNode r : rows) {
-      JsonNode parsed = r.path("payload");
-      if (parsed.isTextual()) {
-        try {
-          parsed = Json.MAPPER.readTree(parsed.asText());
-        } catch (IOException e) {
-          parsed = TextNode.valueOf(parsed.asText());
-        }
+  public List<WsEvent.HubEvent> pollEvents(Long cursor, Integer limit) {
+    List<String> query = new ArrayList<>();
+    if (cursor != null) query.add("cursor=" + cursor);
+    if (limit != null) query.add("limit=" + limit);
+    JsonNode res;
+    try {
+      res =
+          send("GET", "/me/events" + (query.isEmpty() ? "" : "?" + String.join("&", query)), null);
+    } catch (HubException e) {
+      if (e.status() != 410) throw e;
+      JsonNode gone;
+      try {
+        gone = Json.MAPPER.readTree(e.body());
+      } catch (IOException notJson) {
+        throw e;
       }
-      out.add(
-          new PolledEvent(
-              r.path("id").asText(),
-              r.path("event_type").asText(),
-              parsed,
-              r.path("created_at").asLong()));
+      throw new ReplayUnavailableException(
+          gone.path("earliest_seq").asLong(), gone.path("earliest_at").asLong());
+    }
+    if (res == null || !res.isArray()) {
+      throw new HubException(200, "GET /me/events answered without an array");
+    }
+    List<WsEvent.HubEvent> out = new ArrayList<>();
+    for (JsonNode r : res) {
+      try {
+        out.add(Json.MAPPER.treeToValue(r, WsEvent.HubEvent.class));
+      } catch (IOException e) {
+        throw new HubException(200, "GET /me/events answered an event this SDK cannot read: " + r);
+      }
     }
     return out;
-  }
-
-  /**
-   * {@code DELETE /me/events}: acknowledge polled events so they are not returned again.
-   *
-   * @param ids the events' ids
-   */
-  public void ackEvents(List<String> ids) {
-    send("DELETE", "/me/events", Map.of("ids", ids));
   }
 
   interface Call<T> {

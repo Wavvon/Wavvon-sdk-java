@@ -553,13 +553,16 @@ public class MessagesApi {
    * Fetch message history
    * 
    * @param channelId  (required)
-   * @param before Message ID cursor for pagination (optional)
+   * @param cursor The &#x60;id&#x60; of the last message of the previous page. Newest first; with &#x60;thread_root&#x60;, oldest first and the cursor pages forward. (optional)
+   * @param before The former name of &#x60;cursor&#x60;, still accepted for older clients. (optional)
    * @param limit  (optional, default to 50)
+   * @param threadRoot Return only replies to this message, oldest first. (optional)
+   * @param q Full-text search within the channel; one page of hits, &#x60;cursor&#x60; ignored. (optional)
    * @return List&lt;Message&gt;
    * @throws ApiException if fails to make API call
    */
-  public List<Message> listChannelMessages(String channelId, String before, Long limit) throws ApiException {
-    ApiResponse<List<Message>> localVarResponse = listChannelMessagesWithHttpInfo(channelId, before, limit);
+  public List<Message> listChannelMessages(String channelId, String cursor, String before, Long limit, String threadRoot, String q) throws ApiException {
+    ApiResponse<List<Message>> localVarResponse = listChannelMessagesWithHttpInfo(channelId, cursor, before, limit, threadRoot, q);
     return localVarResponse.getData();
   }
 
@@ -567,13 +570,16 @@ public class MessagesApi {
    * Fetch message history
    * 
    * @param channelId  (required)
-   * @param before Message ID cursor for pagination (optional)
+   * @param cursor The &#x60;id&#x60; of the last message of the previous page. Newest first; with &#x60;thread_root&#x60;, oldest first and the cursor pages forward. (optional)
+   * @param before The former name of &#x60;cursor&#x60;, still accepted for older clients. (optional)
    * @param limit  (optional, default to 50)
+   * @param threadRoot Return only replies to this message, oldest first. (optional)
+   * @param q Full-text search within the channel; one page of hits, &#x60;cursor&#x60; ignored. (optional)
    * @return ApiResponse&lt;List&lt;Message&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<List<Message>> listChannelMessagesWithHttpInfo(String channelId, String before, Long limit) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = listChannelMessagesRequestBuilder(channelId, before, limit);
+  public ApiResponse<List<Message>> listChannelMessagesWithHttpInfo(String channelId, String cursor, String before, Long limit, String threadRoot, String q) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = listChannelMessagesRequestBuilder(channelId, cursor, before, limit, threadRoot, q);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -612,7 +618,7 @@ public class MessagesApi {
     }
   }
 
-  private HttpRequest.Builder listChannelMessagesRequestBuilder(String channelId, String before, Long limit) throws ApiException {
+  private HttpRequest.Builder listChannelMessagesRequestBuilder(String channelId, String cursor, String before, Long limit, String threadRoot, String q) throws ApiException {
     // verify the required parameter 'channelId' is set
     if (channelId == null) {
       throw new ApiException(400, "Missing the required parameter 'channelId' when calling listChannelMessages");
@@ -626,10 +632,16 @@ public class MessagesApi {
     List<Pair> localVarQueryParams = new ArrayList<>();
     StringJoiner localVarQueryStringJoiner = new StringJoiner("&");
     String localVarQueryParameterBaseName;
+    localVarQueryParameterBaseName = "cursor";
+    localVarQueryParams.addAll(ApiClient.parameterToPairs("cursor", cursor));
     localVarQueryParameterBaseName = "before";
     localVarQueryParams.addAll(ApiClient.parameterToPairs("before", before));
     localVarQueryParameterBaseName = "limit";
     localVarQueryParams.addAll(ApiClient.parameterToPairs("limit", limit));
+    localVarQueryParameterBaseName = "thread_root";
+    localVarQueryParams.addAll(ApiClient.parameterToPairs("thread_root", threadRoot));
+    localVarQueryParameterBaseName = "q";
+    localVarQueryParams.addAll(ApiClient.parameterToPairs("q", q));
 
     if (!localVarQueryParams.isEmpty() || localVarQueryStringJoiner.length() != 0) {
       StringJoiner queryJoiner = new StringJoiner("&");

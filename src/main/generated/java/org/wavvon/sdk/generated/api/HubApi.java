@@ -19,6 +19,7 @@ import org.wavvon.sdk.generated.Configuration;
 import org.wavvon.sdk.generated.Pair;
 
 import org.wavvon.sdk.generated.model.CreateHubIconRequest;
+import org.wavvon.sdk.generated.model.GetAdminSettingsModeration200Response;
 import org.wavvon.sdk.generated.model.GetAdminSettingsPow200Response;
 import org.wavvon.sdk.generated.model.GetAdminSettingsTags200Response;
 import org.wavvon.sdk.generated.model.MemberAdminInfo;
@@ -317,6 +318,83 @@ public class HubApi {
     localVarRequestBuilder.header("Accept", "application/json");
 
     localVarRequestBuilder.method("DELETE", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Read the auto-moderation webhook settings (moderation.settings)
+   * 
+   * @return GetAdminSettingsModeration200Response
+   * @throws ApiException if fails to make API call
+   */
+  public GetAdminSettingsModeration200Response getAdminSettingsModeration() throws ApiException {
+    ApiResponse<GetAdminSettingsModeration200Response> localVarResponse = getAdminSettingsModerationWithHttpInfo();
+    return localVarResponse.getData();
+  }
+
+  /**
+   * Read the auto-moderation webhook settings (moderation.settings)
+   * 
+   * @return ApiResponse&lt;GetAdminSettingsModeration200Response&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<GetAdminSettingsModeration200Response> getAdminSettingsModerationWithHttpInfo() throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = getAdminSettingsModerationRequestBuilder();
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("getAdminSettingsModeration", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<GetAdminSettingsModeration200Response>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        localVarResponse.body().close();
+
+        return new ApiResponse<GetAdminSettingsModeration200Response>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<GetAdminSettingsModeration200Response>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder getAdminSettingsModerationRequestBuilder() throws ApiException {
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/admin/settings/moderation";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }

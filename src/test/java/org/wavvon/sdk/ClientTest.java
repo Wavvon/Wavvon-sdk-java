@@ -118,7 +118,7 @@ class ClientTest {
   }
 
   @Test
-  void pollingParsesThePayloadString() throws Exception {
+  void pollingPagesBySeqAndReportsACursorOutsideTheWindow() throws Exception {
     try (TestHub hub =
         new TestHub(
             req ->
@@ -128,14 +128,23 @@ class ClientTest {
                           "{\"challenge\":\"" + "00".repeat(32) + "\",\"scheme\":\"tagged-v1\"}");
                   case "/auth/verify" -> TestHub.Res.json("{\"token\":\"t\"}");
                   default ->
-                      TestHub.Res.json(
-                          "{\"events\":[{\"id\":\"e1\",\"event_type\":\"member.joined\","
-                              + "\"payload\":\"{\\\"pubkey\\\":\\\"p\\\"}\",\"created_at\":5}]}");
+                      "cursor=1".equals(req.query())
+                          ? new TestHub.Res(
+                              410,
+                              "{\"type\":\"replay_unavailable\",\"earliest_seq\":40,\"earliest_at\":9}")
+                          : TestHub.Res.json(
+                              "[{\"type\":\"hub_event\",\"seq\":42,\"event\":\"member.joined\","
+                                  + "\"hub_url\":\"h\",\"at\":1,\"payload\":{\"pubkey\":\"p\"},"
+                                  + "\"replayed\":true}]");
                 })) {
       WavvonClient client = WavvonClient.builder(hub.url()).seed(SEED).build();
-      List<PolledEvent> events = client.pollEvents(3L);
+      List<WsEvent.HubEvent> events = client.pollEvents(41L, null);
+      assertEquals(42, events.get(0).seq());
       assertEquals("p", events.get(0).payload().get("pubkey").asText());
-      assertTrue(hub.log.stream().anyMatch(r -> "since=3".equals(r.query())));
+      assertTrue(hub.log.stream().anyMatch(r -> "cursor=41".equals(r.query())));
+      ReplayUnavailableException gone =
+          assertThrows(ReplayUnavailableException.class, () -> client.pollEvents(1L, null));
+      assertEquals(40, gone.earliestSeq());
     }
   }
 }
