@@ -23,6 +23,7 @@ import org.wavvon.sdk.generated.model.GetRecoveryRotationRequest200Response;
 import org.wavvon.sdk.generated.model.ListAdminRecoveryPending200ResponseInner;
 import org.wavvon.sdk.generated.model.ListRecoveryContacts200Response;
 import org.wavvon.sdk.generated.model.ListRecoveryRequests200ResponseInner;
+import org.wavvon.sdk.generated.model.ListRecoveryRequestsToAttest200ResponseInner;
 import org.wavvon.sdk.generated.model.RotateRecoveryKey201Response;
 import org.wavvon.sdk.generated.model.RotateRecoveryKeyRequest;
 import org.wavvon.sdk.generated.model.SetRecoveryContactsRequest;
@@ -705,6 +706,83 @@ public class RecoveryApi {
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
     String localVarPath = "/recovery/requests";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Open rotation requests that name the caller as a recovery contact
+   * Pending requests whose old key designated the caller, directly or by master key, as a recovery contact, and which the caller has not attested yet. Advertised by the &#x60;recovery.attest.requests&#x60; capability; a &#x60;recovery_attestation_requested&#x60; WebSocket event (&#x60;request_id&#x60;) tells a connected contact when one opens.
+   * @return List&lt;ListRecoveryRequestsToAttest200ResponseInner&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public List<ListRecoveryRequestsToAttest200ResponseInner> listRecoveryRequestsToAttest() throws ApiException {
+    ApiResponse<List<ListRecoveryRequestsToAttest200ResponseInner>> localVarResponse = listRecoveryRequestsToAttestWithHttpInfo();
+    return localVarResponse.getData();
+  }
+
+  /**
+   * Open rotation requests that name the caller as a recovery contact
+   * Pending requests whose old key designated the caller, directly or by master key, as a recovery contact, and which the caller has not attested yet. Advertised by the &#x60;recovery.attest.requests&#x60; capability; a &#x60;recovery_attestation_requested&#x60; WebSocket event (&#x60;request_id&#x60;) tells a connected contact when one opens.
+   * @return ApiResponse&lt;List&lt;ListRecoveryRequestsToAttest200ResponseInner&gt;&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<List<ListRecoveryRequestsToAttest200ResponseInner>> listRecoveryRequestsToAttestWithHttpInfo() throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = listRecoveryRequestsToAttestRequestBuilder();
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("listRecoveryRequestsToAttest", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<List<ListRecoveryRequestsToAttest200ResponseInner>>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        localVarResponse.body().close();
+
+        return new ApiResponse<List<ListRecoveryRequestsToAttest200ResponseInner>>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<List<ListRecoveryRequestsToAttest200ResponseInner>>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder listRecoveryRequestsToAttestRequestBuilder() throws ApiException {
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/recovery/requests/to-attest";
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 

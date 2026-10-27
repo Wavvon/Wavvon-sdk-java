@@ -44,7 +44,8 @@ import org.wavvon.sdk.generated.ApiClient;
   UpdateChannelRequest.JSON_PROPERTY_BANNER_URL,
   UpdateChannelRequest.JSON_PROPERTY_BANNER_FILE_ID,
   UpdateChannelRequest.JSON_PROPERTY_FORUM_REQUIRE_TAG,
-  UpdateChannelRequest.JSON_PROPERTY_NSFW
+  UpdateChannelRequest.JSON_PROPERTY_NSFW,
+  UpdateChannelRequest.JSON_PROPERTY_CHANNEL_TYPE
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class UpdateChannelRequest {
@@ -95,6 +96,45 @@ public class UpdateChannelRequest {
   public static final String JSON_PROPERTY_NSFW = "nsfw";
   @jakarta.annotation.Nullable
   private Boolean nsfw;
+
+  /**
+   * Switch between text and voice; both keep their chat.
+   */
+  public enum ChannelTypeEnum {
+    TEXT(String.valueOf("text")),
+    
+    VOICE(String.valueOf("voice"));
+
+    private String value;
+
+    ChannelTypeEnum(String value) {
+      this.value = value;
+    }
+
+    @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static ChannelTypeEnum fromValue(String value) {
+      for (ChannelTypeEnum b : ChannelTypeEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+  }
+
+  public static final String JSON_PROPERTY_CHANNEL_TYPE = "channel_type";
+  @jakarta.annotation.Nullable
+  private ChannelTypeEnum channelType;
 
   public UpdateChannelRequest() { 
   }
@@ -387,6 +427,30 @@ public class UpdateChannelRequest {
   }
 
 
+  public UpdateChannelRequest channelType(@jakarta.annotation.Nullable ChannelTypeEnum channelType) {
+    this.channelType = channelType;
+    return this;
+  }
+
+  /**
+   * Switch between text and voice; both keep their chat.
+   * @return channelType
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CHANNEL_TYPE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public ChannelTypeEnum getChannelType() {
+    return channelType;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_CHANNEL_TYPE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setChannelType(@jakarta.annotation.Nullable ChannelTypeEnum channelType) {
+    this.channelType = channelType;
+  }
+
+
   /**
    * Return true if this updateChannel_request object is equal to o.
    */
@@ -410,12 +474,13 @@ public class UpdateChannelRequest {
         Objects.equals(this.bannerUrl, updateChannelRequest.bannerUrl) &&
         Objects.equals(this.bannerFileId, updateChannelRequest.bannerFileId) &&
         Objects.equals(this.forumRequireTag, updateChannelRequest.forumRequireTag) &&
-        Objects.equals(this.nsfw, updateChannelRequest.nsfw);
+        Objects.equals(this.nsfw, updateChannelRequest.nsfw) &&
+        Objects.equals(this.channelType, updateChannelRequest.channelType);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, description, parentId, icon, color, customIconSvg, minTalkPower, retentionDays, bannerUrl, bannerFileId, forumRequireTag, nsfw);
+    return Objects.hash(name, description, parentId, icon, color, customIconSvg, minTalkPower, retentionDays, bannerUrl, bannerFileId, forumRequireTag, nsfw, channelType);
   }
 
   @Override
@@ -434,6 +499,7 @@ public class UpdateChannelRequest {
     sb.append("    bannerFileId: ").append(toIndentedString(bannerFileId)).append("\n");
     sb.append("    forumRequireTag: ").append(toIndentedString(forumRequireTag)).append("\n");
     sb.append("    nsfw: ").append(toIndentedString(nsfw)).append("\n");
+    sb.append("    channelType: ").append(toIndentedString(channelType)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -539,6 +605,11 @@ public class UpdateChannelRequest {
     // add `nsfw` to the URL query string
     if (getNsfw() != null) {
       joiner.add(String.format("%snsfw%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getNsfw()))));
+    }
+
+    // add `channel_type` to the URL query string
+    if (getChannelType() != null) {
+      joiner.add(String.format("%schannel_type%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getChannelType()))));
     }
 
     return joiner.toString();

@@ -677,7 +677,7 @@ public class CertificationsApi {
 
   /**
    * Update certification settings (admin)
-   * All fields optional. Scalars are accepted as strings, booleans or numbers and stored as text; &#x60;cert_min_age_days&#x60; is an accepted alias for &#x60;cert_standing_days&#x60;, which is what GET calls the same setting.
+   * All fields optional. Scalars are accepted as strings, booleans or numbers and stored as text. &#x60;cert_min_age_days&#x60; is the standing period, under the name GET returns.
    * @param updateAdminSettingsCertsRequest  (required)
    * @throws ApiException if fails to make API call
    */
@@ -687,7 +687,7 @@ public class CertificationsApi {
 
   /**
    * Update certification settings (admin)
-   * All fields optional. Scalars are accepted as strings, booleans or numbers and stored as text; &#x60;cert_min_age_days&#x60; is an accepted alias for &#x60;cert_standing_days&#x60;, which is what GET calls the same setting.
+   * All fields optional. Scalars are accepted as strings, booleans or numbers and stored as text. &#x60;cert_min_age_days&#x60; is the standing period, under the name GET returns.
    * @param updateAdminSettingsCertsRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call

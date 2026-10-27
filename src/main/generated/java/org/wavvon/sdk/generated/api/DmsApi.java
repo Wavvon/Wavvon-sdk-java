@@ -543,12 +543,11 @@ public class DmsApi {
    * @param conversationId  (required)
    * @param limit Page size, clamped to 1..100. (optional, default to 50)
    * @param cursor Keyset cursor — the &#x60;id&#x60; of the oldest message already held. (optional)
-   * @param before The former name of &#x60;cursor&#x60;, still accepted for older clients. (optional)
    * @return List&lt;DmMessage&gt;
    * @throws ApiException if fails to make API call
    */
-  public List<DmMessage> listConversationMessages(String conversationId, Long limit, String cursor, String before) throws ApiException {
-    ApiResponse<List<DmMessage>> localVarResponse = listConversationMessagesWithHttpInfo(conversationId, limit, cursor, before);
+  public List<DmMessage> listConversationMessages(String conversationId, Long limit, String cursor) throws ApiException {
+    ApiResponse<List<DmMessage>> localVarResponse = listConversationMessagesWithHttpInfo(conversationId, limit, cursor);
     return localVarResponse.getData();
   }
 
@@ -558,12 +557,11 @@ public class DmsApi {
    * @param conversationId  (required)
    * @param limit Page size, clamped to 1..100. (optional, default to 50)
    * @param cursor Keyset cursor — the &#x60;id&#x60; of the oldest message already held. (optional)
-   * @param before The former name of &#x60;cursor&#x60;, still accepted for older clients. (optional)
    * @return ApiResponse&lt;List&lt;DmMessage&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<List<DmMessage>> listConversationMessagesWithHttpInfo(String conversationId, Long limit, String cursor, String before) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = listConversationMessagesRequestBuilder(conversationId, limit, cursor, before);
+  public ApiResponse<List<DmMessage>> listConversationMessagesWithHttpInfo(String conversationId, Long limit, String cursor) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = listConversationMessagesRequestBuilder(conversationId, limit, cursor);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -602,7 +600,7 @@ public class DmsApi {
     }
   }
 
-  private HttpRequest.Builder listConversationMessagesRequestBuilder(String conversationId, Long limit, String cursor, String before) throws ApiException {
+  private HttpRequest.Builder listConversationMessagesRequestBuilder(String conversationId, Long limit, String cursor) throws ApiException {
     // verify the required parameter 'conversationId' is set
     if (conversationId == null) {
       throw new ApiException(400, "Missing the required parameter 'conversationId' when calling listConversationMessages");
@@ -620,8 +618,6 @@ public class DmsApi {
     localVarQueryParams.addAll(ApiClient.parameterToPairs("limit", limit));
     localVarQueryParameterBaseName = "cursor";
     localVarQueryParams.addAll(ApiClient.parameterToPairs("cursor", cursor));
-    localVarQueryParameterBaseName = "before";
-    localVarQueryParams.addAll(ApiClient.parameterToPairs("before", before));
 
     if (!localVarQueryParams.isEmpty() || localVarQueryStringJoiner.length() != 0) {
       StringJoiner queryJoiner = new StringJoiner("&");

@@ -29,7 +29,7 @@ import org.wavvon.sdk.generated.model.CreateFederationDmRequest;
 import org.wavvon.sdk.generated.model.CreateFederationForumChannelPostReactionRequest;
 import org.wavvon.sdk.generated.model.CreateFederationForumChannelPostReplyRequest;
 import org.wavvon.sdk.generated.model.CreateFederationForumChannelPostRequest;
-import org.wavvon.sdk.generated.model.CreateFederationPeerRequest;
+import org.wavvon.sdk.generated.model.DeleteAdminBanlistSourcesRequest;
 import org.wavvon.sdk.generated.model.DeleteFederationAllianceMemberRequest;
 import org.wavvon.sdk.generated.model.DeleteFederationForumChannelPostRequest;
 import org.wavvon.sdk.generated.model.GetAdminSettingsBanlist200Response;
@@ -904,87 +904,6 @@ public class FederationApi {
   }
 
   /**
-   * Add a federation peer
-   * 
-   * @param createFederationPeerRequest  (required)
-   * @throws ApiException if fails to make API call
-   */
-  public void createFederationPeer(CreateFederationPeerRequest createFederationPeerRequest) throws ApiException {
-    createFederationPeerWithHttpInfo(createFederationPeerRequest);
-  }
-
-  /**
-   * Add a federation peer
-   * 
-   * @param createFederationPeerRequest  (required)
-   * @return ApiResponse&lt;Void&gt;
-   * @throws ApiException if fails to make API call
-   */
-  public ApiResponse<Void> createFederationPeerWithHttpInfo(CreateFederationPeerRequest createFederationPeerRequest) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = createFederationPeerRequestBuilder(createFederationPeerRequest);
-    try {
-      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
-          localVarRequestBuilder.build(),
-          HttpResponse.BodyHandlers.ofInputStream());
-      if (memberVarResponseInterceptor != null) {
-        memberVarResponseInterceptor.accept(localVarResponse);
-      }
-      try {
-        if (localVarResponse.statusCode()/ 100 != 2) {
-          throw getApiException("createFederationPeer", localVarResponse);
-        }
-        return new ApiResponse<>(
-            localVarResponse.statusCode(),
-            localVarResponse.headers().map(),
-            null
-        );
-      } finally {
-        // Drain the InputStream
-        while (localVarResponse.body().read() != -1) {
-          // Ignore
-        }
-        localVarResponse.body().close();
-      }
-    } catch (IOException e) {
-      throw new ApiException(e);
-    }
-    catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-      throw new ApiException(e);
-    }
-  }
-
-  private HttpRequest.Builder createFederationPeerRequestBuilder(CreateFederationPeerRequest createFederationPeerRequest) throws ApiException {
-    // verify the required parameter 'createFederationPeerRequest' is set
-    if (createFederationPeerRequest == null) {
-      throw new ApiException(400, "Missing the required parameter 'createFederationPeerRequest' when calling createFederationPeer");
-    }
-
-    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
-
-    String localVarPath = "/federation/peers";
-
-    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
-
-    localVarRequestBuilder.header("Content-Type", "application/json");
-    localVarRequestBuilder.header("Accept", "application/json");
-
-    try {
-      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(createFederationPeerRequest);
-      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
-    } catch (IOException e) {
-      throw new ApiException(e);
-    }
-    if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }
-    return localVarRequestBuilder;
-  }
-
-  /**
    * Remove a ban list override (admin)
    * 
    * @param pubkey  (required)
@@ -1063,22 +982,22 @@ public class FederationApi {
   /**
    * Remove a ban list source and its synced entries (admin)
    * 
-   * @param createFederationPeerRequest  (required)
+   * @param deleteAdminBanlistSourcesRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void deleteAdminBanlistSources(CreateFederationPeerRequest createFederationPeerRequest) throws ApiException {
-    deleteAdminBanlistSourcesWithHttpInfo(createFederationPeerRequest);
+  public void deleteAdminBanlistSources(DeleteAdminBanlistSourcesRequest deleteAdminBanlistSourcesRequest) throws ApiException {
+    deleteAdminBanlistSourcesWithHttpInfo(deleteAdminBanlistSourcesRequest);
   }
 
   /**
    * Remove a ban list source and its synced entries (admin)
    * 
-   * @param createFederationPeerRequest  (required)
+   * @param deleteAdminBanlistSourcesRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> deleteAdminBanlistSourcesWithHttpInfo(CreateFederationPeerRequest createFederationPeerRequest) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = deleteAdminBanlistSourcesRequestBuilder(createFederationPeerRequest);
+  public ApiResponse<Void> deleteAdminBanlistSourcesWithHttpInfo(DeleteAdminBanlistSourcesRequest deleteAdminBanlistSourcesRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = deleteAdminBanlistSourcesRequestBuilder(deleteAdminBanlistSourcesRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -1111,10 +1030,10 @@ public class FederationApi {
     }
   }
 
-  private HttpRequest.Builder deleteAdminBanlistSourcesRequestBuilder(CreateFederationPeerRequest createFederationPeerRequest) throws ApiException {
-    // verify the required parameter 'createFederationPeerRequest' is set
-    if (createFederationPeerRequest == null) {
-      throw new ApiException(400, "Missing the required parameter 'createFederationPeerRequest' when calling deleteAdminBanlistSources");
+  private HttpRequest.Builder deleteAdminBanlistSourcesRequestBuilder(DeleteAdminBanlistSourcesRequest deleteAdminBanlistSourcesRequest) throws ApiException {
+    // verify the required parameter 'deleteAdminBanlistSourcesRequest' is set
+    if (deleteAdminBanlistSourcesRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'deleteAdminBanlistSourcesRequest' when calling deleteAdminBanlistSources");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -1127,7 +1046,7 @@ public class FederationApi {
     localVarRequestBuilder.header("Accept", "application/json");
 
     try {
-      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(createFederationPeerRequest);
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(deleteAdminBanlistSourcesRequest);
       localVarRequestBuilder.method("DELETE", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
     } catch (IOException e) {
       throw new ApiException(e);
@@ -2036,75 +1955,6 @@ public class FederationApi {
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
     String localVarPath = "/admin/banlist/sources";
-
-    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
-
-    localVarRequestBuilder.header("Accept", "application/json");
-
-    localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
-    if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }
-    return localVarRequestBuilder;
-  }
-
-  /**
-   * List federated peer hubs
-   * 
-   * @throws ApiException if fails to make API call
-   */
-  public void listFederationPeers() throws ApiException {
-    listFederationPeersWithHttpInfo();
-  }
-
-  /**
-   * List federated peer hubs
-   * 
-   * @return ApiResponse&lt;Void&gt;
-   * @throws ApiException if fails to make API call
-   */
-  public ApiResponse<Void> listFederationPeersWithHttpInfo() throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = listFederationPeersRequestBuilder();
-    try {
-      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
-          localVarRequestBuilder.build(),
-          HttpResponse.BodyHandlers.ofInputStream());
-      if (memberVarResponseInterceptor != null) {
-        memberVarResponseInterceptor.accept(localVarResponse);
-      }
-      try {
-        if (localVarResponse.statusCode()/ 100 != 2) {
-          throw getApiException("listFederationPeers", localVarResponse);
-        }
-        return new ApiResponse<>(
-            localVarResponse.statusCode(),
-            localVarResponse.headers().map(),
-            null
-        );
-      } finally {
-        // Drain the InputStream
-        while (localVarResponse.body().read() != -1) {
-          // Ignore
-        }
-        localVarResponse.body().close();
-      }
-    } catch (IOException e) {
-      throw new ApiException(e);
-    }
-    catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-      throw new ApiException(e);
-    }
-  }
-
-  private HttpRequest.Builder listFederationPeersRequestBuilder() throws ApiException {
-
-    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
-
-    String localVarPath = "/federation/peers";
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 

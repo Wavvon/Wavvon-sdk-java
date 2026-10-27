@@ -414,7 +414,7 @@ public class Channel {
   }
 
   /**
-   * &#x60;text&#x60;, &#x60;forum&#x60;, &#x60;banner&#x60; or &#x60;spawner&#x60;. Always &#x60;text&#x60; for categories.
+   * &#x60;text&#x60;, &#x60;voice&#x60;, &#x60;forum&#x60;, &#x60;banner&#x60; or &#x60;spawner&#x60;. Always &#x60;text&#x60; for categories. On hubs with the &#x60;channels.voice&#x60; capability only a &#x60;voice&#x60; channel can be joined for voice; it has a chat as well, and a spawner&#39;s rooms are &#x60;voice&#x60;.
    * @return channelType
    */
   @jakarta.annotation.Nullable

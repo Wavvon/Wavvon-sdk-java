@@ -35,14 +35,8 @@ class AuthTest {
   }
 
   @Test
-  void signsARawChallengeOnlyAtExactly32BytesWithoutAScheme() {
-    assertArrayEquals(C32, Auth.challengeSigningBytes(C32, null));
-    assertThrows(AuthSchemeException.class, () -> Auth.challengeSigningBytes(new byte[31], null));
-    assertThrows(AuthSchemeException.class, () -> Auth.challengeSigningBytes(new byte[64], null));
-  }
-
-  @Test
-  void refusesAnUnknownSchemeInsteadOfFallingBackToRaw() {
+  void refusesAMissingOrUnknownSchemeInsteadOfSigningRaw() {
+    assertThrows(AuthSchemeException.class, () -> Auth.challengeSigningBytes(C32, null));
     assertThrows(AuthSchemeException.class, () -> Auth.challengeSigningBytes(C32, "tagged-v2"));
     assertThrows(AuthSchemeException.class, () -> Auth.challengeSigningBytes(C32, ""));
   }
@@ -119,6 +113,15 @@ class AuthTest {
       HashSet<String> used = new HashSet<>();
       f.verifies.forEach(v -> used.add(v.get("challenge").asText()));
       assertEquals(3, used.size());
+    }
+  }
+
+  @Test
+  void refusesAHubThatNamesNoSchemeWithoutSendingAVerify() throws Exception {
+    FakeHub f = new FakeHub(null, 0, 0);
+    try (f.hub) {
+      assertThrows(AuthSchemeException.class, () -> f.login(null));
+      assertEquals(0, f.verifies.size());
     }
   }
 

@@ -19,7 +19,6 @@ import org.wavvon.sdk.generated.Configuration;
 import org.wavvon.sdk.generated.Pair;
 
 import org.wavvon.sdk.generated.model.ListMeCredentials200ResponseInner;
-import org.wavvon.sdk.generated.model.ListMeDevices200ResponseInner;
 import org.wavvon.sdk.generated.model.MeInfo;
 import org.wavvon.sdk.generated.model.UpdateMeCredentialRequest;
 import org.wavvon.sdk.generated.model.UpdateMeRequest;
@@ -232,82 +231,6 @@ public class MeApi {
   }
 
   /**
-   * Revoke a trusted device token
-   * 
-   * @param id  (required)
-   * @throws ApiException if fails to make API call
-   */
-  public void deleteMeDevice(String id) throws ApiException {
-    deleteMeDeviceWithHttpInfo(id);
-  }
-
-  /**
-   * Revoke a trusted device token
-   * 
-   * @param id  (required)
-   * @return ApiResponse&lt;Void&gt;
-   * @throws ApiException if fails to make API call
-   */
-  public ApiResponse<Void> deleteMeDeviceWithHttpInfo(String id) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = deleteMeDeviceRequestBuilder(id);
-    try {
-      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
-          localVarRequestBuilder.build(),
-          HttpResponse.BodyHandlers.ofInputStream());
-      if (memberVarResponseInterceptor != null) {
-        memberVarResponseInterceptor.accept(localVarResponse);
-      }
-      try {
-        if (localVarResponse.statusCode()/ 100 != 2) {
-          throw getApiException("deleteMeDevice", localVarResponse);
-        }
-        return new ApiResponse<>(
-            localVarResponse.statusCode(),
-            localVarResponse.headers().map(),
-            null
-        );
-      } finally {
-        // Drain the InputStream
-        while (localVarResponse.body().read() != -1) {
-          // Ignore
-        }
-        localVarResponse.body().close();
-      }
-    } catch (IOException e) {
-      throw new ApiException(e);
-    }
-    catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-      throw new ApiException(e);
-    }
-  }
-
-  private HttpRequest.Builder deleteMeDeviceRequestBuilder(String id) throws ApiException {
-    // verify the required parameter 'id' is set
-    if (id == null) {
-      throw new ApiException(400, "Missing the required parameter 'id' when calling deleteMeDevice");
-    }
-
-    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
-
-    String localVarPath = "/me/devices/{id}"
-        .replace("{id}", ApiClient.urlEncode(id.toString()));
-
-    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
-
-    localVarRequestBuilder.header("Accept", "application/json");
-
-    localVarRequestBuilder.method("DELETE", HttpRequest.BodyPublishers.noBody());
-    if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }
-    return localVarRequestBuilder;
-  }
-
-  /**
    * Get own profile and roles
    * 
    * @return MeInfo
@@ -446,83 +369,6 @@ public class MeApi {
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
     String localVarPath = "/me/credentials";
-
-    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
-
-    localVarRequestBuilder.header("Accept", "application/json");
-
-    localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
-    if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }
-    return localVarRequestBuilder;
-  }
-
-  /**
-   * List the caller&#39;s trusted devices (active device tokens)
-   * 
-   * @return List&lt;ListMeDevices200ResponseInner&gt;
-   * @throws ApiException if fails to make API call
-   */
-  public List<ListMeDevices200ResponseInner> listMeDevices() throws ApiException {
-    ApiResponse<List<ListMeDevices200ResponseInner>> localVarResponse = listMeDevicesWithHttpInfo();
-    return localVarResponse.getData();
-  }
-
-  /**
-   * List the caller&#39;s trusted devices (active device tokens)
-   * 
-   * @return ApiResponse&lt;List&lt;ListMeDevices200ResponseInner&gt;&gt;
-   * @throws ApiException if fails to make API call
-   */
-  public ApiResponse<List<ListMeDevices200ResponseInner>> listMeDevicesWithHttpInfo() throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = listMeDevicesRequestBuilder();
-    try {
-      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
-          localVarRequestBuilder.build(),
-          HttpResponse.BodyHandlers.ofInputStream());
-      if (memberVarResponseInterceptor != null) {
-        memberVarResponseInterceptor.accept(localVarResponse);
-      }
-      try {
-        if (localVarResponse.statusCode()/ 100 != 2) {
-          throw getApiException("listMeDevices", localVarResponse);
-        }
-        if (localVarResponse.body() == null) {
-          return new ApiResponse<List<ListMeDevices200ResponseInner>>(
-              localVarResponse.statusCode(),
-              localVarResponse.headers().map(),
-              null
-          );
-        }
-
-        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
-        localVarResponse.body().close();
-
-        return new ApiResponse<List<ListMeDevices200ResponseInner>>(
-            localVarResponse.statusCode(),
-            localVarResponse.headers().map(),
-            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<List<ListMeDevices200ResponseInner>>() {})
-        );
-      } finally {
-      }
-    } catch (IOException e) {
-      throw new ApiException(e);
-    }
-    catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-      throw new ApiException(e);
-    }
-  }
-
-  private HttpRequest.Builder listMeDevicesRequestBuilder() throws ApiException {
-
-    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
-
-    String localVarPath = "/me/devices";
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 

@@ -84,8 +84,8 @@ in the commit message.
 - **Re-auth on its own**, with the state observable (`onStateChange`).
   Concurrent callers share one login (a lock plus the stale-token check).
 - **Auth challenge**: `scheme: "tagged-v1"` -> sign
-  `"wavvon/auth-challenge/v1\0" || challenge`; no scheme -> raw only at exactly
-  32 bytes; unknown scheme -> `AuthSchemeException`.
+  `"wavvon/auth-challenge/v1\0" || challenge`; no scheme or an unknown one ->
+  `AuthSchemeException`. Never sign the raw challenge (Wavvon-server#199).
 - **Never send the seed** or any private key anywhere. Never invent a wire
   format: signed bytes come from wire-format.md and the vectors; a new one is
   a server-side change first. Never model a bot as an account or send
@@ -109,8 +109,7 @@ report the doc bug to Wavvon-docs.
 - Paging: a bare array plus `limit` (default 100, max 500) and `cursor` = key
   of the previous page's last row; the key differs per endpoint (`code`,
   `public_key`, `id`), hence the key function. A hub that ignores the cursor
-  is detected. Channel messages too since Wavvon-server#184 (`before` is a
-  deprecated alias).
+  is detected. Channel messages too since Wavvon-server#184.
 - Outgoing-webhook HKDF input is the **decoded** secret bytes (the admin sees
   base64url without padding); the HMAC key is the 32 HKDF bytes, not hex.
 - `GET /me/events` reads the audit log (Wavvon-server#183): `hub_event`

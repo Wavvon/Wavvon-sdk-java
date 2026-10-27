@@ -53,7 +53,6 @@ import org.wavvon.sdk.generated.ApiClient;
   HubInfo.JSON_PROPERTY_NSFW,
   HubInfo.JSON_PROPERTY_BADGES,
   HubInfo.JSON_PROPERTY_CERT_REQUIREMENT,
-  HubInfo.JSON_PROPERTY_SCREEN_SHARE_V2,
   HubInfo.JSON_PROPERTY_SFU_URL,
   HubInfo.JSON_PROPERTY_EMOJI_COUNT,
   HubInfo.JSON_PROPERTY_ROTATION,
@@ -173,10 +172,6 @@ public class HubInfo {
   public static final String JSON_PROPERTY_CERT_REQUIREMENT = "cert_requirement";
   @jakarta.annotation.Nullable
   private HubInfoCertRequirement certRequirement;
-
-  public static final String JSON_PROPERTY_SCREEN_SHARE_V2 = "screen_share_v2";
-  @jakarta.annotation.Nonnull
-  private Boolean screenShareV2;
 
   public static final String JSON_PROPERTY_SFU_URL = "sfu_url";
   @jakarta.annotation.Nullable
@@ -645,30 +640,6 @@ public class HubInfo {
   }
 
 
-  public HubInfo screenShareV2(@jakarta.annotation.Nonnull Boolean screenShareV2) {
-    this.screenShareV2 = screenShareV2;
-    return this;
-  }
-
-  /**
-   * Get screenShareV2
-   * @return screenShareV2
-   */
-  @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_SCREEN_SHARE_V2)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public Boolean getScreenShareV2() {
-    return screenShareV2;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_SCREEN_SHARE_V2)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setScreenShareV2(@jakarta.annotation.Nonnull Boolean screenShareV2) {
-    this.screenShareV2 = screenShareV2;
-  }
-
-
   public HubInfo sfuUrl(@jakarta.annotation.Nullable String sfuUrl) {
     this.sfuUrl = sfuUrl;
     return this;
@@ -1033,7 +1004,6 @@ public class HubInfo {
         Objects.equals(this.nsfw, hubInfo.nsfw) &&
         Objects.equals(this.badges, hubInfo.badges) &&
         Objects.equals(this.certRequirement, hubInfo.certRequirement) &&
-        Objects.equals(this.screenShareV2, hubInfo.screenShareV2) &&
         Objects.equals(this.sfuUrl, hubInfo.sfuUrl) &&
         Objects.equals(this.emojiCount, hubInfo.emojiCount) &&
         Objects.equals(this.rotation, hubInfo.rotation) &&
@@ -1052,7 +1022,7 @@ public class HubInfo {
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, description, icon, publicKey, version, capabilities, canonicalUrl, inviteOnly, minSecurityLevel, minPowLevel, challengeMode, farmUrl, selfTags, nsfw, badges, certRequirement, screenShareV2, sfuUrl, emojiCount, rotation, lanMode, lanTls, lanFingerprint, welcomeLabel, welcomeInviteUrl, farewellLabel, voiceWtUrl, voiceCertHash, timezone, birthdaysEnabled, maxAttachmentBytes);
+    return Objects.hash(name, description, icon, publicKey, version, capabilities, canonicalUrl, inviteOnly, minSecurityLevel, minPowLevel, challengeMode, farmUrl, selfTags, nsfw, badges, certRequirement, sfuUrl, emojiCount, rotation, lanMode, lanTls, lanFingerprint, welcomeLabel, welcomeInviteUrl, farewellLabel, voiceWtUrl, voiceCertHash, timezone, birthdaysEnabled, maxAttachmentBytes);
   }
 
   @Override
@@ -1075,7 +1045,6 @@ public class HubInfo {
     sb.append("    nsfw: ").append(toIndentedString(nsfw)).append("\n");
     sb.append("    badges: ").append(toIndentedString(badges)).append("\n");
     sb.append("    certRequirement: ").append(toIndentedString(certRequirement)).append("\n");
-    sb.append("    screenShareV2: ").append(toIndentedString(screenShareV2)).append("\n");
     sb.append("    sfuUrl: ").append(toIndentedString(sfuUrl)).append("\n");
     sb.append("    emojiCount: ").append(toIndentedString(emojiCount)).append("\n");
     sb.append("    rotation: ").append(toIndentedString(rotation)).append("\n");
@@ -1228,11 +1197,6 @@ public class HubInfo {
     // add `cert_requirement` to the URL query string
     if (getCertRequirement() != null) {
       joiner.add(getCertRequirement().toUrlQueryString(prefix + "cert_requirement" + suffix));
-    }
-
-    // add `screen_share_v2` to the URL query string
-    if (getScreenShareV2() != null) {
-      joiner.add(String.format("%sscreen_share_v2%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getScreenShareV2()))));
     }
 
     // add `sfu_url` to the URL query string

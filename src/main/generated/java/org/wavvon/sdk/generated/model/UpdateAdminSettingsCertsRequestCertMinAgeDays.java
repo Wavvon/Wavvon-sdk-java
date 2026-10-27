@@ -48,37 +48,37 @@ import org.wavvon.sdk.generated.ApiClient;
 import org.wavvon.sdk.generated.JSON;
 
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-@JsonDeserialize(using = UpdateAdminSettingsCertsRequestCertStandingDays.UpdateAdminSettingsCertsRequestCertStandingDaysDeserializer.class)
-@JsonSerialize(using = UpdateAdminSettingsCertsRequestCertStandingDays.UpdateAdminSettingsCertsRequestCertStandingDaysSerializer.class)
-public class UpdateAdminSettingsCertsRequestCertStandingDays extends AbstractOpenApiSchema {
-    private static final Logger log = Logger.getLogger(UpdateAdminSettingsCertsRequestCertStandingDays.class.getName());
+@JsonDeserialize(using = UpdateAdminSettingsCertsRequestCertMinAgeDays.UpdateAdminSettingsCertsRequestCertMinAgeDaysDeserializer.class)
+@JsonSerialize(using = UpdateAdminSettingsCertsRequestCertMinAgeDays.UpdateAdminSettingsCertsRequestCertMinAgeDaysSerializer.class)
+public class UpdateAdminSettingsCertsRequestCertMinAgeDays extends AbstractOpenApiSchema {
+    private static final Logger log = Logger.getLogger(UpdateAdminSettingsCertsRequestCertMinAgeDays.class.getName());
 
-    public static class UpdateAdminSettingsCertsRequestCertStandingDaysSerializer extends StdSerializer<UpdateAdminSettingsCertsRequestCertStandingDays> {
-        public UpdateAdminSettingsCertsRequestCertStandingDaysSerializer(Class<UpdateAdminSettingsCertsRequestCertStandingDays> t) {
+    public static class UpdateAdminSettingsCertsRequestCertMinAgeDaysSerializer extends StdSerializer<UpdateAdminSettingsCertsRequestCertMinAgeDays> {
+        public UpdateAdminSettingsCertsRequestCertMinAgeDaysSerializer(Class<UpdateAdminSettingsCertsRequestCertMinAgeDays> t) {
             super(t);
         }
 
-        public UpdateAdminSettingsCertsRequestCertStandingDaysSerializer() {
+        public UpdateAdminSettingsCertsRequestCertMinAgeDaysSerializer() {
             this(null);
         }
 
         @Override
-        public void serialize(UpdateAdminSettingsCertsRequestCertStandingDays value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonProcessingException {
+        public void serialize(UpdateAdminSettingsCertsRequestCertMinAgeDays value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonProcessingException {
             jgen.writeObject(value.getActualInstance());
         }
     }
 
-    public static class UpdateAdminSettingsCertsRequestCertStandingDaysDeserializer extends StdDeserializer<UpdateAdminSettingsCertsRequestCertStandingDays> {
-        public UpdateAdminSettingsCertsRequestCertStandingDaysDeserializer() {
-            this(UpdateAdminSettingsCertsRequestCertStandingDays.class);
+    public static class UpdateAdminSettingsCertsRequestCertMinAgeDaysDeserializer extends StdDeserializer<UpdateAdminSettingsCertsRequestCertMinAgeDays> {
+        public UpdateAdminSettingsCertsRequestCertMinAgeDaysDeserializer() {
+            this(UpdateAdminSettingsCertsRequestCertMinAgeDays.class);
         }
 
-        public UpdateAdminSettingsCertsRequestCertStandingDaysDeserializer(Class<?> vc) {
+        public UpdateAdminSettingsCertsRequestCertMinAgeDaysDeserializer(Class<?> vc) {
             super(vc);
         }
 
         @Override
-        public UpdateAdminSettingsCertsRequestCertStandingDays deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+        public UpdateAdminSettingsCertsRequestCertMinAgeDays deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
             JsonNode tree = jp.readValueAsTree();
             Object deserialized = null;
             boolean typeCoercion = ctxt.isEnabled(MapperFeature.ALLOW_COERCION_OF_SCALARS);
@@ -137,35 +137,35 @@ public class UpdateAdminSettingsCertsRequestCertStandingDays extends AbstractOpe
             }
 
             if (match == 1) {
-                UpdateAdminSettingsCertsRequestCertStandingDays ret = new UpdateAdminSettingsCertsRequestCertStandingDays();
+                UpdateAdminSettingsCertsRequestCertMinAgeDays ret = new UpdateAdminSettingsCertsRequestCertMinAgeDays();
                 ret.setActualInstance(deserialized);
                 return ret;
             }
-            throw new IOException(String.format("Failed deserialization for UpdateAdminSettingsCertsRequestCertStandingDays: %d classes match result, expected 1", match));
+            throw new IOException(String.format("Failed deserialization for UpdateAdminSettingsCertsRequestCertMinAgeDays: %d classes match result, expected 1", match));
         }
 
         /**
          * Handle deserialization of the 'null' value.
          */
         @Override
-        public UpdateAdminSettingsCertsRequestCertStandingDays getNullValue(DeserializationContext ctxt) throws JsonMappingException {
-            throw new JsonMappingException(ctxt.getParser(), "UpdateAdminSettingsCertsRequestCertStandingDays cannot be null");
+        public UpdateAdminSettingsCertsRequestCertMinAgeDays getNullValue(DeserializationContext ctxt) throws JsonMappingException {
+            throw new JsonMappingException(ctxt.getParser(), "UpdateAdminSettingsCertsRequestCertMinAgeDays cannot be null");
         }
     }
 
     // store a list of schema names defined in oneOf
     public static final Map<String, Class<?>> schemas = new HashMap<>();
 
-    public UpdateAdminSettingsCertsRequestCertStandingDays() {
+    public UpdateAdminSettingsCertsRequestCertMinAgeDays() {
         super("oneOf", Boolean.FALSE);
     }
 
-    public UpdateAdminSettingsCertsRequestCertStandingDays(Integer o) {
+    public UpdateAdminSettingsCertsRequestCertMinAgeDays(Integer o) {
         super("oneOf", Boolean.FALSE);
         setActualInstance(o);
     }
 
-    public UpdateAdminSettingsCertsRequestCertStandingDays(String o) {
+    public UpdateAdminSettingsCertsRequestCertMinAgeDays(String o) {
         super("oneOf", Boolean.FALSE);
         setActualInstance(o);
     }
@@ -173,12 +173,12 @@ public class UpdateAdminSettingsCertsRequestCertStandingDays extends AbstractOpe
     static {
         schemas.put("Integer", Integer.class);
         schemas.put("String", String.class);
-        JSON.registerDescendants(UpdateAdminSettingsCertsRequestCertStandingDays.class, Collections.unmodifiableMap(schemas));
+        JSON.registerDescendants(UpdateAdminSettingsCertsRequestCertMinAgeDays.class, Collections.unmodifiableMap(schemas));
     }
 
     @Override
     public Map<String, Class<?>> getSchemas() {
-        return UpdateAdminSettingsCertsRequestCertStandingDays.schemas;
+        return UpdateAdminSettingsCertsRequestCertMinAgeDays.schemas;
     }
 
     /**
