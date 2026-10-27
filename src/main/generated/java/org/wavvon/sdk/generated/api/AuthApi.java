@@ -24,12 +24,9 @@ import org.wavvon.sdk.generated.model.BeginWebauthnRegistration200Response;
 import org.wavvon.sdk.generated.model.BeginWebauthnRegistrationRequest;
 import org.wavvon.sdk.generated.model.CreateAuthChallenge200Response;
 import org.wavvon.sdk.generated.model.CreateAuthChallengeRequest;
-import org.wavvon.sdk.generated.model.CreateAuthDeviceToken200Response;
-import org.wavvon.sdk.generated.model.CreateAuthDeviceTokenRequest;
 import org.wavvon.sdk.generated.model.FinishWebauthnAssertionRequest;
 import org.wavvon.sdk.generated.model.FinishWebauthnRegistration200Response;
 import org.wavvon.sdk.generated.model.FinishWebauthnRegistrationRequest;
-import org.wavvon.sdk.generated.model.RedeemAuthDeviceTokenRequest;
 import org.wavvon.sdk.generated.model.VerifyAuth200Response;
 import org.wavvon.sdk.generated.model.VerifyAuthRequest;
 
@@ -363,95 +360,6 @@ public class AuthApi {
   }
 
   /**
-   * Mint a long-lived \&quot;trust this device\&quot; token
-   * Requires an existing session (e.g. right after a WebAuthn assertion).
-   * @param createAuthDeviceTokenRequest  (required)
-   * @return CreateAuthDeviceToken200Response
-   * @throws ApiException if fails to make API call
-   */
-  public CreateAuthDeviceToken200Response createAuthDeviceToken(CreateAuthDeviceTokenRequest createAuthDeviceTokenRequest) throws ApiException {
-    ApiResponse<CreateAuthDeviceToken200Response> localVarResponse = createAuthDeviceTokenWithHttpInfo(createAuthDeviceTokenRequest);
-    return localVarResponse.getData();
-  }
-
-  /**
-   * Mint a long-lived \&quot;trust this device\&quot; token
-   * Requires an existing session (e.g. right after a WebAuthn assertion).
-   * @param createAuthDeviceTokenRequest  (required)
-   * @return ApiResponse&lt;CreateAuthDeviceToken200Response&gt;
-   * @throws ApiException if fails to make API call
-   */
-  public ApiResponse<CreateAuthDeviceToken200Response> createAuthDeviceTokenWithHttpInfo(CreateAuthDeviceTokenRequest createAuthDeviceTokenRequest) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = createAuthDeviceTokenRequestBuilder(createAuthDeviceTokenRequest);
-    try {
-      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
-          localVarRequestBuilder.build(),
-          HttpResponse.BodyHandlers.ofInputStream());
-      if (memberVarResponseInterceptor != null) {
-        memberVarResponseInterceptor.accept(localVarResponse);
-      }
-      try {
-        if (localVarResponse.statusCode()/ 100 != 2) {
-          throw getApiException("createAuthDeviceToken", localVarResponse);
-        }
-        if (localVarResponse.body() == null) {
-          return new ApiResponse<CreateAuthDeviceToken200Response>(
-              localVarResponse.statusCode(),
-              localVarResponse.headers().map(),
-              null
-          );
-        }
-
-        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
-        localVarResponse.body().close();
-
-        return new ApiResponse<CreateAuthDeviceToken200Response>(
-            localVarResponse.statusCode(),
-            localVarResponse.headers().map(),
-            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<CreateAuthDeviceToken200Response>() {})
-        );
-      } finally {
-      }
-    } catch (IOException e) {
-      throw new ApiException(e);
-    }
-    catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-      throw new ApiException(e);
-    }
-  }
-
-  private HttpRequest.Builder createAuthDeviceTokenRequestBuilder(CreateAuthDeviceTokenRequest createAuthDeviceTokenRequest) throws ApiException {
-    // verify the required parameter 'createAuthDeviceTokenRequest' is set
-    if (createAuthDeviceTokenRequest == null) {
-      throw new ApiException(400, "Missing the required parameter 'createAuthDeviceTokenRequest' when calling createAuthDeviceToken");
-    }
-
-    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
-
-    String localVarPath = "/auth/device-token/create";
-
-    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
-
-    localVarRequestBuilder.header("Content-Type", "application/json");
-    localVarRequestBuilder.header("Accept", "application/json");
-
-    try {
-      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(createAuthDeviceTokenRequest);
-      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
-    } catch (IOException e) {
-      throw new ApiException(e);
-    }
-    if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }
-    return localVarRequestBuilder;
-  }
-
-  /**
    * Complete WebAuthn assertion and issue a session token
    * 
    * @param finishWebauthnAssertionRequest  (required)
@@ -616,95 +524,6 @@ public class AuthApi {
 
     try {
       byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(finishWebauthnRegistrationRequest);
-      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
-    } catch (IOException e) {
-      throw new ApiException(e);
-    }
-    if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }
-    return localVarRequestBuilder;
-  }
-
-  /**
-   * Exchange a device token for a fresh session token
-   * Rotates the device token on each use (issues a new one, invalidates the old).
-   * @param redeemAuthDeviceTokenRequest  (required)
-   * @return FinishWebauthnRegistration200Response
-   * @throws ApiException if fails to make API call
-   */
-  public FinishWebauthnRegistration200Response redeemAuthDeviceToken(RedeemAuthDeviceTokenRequest redeemAuthDeviceTokenRequest) throws ApiException {
-    ApiResponse<FinishWebauthnRegistration200Response> localVarResponse = redeemAuthDeviceTokenWithHttpInfo(redeemAuthDeviceTokenRequest);
-    return localVarResponse.getData();
-  }
-
-  /**
-   * Exchange a device token for a fresh session token
-   * Rotates the device token on each use (issues a new one, invalidates the old).
-   * @param redeemAuthDeviceTokenRequest  (required)
-   * @return ApiResponse&lt;FinishWebauthnRegistration200Response&gt;
-   * @throws ApiException if fails to make API call
-   */
-  public ApiResponse<FinishWebauthnRegistration200Response> redeemAuthDeviceTokenWithHttpInfo(RedeemAuthDeviceTokenRequest redeemAuthDeviceTokenRequest) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = redeemAuthDeviceTokenRequestBuilder(redeemAuthDeviceTokenRequest);
-    try {
-      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
-          localVarRequestBuilder.build(),
-          HttpResponse.BodyHandlers.ofInputStream());
-      if (memberVarResponseInterceptor != null) {
-        memberVarResponseInterceptor.accept(localVarResponse);
-      }
-      try {
-        if (localVarResponse.statusCode()/ 100 != 2) {
-          throw getApiException("redeemAuthDeviceToken", localVarResponse);
-        }
-        if (localVarResponse.body() == null) {
-          return new ApiResponse<FinishWebauthnRegistration200Response>(
-              localVarResponse.statusCode(),
-              localVarResponse.headers().map(),
-              null
-          );
-        }
-
-        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
-        localVarResponse.body().close();
-
-        return new ApiResponse<FinishWebauthnRegistration200Response>(
-            localVarResponse.statusCode(),
-            localVarResponse.headers().map(),
-            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<FinishWebauthnRegistration200Response>() {})
-        );
-      } finally {
-      }
-    } catch (IOException e) {
-      throw new ApiException(e);
-    }
-    catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-      throw new ApiException(e);
-    }
-  }
-
-  private HttpRequest.Builder redeemAuthDeviceTokenRequestBuilder(RedeemAuthDeviceTokenRequest redeemAuthDeviceTokenRequest) throws ApiException {
-    // verify the required parameter 'redeemAuthDeviceTokenRequest' is set
-    if (redeemAuthDeviceTokenRequest == null) {
-      throw new ApiException(400, "Missing the required parameter 'redeemAuthDeviceTokenRequest' when calling redeemAuthDeviceToken");
-    }
-
-    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
-
-    String localVarPath = "/auth/device-token/redeem";
-
-    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
-
-    localVarRequestBuilder.header("Content-Type", "application/json");
-    localVarRequestBuilder.header("Accept", "application/json");
-
-    try {
-      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(redeemAuthDeviceTokenRequest);
       localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
     } catch (IOException e) {
       throw new ApiException(e);

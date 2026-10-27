@@ -24,7 +24,7 @@ import org.wavvon.sdk.generated.model.CreateModerationBan201Response;
 import org.wavvon.sdk.generated.model.CreateModerationBanRequest;
 import org.wavvon.sdk.generated.model.CreateModerationMuteRequest;
 import org.wavvon.sdk.generated.model.KickUserRequest;
-import org.wavvon.sdk.generated.model.ListAdminAuditLog200Response;
+import org.wavvon.sdk.generated.model.ListAdminAuditLog200ResponseInner;
 import org.wavvon.sdk.generated.model.ListAdminReports200ResponseInner;
 import org.wavvon.sdk.generated.model.ListChannelBans200ResponseInner;
 import org.wavvon.sdk.generated.model.ListChannelVoiceMutes200ResponseInner;
@@ -1159,34 +1159,36 @@ public class ModerationApi {
   }
 
   /**
-   * Cursor-paginated hub audit log (admin)
-   * 
+   * Hub audit log, newest first (admin)
+   * Pages backwards: each page holds entries older than &#x60;cursor&#x60;. Hubs advertising the &#x60;audit.newest&#x60; capability serve this shape; older hubs answer &#x60;{entries, next_cursor}&#x60; oldest first. Apps that replay the log forwards use &#x60;GET /me/events&#x60;.
    * @param eventType  (optional)
+   * @param actor Only entries by this public key (optional)
    * @param since Unix timestamp lower bound (optional)
    * @param until Unix timestamp upper bound (optional)
-   * @param cursor &#x60;next_cursor&#x60; from the previous page (optional)
+   * @param cursor &#x60;seq&#x60; of the oldest entry already shown (optional)
    * @param limit  (optional, default to 50)
-   * @return ListAdminAuditLog200Response
+   * @return List&lt;ListAdminAuditLog200ResponseInner&gt;
    * @throws ApiException if fails to make API call
    */
-  public ListAdminAuditLog200Response listAdminAuditLog(String eventType, Long since, Long until, Long cursor, Long limit) throws ApiException {
-    ApiResponse<ListAdminAuditLog200Response> localVarResponse = listAdminAuditLogWithHttpInfo(eventType, since, until, cursor, limit);
+  public List<ListAdminAuditLog200ResponseInner> listAdminAuditLog(String eventType, String actor, Long since, Long until, Long cursor, Long limit) throws ApiException {
+    ApiResponse<List<ListAdminAuditLog200ResponseInner>> localVarResponse = listAdminAuditLogWithHttpInfo(eventType, actor, since, until, cursor, limit);
     return localVarResponse.getData();
   }
 
   /**
-   * Cursor-paginated hub audit log (admin)
-   * 
+   * Hub audit log, newest first (admin)
+   * Pages backwards: each page holds entries older than &#x60;cursor&#x60;. Hubs advertising the &#x60;audit.newest&#x60; capability serve this shape; older hubs answer &#x60;{entries, next_cursor}&#x60; oldest first. Apps that replay the log forwards use &#x60;GET /me/events&#x60;.
    * @param eventType  (optional)
+   * @param actor Only entries by this public key (optional)
    * @param since Unix timestamp lower bound (optional)
    * @param until Unix timestamp upper bound (optional)
-   * @param cursor &#x60;next_cursor&#x60; from the previous page (optional)
+   * @param cursor &#x60;seq&#x60; of the oldest entry already shown (optional)
    * @param limit  (optional, default to 50)
-   * @return ApiResponse&lt;ListAdminAuditLog200Response&gt;
+   * @return ApiResponse&lt;List&lt;ListAdminAuditLog200ResponseInner&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<ListAdminAuditLog200Response> listAdminAuditLogWithHttpInfo(String eventType, Long since, Long until, Long cursor, Long limit) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = listAdminAuditLogRequestBuilder(eventType, since, until, cursor, limit);
+  public ApiResponse<List<ListAdminAuditLog200ResponseInner>> listAdminAuditLogWithHttpInfo(String eventType, String actor, Long since, Long until, Long cursor, Long limit) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = listAdminAuditLogRequestBuilder(eventType, actor, since, until, cursor, limit);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -1199,7 +1201,7 @@ public class ModerationApi {
           throw getApiException("listAdminAuditLog", localVarResponse);
         }
         if (localVarResponse.body() == null) {
-          return new ApiResponse<ListAdminAuditLog200Response>(
+          return new ApiResponse<List<ListAdminAuditLog200ResponseInner>>(
               localVarResponse.statusCode(),
               localVarResponse.headers().map(),
               null
@@ -1209,10 +1211,10 @@ public class ModerationApi {
         String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
-        return new ApiResponse<ListAdminAuditLog200Response>(
+        return new ApiResponse<List<ListAdminAuditLog200ResponseInner>>(
             localVarResponse.statusCode(),
             localVarResponse.headers().map(),
-            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<ListAdminAuditLog200Response>() {})
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<List<ListAdminAuditLog200ResponseInner>>() {})
         );
       } finally {
       }
@@ -1225,7 +1227,7 @@ public class ModerationApi {
     }
   }
 
-  private HttpRequest.Builder listAdminAuditLogRequestBuilder(String eventType, Long since, Long until, Long cursor, Long limit) throws ApiException {
+  private HttpRequest.Builder listAdminAuditLogRequestBuilder(String eventType, String actor, Long since, Long until, Long cursor, Long limit) throws ApiException {
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -1236,6 +1238,8 @@ public class ModerationApi {
     String localVarQueryParameterBaseName;
     localVarQueryParameterBaseName = "event_type";
     localVarQueryParams.addAll(ApiClient.parameterToPairs("event_type", eventType));
+    localVarQueryParameterBaseName = "actor";
+    localVarQueryParams.addAll(ApiClient.parameterToPairs("actor", actor));
     localVarQueryParameterBaseName = "since";
     localVarQueryParams.addAll(ApiClient.parameterToPairs("since", since));
     localVarQueryParameterBaseName = "until";

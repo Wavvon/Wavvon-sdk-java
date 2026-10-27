@@ -95,14 +95,12 @@ class ConformanceTest {
     assertEquals(hex(v, "signing_bytes"), Bytes.toHex(bytes));
     assertEquals(hex(v, "hub_pubkey"), hub.publicKey());
     assertEquals(hex(v, "signature_v1"), Bytes.toHex(hub.sign(bytes)));
-    assertEquals(hex(v, "signature_legacy"), Bytes.toHex(hub.sign(body)));
 
     JsonNode h = v.get("headers");
     Map<String, List<String>> headers =
         Map.of(
             h.get("hub_pubkey").asText(), List.of(hex(v, "hub_pubkey")),
             h.get("signature_v1").asText(), List.of(hex(v, "signature_v1")),
-            h.get("signature_legacy").asText(), List.of(hex(v, "signature_legacy")),
             h.get("timestamp").asText(), List.of(String.valueOf(ts)));
     assertInstanceOf(
         Dispatch.SlashInvocation.class,
@@ -128,13 +126,11 @@ class ConformanceTest {
     byte[] bytes = Webhooks.deliverySigningBytes(ts, body);
     assertEquals(hex(v, "signing_bytes"), Bytes.toHex(bytes));
     assertEquals(hex(v, "signature_v1"), Bytes.toHex(Webhooks.hmacSha256(key, bytes)));
-    assertEquals(hex(v, "signature_legacy"), Bytes.toHex(Webhooks.hmacSha256(key, body)));
 
     JsonNode h = v.get("headers");
     Map<String, List<String>> headers =
         Map.of(
             h.get("signature_v1").asText(), List.of(hex(v, "signature_v1")),
-            h.get("signature_legacy").asText(), List.of(hex(v, "signature_legacy")),
             h.get("timestamp").asText(), List.of(String.valueOf(ts)),
             h.get("webhook_id").asText(), List.of("wh_test"));
     OutgoingWebhookEvent event =

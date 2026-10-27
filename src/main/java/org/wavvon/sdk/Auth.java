@@ -15,35 +15,24 @@ public final class Auth {
   /** The scheme a current hub names in its challenge. */
   public static final String CHALLENGE_SCHEME = "tagged-v1";
 
-  /** The only length a raw (untagged) challenge is ever signed at. */
-  public static final int CHALLENGE_LEN = 32;
-
   private static final byte[] TAG = Bytes.utf8("wavvon/auth-challenge/v1\0");
 
   private Auth() {}
 
   /**
-   * The bytes a client signs to answer a challenge. {@code tagged-v1}: the domain prefix plus the
-   * challenge. No scheme (an older hub): the raw challenge, and only at exactly 32 bytes, so this
-   * can never be used to sign arbitrary bytes. Any other scheme is refused rather than guessed at.
+   * The bytes a client signs to answer a challenge: the {@code tagged-v1} domain prefix plus the
+   * challenge. Anything else, a missing scheme included, is refused: hubs before v0.7.0 named no
+   * scheme and are no longer supported, and a raw answer would sign bytes the hub chose.
    *
    * @param challenge the decoded challenge
    * @param scheme the challenge's {@code scheme}, or null when the hub sent none
    * @return the bytes to sign
-   * @throws AuthSchemeException for an unknown scheme or a raw challenge of the wrong length
+   * @throws AuthSchemeException for a missing or unknown scheme
    */
   public static byte[] challengeSigningBytes(byte[] challenge, String scheme) {
     if (CHALLENGE_SCHEME.equals(scheme)) return Bytes.concat(TAG, challenge);
     if (scheme == null) {
-      if (challenge.length != CHALLENGE_LEN) {
-        throw new AuthSchemeException(
-            "refusing to sign a raw "
-                + challenge.length
-                + "-byte challenge; only "
-                + CHALLENGE_LEN
-                + " bytes are ever signed raw");
-      }
-      return challenge.clone();
+      throw new AuthSchemeException("hub named no auth challenge scheme; only tagged-v1 is signed");
     }
     throw new AuthSchemeException("unknown auth challenge scheme \"" + scheme + "\"");
   }

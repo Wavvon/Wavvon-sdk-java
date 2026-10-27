@@ -30,41 +30,51 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * ListMeDevices200ResponseInner
+ * ListRecoveryRequestsToAttest200ResponseInner
  */
 @JsonPropertyOrder({
-  ListMeDevices200ResponseInner.JSON_PROPERTY_ID,
-  ListMeDevices200ResponseInner.JSON_PROPERTY_DEVICE_NAME,
-  ListMeDevices200ResponseInner.JSON_PROPERTY_CREATED_AT,
-  ListMeDevices200ResponseInner.JSON_PROPERTY_EXPIRES_AT,
-  ListMeDevices200ResponseInner.JSON_PROPERTY_LAST_USED_AT
+  ListRecoveryRequestsToAttest200ResponseInner.JSON_PROPERTY_ID,
+  ListRecoveryRequestsToAttest200ResponseInner.JSON_PROPERTY_OLD_PUBKEY,
+  ListRecoveryRequestsToAttest200ResponseInner.JSON_PROPERTY_NEW_PUBKEY,
+  ListRecoveryRequestsToAttest200ResponseInner.JSON_PROPERTY_REASON,
+  ListRecoveryRequestsToAttest200ResponseInner.JSON_PROPERTY_CREATED_AT,
+  ListRecoveryRequestsToAttest200ResponseInner.JSON_PROPERTY_ATTESTATION_COUNT,
+  ListRecoveryRequestsToAttest200ResponseInner.JSON_PROPERTY_THRESHOLD
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class ListMeDevices200ResponseInner {
+public class ListRecoveryRequestsToAttest200ResponseInner {
   public static final String JSON_PROPERTY_ID = "id";
   @jakarta.annotation.Nullable
   private String id;
 
-  public static final String JSON_PROPERTY_DEVICE_NAME = "device_name";
+  public static final String JSON_PROPERTY_OLD_PUBKEY = "old_pubkey";
   @jakarta.annotation.Nullable
-  private String deviceName;
+  private String oldPubkey;
+
+  public static final String JSON_PROPERTY_NEW_PUBKEY = "new_pubkey";
+  @jakarta.annotation.Nullable
+  private String newPubkey;
+
+  public static final String JSON_PROPERTY_REASON = "reason";
+  @jakarta.annotation.Nullable
+  private String reason;
 
   public static final String JSON_PROPERTY_CREATED_AT = "created_at";
   @jakarta.annotation.Nullable
   private Long createdAt;
 
-  public static final String JSON_PROPERTY_EXPIRES_AT = "expires_at";
+  public static final String JSON_PROPERTY_ATTESTATION_COUNT = "attestation_count";
   @jakarta.annotation.Nullable
-  private Long expiresAt;
+  private Long attestationCount;
 
-  public static final String JSON_PROPERTY_LAST_USED_AT = "last_used_at";
+  public static final String JSON_PROPERTY_THRESHOLD = "threshold";
   @jakarta.annotation.Nullable
-  private Long lastUsedAt;
+  private Long threshold;
 
-  public ListMeDevices200ResponseInner() { 
+  public ListRecoveryRequestsToAttest200ResponseInner() { 
   }
 
-  public ListMeDevices200ResponseInner id(@jakarta.annotation.Nullable String id) {
+  public ListRecoveryRequestsToAttest200ResponseInner id(@jakarta.annotation.Nullable String id) {
     this.id = id;
     return this;
   }
@@ -88,31 +98,79 @@ public class ListMeDevices200ResponseInner {
   }
 
 
-  public ListMeDevices200ResponseInner deviceName(@jakarta.annotation.Nullable String deviceName) {
-    this.deviceName = deviceName;
+  public ListRecoveryRequestsToAttest200ResponseInner oldPubkey(@jakarta.annotation.Nullable String oldPubkey) {
+    this.oldPubkey = oldPubkey;
     return this;
   }
 
   /**
-   * Get deviceName
-   * @return deviceName
+   * Get oldPubkey
+   * @return oldPubkey
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_DEVICE_NAME)
+  @JsonProperty(JSON_PROPERTY_OLD_PUBKEY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getDeviceName() {
-    return deviceName;
+  public String getOldPubkey() {
+    return oldPubkey;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_DEVICE_NAME)
+  @JsonProperty(JSON_PROPERTY_OLD_PUBKEY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setDeviceName(@jakarta.annotation.Nullable String deviceName) {
-    this.deviceName = deviceName;
+  public void setOldPubkey(@jakarta.annotation.Nullable String oldPubkey) {
+    this.oldPubkey = oldPubkey;
   }
 
 
-  public ListMeDevices200ResponseInner createdAt(@jakarta.annotation.Nullable Long createdAt) {
+  public ListRecoveryRequestsToAttest200ResponseInner newPubkey(@jakarta.annotation.Nullable String newPubkey) {
+    this.newPubkey = newPubkey;
+    return this;
+  }
+
+  /**
+   * Get newPubkey
+   * @return newPubkey
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_NEW_PUBKEY)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getNewPubkey() {
+    return newPubkey;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_NEW_PUBKEY)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setNewPubkey(@jakarta.annotation.Nullable String newPubkey) {
+    this.newPubkey = newPubkey;
+  }
+
+
+  public ListRecoveryRequestsToAttest200ResponseInner reason(@jakarta.annotation.Nullable String reason) {
+    this.reason = reason;
+    return this;
+  }
+
+  /**
+   * Get reason
+   * @return reason
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_REASON)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getReason() {
+    return reason;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_REASON)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setReason(@jakarta.annotation.Nullable String reason) {
+    this.reason = reason;
+  }
+
+
+  public ListRecoveryRequestsToAttest200ResponseInner createdAt(@jakarta.annotation.Nullable Long createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -136,56 +194,56 @@ public class ListMeDevices200ResponseInner {
   }
 
 
-  public ListMeDevices200ResponseInner expiresAt(@jakarta.annotation.Nullable Long expiresAt) {
-    this.expiresAt = expiresAt;
+  public ListRecoveryRequestsToAttest200ResponseInner attestationCount(@jakarta.annotation.Nullable Long attestationCount) {
+    this.attestationCount = attestationCount;
     return this;
   }
 
   /**
-   * Get expiresAt
-   * @return expiresAt
+   * Get attestationCount
+   * @return attestationCount
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_EXPIRES_AT)
+  @JsonProperty(JSON_PROPERTY_ATTESTATION_COUNT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Long getExpiresAt() {
-    return expiresAt;
+  public Long getAttestationCount() {
+    return attestationCount;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_EXPIRES_AT)
+  @JsonProperty(JSON_PROPERTY_ATTESTATION_COUNT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setExpiresAt(@jakarta.annotation.Nullable Long expiresAt) {
-    this.expiresAt = expiresAt;
+  public void setAttestationCount(@jakarta.annotation.Nullable Long attestationCount) {
+    this.attestationCount = attestationCount;
   }
 
 
-  public ListMeDevices200ResponseInner lastUsedAt(@jakarta.annotation.Nullable Long lastUsedAt) {
-    this.lastUsedAt = lastUsedAt;
+  public ListRecoveryRequestsToAttest200ResponseInner threshold(@jakarta.annotation.Nullable Long threshold) {
+    this.threshold = threshold;
     return this;
   }
 
   /**
-   * Get lastUsedAt
-   * @return lastUsedAt
+   * Get threshold
+   * @return threshold
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_LAST_USED_AT)
+  @JsonProperty(JSON_PROPERTY_THRESHOLD)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Long getLastUsedAt() {
-    return lastUsedAt;
+  public Long getThreshold() {
+    return threshold;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_LAST_USED_AT)
+  @JsonProperty(JSON_PROPERTY_THRESHOLD)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setLastUsedAt(@jakarta.annotation.Nullable Long lastUsedAt) {
-    this.lastUsedAt = lastUsedAt;
+  public void setThreshold(@jakarta.annotation.Nullable Long threshold) {
+    this.threshold = threshold;
   }
 
 
   /**
-   * Return true if this listMeDevices_200_response_inner object is equal to o.
+   * Return true if this listRecoveryRequestsToAttest_200_response_inner object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -195,28 +253,32 @@ public class ListMeDevices200ResponseInner {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ListMeDevices200ResponseInner listMeDevices200ResponseInner = (ListMeDevices200ResponseInner) o;
-    return Objects.equals(this.id, listMeDevices200ResponseInner.id) &&
-        Objects.equals(this.deviceName, listMeDevices200ResponseInner.deviceName) &&
-        Objects.equals(this.createdAt, listMeDevices200ResponseInner.createdAt) &&
-        Objects.equals(this.expiresAt, listMeDevices200ResponseInner.expiresAt) &&
-        Objects.equals(this.lastUsedAt, listMeDevices200ResponseInner.lastUsedAt);
+    ListRecoveryRequestsToAttest200ResponseInner listRecoveryRequestsToAttest200ResponseInner = (ListRecoveryRequestsToAttest200ResponseInner) o;
+    return Objects.equals(this.id, listRecoveryRequestsToAttest200ResponseInner.id) &&
+        Objects.equals(this.oldPubkey, listRecoveryRequestsToAttest200ResponseInner.oldPubkey) &&
+        Objects.equals(this.newPubkey, listRecoveryRequestsToAttest200ResponseInner.newPubkey) &&
+        Objects.equals(this.reason, listRecoveryRequestsToAttest200ResponseInner.reason) &&
+        Objects.equals(this.createdAt, listRecoveryRequestsToAttest200ResponseInner.createdAt) &&
+        Objects.equals(this.attestationCount, listRecoveryRequestsToAttest200ResponseInner.attestationCount) &&
+        Objects.equals(this.threshold, listRecoveryRequestsToAttest200ResponseInner.threshold);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, deviceName, createdAt, expiresAt, lastUsedAt);
+    return Objects.hash(id, oldPubkey, newPubkey, reason, createdAt, attestationCount, threshold);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ListMeDevices200ResponseInner {\n");
+    sb.append("class ListRecoveryRequestsToAttest200ResponseInner {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    deviceName: ").append(toIndentedString(deviceName)).append("\n");
+    sb.append("    oldPubkey: ").append(toIndentedString(oldPubkey)).append("\n");
+    sb.append("    newPubkey: ").append(toIndentedString(newPubkey)).append("\n");
+    sb.append("    reason: ").append(toIndentedString(reason)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
-    sb.append("    expiresAt: ").append(toIndentedString(expiresAt)).append("\n");
-    sb.append("    lastUsedAt: ").append(toIndentedString(lastUsedAt)).append("\n");
+    sb.append("    attestationCount: ").append(toIndentedString(attestationCount)).append("\n");
+    sb.append("    threshold: ").append(toIndentedString(threshold)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -269,9 +331,19 @@ public class ListMeDevices200ResponseInner {
       joiner.add(String.format("%sid%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getId()))));
     }
 
-    // add `device_name` to the URL query string
-    if (getDeviceName() != null) {
-      joiner.add(String.format("%sdevice_name%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getDeviceName()))));
+    // add `old_pubkey` to the URL query string
+    if (getOldPubkey() != null) {
+      joiner.add(String.format("%sold_pubkey%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getOldPubkey()))));
+    }
+
+    // add `new_pubkey` to the URL query string
+    if (getNewPubkey() != null) {
+      joiner.add(String.format("%snew_pubkey%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getNewPubkey()))));
+    }
+
+    // add `reason` to the URL query string
+    if (getReason() != null) {
+      joiner.add(String.format("%sreason%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getReason()))));
     }
 
     // add `created_at` to the URL query string
@@ -279,14 +351,14 @@ public class ListMeDevices200ResponseInner {
       joiner.add(String.format("%screated_at%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCreatedAt()))));
     }
 
-    // add `expires_at` to the URL query string
-    if (getExpiresAt() != null) {
-      joiner.add(String.format("%sexpires_at%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getExpiresAt()))));
+    // add `attestation_count` to the URL query string
+    if (getAttestationCount() != null) {
+      joiner.add(String.format("%sattestation_count%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getAttestationCount()))));
     }
 
-    // add `last_used_at` to the URL query string
-    if (getLastUsedAt() != null) {
-      joiner.add(String.format("%slast_used_at%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getLastUsedAt()))));
+    // add `threshold` to the URL query string
+    if (getThreshold() != null) {
+      joiner.add(String.format("%sthreshold%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getThreshold()))));
     }
 
     return joiner.toString();

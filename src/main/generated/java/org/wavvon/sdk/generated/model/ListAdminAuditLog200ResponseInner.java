@@ -30,19 +30,19 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * ListAdminAuditLog200ResponseEntriesInner
+ * ListAdminAuditLog200ResponseInner
  */
 @JsonPropertyOrder({
-  ListAdminAuditLog200ResponseEntriesInner.JSON_PROPERTY_SEQ,
-  ListAdminAuditLog200ResponseEntriesInner.JSON_PROPERTY_EVENT_TYPE,
-  ListAdminAuditLog200ResponseEntriesInner.JSON_PROPERTY_AT,
-  ListAdminAuditLog200ResponseEntriesInner.JSON_PROPERTY_ACTOR_PUBKEY,
-  ListAdminAuditLog200ResponseEntriesInner.JSON_PROPERTY_TARGET_PUBKEY,
-  ListAdminAuditLog200ResponseEntriesInner.JSON_PROPERTY_CHANNEL_ID,
-  ListAdminAuditLog200ResponseEntriesInner.JSON_PROPERTY_PAYLOAD
+  ListAdminAuditLog200ResponseInner.JSON_PROPERTY_SEQ,
+  ListAdminAuditLog200ResponseInner.JSON_PROPERTY_EVENT_TYPE,
+  ListAdminAuditLog200ResponseInner.JSON_PROPERTY_AT,
+  ListAdminAuditLog200ResponseInner.JSON_PROPERTY_ACTOR_PUBKEY,
+  ListAdminAuditLog200ResponseInner.JSON_PROPERTY_TARGET_PUBKEY,
+  ListAdminAuditLog200ResponseInner.JSON_PROPERTY_CHANNEL_ID,
+  ListAdminAuditLog200ResponseInner.JSON_PROPERTY_PAYLOAD
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class ListAdminAuditLog200ResponseEntriesInner {
+public class ListAdminAuditLog200ResponseInner {
   public static final String JSON_PROPERTY_SEQ = "seq";
   @jakarta.annotation.Nullable
   private Long seq;
@@ -71,10 +71,10 @@ public class ListAdminAuditLog200ResponseEntriesInner {
   @jakarta.annotation.Nullable
   private Object payload;
 
-  public ListAdminAuditLog200ResponseEntriesInner() { 
+  public ListAdminAuditLog200ResponseInner() { 
   }
 
-  public ListAdminAuditLog200ResponseEntriesInner seq(@jakarta.annotation.Nullable Long seq) {
+  public ListAdminAuditLog200ResponseInner seq(@jakarta.annotation.Nullable Long seq) {
     this.seq = seq;
     return this;
   }
@@ -98,7 +98,7 @@ public class ListAdminAuditLog200ResponseEntriesInner {
   }
 
 
-  public ListAdminAuditLog200ResponseEntriesInner eventType(@jakarta.annotation.Nullable String eventType) {
+  public ListAdminAuditLog200ResponseInner eventType(@jakarta.annotation.Nullable String eventType) {
     this.eventType = eventType;
     return this;
   }
@@ -122,7 +122,7 @@ public class ListAdminAuditLog200ResponseEntriesInner {
   }
 
 
-  public ListAdminAuditLog200ResponseEntriesInner at(@jakarta.annotation.Nullable Long at) {
+  public ListAdminAuditLog200ResponseInner at(@jakarta.annotation.Nullable Long at) {
     this.at = at;
     return this;
   }
@@ -146,7 +146,7 @@ public class ListAdminAuditLog200ResponseEntriesInner {
   }
 
 
-  public ListAdminAuditLog200ResponseEntriesInner actorPubkey(@jakarta.annotation.Nullable String actorPubkey) {
+  public ListAdminAuditLog200ResponseInner actorPubkey(@jakarta.annotation.Nullable String actorPubkey) {
     this.actorPubkey = actorPubkey;
     return this;
   }
@@ -170,7 +170,7 @@ public class ListAdminAuditLog200ResponseEntriesInner {
   }
 
 
-  public ListAdminAuditLog200ResponseEntriesInner targetPubkey(@jakarta.annotation.Nullable String targetPubkey) {
+  public ListAdminAuditLog200ResponseInner targetPubkey(@jakarta.annotation.Nullable String targetPubkey) {
     this.targetPubkey = targetPubkey;
     return this;
   }
@@ -194,7 +194,7 @@ public class ListAdminAuditLog200ResponseEntriesInner {
   }
 
 
-  public ListAdminAuditLog200ResponseEntriesInner channelId(@jakarta.annotation.Nullable String channelId) {
+  public ListAdminAuditLog200ResponseInner channelId(@jakarta.annotation.Nullable String channelId) {
     this.channelId = channelId;
     return this;
   }
@@ -218,7 +218,7 @@ public class ListAdminAuditLog200ResponseEntriesInner {
   }
 
 
-  public ListAdminAuditLog200ResponseEntriesInner payload(@jakarta.annotation.Nullable Object payload) {
+  public ListAdminAuditLog200ResponseInner payload(@jakarta.annotation.Nullable Object payload) {
     this.payload = payload;
     return this;
   }
@@ -243,7 +243,7 @@ public class ListAdminAuditLog200ResponseEntriesInner {
 
 
   /**
-   * Return true if this listAdminAuditLog_200_response_entries_inner object is equal to o.
+   * Return true if this listAdminAuditLog_200_response_inner object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -253,14 +253,14 @@ public class ListAdminAuditLog200ResponseEntriesInner {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ListAdminAuditLog200ResponseEntriesInner listAdminAuditLog200ResponseEntriesInner = (ListAdminAuditLog200ResponseEntriesInner) o;
-    return Objects.equals(this.seq, listAdminAuditLog200ResponseEntriesInner.seq) &&
-        Objects.equals(this.eventType, listAdminAuditLog200ResponseEntriesInner.eventType) &&
-        Objects.equals(this.at, listAdminAuditLog200ResponseEntriesInner.at) &&
-        Objects.equals(this.actorPubkey, listAdminAuditLog200ResponseEntriesInner.actorPubkey) &&
-        Objects.equals(this.targetPubkey, listAdminAuditLog200ResponseEntriesInner.targetPubkey) &&
-        Objects.equals(this.channelId, listAdminAuditLog200ResponseEntriesInner.channelId) &&
-        Objects.equals(this.payload, listAdminAuditLog200ResponseEntriesInner.payload);
+    ListAdminAuditLog200ResponseInner listAdminAuditLog200ResponseInner = (ListAdminAuditLog200ResponseInner) o;
+    return Objects.equals(this.seq, listAdminAuditLog200ResponseInner.seq) &&
+        Objects.equals(this.eventType, listAdminAuditLog200ResponseInner.eventType) &&
+        Objects.equals(this.at, listAdminAuditLog200ResponseInner.at) &&
+        Objects.equals(this.actorPubkey, listAdminAuditLog200ResponseInner.actorPubkey) &&
+        Objects.equals(this.targetPubkey, listAdminAuditLog200ResponseInner.targetPubkey) &&
+        Objects.equals(this.channelId, listAdminAuditLog200ResponseInner.channelId) &&
+        Objects.equals(this.payload, listAdminAuditLog200ResponseInner.payload);
   }
 
   @Override
@@ -271,7 +271,7 @@ public class ListAdminAuditLog200ResponseEntriesInner {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ListAdminAuditLog200ResponseEntriesInner {\n");
+    sb.append("class ListAdminAuditLog200ResponseInner {\n");
     sb.append("    seq: ").append(toIndentedString(seq)).append("\n");
     sb.append("    eventType: ").append(toIndentedString(eventType)).append("\n");
     sb.append("    at: ").append(toIndentedString(at)).append("\n");

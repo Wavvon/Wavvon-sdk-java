@@ -30,21 +30,21 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * CreateFederationPeerRequest
+ * DeleteAdminBanlistSourcesRequest
  */
 @JsonPropertyOrder({
-  CreateFederationPeerRequest.JSON_PROPERTY_URL
+  DeleteAdminBanlistSourcesRequest.JSON_PROPERTY_URL
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class CreateFederationPeerRequest {
+public class DeleteAdminBanlistSourcesRequest {
   public static final String JSON_PROPERTY_URL = "url";
   @jakarta.annotation.Nonnull
   private String url;
 
-  public CreateFederationPeerRequest() { 
+  public DeleteAdminBanlistSourcesRequest() { 
   }
 
-  public CreateFederationPeerRequest url(@jakarta.annotation.Nonnull String url) {
+  public DeleteAdminBanlistSourcesRequest url(@jakarta.annotation.Nonnull String url) {
     this.url = url;
     return this;
   }
@@ -69,7 +69,7 @@ public class CreateFederationPeerRequest {
 
 
   /**
-   * Return true if this createFederationPeer_request object is equal to o.
+   * Return true if this deleteAdminBanlistSources_request object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -79,8 +79,8 @@ public class CreateFederationPeerRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CreateFederationPeerRequest createFederationPeerRequest = (CreateFederationPeerRequest) o;
-    return Objects.equals(this.url, createFederationPeerRequest.url);
+    DeleteAdminBanlistSourcesRequest deleteAdminBanlistSourcesRequest = (DeleteAdminBanlistSourcesRequest) o;
+    return Objects.equals(this.url, deleteAdminBanlistSourcesRequest.url);
   }
 
   @Override
@@ -91,7 +91,7 @@ public class CreateFederationPeerRequest {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CreateFederationPeerRequest {\n");
+    sb.append("class DeleteAdminBanlistSourcesRequest {\n");
     sb.append("    url: ").append(toIndentedString(url)).append("\n");
     sb.append("}");
     return sb.toString();

@@ -30,8 +30,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.wavvon.sdk.generated.model.UpdateAdminSettingsCertsRequestCertAutoIssue;
+import org.wavvon.sdk.generated.model.UpdateAdminSettingsCertsRequestCertMinAgeDays;
 import org.wavvon.sdk.generated.model.UpdateAdminSettingsCertsRequestCertRequire;
-import org.wavvon.sdk.generated.model.UpdateAdminSettingsCertsRequestCertStandingDays;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -41,7 +41,6 @@ import org.wavvon.sdk.generated.ApiClient;
  */
 @JsonPropertyOrder({
   UpdateAdminSettingsCertsRequest.JSON_PROPERTY_CERT_AUTO_ISSUE,
-  UpdateAdminSettingsCertsRequest.JSON_PROPERTY_CERT_STANDING_DAYS,
   UpdateAdminSettingsCertsRequest.JSON_PROPERTY_CERT_MIN_AGE_DAYS,
   UpdateAdminSettingsCertsRequest.JSON_PROPERTY_CERT_VALIDITY_DAYS,
   UpdateAdminSettingsCertsRequest.JSON_PROPERTY_CERT_MODE,
@@ -56,17 +55,13 @@ public class UpdateAdminSettingsCertsRequest {
   @jakarta.annotation.Nullable
   private UpdateAdminSettingsCertsRequestCertAutoIssue certAutoIssue;
 
-  public static final String JSON_PROPERTY_CERT_STANDING_DAYS = "cert_standing_days";
-  @jakarta.annotation.Nullable
-  private UpdateAdminSettingsCertsRequestCertStandingDays certStandingDays;
-
   public static final String JSON_PROPERTY_CERT_MIN_AGE_DAYS = "cert_min_age_days";
   @jakarta.annotation.Nullable
-  private UpdateAdminSettingsCertsRequestCertStandingDays certMinAgeDays;
+  private UpdateAdminSettingsCertsRequestCertMinAgeDays certMinAgeDays;
 
   public static final String JSON_PROPERTY_CERT_VALIDITY_DAYS = "cert_validity_days";
   @jakarta.annotation.Nullable
-  private UpdateAdminSettingsCertsRequestCertStandingDays certValidityDays;
+  private UpdateAdminSettingsCertsRequestCertMinAgeDays certValidityDays;
 
   /**
    * Gets or Sets certMode
@@ -123,7 +118,7 @@ public class UpdateAdminSettingsCertsRequest {
 
   public static final String JSON_PROPERTY_CERT_MIN_POW_LEVEL = "cert_min_pow_level";
   @jakarta.annotation.Nullable
-  private UpdateAdminSettingsCertsRequestCertStandingDays certMinPowLevel;
+  private UpdateAdminSettingsCertsRequestCertMinAgeDays certMinPowLevel;
 
   public UpdateAdminSettingsCertsRequest() { 
   }
@@ -152,31 +147,7 @@ public class UpdateAdminSettingsCertsRequest {
   }
 
 
-  public UpdateAdminSettingsCertsRequest certStandingDays(@jakarta.annotation.Nullable UpdateAdminSettingsCertsRequestCertStandingDays certStandingDays) {
-    this.certStandingDays = certStandingDays;
-    return this;
-  }
-
-  /**
-   * Get certStandingDays
-   * @return certStandingDays
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_CERT_STANDING_DAYS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public UpdateAdminSettingsCertsRequestCertStandingDays getCertStandingDays() {
-    return certStandingDays;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_CERT_STANDING_DAYS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCertStandingDays(@jakarta.annotation.Nullable UpdateAdminSettingsCertsRequestCertStandingDays certStandingDays) {
-    this.certStandingDays = certStandingDays;
-  }
-
-
-  public UpdateAdminSettingsCertsRequest certMinAgeDays(@jakarta.annotation.Nullable UpdateAdminSettingsCertsRequestCertStandingDays certMinAgeDays) {
+  public UpdateAdminSettingsCertsRequest certMinAgeDays(@jakarta.annotation.Nullable UpdateAdminSettingsCertsRequestCertMinAgeDays certMinAgeDays) {
     this.certMinAgeDays = certMinAgeDays;
     return this;
   }
@@ -188,19 +159,19 @@ public class UpdateAdminSettingsCertsRequest {
   @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_CERT_MIN_AGE_DAYS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public UpdateAdminSettingsCertsRequestCertStandingDays getCertMinAgeDays() {
+  public UpdateAdminSettingsCertsRequestCertMinAgeDays getCertMinAgeDays() {
     return certMinAgeDays;
   }
 
 
   @JsonProperty(JSON_PROPERTY_CERT_MIN_AGE_DAYS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCertMinAgeDays(@jakarta.annotation.Nullable UpdateAdminSettingsCertsRequestCertStandingDays certMinAgeDays) {
+  public void setCertMinAgeDays(@jakarta.annotation.Nullable UpdateAdminSettingsCertsRequestCertMinAgeDays certMinAgeDays) {
     this.certMinAgeDays = certMinAgeDays;
   }
 
 
-  public UpdateAdminSettingsCertsRequest certValidityDays(@jakarta.annotation.Nullable UpdateAdminSettingsCertsRequestCertStandingDays certValidityDays) {
+  public UpdateAdminSettingsCertsRequest certValidityDays(@jakarta.annotation.Nullable UpdateAdminSettingsCertsRequestCertMinAgeDays certValidityDays) {
     this.certValidityDays = certValidityDays;
     return this;
   }
@@ -212,14 +183,14 @@ public class UpdateAdminSettingsCertsRequest {
   @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_CERT_VALIDITY_DAYS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public UpdateAdminSettingsCertsRequestCertStandingDays getCertValidityDays() {
+  public UpdateAdminSettingsCertsRequestCertMinAgeDays getCertValidityDays() {
     return certValidityDays;
   }
 
 
   @JsonProperty(JSON_PROPERTY_CERT_VALIDITY_DAYS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCertValidityDays(@jakarta.annotation.Nullable UpdateAdminSettingsCertsRequestCertStandingDays certValidityDays) {
+  public void setCertValidityDays(@jakarta.annotation.Nullable UpdateAdminSettingsCertsRequestCertMinAgeDays certValidityDays) {
     this.certValidityDays = certValidityDays;
   }
 
@@ -336,7 +307,7 @@ public class UpdateAdminSettingsCertsRequest {
   }
 
 
-  public UpdateAdminSettingsCertsRequest certMinPowLevel(@jakarta.annotation.Nullable UpdateAdminSettingsCertsRequestCertStandingDays certMinPowLevel) {
+  public UpdateAdminSettingsCertsRequest certMinPowLevel(@jakarta.annotation.Nullable UpdateAdminSettingsCertsRequestCertMinAgeDays certMinPowLevel) {
     this.certMinPowLevel = certMinPowLevel;
     return this;
   }
@@ -348,14 +319,14 @@ public class UpdateAdminSettingsCertsRequest {
   @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_CERT_MIN_POW_LEVEL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public UpdateAdminSettingsCertsRequestCertStandingDays getCertMinPowLevel() {
+  public UpdateAdminSettingsCertsRequestCertMinAgeDays getCertMinPowLevel() {
     return certMinPowLevel;
   }
 
 
   @JsonProperty(JSON_PROPERTY_CERT_MIN_POW_LEVEL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCertMinPowLevel(@jakarta.annotation.Nullable UpdateAdminSettingsCertsRequestCertStandingDays certMinPowLevel) {
+  public void setCertMinPowLevel(@jakarta.annotation.Nullable UpdateAdminSettingsCertsRequestCertMinAgeDays certMinPowLevel) {
     this.certMinPowLevel = certMinPowLevel;
   }
 
@@ -373,7 +344,6 @@ public class UpdateAdminSettingsCertsRequest {
     }
     UpdateAdminSettingsCertsRequest updateAdminSettingsCertsRequest = (UpdateAdminSettingsCertsRequest) o;
     return Objects.equals(this.certAutoIssue, updateAdminSettingsCertsRequest.certAutoIssue) &&
-        Objects.equals(this.certStandingDays, updateAdminSettingsCertsRequest.certStandingDays) &&
         Objects.equals(this.certMinAgeDays, updateAdminSettingsCertsRequest.certMinAgeDays) &&
         Objects.equals(this.certValidityDays, updateAdminSettingsCertsRequest.certValidityDays) &&
         Objects.equals(this.certMode, updateAdminSettingsCertsRequest.certMode) &&
@@ -385,7 +355,7 @@ public class UpdateAdminSettingsCertsRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(certAutoIssue, certStandingDays, certMinAgeDays, certValidityDays, certMode, certTrustedIssuers, certIssuerUrls, certRequire, certMinPowLevel);
+    return Objects.hash(certAutoIssue, certMinAgeDays, certValidityDays, certMode, certTrustedIssuers, certIssuerUrls, certRequire, certMinPowLevel);
   }
 
   @Override
@@ -393,7 +363,6 @@ public class UpdateAdminSettingsCertsRequest {
     StringBuilder sb = new StringBuilder();
     sb.append("class UpdateAdminSettingsCertsRequest {\n");
     sb.append("    certAutoIssue: ").append(toIndentedString(certAutoIssue)).append("\n");
-    sb.append("    certStandingDays: ").append(toIndentedString(certStandingDays)).append("\n");
     sb.append("    certMinAgeDays: ").append(toIndentedString(certMinAgeDays)).append("\n");
     sb.append("    certValidityDays: ").append(toIndentedString(certValidityDays)).append("\n");
     sb.append("    certMode: ").append(toIndentedString(certMode)).append("\n");
@@ -451,11 +420,6 @@ public class UpdateAdminSettingsCertsRequest {
     // add `cert_auto_issue` to the URL query string
     if (getCertAutoIssue() != null) {
       joiner.add(getCertAutoIssue().toUrlQueryString(prefix + "cert_auto_issue" + suffix));
-    }
-
-    // add `cert_standing_days` to the URL query string
-    if (getCertStandingDays() != null) {
-      joiner.add(getCertStandingDays().toUrlQueryString(prefix + "cert_standing_days" + suffix));
     }
 
     // add `cert_min_age_days` to the URL query string
