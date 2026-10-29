@@ -463,7 +463,7 @@ public class BadgesApi {
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
-    String localVarPath = "/admin/badges/issue";
+    String localVarPath = "/admin/badges/issued";
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
@@ -861,7 +861,7 @@ public class BadgesApi {
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
-    String localVarPath = "/admin/badges/issued/{id}/revoke"
+    String localVarPath = "/admin/badges/issued/{id}"
         .replace("{id}", ApiClient.urlEncode(id.toString()));
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));

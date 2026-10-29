@@ -268,24 +268,28 @@ public class CertificationsApi {
   }
 
   /**
-   * List all cert issuances (admin)
+   * List cert issuances, newest first (admin; paged on hubs advertising list.cursor.admin)
    * 
+   * @param limit  (optional, default to 100)
+   * @param cursor The &#x60;id&#x60; of the last issuance of the previous page (optional)
    * @return List&lt;ListAdminCerts200ResponseInner&gt;
    * @throws ApiException if fails to make API call
    */
-  public List<ListAdminCerts200ResponseInner> listAdminCerts() throws ApiException {
-    ApiResponse<List<ListAdminCerts200ResponseInner>> localVarResponse = listAdminCertsWithHttpInfo();
+  public List<ListAdminCerts200ResponseInner> listAdminCerts(Long limit, String cursor) throws ApiException {
+    ApiResponse<List<ListAdminCerts200ResponseInner>> localVarResponse = listAdminCertsWithHttpInfo(limit, cursor);
     return localVarResponse.getData();
   }
 
   /**
-   * List all cert issuances (admin)
+   * List cert issuances, newest first (admin; paged on hubs advertising list.cursor.admin)
    * 
+   * @param limit  (optional, default to 100)
+   * @param cursor The &#x60;id&#x60; of the last issuance of the previous page (optional)
    * @return ApiResponse&lt;List&lt;ListAdminCerts200ResponseInner&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<List<ListAdminCerts200ResponseInner>> listAdminCertsWithHttpInfo() throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = listAdminCertsRequestBuilder();
+  public ApiResponse<List<ListAdminCerts200ResponseInner>> listAdminCertsWithHttpInfo(Long limit, String cursor) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = listAdminCertsRequestBuilder(limit, cursor);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -324,13 +328,30 @@ public class CertificationsApi {
     }
   }
 
-  private HttpRequest.Builder listAdminCertsRequestBuilder() throws ApiException {
+  private HttpRequest.Builder listAdminCertsRequestBuilder(Long limit, String cursor) throws ApiException {
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
     String localVarPath = "/admin/certs";
 
-    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+    List<Pair> localVarQueryParams = new ArrayList<>();
+    StringJoiner localVarQueryStringJoiner = new StringJoiner("&");
+    String localVarQueryParameterBaseName;
+    localVarQueryParameterBaseName = "limit";
+    localVarQueryParams.addAll(ApiClient.parameterToPairs("limit", limit));
+    localVarQueryParameterBaseName = "cursor";
+    localVarQueryParams.addAll(ApiClient.parameterToPairs("cursor", cursor));
+
+    if (!localVarQueryParams.isEmpty() || localVarQueryStringJoiner.length() != 0) {
+      StringJoiner queryJoiner = new StringJoiner("&");
+      localVarQueryParams.forEach(p -> queryJoiner.add(p.getName() + '=' + p.getValue()));
+      if (localVarQueryStringJoiner.length() != 0) {
+        queryJoiner.add(localVarQueryStringJoiner.toString());
+      }
+      localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath + '?' + queryJoiner.toString()));
+    } else {
+      localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+    }
 
     localVarRequestBuilder.header("Accept", "application/json");
 
@@ -658,14 +679,14 @@ public class CertificationsApi {
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
-    String localVarPath = "/admin/certs/{pubkey}/revoke"
+    String localVarPath = "/admin/certs/{pubkey}"
         .replace("{pubkey}", ApiClient.urlEncode(pubkey.toString()));
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    localVarRequestBuilder.method("DELETE", HttpRequest.BodyPublishers.noBody());
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }

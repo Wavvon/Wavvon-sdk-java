@@ -78,7 +78,7 @@ public class Invite {
   private String boundPubkey;
 
   /**
-   * Whether this invite can still admit anyone, and if not, which of the two ways it retired. Advertised as the &#x60;invites.status&#x60; capability; absent on hubs that do not advertise it.
+   * Whether this invite can still admit anyone, and if not, which of the two ways it retired.
    */
   public enum StatusEnum {
     LIVE(String.valueOf("live")),
@@ -319,7 +319,7 @@ public class Invite {
   }
 
   /**
-   * Whether this invite can still admit anyone, and if not, which of the two ways it retired. Advertised as the &#x60;invites.status&#x60; capability; absent on hubs that do not advertise it.
+   * Whether this invite can still admit anyone, and if not, which of the two ways it retired.
    * @return status
    */
   @jakarta.annotation.Nullable

@@ -30,75 +30,162 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * SetHubSettingsLobbyRequest
+ * SearchChannelPosts200ResponseInner
  */
 @JsonPropertyOrder({
-  SetHubSettingsLobbyRequest.JSON_PROPERTY_LOBBY_ENABLED,
-  SetHubSettingsLobbyRequest.JSON_PROPERTY_WELCOME_MD
+  SearchChannelPosts200ResponseInner.JSON_PROPERTY_POST_ID,
+  SearchChannelPosts200ResponseInner.JSON_PROPERTY_TITLE_SNIPPET,
+  SearchChannelPosts200ResponseInner.JSON_PROPERTY_BODY_SNIPPET,
+  SearchChannelPosts200ResponseInner.JSON_PROPERTY_IS_REPLY,
+  SearchChannelPosts200ResponseInner.JSON_PROPERTY_REPLY_ID
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class SetHubSettingsLobbyRequest {
-  public static final String JSON_PROPERTY_LOBBY_ENABLED = "lobby_enabled";
-  @jakarta.annotation.Nonnull
-  private Boolean lobbyEnabled;
-
-  public static final String JSON_PROPERTY_WELCOME_MD = "welcome_md";
+public class SearchChannelPosts200ResponseInner {
+  public static final String JSON_PROPERTY_POST_ID = "post_id";
   @jakarta.annotation.Nullable
-  private String welcomeMd;
+  private String postId;
 
-  public SetHubSettingsLobbyRequest() { 
+  public static final String JSON_PROPERTY_TITLE_SNIPPET = "title_snippet";
+  @jakarta.annotation.Nullable
+  private String titleSnippet;
+
+  public static final String JSON_PROPERTY_BODY_SNIPPET = "body_snippet";
+  @jakarta.annotation.Nullable
+  private String bodySnippet;
+
+  public static final String JSON_PROPERTY_IS_REPLY = "is_reply";
+  @jakarta.annotation.Nullable
+  private Boolean isReply;
+
+  public static final String JSON_PROPERTY_REPLY_ID = "reply_id";
+  @jakarta.annotation.Nullable
+  private String replyId;
+
+  public SearchChannelPosts200ResponseInner() { 
   }
 
-  public SetHubSettingsLobbyRequest lobbyEnabled(@jakarta.annotation.Nonnull Boolean lobbyEnabled) {
-    this.lobbyEnabled = lobbyEnabled;
+  public SearchChannelPosts200ResponseInner postId(@jakarta.annotation.Nullable String postId) {
+    this.postId = postId;
     return this;
   }
 
   /**
-   * Get lobbyEnabled
-   * @return lobbyEnabled
+   * Get postId
+   * @return postId
    */
-  @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_LOBBY_ENABLED)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public Boolean getLobbyEnabled() {
-    return lobbyEnabled;
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_POST_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getPostId() {
+    return postId;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_LOBBY_ENABLED)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setLobbyEnabled(@jakarta.annotation.Nonnull Boolean lobbyEnabled) {
-    this.lobbyEnabled = lobbyEnabled;
+  @JsonProperty(JSON_PROPERTY_POST_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setPostId(@jakarta.annotation.Nullable String postId) {
+    this.postId = postId;
   }
 
 
-  public SetHubSettingsLobbyRequest welcomeMd(@jakarta.annotation.Nullable String welcomeMd) {
-    this.welcomeMd = welcomeMd;
+  public SearchChannelPosts200ResponseInner titleSnippet(@jakarta.annotation.Nullable String titleSnippet) {
+    this.titleSnippet = titleSnippet;
     return this;
   }
 
   /**
-   * Get welcomeMd
-   * @return welcomeMd
+   * Get titleSnippet
+   * @return titleSnippet
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_WELCOME_MD)
+  @JsonProperty(JSON_PROPERTY_TITLE_SNIPPET)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getWelcomeMd() {
-    return welcomeMd;
+  public String getTitleSnippet() {
+    return titleSnippet;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_WELCOME_MD)
+  @JsonProperty(JSON_PROPERTY_TITLE_SNIPPET)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setWelcomeMd(@jakarta.annotation.Nullable String welcomeMd) {
-    this.welcomeMd = welcomeMd;
+  public void setTitleSnippet(@jakarta.annotation.Nullable String titleSnippet) {
+    this.titleSnippet = titleSnippet;
+  }
+
+
+  public SearchChannelPosts200ResponseInner bodySnippet(@jakarta.annotation.Nullable String bodySnippet) {
+    this.bodySnippet = bodySnippet;
+    return this;
+  }
+
+  /**
+   * Get bodySnippet
+   * @return bodySnippet
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_BODY_SNIPPET)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getBodySnippet() {
+    return bodySnippet;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_BODY_SNIPPET)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setBodySnippet(@jakarta.annotation.Nullable String bodySnippet) {
+    this.bodySnippet = bodySnippet;
+  }
+
+
+  public SearchChannelPosts200ResponseInner isReply(@jakarta.annotation.Nullable Boolean isReply) {
+    this.isReply = isReply;
+    return this;
+  }
+
+  /**
+   * Get isReply
+   * @return isReply
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_IS_REPLY)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Boolean getIsReply() {
+    return isReply;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_IS_REPLY)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setIsReply(@jakarta.annotation.Nullable Boolean isReply) {
+    this.isReply = isReply;
+  }
+
+
+  public SearchChannelPosts200ResponseInner replyId(@jakarta.annotation.Nullable String replyId) {
+    this.replyId = replyId;
+    return this;
+  }
+
+  /**
+   * Get replyId
+   * @return replyId
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_REPLY_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getReplyId() {
+    return replyId;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_REPLY_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setReplyId(@jakarta.annotation.Nullable String replyId) {
+    this.replyId = replyId;
   }
 
 
   /**
-   * Return true if this setHubSettingsLobby_request object is equal to o.
+   * Return true if this searchChannelPosts_200_response_inner object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -108,22 +195,28 @@ public class SetHubSettingsLobbyRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SetHubSettingsLobbyRequest setHubSettingsLobbyRequest = (SetHubSettingsLobbyRequest) o;
-    return Objects.equals(this.lobbyEnabled, setHubSettingsLobbyRequest.lobbyEnabled) &&
-        Objects.equals(this.welcomeMd, setHubSettingsLobbyRequest.welcomeMd);
+    SearchChannelPosts200ResponseInner searchChannelPosts200ResponseInner = (SearchChannelPosts200ResponseInner) o;
+    return Objects.equals(this.postId, searchChannelPosts200ResponseInner.postId) &&
+        Objects.equals(this.titleSnippet, searchChannelPosts200ResponseInner.titleSnippet) &&
+        Objects.equals(this.bodySnippet, searchChannelPosts200ResponseInner.bodySnippet) &&
+        Objects.equals(this.isReply, searchChannelPosts200ResponseInner.isReply) &&
+        Objects.equals(this.replyId, searchChannelPosts200ResponseInner.replyId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(lobbyEnabled, welcomeMd);
+    return Objects.hash(postId, titleSnippet, bodySnippet, isReply, replyId);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SetHubSettingsLobbyRequest {\n");
-    sb.append("    lobbyEnabled: ").append(toIndentedString(lobbyEnabled)).append("\n");
-    sb.append("    welcomeMd: ").append(toIndentedString(welcomeMd)).append("\n");
+    sb.append("class SearchChannelPosts200ResponseInner {\n");
+    sb.append("    postId: ").append(toIndentedString(postId)).append("\n");
+    sb.append("    titleSnippet: ").append(toIndentedString(titleSnippet)).append("\n");
+    sb.append("    bodySnippet: ").append(toIndentedString(bodySnippet)).append("\n");
+    sb.append("    isReply: ").append(toIndentedString(isReply)).append("\n");
+    sb.append("    replyId: ").append(toIndentedString(replyId)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -171,14 +264,29 @@ public class SetHubSettingsLobbyRequest {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `lobby_enabled` to the URL query string
-    if (getLobbyEnabled() != null) {
-      joiner.add(String.format("%slobby_enabled%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getLobbyEnabled()))));
+    // add `post_id` to the URL query string
+    if (getPostId() != null) {
+      joiner.add(String.format("%spost_id%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getPostId()))));
     }
 
-    // add `welcome_md` to the URL query string
-    if (getWelcomeMd() != null) {
-      joiner.add(String.format("%swelcome_md%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getWelcomeMd()))));
+    // add `title_snippet` to the URL query string
+    if (getTitleSnippet() != null) {
+      joiner.add(String.format("%stitle_snippet%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getTitleSnippet()))));
+    }
+
+    // add `body_snippet` to the URL query string
+    if (getBodySnippet() != null) {
+      joiner.add(String.format("%sbody_snippet%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getBodySnippet()))));
+    }
+
+    // add `is_reply` to the URL query string
+    if (getIsReply() != null) {
+      joiner.add(String.format("%sis_reply%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getIsReply()))));
+    }
+
+    // add `reply_id` to the URL query string
+    if (getReplyId() != null) {
+      joiner.add(String.format("%sreply_id%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getReplyId()))));
     }
 
     return joiner.toString();

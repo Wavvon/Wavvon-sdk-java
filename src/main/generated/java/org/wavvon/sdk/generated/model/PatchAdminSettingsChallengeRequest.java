@@ -24,91 +24,120 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * ListAdminOutgoingWebhookSubscriptions200ResponseSubscriptionsInner
+ * Absent fields keep their stored value.
  */
 @JsonPropertyOrder({
-  ListAdminOutgoingWebhookSubscriptions200ResponseSubscriptionsInner.JSON_PROPERTY_EVENT,
-  ListAdminOutgoingWebhookSubscriptions200ResponseSubscriptionsInner.JSON_PROPERTY_CHANNELS
+  PatchAdminSettingsChallengeRequest.JSON_PROPERTY_CHALLENGE_MODE,
+  PatchAdminSettingsChallengeRequest.JSON_PROPERTY_CHALLENGE_DIFFICULTY
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class ListAdminOutgoingWebhookSubscriptions200ResponseSubscriptionsInner {
-  public static final String JSON_PROPERTY_EVENT = "event";
-  @jakarta.annotation.Nullable
-  private String event;
-
-  public static final String JSON_PROPERTY_CHANNELS = "channels";
-  @jakarta.annotation.Nullable
-  private List<String> channels;
-
-  public ListAdminOutgoingWebhookSubscriptions200ResponseSubscriptionsInner() { 
-  }
-
-  public ListAdminOutgoingWebhookSubscriptions200ResponseSubscriptionsInner event(@jakarta.annotation.Nullable String event) {
-    this.event = event;
-    return this;
-  }
-
+public class PatchAdminSettingsChallengeRequest {
   /**
-   * Get event
-   * @return event
+   * Gets or Sets challengeMode
    */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_EVENT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getEvent() {
-    return event;
-  }
+  public enum ChallengeModeEnum {
+    OFF(String.valueOf("off")),
+    
+    CLICK(String.valueOf("click")),
+    
+    PUZZLE(String.valueOf("puzzle")),
+    
+    BOTH(String.valueOf("both"));
 
+    private String value;
 
-  @JsonProperty(JSON_PROPERTY_EVENT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setEvent(@jakarta.annotation.Nullable String event) {
-    this.event = event;
-  }
-
-
-  public ListAdminOutgoingWebhookSubscriptions200ResponseSubscriptionsInner channels(@jakarta.annotation.Nullable List<String> channels) {
-    this.channels = channels;
-    return this;
-  }
-
-  public ListAdminOutgoingWebhookSubscriptions200ResponseSubscriptionsInner addChannelsItem(String channelsItem) {
-    if (this.channels == null) {
-      this.channels = new ArrayList<>();
+    ChallengeModeEnum(String value) {
+      this.value = value;
     }
-    this.channels.add(channelsItem);
+
+    @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static ChallengeModeEnum fromValue(String value) {
+      for (ChallengeModeEnum b : ChallengeModeEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+  }
+
+  public static final String JSON_PROPERTY_CHALLENGE_MODE = "challenge_mode";
+  @jakarta.annotation.Nullable
+  private ChallengeModeEnum challengeMode;
+
+  public static final String JSON_PROPERTY_CHALLENGE_DIFFICULTY = "challenge_difficulty";
+  @jakarta.annotation.Nullable
+  private String challengeDifficulty;
+
+  public PatchAdminSettingsChallengeRequest() { 
+  }
+
+  public PatchAdminSettingsChallengeRequest challengeMode(@jakarta.annotation.Nullable ChallengeModeEnum challengeMode) {
+    this.challengeMode = challengeMode;
     return this;
   }
 
   /**
-   * Get channels
-   * @return channels
+   * Get challengeMode
+   * @return challengeMode
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_CHANNELS)
+  @JsonProperty(JSON_PROPERTY_CHALLENGE_MODE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public List<String> getChannels() {
-    return channels;
+  public ChallengeModeEnum getChallengeMode() {
+    return challengeMode;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_CHANNELS)
+  @JsonProperty(JSON_PROPERTY_CHALLENGE_MODE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setChannels(@jakarta.annotation.Nullable List<String> channels) {
-    this.channels = channels;
+  public void setChallengeMode(@jakarta.annotation.Nullable ChallengeModeEnum challengeMode) {
+    this.challengeMode = challengeMode;
+  }
+
+
+  public PatchAdminSettingsChallengeRequest challengeDifficulty(@jakarta.annotation.Nullable String challengeDifficulty) {
+    this.challengeDifficulty = challengeDifficulty;
+    return this;
+  }
+
+  /**
+   * Get challengeDifficulty
+   * @return challengeDifficulty
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CHALLENGE_DIFFICULTY)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getChallengeDifficulty() {
+    return challengeDifficulty;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_CHALLENGE_DIFFICULTY)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setChallengeDifficulty(@jakarta.annotation.Nullable String challengeDifficulty) {
+    this.challengeDifficulty = challengeDifficulty;
   }
 
 
   /**
-   * Return true if this listAdminOutgoingWebhookSubscriptions_200_response_subscriptions_inner object is equal to o.
+   * Return true if this patchAdminSettingsChallenge_request object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -118,22 +147,22 @@ public class ListAdminOutgoingWebhookSubscriptions200ResponseSubscriptionsInner 
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ListAdminOutgoingWebhookSubscriptions200ResponseSubscriptionsInner listAdminOutgoingWebhookSubscriptions200ResponseSubscriptionsInner = (ListAdminOutgoingWebhookSubscriptions200ResponseSubscriptionsInner) o;
-    return Objects.equals(this.event, listAdminOutgoingWebhookSubscriptions200ResponseSubscriptionsInner.event) &&
-        Objects.equals(this.channels, listAdminOutgoingWebhookSubscriptions200ResponseSubscriptionsInner.channels);
+    PatchAdminSettingsChallengeRequest patchAdminSettingsChallengeRequest = (PatchAdminSettingsChallengeRequest) o;
+    return Objects.equals(this.challengeMode, patchAdminSettingsChallengeRequest.challengeMode) &&
+        Objects.equals(this.challengeDifficulty, patchAdminSettingsChallengeRequest.challengeDifficulty);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(event, channels);
+    return Objects.hash(challengeMode, challengeDifficulty);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ListAdminOutgoingWebhookSubscriptions200ResponseSubscriptionsInner {\n");
-    sb.append("    event: ").append(toIndentedString(event)).append("\n");
-    sb.append("    channels: ").append(toIndentedString(channels)).append("\n");
+    sb.append("class PatchAdminSettingsChallengeRequest {\n");
+    sb.append("    challengeMode: ").append(toIndentedString(challengeMode)).append("\n");
+    sb.append("    challengeDifficulty: ").append(toIndentedString(challengeDifficulty)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -181,18 +210,14 @@ public class ListAdminOutgoingWebhookSubscriptions200ResponseSubscriptionsInner 
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `event` to the URL query string
-    if (getEvent() != null) {
-      joiner.add(String.format("%sevent%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getEvent()))));
+    // add `challenge_mode` to the URL query string
+    if (getChallengeMode() != null) {
+      joiner.add(String.format("%schallenge_mode%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getChallengeMode()))));
     }
 
-    // add `channels` to the URL query string
-    if (getChannels() != null) {
-      for (int i = 0; i < getChannels().size(); i++) {
-        joiner.add(String.format("%schannels%s%s=%s", prefix, suffix,
-            "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix),
-            ApiClient.urlEncode(ApiClient.valueToString(getChannels().get(i)))));
-      }
+    // add `challenge_difficulty` to the URL query string
+    if (getChallengeDifficulty() != null) {
+      joiner.add(String.format("%schallenge_difficulty%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getChallengeDifficulty()))));
     }
 
     return joiner.toString();

@@ -85,22 +85,22 @@ public class FriendsApi {
   /**
    * Accept a friend request
    * 
-   * @param publicKey  (required)
+   * @param pubkey  (required)
    * @throws ApiException if fails to make API call
    */
-  public void acceptFriend(String publicKey) throws ApiException {
-    acceptFriendWithHttpInfo(publicKey);
+  public void acceptFriend(String pubkey) throws ApiException {
+    acceptFriendWithHttpInfo(pubkey);
   }
 
   /**
    * Accept a friend request
    * 
-   * @param publicKey  (required)
+   * @param pubkey  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> acceptFriendWithHttpInfo(String publicKey) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = acceptFriendRequestBuilder(publicKey);
+  public ApiResponse<Void> acceptFriendWithHttpInfo(String pubkey) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = acceptFriendRequestBuilder(pubkey);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -133,16 +133,16 @@ public class FriendsApi {
     }
   }
 
-  private HttpRequest.Builder acceptFriendRequestBuilder(String publicKey) throws ApiException {
-    // verify the required parameter 'publicKey' is set
-    if (publicKey == null) {
-      throw new ApiException(400, "Missing the required parameter 'publicKey' when calling acceptFriend");
+  private HttpRequest.Builder acceptFriendRequestBuilder(String pubkey) throws ApiException {
+    // verify the required parameter 'pubkey' is set
+    if (pubkey == null) {
+      throw new ApiException(400, "Missing the required parameter 'pubkey' when calling acceptFriend");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
-    String localVarPath = "/friends/{public_key}/accept"
-        .replace("{public_key}", ApiClient.urlEncode(publicKey.toString()));
+    String localVarPath = "/friends/{pubkey}/accept"
+        .replace("{pubkey}", ApiClient.urlEncode(pubkey.toString()));
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
@@ -242,22 +242,22 @@ public class FriendsApi {
   /**
    * Remove a friend
    * 
-   * @param publicKey  (required)
+   * @param pubkey  (required)
    * @throws ApiException if fails to make API call
    */
-  public void deleteFriend(String publicKey) throws ApiException {
-    deleteFriendWithHttpInfo(publicKey);
+  public void deleteFriend(String pubkey) throws ApiException {
+    deleteFriendWithHttpInfo(pubkey);
   }
 
   /**
    * Remove a friend
    * 
-   * @param publicKey  (required)
+   * @param pubkey  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> deleteFriendWithHttpInfo(String publicKey) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = deleteFriendRequestBuilder(publicKey);
+  public ApiResponse<Void> deleteFriendWithHttpInfo(String pubkey) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = deleteFriendRequestBuilder(pubkey);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -290,16 +290,16 @@ public class FriendsApi {
     }
   }
 
-  private HttpRequest.Builder deleteFriendRequestBuilder(String publicKey) throws ApiException {
-    // verify the required parameter 'publicKey' is set
-    if (publicKey == null) {
-      throw new ApiException(400, "Missing the required parameter 'publicKey' when calling deleteFriend");
+  private HttpRequest.Builder deleteFriendRequestBuilder(String pubkey) throws ApiException {
+    // verify the required parameter 'pubkey' is set
+    if (pubkey == null) {
+      throw new ApiException(400, "Missing the required parameter 'pubkey' when calling deleteFriend");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
-    String localVarPath = "/friends/{public_key}"
-        .replace("{public_key}", ApiClient.urlEncode(publicKey.toString()));
+    String localVarPath = "/friends/{pubkey}"
+        .replace("{pubkey}", ApiClient.urlEncode(pubkey.toString()));
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 

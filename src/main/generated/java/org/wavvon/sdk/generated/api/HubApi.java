@@ -23,8 +23,8 @@ import org.wavvon.sdk.generated.model.GetAdminSettingsModeration200Response;
 import org.wavvon.sdk.generated.model.GetAdminSettingsPow200Response;
 import org.wavvon.sdk.generated.model.GetAdminSettingsTags200Response;
 import org.wavvon.sdk.generated.model.MemberAdminInfo;
-import org.wavvon.sdk.generated.model.SetHubSettingsChallengeRequest;
-import org.wavvon.sdk.generated.model.SetHubSettingsLobbyRequest;
+import org.wavvon.sdk.generated.model.PatchAdminSettingsChallengeRequest;
+import org.wavvon.sdk.generated.model.PatchAdminSettingsLobbyRequest;
 import org.wavvon.sdk.generated.model.UpdateAdminSettingsListingRequest;
 import org.wavvon.sdk.generated.model.UpdateAdminSettingsModerationRequest;
 import org.wavvon.sdk.generated.model.UpdateAdminSettingsPowRequest;
@@ -97,22 +97,22 @@ public class HubApi {
   /**
    * Approve a pending user (admin)
    * 
-   * @param targetKey  (required)
+   * @param pubkey  (required)
    * @throws ApiException if fails to make API call
    */
-  public void approveHubPending(String targetKey) throws ApiException {
-    approveHubPendingWithHttpInfo(targetKey);
+  public void approveHubPending(String pubkey) throws ApiException {
+    approveHubPendingWithHttpInfo(pubkey);
   }
 
   /**
    * Approve a pending user (admin)
    * 
-   * @param targetKey  (required)
+   * @param pubkey  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> approveHubPendingWithHttpInfo(String targetKey) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = approveHubPendingRequestBuilder(targetKey);
+  public ApiResponse<Void> approveHubPendingWithHttpInfo(String pubkey) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = approveHubPendingRequestBuilder(pubkey);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -145,16 +145,16 @@ public class HubApi {
     }
   }
 
-  private HttpRequest.Builder approveHubPendingRequestBuilder(String targetKey) throws ApiException {
-    // verify the required parameter 'targetKey' is set
-    if (targetKey == null) {
-      throw new ApiException(400, "Missing the required parameter 'targetKey' when calling approveHubPending");
+  private HttpRequest.Builder approveHubPendingRequestBuilder(String pubkey) throws ApiException {
+    // verify the required parameter 'pubkey' is set
+    if (pubkey == null) {
+      throw new ApiException(400, "Missing the required parameter 'pubkey' when calling approveHubPending");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
-    String localVarPath = "/hub/pending/{target_key}/approve"
-        .replace("{target_key}", ApiClient.urlEncode(targetKey.toString()));
+    String localVarPath = "/hub/pending/{pubkey}/approve"
+        .replace("{pubkey}", ApiClient.urlEncode(pubkey.toString()));
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
@@ -697,24 +697,28 @@ public class HubApi {
   }
 
   /**
-   * List all hub members
+   * List hub members, oldest first (paged on hubs advertising list.cursor.admin)
    * 
+   * @param limit  (optional, default to 100)
+   * @param cursor The &#x60;public_key&#x60; of the last member of the previous page (optional)
    * @return List&lt;MemberAdminInfo&gt;
    * @throws ApiException if fails to make API call
    */
-  public List<MemberAdminInfo> listHubMembers() throws ApiException {
-    ApiResponse<List<MemberAdminInfo>> localVarResponse = listHubMembersWithHttpInfo();
+  public List<MemberAdminInfo> listHubMembers(Long limit, String cursor) throws ApiException {
+    ApiResponse<List<MemberAdminInfo>> localVarResponse = listHubMembersWithHttpInfo(limit, cursor);
     return localVarResponse.getData();
   }
 
   /**
-   * List all hub members
+   * List hub members, oldest first (paged on hubs advertising list.cursor.admin)
    * 
+   * @param limit  (optional, default to 100)
+   * @param cursor The &#x60;public_key&#x60; of the last member of the previous page (optional)
    * @return ApiResponse&lt;List&lt;MemberAdminInfo&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<List<MemberAdminInfo>> listHubMembersWithHttpInfo() throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = listHubMembersRequestBuilder();
+  public ApiResponse<List<MemberAdminInfo>> listHubMembersWithHttpInfo(Long limit, String cursor) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = listHubMembersRequestBuilder(limit, cursor);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -753,13 +757,30 @@ public class HubApi {
     }
   }
 
-  private HttpRequest.Builder listHubMembersRequestBuilder() throws ApiException {
+  private HttpRequest.Builder listHubMembersRequestBuilder(Long limit, String cursor) throws ApiException {
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
     String localVarPath = "/hub/members";
 
-    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+    List<Pair> localVarQueryParams = new ArrayList<>();
+    StringJoiner localVarQueryStringJoiner = new StringJoiner("&");
+    String localVarQueryParameterBaseName;
+    localVarQueryParameterBaseName = "limit";
+    localVarQueryParams.addAll(ApiClient.parameterToPairs("limit", limit));
+    localVarQueryParameterBaseName = "cursor";
+    localVarQueryParams.addAll(ApiClient.parameterToPairs("cursor", cursor));
+
+    if (!localVarQueryParams.isEmpty() || localVarQueryStringJoiner.length() != 0) {
+      StringJoiner queryJoiner = new StringJoiner("&");
+      localVarQueryParams.forEach(p -> queryJoiner.add(p.getName() + '=' + p.getValue()));
+      if (localVarQueryStringJoiner.length() != 0) {
+        queryJoiner.add(localVarQueryStringJoiner.toString());
+      }
+      localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath + '?' + queryJoiner.toString()));
+    } else {
+      localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+    }
 
     localVarRequestBuilder.header("Accept", "application/json");
 
@@ -866,22 +887,22 @@ public class HubApi {
   /**
    * Update bot-challenge mode (admin)
    * 
-   * @param setHubSettingsChallengeRequest  (required)
+   * @param patchAdminSettingsChallengeRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void setHubSettingsChallenge(SetHubSettingsChallengeRequest setHubSettingsChallengeRequest) throws ApiException {
-    setHubSettingsChallengeWithHttpInfo(setHubSettingsChallengeRequest);
+  public void patchAdminSettingsChallenge(PatchAdminSettingsChallengeRequest patchAdminSettingsChallengeRequest) throws ApiException {
+    patchAdminSettingsChallengeWithHttpInfo(patchAdminSettingsChallengeRequest);
   }
 
   /**
    * Update bot-challenge mode (admin)
    * 
-   * @param setHubSettingsChallengeRequest  (required)
+   * @param patchAdminSettingsChallengeRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> setHubSettingsChallengeWithHttpInfo(SetHubSettingsChallengeRequest setHubSettingsChallengeRequest) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = setHubSettingsChallengeRequestBuilder(setHubSettingsChallengeRequest);
+  public ApiResponse<Void> patchAdminSettingsChallengeWithHttpInfo(PatchAdminSettingsChallengeRequest patchAdminSettingsChallengeRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = patchAdminSettingsChallengeRequestBuilder(patchAdminSettingsChallengeRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -891,7 +912,7 @@ public class HubApi {
       }
       try {
         if (localVarResponse.statusCode()/ 100 != 2) {
-          throw getApiException("setHubSettingsChallenge", localVarResponse);
+          throw getApiException("patchAdminSettingsChallenge", localVarResponse);
         }
         return new ApiResponse<>(
             localVarResponse.statusCode(),
@@ -914,15 +935,15 @@ public class HubApi {
     }
   }
 
-  private HttpRequest.Builder setHubSettingsChallengeRequestBuilder(SetHubSettingsChallengeRequest setHubSettingsChallengeRequest) throws ApiException {
-    // verify the required parameter 'setHubSettingsChallengeRequest' is set
-    if (setHubSettingsChallengeRequest == null) {
-      throw new ApiException(400, "Missing the required parameter 'setHubSettingsChallengeRequest' when calling setHubSettingsChallenge");
+  private HttpRequest.Builder patchAdminSettingsChallengeRequestBuilder(PatchAdminSettingsChallengeRequest patchAdminSettingsChallengeRequest) throws ApiException {
+    // verify the required parameter 'patchAdminSettingsChallengeRequest' is set
+    if (patchAdminSettingsChallengeRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'patchAdminSettingsChallengeRequest' when calling patchAdminSettingsChallenge");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
-    String localVarPath = "/hub/settings/challenge";
+    String localVarPath = "/admin/settings/challenge";
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
@@ -930,8 +951,8 @@ public class HubApi {
     localVarRequestBuilder.header("Accept", "application/json");
 
     try {
-      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(setHubSettingsChallengeRequest);
-      localVarRequestBuilder.method("PUT", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(patchAdminSettingsChallengeRequest);
+      localVarRequestBuilder.method("PATCH", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
     } catch (IOException e) {
       throw new ApiException(e);
     }
@@ -947,22 +968,22 @@ public class HubApi {
   /**
    * Update lobby / security level settings (admin)
    * 
-   * @param setHubSettingsLobbyRequest  (required)
+   * @param patchAdminSettingsLobbyRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void setHubSettingsLobby(SetHubSettingsLobbyRequest setHubSettingsLobbyRequest) throws ApiException {
-    setHubSettingsLobbyWithHttpInfo(setHubSettingsLobbyRequest);
+  public void patchAdminSettingsLobby(PatchAdminSettingsLobbyRequest patchAdminSettingsLobbyRequest) throws ApiException {
+    patchAdminSettingsLobbyWithHttpInfo(patchAdminSettingsLobbyRequest);
   }
 
   /**
    * Update lobby / security level settings (admin)
    * 
-   * @param setHubSettingsLobbyRequest  (required)
+   * @param patchAdminSettingsLobbyRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> setHubSettingsLobbyWithHttpInfo(SetHubSettingsLobbyRequest setHubSettingsLobbyRequest) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = setHubSettingsLobbyRequestBuilder(setHubSettingsLobbyRequest);
+  public ApiResponse<Void> patchAdminSettingsLobbyWithHttpInfo(PatchAdminSettingsLobbyRequest patchAdminSettingsLobbyRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = patchAdminSettingsLobbyRequestBuilder(patchAdminSettingsLobbyRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -972,7 +993,7 @@ public class HubApi {
       }
       try {
         if (localVarResponse.statusCode()/ 100 != 2) {
-          throw getApiException("setHubSettingsLobby", localVarResponse);
+          throw getApiException("patchAdminSettingsLobby", localVarResponse);
         }
         return new ApiResponse<>(
             localVarResponse.statusCode(),
@@ -995,15 +1016,15 @@ public class HubApi {
     }
   }
 
-  private HttpRequest.Builder setHubSettingsLobbyRequestBuilder(SetHubSettingsLobbyRequest setHubSettingsLobbyRequest) throws ApiException {
-    // verify the required parameter 'setHubSettingsLobbyRequest' is set
-    if (setHubSettingsLobbyRequest == null) {
-      throw new ApiException(400, "Missing the required parameter 'setHubSettingsLobbyRequest' when calling setHubSettingsLobby");
+  private HttpRequest.Builder patchAdminSettingsLobbyRequestBuilder(PatchAdminSettingsLobbyRequest patchAdminSettingsLobbyRequest) throws ApiException {
+    // verify the required parameter 'patchAdminSettingsLobbyRequest' is set
+    if (patchAdminSettingsLobbyRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'patchAdminSettingsLobbyRequest' when calling patchAdminSettingsLobby");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
-    String localVarPath = "/hub/settings/lobby";
+    String localVarPath = "/admin/settings/lobby";
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
@@ -1011,8 +1032,8 @@ public class HubApi {
     localVarRequestBuilder.header("Accept", "application/json");
 
     try {
-      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(setHubSettingsLobbyRequest);
-      localVarRequestBuilder.method("PUT", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(patchAdminSettingsLobbyRequest);
+      localVarRequestBuilder.method("PATCH", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
     } catch (IOException e) {
       throw new ApiException(e);
     }

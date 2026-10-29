@@ -31,11 +31,11 @@ import org.wavvon.sdk.generated.model.CreateChannelMessageReactionRequest;
 import org.wavvon.sdk.generated.model.FederationJoinAlliance200Response;
 import org.wavvon.sdk.generated.model.FederationJoinAllianceRequest;
 import org.wavvon.sdk.generated.model.JoinAllianceWithInviteRequest;
-import org.wavvon.sdk.generated.model.ListAllianceChannelPosts200Response;
 import org.wavvon.sdk.generated.model.ListAllianceManagers200ResponseInner;
 import org.wavvon.sdk.generated.model.ListAlliancePeople200ResponseInner;
 import org.wavvon.sdk.generated.model.Message;
 import org.wavvon.sdk.generated.model.PostDetail;
+import org.wavvon.sdk.generated.model.PostSummary;
 import org.wavvon.sdk.generated.model.ReplyView;
 import org.wavvon.sdk.generated.model.SetAlliancePeopleVisibilityRequest;
 import org.wavvon.sdk.generated.model.UpdateHubIconRequest;
@@ -1906,11 +1906,13 @@ public class AlliancesApi {
    * 
    * @param allianceId  (required)
    * @param channelId  (required)
+   * @param cursor The &#x60;id&#x60; of the last message of the previous page, newest first. Forwarded to the owning hub when the channel is a partner&#39;s. (optional)
+   * @param limit  (optional, default to 50)
    * @return List&lt;Message&gt;
    * @throws ApiException if fails to make API call
    */
-  public List<Message> listAllianceChannelMessages(String allianceId, String channelId) throws ApiException {
-    ApiResponse<List<Message>> localVarResponse = listAllianceChannelMessagesWithHttpInfo(allianceId, channelId);
+  public List<Message> listAllianceChannelMessages(String allianceId, String channelId, String cursor, Long limit) throws ApiException {
+    ApiResponse<List<Message>> localVarResponse = listAllianceChannelMessagesWithHttpInfo(allianceId, channelId, cursor, limit);
     return localVarResponse.getData();
   }
 
@@ -1919,11 +1921,13 @@ public class AlliancesApi {
    * 
    * @param allianceId  (required)
    * @param channelId  (required)
+   * @param cursor The &#x60;id&#x60; of the last message of the previous page, newest first. Forwarded to the owning hub when the channel is a partner&#39;s. (optional)
+   * @param limit  (optional, default to 50)
    * @return ApiResponse&lt;List&lt;Message&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<List<Message>> listAllianceChannelMessagesWithHttpInfo(String allianceId, String channelId) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = listAllianceChannelMessagesRequestBuilder(allianceId, channelId);
+  public ApiResponse<List<Message>> listAllianceChannelMessagesWithHttpInfo(String allianceId, String channelId, String cursor, Long limit) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = listAllianceChannelMessagesRequestBuilder(allianceId, channelId, cursor, limit);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -1962,7 +1966,7 @@ public class AlliancesApi {
     }
   }
 
-  private HttpRequest.Builder listAllianceChannelMessagesRequestBuilder(String allianceId, String channelId) throws ApiException {
+  private HttpRequest.Builder listAllianceChannelMessagesRequestBuilder(String allianceId, String channelId, String cursor, Long limit) throws ApiException {
     // verify the required parameter 'allianceId' is set
     if (allianceId == null) {
       throw new ApiException(400, "Missing the required parameter 'allianceId' when calling listAllianceChannelMessages");
@@ -1978,7 +1982,24 @@ public class AlliancesApi {
         .replace("{alliance_id}", ApiClient.urlEncode(allianceId.toString()))
         .replace("{channel_id}", ApiClient.urlEncode(channelId.toString()));
 
-    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+    List<Pair> localVarQueryParams = new ArrayList<>();
+    StringJoiner localVarQueryStringJoiner = new StringJoiner("&");
+    String localVarQueryParameterBaseName;
+    localVarQueryParameterBaseName = "cursor";
+    localVarQueryParams.addAll(ApiClient.parameterToPairs("cursor", cursor));
+    localVarQueryParameterBaseName = "limit";
+    localVarQueryParams.addAll(ApiClient.parameterToPairs("limit", limit));
+
+    if (!localVarQueryParams.isEmpty() || localVarQueryStringJoiner.length() != 0) {
+      StringJoiner queryJoiner = new StringJoiner("&");
+      localVarQueryParams.forEach(p -> queryJoiner.add(p.getName() + '=' + p.getValue()));
+      if (localVarQueryStringJoiner.length() != 0) {
+        queryJoiner.add(localVarQueryStringJoiner.toString());
+      }
+      localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath + '?' + queryJoiner.toString()));
+    } else {
+      localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+    }
 
     localVarRequestBuilder.header("Accept", "application/json");
 
@@ -1999,11 +2020,11 @@ public class AlliancesApi {
    * @param channelId  (required)
    * @param cursor  (optional)
    * @param limit  (optional, default to 50)
-   * @return ListAllianceChannelPosts200Response
+   * @return List&lt;PostSummary&gt;
    * @throws ApiException if fails to make API call
    */
-  public ListAllianceChannelPosts200Response listAllianceChannelPosts(String allianceId, String channelId, String cursor, Long limit) throws ApiException {
-    ApiResponse<ListAllianceChannelPosts200Response> localVarResponse = listAllianceChannelPostsWithHttpInfo(allianceId, channelId, cursor, limit);
+  public List<PostSummary> listAllianceChannelPosts(String allianceId, String channelId, String cursor, Long limit) throws ApiException {
+    ApiResponse<List<PostSummary>> localVarResponse = listAllianceChannelPostsWithHttpInfo(allianceId, channelId, cursor, limit);
     return localVarResponse.getData();
   }
 
@@ -2014,10 +2035,10 @@ public class AlliancesApi {
    * @param channelId  (required)
    * @param cursor  (optional)
    * @param limit  (optional, default to 50)
-   * @return ApiResponse&lt;ListAllianceChannelPosts200Response&gt;
+   * @return ApiResponse&lt;List&lt;PostSummary&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<ListAllianceChannelPosts200Response> listAllianceChannelPostsWithHttpInfo(String allianceId, String channelId, String cursor, Long limit) throws ApiException {
+  public ApiResponse<List<PostSummary>> listAllianceChannelPostsWithHttpInfo(String allianceId, String channelId, String cursor, Long limit) throws ApiException {
     HttpRequest.Builder localVarRequestBuilder = listAllianceChannelPostsRequestBuilder(allianceId, channelId, cursor, limit);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
@@ -2031,7 +2052,7 @@ public class AlliancesApi {
           throw getApiException("listAllianceChannelPosts", localVarResponse);
         }
         if (localVarResponse.body() == null) {
-          return new ApiResponse<ListAllianceChannelPosts200Response>(
+          return new ApiResponse<List<PostSummary>>(
               localVarResponse.statusCode(),
               localVarResponse.headers().map(),
               null
@@ -2041,10 +2062,10 @@ public class AlliancesApi {
         String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
-        return new ApiResponse<ListAllianceChannelPosts200Response>(
+        return new ApiResponse<List<PostSummary>>(
             localVarResponse.statusCode(),
             localVarResponse.headers().map(),
-            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<ListAllianceChannelPosts200Response>() {})
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<List<PostSummary>>() {})
         );
       } finally {
       }
@@ -2182,7 +2203,7 @@ public class AlliancesApi {
 
   /**
    * Roles that may act on this alliance
-   * The per-alliance grant list (decisions.md, \&quot;Alliance permissions\&quot;): the local roles that may invite another hub into this alliance, share and unshare a channel in it, and set the per-share policies. &#x60;alliances.manage&#x60; answers for every alliance and is not listed here. Readable by anyone who may act on this alliance. Present only on hubs advertising &#x60;alliance.permissions&#x60;.
+   * The per-alliance grant list (decisions.md, \&quot;Alliance permissions\&quot;): the local roles that may invite another hub into this alliance, share and unshare a channel in it, and set the per-share policies. &#x60;alliances.manage&#x60; answers for every alliance and is not listed here. Readable by anyone who may act on this alliance, and by holders of &#x60;roles.manage&#x60;, who edit it. Present only on hubs advertising &#x60;alliance.permissions&#x60;.
    * @param allianceId  (required)
    * @return List&lt;ListAllianceManagers200ResponseInner&gt;
    * @throws ApiException if fails to make API call
@@ -2194,7 +2215,7 @@ public class AlliancesApi {
 
   /**
    * Roles that may act on this alliance
-   * The per-alliance grant list (decisions.md, \&quot;Alliance permissions\&quot;): the local roles that may invite another hub into this alliance, share and unshare a channel in it, and set the per-share policies. &#x60;alliances.manage&#x60; answers for every alliance and is not listed here. Readable by anyone who may act on this alliance. Present only on hubs advertising &#x60;alliance.permissions&#x60;.
+   * The per-alliance grant list (decisions.md, \&quot;Alliance permissions\&quot;): the local roles that may invite another hub into this alliance, share and unshare a channel in it, and set the per-share policies. &#x60;alliances.manage&#x60; answers for every alliance and is not listed here. Readable by anyone who may act on this alliance, and by holders of &#x60;roles.manage&#x60;, who edit it. Present only on hubs advertising &#x60;alliance.permissions&#x60;.
    * @param allianceId  (required)
    * @return ApiResponse&lt;List&lt;ListAllianceManagers200ResponseInner&gt;&gt;
    * @throws ApiException if fails to make API call
