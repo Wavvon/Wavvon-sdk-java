@@ -422,24 +422,24 @@ public class RolesApi {
   /**
    * Remove role from user (manage_roles)
    * 
-   * @param publicKey  (required)
+   * @param pubkey  (required)
    * @param roleId  (required)
    * @throws ApiException if fails to make API call
    */
-  public void deleteUserRole(String publicKey, String roleId) throws ApiException {
-    deleteUserRoleWithHttpInfo(publicKey, roleId);
+  public void deleteUserRole(String pubkey, String roleId) throws ApiException {
+    deleteUserRoleWithHttpInfo(pubkey, roleId);
   }
 
   /**
    * Remove role from user (manage_roles)
    * 
-   * @param publicKey  (required)
+   * @param pubkey  (required)
    * @param roleId  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> deleteUserRoleWithHttpInfo(String publicKey, String roleId) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = deleteUserRoleRequestBuilder(publicKey, roleId);
+  public ApiResponse<Void> deleteUserRoleWithHttpInfo(String pubkey, String roleId) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = deleteUserRoleRequestBuilder(pubkey, roleId);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -472,10 +472,10 @@ public class RolesApi {
     }
   }
 
-  private HttpRequest.Builder deleteUserRoleRequestBuilder(String publicKey, String roleId) throws ApiException {
-    // verify the required parameter 'publicKey' is set
-    if (publicKey == null) {
-      throw new ApiException(400, "Missing the required parameter 'publicKey' when calling deleteUserRole");
+  private HttpRequest.Builder deleteUserRoleRequestBuilder(String pubkey, String roleId) throws ApiException {
+    // verify the required parameter 'pubkey' is set
+    if (pubkey == null) {
+      throw new ApiException(400, "Missing the required parameter 'pubkey' when calling deleteUserRole");
     }
     // verify the required parameter 'roleId' is set
     if (roleId == null) {
@@ -484,8 +484,8 @@ public class RolesApi {
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
-    String localVarPath = "/users/{public_key}/roles/{role_id}"
-        .replace("{public_key}", ApiClient.urlEncode(publicKey.toString()))
+    String localVarPath = "/users/{pubkey}/roles/{role_id}"
+        .replace("{pubkey}", ApiClient.urlEncode(pubkey.toString()))
         .replace("{role_id}", ApiClient.urlEncode(roleId.toString()));
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
@@ -505,28 +505,28 @@ public class RolesApi {
   /**
    * Why this member can (or cannot) do X here
    * Answers *role Moderators, allowed on #general*. Two axes are debuggable by reading and not by guessing, and every operator question about permissions is this one. Reading your own answer is always allowed; reading someone else&#39;s needs &#x60;members.read&#x60;.  &#x60;sources&#x60; is every row bearing on the answer, in the order the resolver folds them: the hub-wide baseline first, then the channel&#39;s ancestor chain root to target. An owner&#39;s answer carries &#x60;is_owner&#x60; and no sources, because no role explains it.
-   * @param publicKey  (required)
+   * @param pubkey  (required)
    * @param permission  (required)
    * @param channelId Omit for the hub-wide answer. (optional)
    * @return ExplainUserPermissions200Response
    * @throws ApiException if fails to make API call
    */
-  public ExplainUserPermissions200Response explainUserPermissions(String publicKey, String permission, String channelId) throws ApiException {
-    ApiResponse<ExplainUserPermissions200Response> localVarResponse = explainUserPermissionsWithHttpInfo(publicKey, permission, channelId);
+  public ExplainUserPermissions200Response explainUserPermissions(String pubkey, String permission, String channelId) throws ApiException {
+    ApiResponse<ExplainUserPermissions200Response> localVarResponse = explainUserPermissionsWithHttpInfo(pubkey, permission, channelId);
     return localVarResponse.getData();
   }
 
   /**
    * Why this member can (or cannot) do X here
    * Answers *role Moderators, allowed on #general*. Two axes are debuggable by reading and not by guessing, and every operator question about permissions is this one. Reading your own answer is always allowed; reading someone else&#39;s needs &#x60;members.read&#x60;.  &#x60;sources&#x60; is every row bearing on the answer, in the order the resolver folds them: the hub-wide baseline first, then the channel&#39;s ancestor chain root to target. An owner&#39;s answer carries &#x60;is_owner&#x60; and no sources, because no role explains it.
-   * @param publicKey  (required)
+   * @param pubkey  (required)
    * @param permission  (required)
    * @param channelId Omit for the hub-wide answer. (optional)
    * @return ApiResponse&lt;ExplainUserPermissions200Response&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<ExplainUserPermissions200Response> explainUserPermissionsWithHttpInfo(String publicKey, String permission, String channelId) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = explainUserPermissionsRequestBuilder(publicKey, permission, channelId);
+  public ApiResponse<ExplainUserPermissions200Response> explainUserPermissionsWithHttpInfo(String pubkey, String permission, String channelId) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = explainUserPermissionsRequestBuilder(pubkey, permission, channelId);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -565,10 +565,10 @@ public class RolesApi {
     }
   }
 
-  private HttpRequest.Builder explainUserPermissionsRequestBuilder(String publicKey, String permission, String channelId) throws ApiException {
-    // verify the required parameter 'publicKey' is set
-    if (publicKey == null) {
-      throw new ApiException(400, "Missing the required parameter 'publicKey' when calling explainUserPermissions");
+  private HttpRequest.Builder explainUserPermissionsRequestBuilder(String pubkey, String permission, String channelId) throws ApiException {
+    // verify the required parameter 'pubkey' is set
+    if (pubkey == null) {
+      throw new ApiException(400, "Missing the required parameter 'pubkey' when calling explainUserPermissions");
     }
     // verify the required parameter 'permission' is set
     if (permission == null) {
@@ -577,8 +577,8 @@ public class RolesApi {
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
-    String localVarPath = "/users/{public_key}/permissions/why"
-        .replace("{public_key}", ApiClient.urlEncode(publicKey.toString()));
+    String localVarPath = "/users/{pubkey}/permissions/why"
+        .replace("{pubkey}", ApiClient.urlEncode(pubkey.toString()));
 
     List<Pair> localVarQueryParams = new ArrayList<>();
     StringJoiner localVarQueryStringJoiner = new StringJoiner("&");
@@ -929,24 +929,24 @@ public class RolesApi {
   /**
    * Get roles assigned to a user
    * 
-   * @param publicKey  (required)
+   * @param pubkey  (required)
    * @return List&lt;Role&gt;
    * @throws ApiException if fails to make API call
    */
-  public List<Role> listUserRoles(String publicKey) throws ApiException {
-    ApiResponse<List<Role>> localVarResponse = listUserRolesWithHttpInfo(publicKey);
+  public List<Role> listUserRoles(String pubkey) throws ApiException {
+    ApiResponse<List<Role>> localVarResponse = listUserRolesWithHttpInfo(pubkey);
     return localVarResponse.getData();
   }
 
   /**
    * Get roles assigned to a user
    * 
-   * @param publicKey  (required)
+   * @param pubkey  (required)
    * @return ApiResponse&lt;List&lt;Role&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<List<Role>> listUserRolesWithHttpInfo(String publicKey) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = listUserRolesRequestBuilder(publicKey);
+  public ApiResponse<List<Role>> listUserRolesWithHttpInfo(String pubkey) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = listUserRolesRequestBuilder(pubkey);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -985,16 +985,16 @@ public class RolesApi {
     }
   }
 
-  private HttpRequest.Builder listUserRolesRequestBuilder(String publicKey) throws ApiException {
-    // verify the required parameter 'publicKey' is set
-    if (publicKey == null) {
-      throw new ApiException(400, "Missing the required parameter 'publicKey' when calling listUserRoles");
+  private HttpRequest.Builder listUserRolesRequestBuilder(String pubkey) throws ApiException {
+    // verify the required parameter 'pubkey' is set
+    if (pubkey == null) {
+      throw new ApiException(400, "Missing the required parameter 'pubkey' when calling listUserRoles");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
-    String localVarPath = "/users/{public_key}/roles"
-        .replace("{public_key}", ApiClient.urlEncode(publicKey.toString()));
+    String localVarPath = "/users/{pubkey}/roles"
+        .replace("{pubkey}", ApiClient.urlEncode(pubkey.toString()));
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
@@ -1013,24 +1013,24 @@ public class RolesApi {
   /**
    * Assign role to user (manage_roles)
    * 
-   * @param publicKey  (required)
+   * @param pubkey  (required)
    * @param roleId  (required)
    * @throws ApiException if fails to make API call
    */
-  public void setUserRole(String publicKey, String roleId) throws ApiException {
-    setUserRoleWithHttpInfo(publicKey, roleId);
+  public void setUserRole(String pubkey, String roleId) throws ApiException {
+    setUserRoleWithHttpInfo(pubkey, roleId);
   }
 
   /**
    * Assign role to user (manage_roles)
    * 
-   * @param publicKey  (required)
+   * @param pubkey  (required)
    * @param roleId  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> setUserRoleWithHttpInfo(String publicKey, String roleId) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = setUserRoleRequestBuilder(publicKey, roleId);
+  public ApiResponse<Void> setUserRoleWithHttpInfo(String pubkey, String roleId) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = setUserRoleRequestBuilder(pubkey, roleId);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -1063,10 +1063,10 @@ public class RolesApi {
     }
   }
 
-  private HttpRequest.Builder setUserRoleRequestBuilder(String publicKey, String roleId) throws ApiException {
-    // verify the required parameter 'publicKey' is set
-    if (publicKey == null) {
-      throw new ApiException(400, "Missing the required parameter 'publicKey' when calling setUserRole");
+  private HttpRequest.Builder setUserRoleRequestBuilder(String pubkey, String roleId) throws ApiException {
+    // verify the required parameter 'pubkey' is set
+    if (pubkey == null) {
+      throw new ApiException(400, "Missing the required parameter 'pubkey' when calling setUserRole");
     }
     // verify the required parameter 'roleId' is set
     if (roleId == null) {
@@ -1075,8 +1075,8 @@ public class RolesApi {
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
-    String localVarPath = "/users/{public_key}/roles/{role_id}"
-        .replace("{public_key}", ApiClient.urlEncode(publicKey.toString()))
+    String localVarPath = "/users/{pubkey}/roles/{role_id}"
+        .replace("{pubkey}", ApiClient.urlEncode(pubkey.toString()))
         .replace("{role_id}", ApiClient.urlEncode(roleId.toString()));
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));

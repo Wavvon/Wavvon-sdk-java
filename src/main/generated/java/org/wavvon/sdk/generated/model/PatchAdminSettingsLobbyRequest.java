@@ -24,92 +24,81 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import org.wavvon.sdk.generated.model.SearchChannelPosts200ResponseResultsInner;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * SearchChannelPosts200Response
+ * Absent fields keep their stored value.
  */
 @JsonPropertyOrder({
-  SearchChannelPosts200Response.JSON_PROPERTY_RESULTS,
-  SearchChannelPosts200Response.JSON_PROPERTY_CURSOR
+  PatchAdminSettingsLobbyRequest.JSON_PROPERTY_LOBBY_ENABLED,
+  PatchAdminSettingsLobbyRequest.JSON_PROPERTY_WELCOME_MD
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class SearchChannelPosts200Response {
-  public static final String JSON_PROPERTY_RESULTS = "results";
+public class PatchAdminSettingsLobbyRequest {
+  public static final String JSON_PROPERTY_LOBBY_ENABLED = "lobby_enabled";
   @jakarta.annotation.Nullable
-  private List<SearchChannelPosts200ResponseResultsInner> results = new ArrayList<>();
+  private Boolean lobbyEnabled;
 
-  public static final String JSON_PROPERTY_CURSOR = "cursor";
+  public static final String JSON_PROPERTY_WELCOME_MD = "welcome_md";
   @jakarta.annotation.Nullable
-  private String cursor;
+  private String welcomeMd;
 
-  public SearchChannelPosts200Response() { 
+  public PatchAdminSettingsLobbyRequest() { 
   }
 
-  public SearchChannelPosts200Response results(@jakarta.annotation.Nullable List<SearchChannelPosts200ResponseResultsInner> results) {
-    this.results = results;
-    return this;
-  }
-
-  public SearchChannelPosts200Response addResultsItem(SearchChannelPosts200ResponseResultsInner resultsItem) {
-    if (this.results == null) {
-      this.results = new ArrayList<>();
-    }
-    this.results.add(resultsItem);
+  public PatchAdminSettingsLobbyRequest lobbyEnabled(@jakarta.annotation.Nullable Boolean lobbyEnabled) {
+    this.lobbyEnabled = lobbyEnabled;
     return this;
   }
 
   /**
-   * Get results
-   * @return results
+   * Get lobbyEnabled
+   * @return lobbyEnabled
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_RESULTS)
+  @JsonProperty(JSON_PROPERTY_LOBBY_ENABLED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public List<SearchChannelPosts200ResponseResultsInner> getResults() {
-    return results;
+  public Boolean getLobbyEnabled() {
+    return lobbyEnabled;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_RESULTS)
+  @JsonProperty(JSON_PROPERTY_LOBBY_ENABLED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setResults(@jakarta.annotation.Nullable List<SearchChannelPosts200ResponseResultsInner> results) {
-    this.results = results;
+  public void setLobbyEnabled(@jakarta.annotation.Nullable Boolean lobbyEnabled) {
+    this.lobbyEnabled = lobbyEnabled;
   }
 
 
-  public SearchChannelPosts200Response cursor(@jakarta.annotation.Nullable String cursor) {
-    this.cursor = cursor;
+  public PatchAdminSettingsLobbyRequest welcomeMd(@jakarta.annotation.Nullable String welcomeMd) {
+    this.welcomeMd = welcomeMd;
     return this;
   }
 
   /**
-   * Get cursor
-   * @return cursor
+   * Get welcomeMd
+   * @return welcomeMd
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_CURSOR)
+  @JsonProperty(JSON_PROPERTY_WELCOME_MD)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getCursor() {
-    return cursor;
+  public String getWelcomeMd() {
+    return welcomeMd;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_CURSOR)
+  @JsonProperty(JSON_PROPERTY_WELCOME_MD)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCursor(@jakarta.annotation.Nullable String cursor) {
-    this.cursor = cursor;
+  public void setWelcomeMd(@jakarta.annotation.Nullable String welcomeMd) {
+    this.welcomeMd = welcomeMd;
   }
 
 
   /**
-   * Return true if this searchChannelPosts_200_response object is equal to o.
+   * Return true if this patchAdminSettingsLobby_request object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -119,22 +108,22 @@ public class SearchChannelPosts200Response {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SearchChannelPosts200Response searchChannelPosts200Response = (SearchChannelPosts200Response) o;
-    return Objects.equals(this.results, searchChannelPosts200Response.results) &&
-        Objects.equals(this.cursor, searchChannelPosts200Response.cursor);
+    PatchAdminSettingsLobbyRequest patchAdminSettingsLobbyRequest = (PatchAdminSettingsLobbyRequest) o;
+    return Objects.equals(this.lobbyEnabled, patchAdminSettingsLobbyRequest.lobbyEnabled) &&
+        Objects.equals(this.welcomeMd, patchAdminSettingsLobbyRequest.welcomeMd);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(results, cursor);
+    return Objects.hash(lobbyEnabled, welcomeMd);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SearchChannelPosts200Response {\n");
-    sb.append("    results: ").append(toIndentedString(results)).append("\n");
-    sb.append("    cursor: ").append(toIndentedString(cursor)).append("\n");
+    sb.append("class PatchAdminSettingsLobbyRequest {\n");
+    sb.append("    lobbyEnabled: ").append(toIndentedString(lobbyEnabled)).append("\n");
+    sb.append("    welcomeMd: ").append(toIndentedString(welcomeMd)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -182,19 +171,14 @@ public class SearchChannelPosts200Response {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `results` to the URL query string
-    if (getResults() != null) {
-      for (int i = 0; i < getResults().size(); i++) {
-        if (getResults().get(i) != null) {
-          joiner.add(getResults().get(i).toUrlQueryString(String.format("%sresults%s%s", prefix, suffix,
-          "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix))));
-        }
-      }
+    // add `lobby_enabled` to the URL query string
+    if (getLobbyEnabled() != null) {
+      joiner.add(String.format("%slobby_enabled%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getLobbyEnabled()))));
     }
 
-    // add `cursor` to the URL query string
-    if (getCursor() != null) {
-      joiner.add(String.format("%scursor%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCursor()))));
+    // add `welcome_md` to the URL query string
+    if (getWelcomeMd() != null) {
+      joiner.add(String.format("%swelcome_md%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getWelcomeMd()))));
     }
 
     return joiner.toString();

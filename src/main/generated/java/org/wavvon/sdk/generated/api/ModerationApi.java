@@ -693,22 +693,22 @@ public class ModerationApi {
   /**
    * Unban (moderation.ban.permanent)
    * Lifts either kind. It stays on the permanent permission because removing a ban is never the escalation the split guards against.
-   * @param targetKey  (required)
+   * @param pubkey  (required)
    * @throws ApiException if fails to make API call
    */
-  public void deleteModerationBan(String targetKey) throws ApiException {
-    deleteModerationBanWithHttpInfo(targetKey);
+  public void deleteModerationBan(String pubkey) throws ApiException {
+    deleteModerationBanWithHttpInfo(pubkey);
   }
 
   /**
    * Unban (moderation.ban.permanent)
    * Lifts either kind. It stays on the permanent permission because removing a ban is never the escalation the split guards against.
-   * @param targetKey  (required)
+   * @param pubkey  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> deleteModerationBanWithHttpInfo(String targetKey) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = deleteModerationBanRequestBuilder(targetKey);
+  public ApiResponse<Void> deleteModerationBanWithHttpInfo(String pubkey) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = deleteModerationBanRequestBuilder(pubkey);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -741,16 +741,16 @@ public class ModerationApi {
     }
   }
 
-  private HttpRequest.Builder deleteModerationBanRequestBuilder(String targetKey) throws ApiException {
-    // verify the required parameter 'targetKey' is set
-    if (targetKey == null) {
-      throw new ApiException(400, "Missing the required parameter 'targetKey' when calling deleteModerationBan");
+  private HttpRequest.Builder deleteModerationBanRequestBuilder(String pubkey) throws ApiException {
+    // verify the required parameter 'pubkey' is set
+    if (pubkey == null) {
+      throw new ApiException(400, "Missing the required parameter 'pubkey' when calling deleteModerationBan");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
-    String localVarPath = "/moderation/bans/{target_key}"
-        .replace("{target_key}", ApiClient.urlEncode(targetKey.toString()));
+    String localVarPath = "/moderation/bans/{pubkey}"
+        .replace("{pubkey}", ApiClient.urlEncode(pubkey.toString()));
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
@@ -769,22 +769,22 @@ public class ModerationApi {
   /**
    * Unmute (manage_users)
    * 
-   * @param targetKey  (required)
+   * @param pubkey  (required)
    * @throws ApiException if fails to make API call
    */
-  public void deleteModerationMute(String targetKey) throws ApiException {
-    deleteModerationMuteWithHttpInfo(targetKey);
+  public void deleteModerationMute(String pubkey) throws ApiException {
+    deleteModerationMuteWithHttpInfo(pubkey);
   }
 
   /**
    * Unmute (manage_users)
    * 
-   * @param targetKey  (required)
+   * @param pubkey  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> deleteModerationMuteWithHttpInfo(String targetKey) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = deleteModerationMuteRequestBuilder(targetKey);
+  public ApiResponse<Void> deleteModerationMuteWithHttpInfo(String pubkey) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = deleteModerationMuteRequestBuilder(pubkey);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -817,16 +817,16 @@ public class ModerationApi {
     }
   }
 
-  private HttpRequest.Builder deleteModerationMuteRequestBuilder(String targetKey) throws ApiException {
-    // verify the required parameter 'targetKey' is set
-    if (targetKey == null) {
-      throw new ApiException(400, "Missing the required parameter 'targetKey' when calling deleteModerationMute");
+  private HttpRequest.Builder deleteModerationMuteRequestBuilder(String pubkey) throws ApiException {
+    // verify the required parameter 'pubkey' is set
+    if (pubkey == null) {
+      throw new ApiException(400, "Missing the required parameter 'pubkey' when calling deleteModerationMute");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
-    String localVarPath = "/moderation/mutes/{target_key}"
-        .replace("{target_key}", ApiClient.urlEncode(targetKey.toString()));
+    String localVarPath = "/moderation/mutes/{pubkey}"
+        .replace("{pubkey}", ApiClient.urlEncode(pubkey.toString()));
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
@@ -845,22 +845,22 @@ public class ModerationApi {
   /**
    * Remove voice mute
    * 
-   * @param targetKey  (required)
+   * @param pubkey  (required)
    * @throws ApiException if fails to make API call
    */
-  public void deleteModerationVoiceMute(String targetKey) throws ApiException {
-    deleteModerationVoiceMuteWithHttpInfo(targetKey);
+  public void deleteModerationVoiceMute(String pubkey) throws ApiException {
+    deleteModerationVoiceMuteWithHttpInfo(pubkey);
   }
 
   /**
    * Remove voice mute
    * 
-   * @param targetKey  (required)
+   * @param pubkey  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> deleteModerationVoiceMuteWithHttpInfo(String targetKey) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = deleteModerationVoiceMuteRequestBuilder(targetKey);
+  public ApiResponse<Void> deleteModerationVoiceMuteWithHttpInfo(String pubkey) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = deleteModerationVoiceMuteRequestBuilder(pubkey);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -893,16 +893,16 @@ public class ModerationApi {
     }
   }
 
-  private HttpRequest.Builder deleteModerationVoiceMuteRequestBuilder(String targetKey) throws ApiException {
-    // verify the required parameter 'targetKey' is set
-    if (targetKey == null) {
-      throw new ApiException(400, "Missing the required parameter 'targetKey' when calling deleteModerationVoiceMute");
+  private HttpRequest.Builder deleteModerationVoiceMuteRequestBuilder(String pubkey) throws ApiException {
+    // verify the required parameter 'pubkey' is set
+    if (pubkey == null) {
+      throw new ApiException(400, "Missing the required parameter 'pubkey' when calling deleteModerationVoiceMute");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
-    String localVarPath = "/moderation/voice-mutes/{target_key}"
-        .replace("{target_key}", ApiClient.urlEncode(targetKey.toString()));
+    String localVarPath = "/moderation/voice-mutes/{pubkey}"
+        .replace("{pubkey}", ApiClient.urlEncode(pubkey.toString()));
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
@@ -1160,7 +1160,7 @@ public class ModerationApi {
 
   /**
    * Hub audit log, newest first (admin)
-   * Pages backwards: each page holds entries older than &#x60;cursor&#x60;. Hubs advertising the &#x60;audit.newest&#x60; capability serve this shape; older hubs answer &#x60;{entries, next_cursor}&#x60; oldest first. Apps that replay the log forwards use &#x60;GET /me/events&#x60;.
+   * Pages backwards: each page holds entries older than &#x60;cursor&#x60;. Apps that replay the log forwards use &#x60;GET /me/events&#x60;.
    * @param eventType  (optional)
    * @param actor Only entries by this public key (optional)
    * @param since Unix timestamp lower bound (optional)
@@ -1177,7 +1177,7 @@ public class ModerationApi {
 
   /**
    * Hub audit log, newest first (admin)
-   * Pages backwards: each page holds entries older than &#x60;cursor&#x60;. Hubs advertising the &#x60;audit.newest&#x60; capability serve this shape; older hubs answer &#x60;{entries, next_cursor}&#x60; oldest first. Apps that replay the log forwards use &#x60;GET /me/events&#x60;.
+   * Pages backwards: each page holds entries older than &#x60;cursor&#x60;. Apps that replay the log forwards use &#x60;GET /me/events&#x60;.
    * @param eventType  (optional)
    * @param actor Only entries by this public key (optional)
    * @param since Unix timestamp lower bound (optional)

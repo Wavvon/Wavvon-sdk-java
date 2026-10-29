@@ -21,7 +21,7 @@ import org.wavvon.sdk.generated.Pair;
 import org.wavvon.sdk.generated.model.CreateAdminOutgoingWebhook201Response;
 import org.wavvon.sdk.generated.model.CreateAdminOutgoingWebhookRequest;
 import org.wavvon.sdk.generated.model.ListAdminOutgoingWebhookDeliveries200ResponseInner;
-import org.wavvon.sdk.generated.model.ListAdminOutgoingWebhookSubscriptions200Response;
+import org.wavvon.sdk.generated.model.ListAdminOutgoingWebhookSubscriptions200ResponseInner;
 import org.wavvon.sdk.generated.model.ListAdminOutgoingWebhooks200ResponseInner;
 import org.wavvon.sdk.generated.model.RotateAdminOutgoingWebhookSecret200Response;
 import org.wavvon.sdk.generated.model.SetAdminOutgoingWebhookSubscriptionsRequest;
@@ -336,14 +336,14 @@ public class OutgoingWebhooksApi {
    * 
    * @param id  (required)
    * @param limit  (optional, default to 50)
-   * @param offset  (optional, default to 0)
+   * @param cursor The id of the last delivery of the previous page (optional)
    * @param eventType  (optional)
    * @param success  (optional)
    * @return List&lt;ListAdminOutgoingWebhookDeliveries200ResponseInner&gt;
    * @throws ApiException if fails to make API call
    */
-  public List<ListAdminOutgoingWebhookDeliveries200ResponseInner> listAdminOutgoingWebhookDeliveries(String id, Long limit, Long offset, String eventType, Boolean success) throws ApiException {
-    ApiResponse<List<ListAdminOutgoingWebhookDeliveries200ResponseInner>> localVarResponse = listAdminOutgoingWebhookDeliveriesWithHttpInfo(id, limit, offset, eventType, success);
+  public List<ListAdminOutgoingWebhookDeliveries200ResponseInner> listAdminOutgoingWebhookDeliveries(String id, Long limit, String cursor, String eventType, Boolean success) throws ApiException {
+    ApiResponse<List<ListAdminOutgoingWebhookDeliveries200ResponseInner>> localVarResponse = listAdminOutgoingWebhookDeliveriesWithHttpInfo(id, limit, cursor, eventType, success);
     return localVarResponse.getData();
   }
 
@@ -352,14 +352,14 @@ public class OutgoingWebhooksApi {
    * 
    * @param id  (required)
    * @param limit  (optional, default to 50)
-   * @param offset  (optional, default to 0)
+   * @param cursor The id of the last delivery of the previous page (optional)
    * @param eventType  (optional)
    * @param success  (optional)
    * @return ApiResponse&lt;List&lt;ListAdminOutgoingWebhookDeliveries200ResponseInner&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<List<ListAdminOutgoingWebhookDeliveries200ResponseInner>> listAdminOutgoingWebhookDeliveriesWithHttpInfo(String id, Long limit, Long offset, String eventType, Boolean success) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = listAdminOutgoingWebhookDeliveriesRequestBuilder(id, limit, offset, eventType, success);
+  public ApiResponse<List<ListAdminOutgoingWebhookDeliveries200ResponseInner>> listAdminOutgoingWebhookDeliveriesWithHttpInfo(String id, Long limit, String cursor, String eventType, Boolean success) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = listAdminOutgoingWebhookDeliveriesRequestBuilder(id, limit, cursor, eventType, success);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -398,7 +398,7 @@ public class OutgoingWebhooksApi {
     }
   }
 
-  private HttpRequest.Builder listAdminOutgoingWebhookDeliveriesRequestBuilder(String id, Long limit, Long offset, String eventType, Boolean success) throws ApiException {
+  private HttpRequest.Builder listAdminOutgoingWebhookDeliveriesRequestBuilder(String id, Long limit, String cursor, String eventType, Boolean success) throws ApiException {
     // verify the required parameter 'id' is set
     if (id == null) {
       throw new ApiException(400, "Missing the required parameter 'id' when calling listAdminOutgoingWebhookDeliveries");
@@ -414,8 +414,8 @@ public class OutgoingWebhooksApi {
     String localVarQueryParameterBaseName;
     localVarQueryParameterBaseName = "limit";
     localVarQueryParams.addAll(ApiClient.parameterToPairs("limit", limit));
-    localVarQueryParameterBaseName = "offset";
-    localVarQueryParams.addAll(ApiClient.parameterToPairs("offset", offset));
+    localVarQueryParameterBaseName = "cursor";
+    localVarQueryParams.addAll(ApiClient.parameterToPairs("cursor", cursor));
     localVarQueryParameterBaseName = "event_type";
     localVarQueryParams.addAll(ApiClient.parameterToPairs("event_type", eventType));
     localVarQueryParameterBaseName = "success";
@@ -448,11 +448,11 @@ public class OutgoingWebhooksApi {
    * List an outgoing webhook&#39;s event subscriptions (admin)
    * 
    * @param id  (required)
-   * @return ListAdminOutgoingWebhookSubscriptions200Response
+   * @return List&lt;ListAdminOutgoingWebhookSubscriptions200ResponseInner&gt;
    * @throws ApiException if fails to make API call
    */
-  public ListAdminOutgoingWebhookSubscriptions200Response listAdminOutgoingWebhookSubscriptions(String id) throws ApiException {
-    ApiResponse<ListAdminOutgoingWebhookSubscriptions200Response> localVarResponse = listAdminOutgoingWebhookSubscriptionsWithHttpInfo(id);
+  public List<ListAdminOutgoingWebhookSubscriptions200ResponseInner> listAdminOutgoingWebhookSubscriptions(String id) throws ApiException {
+    ApiResponse<List<ListAdminOutgoingWebhookSubscriptions200ResponseInner>> localVarResponse = listAdminOutgoingWebhookSubscriptionsWithHttpInfo(id);
     return localVarResponse.getData();
   }
 
@@ -460,10 +460,10 @@ public class OutgoingWebhooksApi {
    * List an outgoing webhook&#39;s event subscriptions (admin)
    * 
    * @param id  (required)
-   * @return ApiResponse&lt;ListAdminOutgoingWebhookSubscriptions200Response&gt;
+   * @return ApiResponse&lt;List&lt;ListAdminOutgoingWebhookSubscriptions200ResponseInner&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<ListAdminOutgoingWebhookSubscriptions200Response> listAdminOutgoingWebhookSubscriptionsWithHttpInfo(String id) throws ApiException {
+  public ApiResponse<List<ListAdminOutgoingWebhookSubscriptions200ResponseInner>> listAdminOutgoingWebhookSubscriptionsWithHttpInfo(String id) throws ApiException {
     HttpRequest.Builder localVarRequestBuilder = listAdminOutgoingWebhookSubscriptionsRequestBuilder(id);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
@@ -477,7 +477,7 @@ public class OutgoingWebhooksApi {
           throw getApiException("listAdminOutgoingWebhookSubscriptions", localVarResponse);
         }
         if (localVarResponse.body() == null) {
-          return new ApiResponse<ListAdminOutgoingWebhookSubscriptions200Response>(
+          return new ApiResponse<List<ListAdminOutgoingWebhookSubscriptions200ResponseInner>>(
               localVarResponse.statusCode(),
               localVarResponse.headers().map(),
               null
@@ -487,10 +487,10 @@ public class OutgoingWebhooksApi {
         String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
-        return new ApiResponse<ListAdminOutgoingWebhookSubscriptions200Response>(
+        return new ApiResponse<List<ListAdminOutgoingWebhookSubscriptions200ResponseInner>>(
             localVarResponse.statusCode(),
             localVarResponse.headers().map(),
-            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<ListAdminOutgoingWebhookSubscriptions200Response>() {})
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<List<ListAdminOutgoingWebhookSubscriptions200ResponseInner>>() {})
         );
       } finally {
       }

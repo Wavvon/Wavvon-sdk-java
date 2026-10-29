@@ -24,168 +24,91 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * SearchChannelPosts200ResponseResultsInner
+ * ListAdminOutgoingWebhookSubscriptions200ResponseInner
  */
 @JsonPropertyOrder({
-  SearchChannelPosts200ResponseResultsInner.JSON_PROPERTY_POST_ID,
-  SearchChannelPosts200ResponseResultsInner.JSON_PROPERTY_TITLE_SNIPPET,
-  SearchChannelPosts200ResponseResultsInner.JSON_PROPERTY_BODY_SNIPPET,
-  SearchChannelPosts200ResponseResultsInner.JSON_PROPERTY_IS_REPLY,
-  SearchChannelPosts200ResponseResultsInner.JSON_PROPERTY_REPLY_ID
+  ListAdminOutgoingWebhookSubscriptions200ResponseInner.JSON_PROPERTY_EVENT,
+  ListAdminOutgoingWebhookSubscriptions200ResponseInner.JSON_PROPERTY_CHANNELS
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class SearchChannelPosts200ResponseResultsInner {
-  public static final String JSON_PROPERTY_POST_ID = "post_id";
+public class ListAdminOutgoingWebhookSubscriptions200ResponseInner {
+  public static final String JSON_PROPERTY_EVENT = "event";
   @jakarta.annotation.Nullable
-  private String postId;
+  private String event;
 
-  public static final String JSON_PROPERTY_TITLE_SNIPPET = "title_snippet";
+  public static final String JSON_PROPERTY_CHANNELS = "channels";
   @jakarta.annotation.Nullable
-  private String titleSnippet;
+  private List<String> channels;
 
-  public static final String JSON_PROPERTY_BODY_SNIPPET = "body_snippet";
-  @jakarta.annotation.Nullable
-  private String bodySnippet;
-
-  public static final String JSON_PROPERTY_IS_REPLY = "is_reply";
-  @jakarta.annotation.Nullable
-  private Boolean isReply;
-
-  public static final String JSON_PROPERTY_REPLY_ID = "reply_id";
-  @jakarta.annotation.Nullable
-  private String replyId;
-
-  public SearchChannelPosts200ResponseResultsInner() { 
+  public ListAdminOutgoingWebhookSubscriptions200ResponseInner() { 
   }
 
-  public SearchChannelPosts200ResponseResultsInner postId(@jakarta.annotation.Nullable String postId) {
-    this.postId = postId;
+  public ListAdminOutgoingWebhookSubscriptions200ResponseInner event(@jakarta.annotation.Nullable String event) {
+    this.event = event;
     return this;
   }
 
   /**
-   * Get postId
-   * @return postId
+   * Get event
+   * @return event
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_POST_ID)
+  @JsonProperty(JSON_PROPERTY_EVENT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getPostId() {
-    return postId;
+  public String getEvent() {
+    return event;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_POST_ID)
+  @JsonProperty(JSON_PROPERTY_EVENT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setPostId(@jakarta.annotation.Nullable String postId) {
-    this.postId = postId;
+  public void setEvent(@jakarta.annotation.Nullable String event) {
+    this.event = event;
   }
 
 
-  public SearchChannelPosts200ResponseResultsInner titleSnippet(@jakarta.annotation.Nullable String titleSnippet) {
-    this.titleSnippet = titleSnippet;
+  public ListAdminOutgoingWebhookSubscriptions200ResponseInner channels(@jakarta.annotation.Nullable List<String> channels) {
+    this.channels = channels;
+    return this;
+  }
+
+  public ListAdminOutgoingWebhookSubscriptions200ResponseInner addChannelsItem(String channelsItem) {
+    if (this.channels == null) {
+      this.channels = new ArrayList<>();
+    }
+    this.channels.add(channelsItem);
     return this;
   }
 
   /**
-   * Get titleSnippet
-   * @return titleSnippet
+   * Get channels
+   * @return channels
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_TITLE_SNIPPET)
+  @JsonProperty(JSON_PROPERTY_CHANNELS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getTitleSnippet() {
-    return titleSnippet;
+  public List<String> getChannels() {
+    return channels;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_TITLE_SNIPPET)
+  @JsonProperty(JSON_PROPERTY_CHANNELS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setTitleSnippet(@jakarta.annotation.Nullable String titleSnippet) {
-    this.titleSnippet = titleSnippet;
-  }
-
-
-  public SearchChannelPosts200ResponseResultsInner bodySnippet(@jakarta.annotation.Nullable String bodySnippet) {
-    this.bodySnippet = bodySnippet;
-    return this;
-  }
-
-  /**
-   * Get bodySnippet
-   * @return bodySnippet
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_BODY_SNIPPET)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getBodySnippet() {
-    return bodySnippet;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_BODY_SNIPPET)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setBodySnippet(@jakarta.annotation.Nullable String bodySnippet) {
-    this.bodySnippet = bodySnippet;
-  }
-
-
-  public SearchChannelPosts200ResponseResultsInner isReply(@jakarta.annotation.Nullable Boolean isReply) {
-    this.isReply = isReply;
-    return this;
-  }
-
-  /**
-   * Get isReply
-   * @return isReply
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_IS_REPLY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Boolean getIsReply() {
-    return isReply;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_IS_REPLY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setIsReply(@jakarta.annotation.Nullable Boolean isReply) {
-    this.isReply = isReply;
-  }
-
-
-  public SearchChannelPosts200ResponseResultsInner replyId(@jakarta.annotation.Nullable String replyId) {
-    this.replyId = replyId;
-    return this;
-  }
-
-  /**
-   * Get replyId
-   * @return replyId
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_REPLY_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getReplyId() {
-    return replyId;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_REPLY_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setReplyId(@jakarta.annotation.Nullable String replyId) {
-    this.replyId = replyId;
+  public void setChannels(@jakarta.annotation.Nullable List<String> channels) {
+    this.channels = channels;
   }
 
 
   /**
-   * Return true if this searchChannelPosts_200_response_results_inner object is equal to o.
+   * Return true if this listAdminOutgoingWebhookSubscriptions_200_response_inner object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -195,28 +118,22 @@ public class SearchChannelPosts200ResponseResultsInner {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SearchChannelPosts200ResponseResultsInner searchChannelPosts200ResponseResultsInner = (SearchChannelPosts200ResponseResultsInner) o;
-    return Objects.equals(this.postId, searchChannelPosts200ResponseResultsInner.postId) &&
-        Objects.equals(this.titleSnippet, searchChannelPosts200ResponseResultsInner.titleSnippet) &&
-        Objects.equals(this.bodySnippet, searchChannelPosts200ResponseResultsInner.bodySnippet) &&
-        Objects.equals(this.isReply, searchChannelPosts200ResponseResultsInner.isReply) &&
-        Objects.equals(this.replyId, searchChannelPosts200ResponseResultsInner.replyId);
+    ListAdminOutgoingWebhookSubscriptions200ResponseInner listAdminOutgoingWebhookSubscriptions200ResponseInner = (ListAdminOutgoingWebhookSubscriptions200ResponseInner) o;
+    return Objects.equals(this.event, listAdminOutgoingWebhookSubscriptions200ResponseInner.event) &&
+        Objects.equals(this.channels, listAdminOutgoingWebhookSubscriptions200ResponseInner.channels);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(postId, titleSnippet, bodySnippet, isReply, replyId);
+    return Objects.hash(event, channels);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SearchChannelPosts200ResponseResultsInner {\n");
-    sb.append("    postId: ").append(toIndentedString(postId)).append("\n");
-    sb.append("    titleSnippet: ").append(toIndentedString(titleSnippet)).append("\n");
-    sb.append("    bodySnippet: ").append(toIndentedString(bodySnippet)).append("\n");
-    sb.append("    isReply: ").append(toIndentedString(isReply)).append("\n");
-    sb.append("    replyId: ").append(toIndentedString(replyId)).append("\n");
+    sb.append("class ListAdminOutgoingWebhookSubscriptions200ResponseInner {\n");
+    sb.append("    event: ").append(toIndentedString(event)).append("\n");
+    sb.append("    channels: ").append(toIndentedString(channels)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -264,29 +181,18 @@ public class SearchChannelPosts200ResponseResultsInner {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `post_id` to the URL query string
-    if (getPostId() != null) {
-      joiner.add(String.format("%spost_id%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getPostId()))));
+    // add `event` to the URL query string
+    if (getEvent() != null) {
+      joiner.add(String.format("%sevent%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getEvent()))));
     }
 
-    // add `title_snippet` to the URL query string
-    if (getTitleSnippet() != null) {
-      joiner.add(String.format("%stitle_snippet%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getTitleSnippet()))));
-    }
-
-    // add `body_snippet` to the URL query string
-    if (getBodySnippet() != null) {
-      joiner.add(String.format("%sbody_snippet%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getBodySnippet()))));
-    }
-
-    // add `is_reply` to the URL query string
-    if (getIsReply() != null) {
-      joiner.add(String.format("%sis_reply%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getIsReply()))));
-    }
-
-    // add `reply_id` to the URL query string
-    if (getReplyId() != null) {
-      joiner.add(String.format("%sreply_id%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getReplyId()))));
+    // add `channels` to the URL query string
+    if (getChannels() != null) {
+      for (int i = 0; i < getChannels().size(); i++) {
+        joiner.add(String.format("%schannels%s%s=%s", prefix, suffix,
+            "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix),
+            ApiClient.urlEncode(ApiClient.valueToString(getChannels().get(i)))));
+      }
     }
 
     return joiner.toString();

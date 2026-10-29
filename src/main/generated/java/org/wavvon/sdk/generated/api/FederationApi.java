@@ -1570,75 +1570,6 @@ public class FederationApi {
   }
 
   /**
-   * Get the signed hub key-rotation payload
-   * Serves &#x60;hub_rotation.json&#x60; if the hub has rotated its keypair, so federation peers can follow the rotation. 204 when no rotation exists.
-   * @throws ApiException if fails to make API call
-   */
-  public void getKeyRotation() throws ApiException {
-    getKeyRotationWithHttpInfo();
-  }
-
-  /**
-   * Get the signed hub key-rotation payload
-   * Serves &#x60;hub_rotation.json&#x60; if the hub has rotated its keypair, so federation peers can follow the rotation. 204 when no rotation exists.
-   * @return ApiResponse&lt;Void&gt;
-   * @throws ApiException if fails to make API call
-   */
-  public ApiResponse<Void> getKeyRotationWithHttpInfo() throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = getKeyRotationRequestBuilder();
-    try {
-      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
-          localVarRequestBuilder.build(),
-          HttpResponse.BodyHandlers.ofInputStream());
-      if (memberVarResponseInterceptor != null) {
-        memberVarResponseInterceptor.accept(localVarResponse);
-      }
-      try {
-        if (localVarResponse.statusCode()/ 100 != 2) {
-          throw getApiException("getKeyRotation", localVarResponse);
-        }
-        return new ApiResponse<>(
-            localVarResponse.statusCode(),
-            localVarResponse.headers().map(),
-            null
-        );
-      } finally {
-        // Drain the InputStream
-        while (localVarResponse.body().read() != -1) {
-          // Ignore
-        }
-        localVarResponse.body().close();
-      }
-    } catch (IOException e) {
-      throw new ApiException(e);
-    }
-    catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-      throw new ApiException(e);
-    }
-  }
-
-  private HttpRequest.Builder getKeyRotationRequestBuilder() throws ApiException {
-
-    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
-
-    String localVarPath = "/key-rotation";
-
-    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
-
-    localVarRequestBuilder.header("Accept", "application/json");
-
-    localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
-    if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }
-    return localVarRequestBuilder;
-  }
-
-  /**
    * What other hubs have said about this member
    * Entries from subscribed federated ban lists that name this member, soft-flag ones included — those do not block admission and exist to be read. Resolved against the member master pubkey where they have one, matching admission, so a paired device does not show a clean record. Requires ban_members.
    * @param pubkey  (required)
@@ -1726,11 +1657,13 @@ public class FederationApi {
    * List synced federated ban entries (admin)
    * 
    * @param source Filter by source hub pubkey (optional)
+   * @param limit  (optional, default to 100)
+   * @param cursor &#x60;&lt;source_hub_pubkey&gt;:&lt;target_master_pubkey&gt;&#x60; of the last entry of the previous page (optional)
    * @return List&lt;ListAdminBanlistEntries200ResponseInner&gt;
    * @throws ApiException if fails to make API call
    */
-  public List<ListAdminBanlistEntries200ResponseInner> listAdminBanlistEntries(String source) throws ApiException {
-    ApiResponse<List<ListAdminBanlistEntries200ResponseInner>> localVarResponse = listAdminBanlistEntriesWithHttpInfo(source);
+  public List<ListAdminBanlistEntries200ResponseInner> listAdminBanlistEntries(String source, Long limit, String cursor) throws ApiException {
+    ApiResponse<List<ListAdminBanlistEntries200ResponseInner>> localVarResponse = listAdminBanlistEntriesWithHttpInfo(source, limit, cursor);
     return localVarResponse.getData();
   }
 
@@ -1738,11 +1671,13 @@ public class FederationApi {
    * List synced federated ban entries (admin)
    * 
    * @param source Filter by source hub pubkey (optional)
+   * @param limit  (optional, default to 100)
+   * @param cursor &#x60;&lt;source_hub_pubkey&gt;:&lt;target_master_pubkey&gt;&#x60; of the last entry of the previous page (optional)
    * @return ApiResponse&lt;List&lt;ListAdminBanlistEntries200ResponseInner&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<List<ListAdminBanlistEntries200ResponseInner>> listAdminBanlistEntriesWithHttpInfo(String source) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = listAdminBanlistEntriesRequestBuilder(source);
+  public ApiResponse<List<ListAdminBanlistEntries200ResponseInner>> listAdminBanlistEntriesWithHttpInfo(String source, Long limit, String cursor) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = listAdminBanlistEntriesRequestBuilder(source, limit, cursor);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -1781,7 +1716,7 @@ public class FederationApi {
     }
   }
 
-  private HttpRequest.Builder listAdminBanlistEntriesRequestBuilder(String source) throws ApiException {
+  private HttpRequest.Builder listAdminBanlistEntriesRequestBuilder(String source, Long limit, String cursor) throws ApiException {
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -1792,6 +1727,10 @@ public class FederationApi {
     String localVarQueryParameterBaseName;
     localVarQueryParameterBaseName = "source";
     localVarQueryParams.addAll(ApiClient.parameterToPairs("source", source));
+    localVarQueryParameterBaseName = "limit";
+    localVarQueryParams.addAll(ApiClient.parameterToPairs("limit", limit));
+    localVarQueryParameterBaseName = "cursor";
+    localVarQueryParams.addAll(ApiClient.parameterToPairs("cursor", cursor));
 
     if (!localVarQueryParams.isEmpty() || localVarQueryStringJoiner.length() != 0) {
       StringJoiner queryJoiner = new StringJoiner("&");

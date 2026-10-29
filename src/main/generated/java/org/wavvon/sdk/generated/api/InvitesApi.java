@@ -335,7 +335,7 @@ public class InvitesApi {
 
   /**
    * List active invites (manage_invites)
-   * Newest first, and only the invites that can still admit someone — an expired or used-up one is returned only with &#x60;include_inactive&#x3D;true&#x60;, on hubs advertising &#x60;invites.status&#x60;. Paged only on hubs advertising &#x60;list.cursor.lists&#x60;.
+   * Newest first, and only the invites that can still admit someone — an expired or used-up one is returned only with &#x60;include_inactive&#x3D;true&#x60;. Paged only on hubs advertising &#x60;list.cursor.lists&#x60;.
    * @param includeInactive Include invites that are expired or have no uses left. (optional, default to false)
    * @param limit Page size, clamped to 1..500. (optional, default to 100)
    * @param cursor Keyset cursor — the &#x60;code&#x60; of the previous page&#39;s last row. (optional)
@@ -349,7 +349,7 @@ public class InvitesApi {
 
   /**
    * List active invites (manage_invites)
-   * Newest first, and only the invites that can still admit someone — an expired or used-up one is returned only with &#x60;include_inactive&#x3D;true&#x60;, on hubs advertising &#x60;invites.status&#x60;. Paged only on hubs advertising &#x60;list.cursor.lists&#x60;.
+   * Newest first, and only the invites that can still admit someone — an expired or used-up one is returned only with &#x60;include_inactive&#x3D;true&#x60;. Paged only on hubs advertising &#x60;list.cursor.lists&#x60;.
    * @param includeInactive Include invites that are expired or have no uses left. (optional, default to false)
    * @param limit Page size, clamped to 1..500. (optional, default to 100)
    * @param cursor Keyset cursor — the &#x60;code&#x60; of the previous page&#39;s last row. (optional)

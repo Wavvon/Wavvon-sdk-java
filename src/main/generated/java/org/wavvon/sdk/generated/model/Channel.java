@@ -630,7 +630,7 @@ public class Channel {
   }
 
   /**
-   * The caller&#39;s own &#x60;voice.move_members&#x60; on this channel, resolved channel-scoped, so a move-destination picker can offer only the channels that will accept the move (events.md §7.1). Advertised as the &#x60;channels.move.targets&#x60; capability; absent on hubs that do not advertise it, which is not the same as &#x60;false&#x60;.
+   * The caller&#39;s own &#x60;voice.move_members&#x60; on this channel, resolved channel-scoped, so a move-destination picker can offer only the channels that will accept the move (events.md §7.1).
    * @return canMoveMembers
    */
   @jakarta.annotation.Nullable

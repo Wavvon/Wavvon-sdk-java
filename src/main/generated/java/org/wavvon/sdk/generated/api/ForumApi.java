@@ -29,10 +29,10 @@ import org.wavvon.sdk.generated.model.CreateFederationForumChannelPostReplyReque
 import org.wavvon.sdk.generated.model.CreateFederationForumChannelPostRequest;
 import org.wavvon.sdk.generated.model.DeleteFederationForumChannelPostRequest;
 import org.wavvon.sdk.generated.model.ForumTag;
-import org.wavvon.sdk.generated.model.ListAllianceChannelPosts200Response;
 import org.wavvon.sdk.generated.model.PostDetail;
+import org.wavvon.sdk.generated.model.PostSummary;
 import org.wavvon.sdk.generated.model.ReplyView;
-import org.wavvon.sdk.generated.model.SearchChannelPosts200Response;
+import org.wavvon.sdk.generated.model.SearchChannelPosts200ResponseInner;
 import org.wavvon.sdk.generated.model.UpdateChannelPostReplyRequest;
 import org.wavvon.sdk.generated.model.UpdateChannelPostRequest;
 import org.wavvon.sdk.generated.model.UpdateTagRequest;
@@ -2237,11 +2237,11 @@ public class ForumApi {
    * @param channelId  (required)
    * @param cursor  (optional)
    * @param limit  (optional, default to 50)
-   * @return ListAllianceChannelPosts200Response
+   * @return List&lt;PostSummary&gt;
    * @throws ApiException if fails to make API call
    */
-  public ListAllianceChannelPosts200Response listAllianceChannelPosts(String allianceId, String channelId, String cursor, Long limit) throws ApiException {
-    ApiResponse<ListAllianceChannelPosts200Response> localVarResponse = listAllianceChannelPostsWithHttpInfo(allianceId, channelId, cursor, limit);
+  public List<PostSummary> listAllianceChannelPosts(String allianceId, String channelId, String cursor, Long limit) throws ApiException {
+    ApiResponse<List<PostSummary>> localVarResponse = listAllianceChannelPostsWithHttpInfo(allianceId, channelId, cursor, limit);
     return localVarResponse.getData();
   }
 
@@ -2252,10 +2252,10 @@ public class ForumApi {
    * @param channelId  (required)
    * @param cursor  (optional)
    * @param limit  (optional, default to 50)
-   * @return ApiResponse&lt;ListAllianceChannelPosts200Response&gt;
+   * @return ApiResponse&lt;List&lt;PostSummary&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<ListAllianceChannelPosts200Response> listAllianceChannelPostsWithHttpInfo(String allianceId, String channelId, String cursor, Long limit) throws ApiException {
+  public ApiResponse<List<PostSummary>> listAllianceChannelPostsWithHttpInfo(String allianceId, String channelId, String cursor, Long limit) throws ApiException {
     HttpRequest.Builder localVarRequestBuilder = listAllianceChannelPostsRequestBuilder(allianceId, channelId, cursor, limit);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
@@ -2269,7 +2269,7 @@ public class ForumApi {
           throw getApiException("listAllianceChannelPosts", localVarResponse);
         }
         if (localVarResponse.body() == null) {
-          return new ApiResponse<ListAllianceChannelPosts200Response>(
+          return new ApiResponse<List<PostSummary>>(
               localVarResponse.statusCode(),
               localVarResponse.headers().map(),
               null
@@ -2279,10 +2279,10 @@ public class ForumApi {
         String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
-        return new ApiResponse<ListAllianceChannelPosts200Response>(
+        return new ApiResponse<List<PostSummary>>(
             localVarResponse.statusCode(),
             localVarResponse.headers().map(),
-            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<ListAllianceChannelPosts200Response>() {})
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<List<PostSummary>>() {})
         );
       } finally {
       }
@@ -2346,13 +2346,13 @@ public class ForumApi {
    * List posts in a forum channel (pinned first, then by activity)
    * 
    * @param channelId  (required)
-   * @param cursor Opaque cursor from the previous page (optional)
+   * @param cursor The id of the last post of the previous page (optional)
    * @param limit  (optional, default to 50)
-   * @return ListAllianceChannelPosts200Response
+   * @return List&lt;PostSummary&gt;
    * @throws ApiException if fails to make API call
    */
-  public ListAllianceChannelPosts200Response listChannelPosts(String channelId, String cursor, Long limit) throws ApiException {
-    ApiResponse<ListAllianceChannelPosts200Response> localVarResponse = listChannelPostsWithHttpInfo(channelId, cursor, limit);
+  public List<PostSummary> listChannelPosts(String channelId, String cursor, Long limit) throws ApiException {
+    ApiResponse<List<PostSummary>> localVarResponse = listChannelPostsWithHttpInfo(channelId, cursor, limit);
     return localVarResponse.getData();
   }
 
@@ -2360,12 +2360,12 @@ public class ForumApi {
    * List posts in a forum channel (pinned first, then by activity)
    * 
    * @param channelId  (required)
-   * @param cursor Opaque cursor from the previous page (optional)
+   * @param cursor The id of the last post of the previous page (optional)
    * @param limit  (optional, default to 50)
-   * @return ApiResponse&lt;ListAllianceChannelPosts200Response&gt;
+   * @return ApiResponse&lt;List&lt;PostSummary&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<ListAllianceChannelPosts200Response> listChannelPostsWithHttpInfo(String channelId, String cursor, Long limit) throws ApiException {
+  public ApiResponse<List<PostSummary>> listChannelPostsWithHttpInfo(String channelId, String cursor, Long limit) throws ApiException {
     HttpRequest.Builder localVarRequestBuilder = listChannelPostsRequestBuilder(channelId, cursor, limit);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
@@ -2379,7 +2379,7 @@ public class ForumApi {
           throw getApiException("listChannelPosts", localVarResponse);
         }
         if (localVarResponse.body() == null) {
-          return new ApiResponse<ListAllianceChannelPosts200Response>(
+          return new ApiResponse<List<PostSummary>>(
               localVarResponse.statusCode(),
               localVarResponse.headers().map(),
               null
@@ -2389,10 +2389,10 @@ public class ForumApi {
         String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
-        return new ApiResponse<ListAllianceChannelPosts200Response>(
+        return new ApiResponse<List<PostSummary>>(
             localVarResponse.statusCode(),
             localVarResponse.headers().map(),
-            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<ListAllianceChannelPosts200Response>() {})
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<List<PostSummary>>() {})
         );
       } finally {
       }
@@ -2785,11 +2785,13 @@ public class ForumApi {
    * 
    * @param channelId  (required)
    * @param q  (required)
-   * @return SearchChannelPosts200Response
+   * @param cursor The &#x60;post_id&#x60; of the last hit of the previous page (optional)
+   * @param limit  (optional, default to 50)
+   * @return List&lt;SearchChannelPosts200ResponseInner&gt;
    * @throws ApiException if fails to make API call
    */
-  public SearchChannelPosts200Response searchChannelPosts(String channelId, String q) throws ApiException {
-    ApiResponse<SearchChannelPosts200Response> localVarResponse = searchChannelPostsWithHttpInfo(channelId, q);
+  public List<SearchChannelPosts200ResponseInner> searchChannelPosts(String channelId, String q, String cursor, Long limit) throws ApiException {
+    ApiResponse<List<SearchChannelPosts200ResponseInner>> localVarResponse = searchChannelPostsWithHttpInfo(channelId, q, cursor, limit);
     return localVarResponse.getData();
   }
 
@@ -2798,11 +2800,13 @@ public class ForumApi {
    * 
    * @param channelId  (required)
    * @param q  (required)
-   * @return ApiResponse&lt;SearchChannelPosts200Response&gt;
+   * @param cursor The &#x60;post_id&#x60; of the last hit of the previous page (optional)
+   * @param limit  (optional, default to 50)
+   * @return ApiResponse&lt;List&lt;SearchChannelPosts200ResponseInner&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<SearchChannelPosts200Response> searchChannelPostsWithHttpInfo(String channelId, String q) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = searchChannelPostsRequestBuilder(channelId, q);
+  public ApiResponse<List<SearchChannelPosts200ResponseInner>> searchChannelPostsWithHttpInfo(String channelId, String q, String cursor, Long limit) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = searchChannelPostsRequestBuilder(channelId, q, cursor, limit);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -2815,7 +2819,7 @@ public class ForumApi {
           throw getApiException("searchChannelPosts", localVarResponse);
         }
         if (localVarResponse.body() == null) {
-          return new ApiResponse<SearchChannelPosts200Response>(
+          return new ApiResponse<List<SearchChannelPosts200ResponseInner>>(
               localVarResponse.statusCode(),
               localVarResponse.headers().map(),
               null
@@ -2825,10 +2829,10 @@ public class ForumApi {
         String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
-        return new ApiResponse<SearchChannelPosts200Response>(
+        return new ApiResponse<List<SearchChannelPosts200ResponseInner>>(
             localVarResponse.statusCode(),
             localVarResponse.headers().map(),
-            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<SearchChannelPosts200Response>() {})
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<List<SearchChannelPosts200ResponseInner>>() {})
         );
       } finally {
       }
@@ -2841,7 +2845,7 @@ public class ForumApi {
     }
   }
 
-  private HttpRequest.Builder searchChannelPostsRequestBuilder(String channelId, String q) throws ApiException {
+  private HttpRequest.Builder searchChannelPostsRequestBuilder(String channelId, String q, String cursor, Long limit) throws ApiException {
     // verify the required parameter 'channelId' is set
     if (channelId == null) {
       throw new ApiException(400, "Missing the required parameter 'channelId' when calling searchChannelPosts");
@@ -2861,6 +2865,10 @@ public class ForumApi {
     String localVarQueryParameterBaseName;
     localVarQueryParameterBaseName = "q";
     localVarQueryParams.addAll(ApiClient.parameterToPairs("q", q));
+    localVarQueryParameterBaseName = "cursor";
+    localVarQueryParams.addAll(ApiClient.parameterToPairs("cursor", cursor));
+    localVarQueryParameterBaseName = "limit";
+    localVarQueryParams.addAll(ApiClient.parameterToPairs("limit", limit));
 
     if (!localVarQueryParams.isEmpty() || localVarQueryStringJoiner.length() != 0) {
       StringJoiner queryJoiner = new StringJoiner("&");

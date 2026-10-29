@@ -304,22 +304,28 @@ public class SurveyApi {
   }
 
   /**
-   * List all survey responses (manage_hub)
+   * List survey responses, newest first (manage_hub)
    * 
+   * @param status  (optional, default to pending)
+   * @param limit  (optional, default to 50)
+   * @param cursor The &#x60;response_id&#x60; of the last response of the previous page (optional)
    * @throws ApiException if fails to make API call
    */
-  public void listAdminSurveyResponses() throws ApiException {
-    listAdminSurveyResponsesWithHttpInfo();
+  public void listAdminSurveyResponses(String status, Long limit, String cursor) throws ApiException {
+    listAdminSurveyResponsesWithHttpInfo(status, limit, cursor);
   }
 
   /**
-   * List all survey responses (manage_hub)
+   * List survey responses, newest first (manage_hub)
    * 
+   * @param status  (optional, default to pending)
+   * @param limit  (optional, default to 50)
+   * @param cursor The &#x60;response_id&#x60; of the last response of the previous page (optional)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> listAdminSurveyResponsesWithHttpInfo() throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = listAdminSurveyResponsesRequestBuilder();
+  public ApiResponse<Void> listAdminSurveyResponsesWithHttpInfo(String status, Long limit, String cursor) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = listAdminSurveyResponsesRequestBuilder(status, limit, cursor);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -352,13 +358,32 @@ public class SurveyApi {
     }
   }
 
-  private HttpRequest.Builder listAdminSurveyResponsesRequestBuilder() throws ApiException {
+  private HttpRequest.Builder listAdminSurveyResponsesRequestBuilder(String status, Long limit, String cursor) throws ApiException {
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
     String localVarPath = "/admin/survey/responses";
 
-    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+    List<Pair> localVarQueryParams = new ArrayList<>();
+    StringJoiner localVarQueryStringJoiner = new StringJoiner("&");
+    String localVarQueryParameterBaseName;
+    localVarQueryParameterBaseName = "status";
+    localVarQueryParams.addAll(ApiClient.parameterToPairs("status", status));
+    localVarQueryParameterBaseName = "limit";
+    localVarQueryParams.addAll(ApiClient.parameterToPairs("limit", limit));
+    localVarQueryParameterBaseName = "cursor";
+    localVarQueryParams.addAll(ApiClient.parameterToPairs("cursor", cursor));
+
+    if (!localVarQueryParams.isEmpty() || localVarQueryStringJoiner.length() != 0) {
+      StringJoiner queryJoiner = new StringJoiner("&");
+      localVarQueryParams.forEach(p -> queryJoiner.add(p.getName() + '=' + p.getValue()));
+      if (localVarQueryStringJoiner.length() != 0) {
+        queryJoiner.add(localVarQueryStringJoiner.toString());
+      }
+      localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath + '?' + queryJoiner.toString()));
+    } else {
+      localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+    }
 
     localVarRequestBuilder.header("Accept", "application/json");
 

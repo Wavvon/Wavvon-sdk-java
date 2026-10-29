@@ -256,24 +256,24 @@ public class IdentityApi {
   /**
    * Publish a master-signed home-hub list
    * Unauthenticated on purpose: a client publishes the same designation to every hub in the list it just signed, and holds a session with at most one of them. The signature is what makes it safe — you can only write your own designation, one row per master, and only forward (&#x60;sequence&#x60; must exceed the stored one).  **403** when this hub has never met the identity behind &#x60;master&#x60;: no member carries it, and no device cert for it names a subkey that is a member here. Such a row could never be read — the lookup starts from a member — so it was only ever a way for a stranger to leave rows behind.
-   * @param master  (required)
+   * @param pubkey  (required)
    * @param createIdentityDesignationRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void createIdentityDesignation(String master, CreateIdentityDesignationRequest createIdentityDesignationRequest) throws ApiException {
-    createIdentityDesignationWithHttpInfo(master, createIdentityDesignationRequest);
+  public void createIdentityDesignation(String pubkey, CreateIdentityDesignationRequest createIdentityDesignationRequest) throws ApiException {
+    createIdentityDesignationWithHttpInfo(pubkey, createIdentityDesignationRequest);
   }
 
   /**
    * Publish a master-signed home-hub list
    * Unauthenticated on purpose: a client publishes the same designation to every hub in the list it just signed, and holds a session with at most one of them. The signature is what makes it safe — you can only write your own designation, one row per master, and only forward (&#x60;sequence&#x60; must exceed the stored one).  **403** when this hub has never met the identity behind &#x60;master&#x60;: no member carries it, and no device cert for it names a subkey that is a member here. Such a row could never be read — the lookup starts from a member — so it was only ever a way for a stranger to leave rows behind.
-   * @param master  (required)
+   * @param pubkey  (required)
    * @param createIdentityDesignationRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> createIdentityDesignationWithHttpInfo(String master, CreateIdentityDesignationRequest createIdentityDesignationRequest) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = createIdentityDesignationRequestBuilder(master, createIdentityDesignationRequest);
+  public ApiResponse<Void> createIdentityDesignationWithHttpInfo(String pubkey, CreateIdentityDesignationRequest createIdentityDesignationRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = createIdentityDesignationRequestBuilder(pubkey, createIdentityDesignationRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -306,10 +306,10 @@ public class IdentityApi {
     }
   }
 
-  private HttpRequest.Builder createIdentityDesignationRequestBuilder(String master, CreateIdentityDesignationRequest createIdentityDesignationRequest) throws ApiException {
-    // verify the required parameter 'master' is set
-    if (master == null) {
-      throw new ApiException(400, "Missing the required parameter 'master' when calling createIdentityDesignation");
+  private HttpRequest.Builder createIdentityDesignationRequestBuilder(String pubkey, CreateIdentityDesignationRequest createIdentityDesignationRequest) throws ApiException {
+    // verify the required parameter 'pubkey' is set
+    if (pubkey == null) {
+      throw new ApiException(400, "Missing the required parameter 'pubkey' when calling createIdentityDesignation");
     }
     // verify the required parameter 'createIdentityDesignationRequest' is set
     if (createIdentityDesignationRequest == null) {
@@ -318,8 +318,8 @@ public class IdentityApi {
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
-    String localVarPath = "/identity/{master}/designation"
-        .replace("{master}", ApiClient.urlEncode(master.toString()));
+    String localVarPath = "/identity/{pubkey}/designation"
+        .replace("{pubkey}", ApiClient.urlEncode(pubkey.toString()));
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
@@ -344,24 +344,24 @@ public class IdentityApi {
   /**
    * Register a new device subkey
    * 
-   * @param master  (required)
+   * @param pubkey  (required)
    * @param subkeyCert  (required)
    * @throws ApiException if fails to make API call
    */
-  public void createIdentityDevice(String master, SubkeyCert subkeyCert) throws ApiException {
-    createIdentityDeviceWithHttpInfo(master, subkeyCert);
+  public void createIdentityDevice(String pubkey, SubkeyCert subkeyCert) throws ApiException {
+    createIdentityDeviceWithHttpInfo(pubkey, subkeyCert);
   }
 
   /**
    * Register a new device subkey
    * 
-   * @param master  (required)
+   * @param pubkey  (required)
    * @param subkeyCert  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> createIdentityDeviceWithHttpInfo(String master, SubkeyCert subkeyCert) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = createIdentityDeviceRequestBuilder(master, subkeyCert);
+  public ApiResponse<Void> createIdentityDeviceWithHttpInfo(String pubkey, SubkeyCert subkeyCert) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = createIdentityDeviceRequestBuilder(pubkey, subkeyCert);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -394,10 +394,10 @@ public class IdentityApi {
     }
   }
 
-  private HttpRequest.Builder createIdentityDeviceRequestBuilder(String master, SubkeyCert subkeyCert) throws ApiException {
-    // verify the required parameter 'master' is set
-    if (master == null) {
-      throw new ApiException(400, "Missing the required parameter 'master' when calling createIdentityDevice");
+  private HttpRequest.Builder createIdentityDeviceRequestBuilder(String pubkey, SubkeyCert subkeyCert) throws ApiException {
+    // verify the required parameter 'pubkey' is set
+    if (pubkey == null) {
+      throw new ApiException(400, "Missing the required parameter 'pubkey' when calling createIdentityDevice");
     }
     // verify the required parameter 'subkeyCert' is set
     if (subkeyCert == null) {
@@ -406,8 +406,8 @@ public class IdentityApi {
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
-    String localVarPath = "/identity/{master}/devices"
-        .replace("{master}", ApiClient.urlEncode(master.toString()));
+    String localVarPath = "/identity/{pubkey}/devices"
+        .replace("{pubkey}", ApiClient.urlEncode(pubkey.toString()));
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
@@ -513,24 +513,24 @@ public class IdentityApi {
   /**
    * Revoke a device key
    * 
-   * @param master  (required)
+   * @param pubkey  (required)
    * @param createIdentityRevocationRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void createIdentityRevocation(String master, CreateIdentityRevocationRequest createIdentityRevocationRequest) throws ApiException {
-    createIdentityRevocationWithHttpInfo(master, createIdentityRevocationRequest);
+  public void createIdentityRevocation(String pubkey, CreateIdentityRevocationRequest createIdentityRevocationRequest) throws ApiException {
+    createIdentityRevocationWithHttpInfo(pubkey, createIdentityRevocationRequest);
   }
 
   /**
    * Revoke a device key
    * 
-   * @param master  (required)
+   * @param pubkey  (required)
    * @param createIdentityRevocationRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> createIdentityRevocationWithHttpInfo(String master, CreateIdentityRevocationRequest createIdentityRevocationRequest) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = createIdentityRevocationRequestBuilder(master, createIdentityRevocationRequest);
+  public ApiResponse<Void> createIdentityRevocationWithHttpInfo(String pubkey, CreateIdentityRevocationRequest createIdentityRevocationRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = createIdentityRevocationRequestBuilder(pubkey, createIdentityRevocationRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -563,10 +563,10 @@ public class IdentityApi {
     }
   }
 
-  private HttpRequest.Builder createIdentityRevocationRequestBuilder(String master, CreateIdentityRevocationRequest createIdentityRevocationRequest) throws ApiException {
-    // verify the required parameter 'master' is set
-    if (master == null) {
-      throw new ApiException(400, "Missing the required parameter 'master' when calling createIdentityRevocation");
+  private HttpRequest.Builder createIdentityRevocationRequestBuilder(String pubkey, CreateIdentityRevocationRequest createIdentityRevocationRequest) throws ApiException {
+    // verify the required parameter 'pubkey' is set
+    if (pubkey == null) {
+      throw new ApiException(400, "Missing the required parameter 'pubkey' when calling createIdentityRevocation");
     }
     // verify the required parameter 'createIdentityRevocationRequest' is set
     if (createIdentityRevocationRequest == null) {
@@ -575,8 +575,8 @@ public class IdentityApi {
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
-    String localVarPath = "/identity/{master}/revocations"
-        .replace("{master}", ApiClient.urlEncode(master.toString()));
+    String localVarPath = "/identity/{pubkey}/revocations"
+        .replace("{pubkey}", ApiClient.urlEncode(pubkey.toString()));
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
@@ -601,22 +601,22 @@ public class IdentityApi {
   /**
    * Get the home-hub list a master key has published here
    * 
-   * @param master  (required)
+   * @param pubkey  (required)
    * @throws ApiException if fails to make API call
    */
-  public void getIdentityDesignation(String master) throws ApiException {
-    getIdentityDesignationWithHttpInfo(master);
+  public void getIdentityDesignation(String pubkey) throws ApiException {
+    getIdentityDesignationWithHttpInfo(pubkey);
   }
 
   /**
    * Get the home-hub list a master key has published here
    * 
-   * @param master  (required)
+   * @param pubkey  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> getIdentityDesignationWithHttpInfo(String master) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = getIdentityDesignationRequestBuilder(master);
+  public ApiResponse<Void> getIdentityDesignationWithHttpInfo(String pubkey) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = getIdentityDesignationRequestBuilder(pubkey);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -649,16 +649,16 @@ public class IdentityApi {
     }
   }
 
-  private HttpRequest.Builder getIdentityDesignationRequestBuilder(String master) throws ApiException {
-    // verify the required parameter 'master' is set
-    if (master == null) {
-      throw new ApiException(400, "Missing the required parameter 'master' when calling getIdentityDesignation");
+  private HttpRequest.Builder getIdentityDesignationRequestBuilder(String pubkey) throws ApiException {
+    // verify the required parameter 'pubkey' is set
+    if (pubkey == null) {
+      throw new ApiException(400, "Missing the required parameter 'pubkey' when calling getIdentityDesignation");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
-    String localVarPath = "/identity/{master}/designation"
-        .replace("{master}", ApiClient.urlEncode(master.toString()));
+    String localVarPath = "/identity/{pubkey}/designation"
+        .replace("{pubkey}", ApiClient.urlEncode(pubkey.toString()));
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
@@ -829,22 +829,22 @@ public class IdentityApi {
   /**
    * Get cross-device preferences blob
    * 
-   * @param master  (required)
+   * @param pubkey  (required)
    * @throws ApiException if fails to make API call
    */
-  public void getIdentityPrefs(String master) throws ApiException {
-    getIdentityPrefsWithHttpInfo(master);
+  public void getIdentityPrefs(String pubkey) throws ApiException {
+    getIdentityPrefsWithHttpInfo(pubkey);
   }
 
   /**
    * Get cross-device preferences blob
    * 
-   * @param master  (required)
+   * @param pubkey  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> getIdentityPrefsWithHttpInfo(String master) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = getIdentityPrefsRequestBuilder(master);
+  public ApiResponse<Void> getIdentityPrefsWithHttpInfo(String pubkey) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = getIdentityPrefsRequestBuilder(pubkey);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -877,16 +877,16 @@ public class IdentityApi {
     }
   }
 
-  private HttpRequest.Builder getIdentityPrefsRequestBuilder(String master) throws ApiException {
-    // verify the required parameter 'master' is set
-    if (master == null) {
-      throw new ApiException(400, "Missing the required parameter 'master' when calling getIdentityPrefs");
+  private HttpRequest.Builder getIdentityPrefsRequestBuilder(String pubkey) throws ApiException {
+    // verify the required parameter 'pubkey' is set
+    if (pubkey == null) {
+      throw new ApiException(400, "Missing the required parameter 'pubkey' when calling getIdentityPrefs");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
-    String localVarPath = "/identity/{master}/prefs"
-        .replace("{master}", ApiClient.urlEncode(master.toString()));
+    String localVarPath = "/identity/{pubkey}/prefs"
+        .replace("{pubkey}", ApiClient.urlEncode(pubkey.toString()));
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
@@ -905,22 +905,22 @@ public class IdentityApi {
   /**
    * List devices linked to a master key
    * 
-   * @param master  (required)
+   * @param pubkey  (required)
    * @throws ApiException if fails to make API call
    */
-  public void listIdentityDevices(String master) throws ApiException {
-    listIdentityDevicesWithHttpInfo(master);
+  public void listIdentityDevices(String pubkey) throws ApiException {
+    listIdentityDevicesWithHttpInfo(pubkey);
   }
 
   /**
    * List devices linked to a master key
    * 
-   * @param master  (required)
+   * @param pubkey  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> listIdentityDevicesWithHttpInfo(String master) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = listIdentityDevicesRequestBuilder(master);
+  public ApiResponse<Void> listIdentityDevicesWithHttpInfo(String pubkey) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = listIdentityDevicesRequestBuilder(pubkey);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -953,16 +953,16 @@ public class IdentityApi {
     }
   }
 
-  private HttpRequest.Builder listIdentityDevicesRequestBuilder(String master) throws ApiException {
-    // verify the required parameter 'master' is set
-    if (master == null) {
-      throw new ApiException(400, "Missing the required parameter 'master' when calling listIdentityDevices");
+  private HttpRequest.Builder listIdentityDevicesRequestBuilder(String pubkey) throws ApiException {
+    // verify the required parameter 'pubkey' is set
+    if (pubkey == null) {
+      throw new ApiException(400, "Missing the required parameter 'pubkey' when calling listIdentityDevices");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
-    String localVarPath = "/identity/{master}/devices"
-        .replace("{master}", ApiClient.urlEncode(master.toString()));
+    String localVarPath = "/identity/{pubkey}/devices"
+        .replace("{pubkey}", ApiClient.urlEncode(pubkey.toString()));
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
@@ -1058,22 +1058,22 @@ public class IdentityApi {
   /**
    * List revoked device keys
    * 
-   * @param master  (required)
+   * @param pubkey  (required)
    * @throws ApiException if fails to make API call
    */
-  public void listIdentityRevocations(String master) throws ApiException {
-    listIdentityRevocationsWithHttpInfo(master);
+  public void listIdentityRevocations(String pubkey) throws ApiException {
+    listIdentityRevocationsWithHttpInfo(pubkey);
   }
 
   /**
    * List revoked device keys
    * 
-   * @param master  (required)
+   * @param pubkey  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> listIdentityRevocationsWithHttpInfo(String master) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = listIdentityRevocationsRequestBuilder(master);
+  public ApiResponse<Void> listIdentityRevocationsWithHttpInfo(String pubkey) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = listIdentityRevocationsRequestBuilder(pubkey);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -1106,16 +1106,16 @@ public class IdentityApi {
     }
   }
 
-  private HttpRequest.Builder listIdentityRevocationsRequestBuilder(String master) throws ApiException {
-    // verify the required parameter 'master' is set
-    if (master == null) {
-      throw new ApiException(400, "Missing the required parameter 'master' when calling listIdentityRevocations");
+  private HttpRequest.Builder listIdentityRevocationsRequestBuilder(String pubkey) throws ApiException {
+    // verify the required parameter 'pubkey' is set
+    if (pubkey == null) {
+      throw new ApiException(400, "Missing the required parameter 'pubkey' when calling listIdentityRevocations");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
-    String localVarPath = "/identity/{master}/revocations"
-        .replace("{master}", ApiClient.urlEncode(master.toString()));
+    String localVarPath = "/identity/{pubkey}/revocations"
+        .replace("{pubkey}", ApiClient.urlEncode(pubkey.toString()));
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
@@ -1303,24 +1303,24 @@ public class IdentityApi {
   /**
    * Store cross-device preferences blob
    * 
-   * @param master  (required)
+   * @param pubkey  (required)
    * @param setIdentityPrefsRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void setIdentityPrefs(String master, SetIdentityPrefsRequest setIdentityPrefsRequest) throws ApiException {
-    setIdentityPrefsWithHttpInfo(master, setIdentityPrefsRequest);
+  public void setIdentityPrefs(String pubkey, SetIdentityPrefsRequest setIdentityPrefsRequest) throws ApiException {
+    setIdentityPrefsWithHttpInfo(pubkey, setIdentityPrefsRequest);
   }
 
   /**
    * Store cross-device preferences blob
    * 
-   * @param master  (required)
+   * @param pubkey  (required)
    * @param setIdentityPrefsRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> setIdentityPrefsWithHttpInfo(String master, SetIdentityPrefsRequest setIdentityPrefsRequest) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = setIdentityPrefsRequestBuilder(master, setIdentityPrefsRequest);
+  public ApiResponse<Void> setIdentityPrefsWithHttpInfo(String pubkey, SetIdentityPrefsRequest setIdentityPrefsRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = setIdentityPrefsRequestBuilder(pubkey, setIdentityPrefsRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -1353,10 +1353,10 @@ public class IdentityApi {
     }
   }
 
-  private HttpRequest.Builder setIdentityPrefsRequestBuilder(String master, SetIdentityPrefsRequest setIdentityPrefsRequest) throws ApiException {
-    // verify the required parameter 'master' is set
-    if (master == null) {
-      throw new ApiException(400, "Missing the required parameter 'master' when calling setIdentityPrefs");
+  private HttpRequest.Builder setIdentityPrefsRequestBuilder(String pubkey, SetIdentityPrefsRequest setIdentityPrefsRequest) throws ApiException {
+    // verify the required parameter 'pubkey' is set
+    if (pubkey == null) {
+      throw new ApiException(400, "Missing the required parameter 'pubkey' when calling setIdentityPrefs");
     }
     // verify the required parameter 'setIdentityPrefsRequest' is set
     if (setIdentityPrefsRequest == null) {
@@ -1365,8 +1365,8 @@ public class IdentityApi {
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
-    String localVarPath = "/identity/{master}/prefs"
-        .replace("{master}", ApiClient.urlEncode(master.toString()));
+    String localVarPath = "/identity/{pubkey}/prefs"
+        .replace("{pubkey}", ApiClient.urlEncode(pubkey.toString()));
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 

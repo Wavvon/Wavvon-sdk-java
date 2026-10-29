@@ -366,7 +366,7 @@ public class HubInfo {
   }
 
   /**
-   * What this hub can do, e.g. &#x60;voice.wt&#x60;, &#x60;list.cursor&#x60;. Test membership to decide what to offer; absent or empty means a hub predating capability advertising, which reads correctly as \&quot;knows nothing\&quot;. The list only ever grows — a string never changes spelling or meaning once published. 
+   * What this hub can do, e.g. &#x60;voice.alliance&#x60;, &#x60;list.cursor&#x60;. Test membership to decide what to offer; absent or empty means a hub predating capability advertising, which reads correctly as \&quot;knows nothing\&quot;. The list only ever grows — a string never changes spelling or meaning once published. 
    * @return capabilities
    */
   @jakarta.annotation.Nonnull
