@@ -27,7 +27,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.wavvon.sdk.generated.model.Attachment;
 import org.wavvon.sdk.generated.model.GameLaunchCard;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
@@ -38,9 +37,10 @@ import org.wavvon.sdk.generated.ApiClient;
  */
 @JsonPropertyOrder({
   CreateChannelMessageRequest.JSON_PROPERTY_CONTENT,
-  CreateChannelMessageRequest.JSON_PROPERTY_ATTACHMENTS,
+  CreateChannelMessageRequest.JSON_PROPERTY_ATTACHMENT_IDS,
   CreateChannelMessageRequest.JSON_PROPERTY_REPLY_TO,
-  CreateChannelMessageRequest.JSON_PROPERTY_GAME
+  CreateChannelMessageRequest.JSON_PROPERTY_GAME,
+  CreateChannelMessageRequest.JSON_PROPERTY_STICKER_ID
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class CreateChannelMessageRequest {
@@ -48,9 +48,9 @@ public class CreateChannelMessageRequest {
   @jakarta.annotation.Nonnull
   private String content;
 
-  public static final String JSON_PROPERTY_ATTACHMENTS = "attachments";
+  public static final String JSON_PROPERTY_ATTACHMENT_IDS = "attachment_ids";
   @jakarta.annotation.Nullable
-  private List<Attachment> attachments = new ArrayList<>();
+  private List<String> attachmentIds = new ArrayList<>();
 
   public static final String JSON_PROPERTY_REPLY_TO = "reply_to";
   @jakarta.annotation.Nullable
@@ -59,6 +59,10 @@ public class CreateChannelMessageRequest {
   public static final String JSON_PROPERTY_GAME = "game";
   @jakarta.annotation.Nullable
   private GameLaunchCard game;
+
+  public static final String JSON_PROPERTY_STICKER_ID = "sticker_id";
+  @jakarta.annotation.Nullable
+  private String stickerId;
 
   public CreateChannelMessageRequest() { 
   }
@@ -87,35 +91,35 @@ public class CreateChannelMessageRequest {
   }
 
 
-  public CreateChannelMessageRequest attachments(@jakarta.annotation.Nullable List<Attachment> attachments) {
-    this.attachments = attachments;
+  public CreateChannelMessageRequest attachmentIds(@jakarta.annotation.Nullable List<String> attachmentIds) {
+    this.attachmentIds = attachmentIds;
     return this;
   }
 
-  public CreateChannelMessageRequest addAttachmentsItem(Attachment attachmentsItem) {
-    if (this.attachments == null) {
-      this.attachments = new ArrayList<>();
+  public CreateChannelMessageRequest addAttachmentIdsItem(String attachmentIdsItem) {
+    if (this.attachmentIds == null) {
+      this.attachmentIds = new ArrayList<>();
     }
-    this.attachments.add(attachmentsItem);
+    this.attachmentIds.add(attachmentIdsItem);
     return this;
   }
 
   /**
-   * Get attachments
-   * @return attachments
+   * Ids from &#x60;POST /channels/{channel_id}/upload&#x60;, shown in this order. Each must be the sender&#39;s own upload to this channel, not linked yet and not a tombstone, and the count within &#x60;max_attachments_per_message&#x60;: otherwise 400 (not found, too many, duplicate), 409 (already linked) or 410 (removed or expired). The retired inline &#x60;attachments&#x60; field answers 400.
+   * @return attachmentIds
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_ATTACHMENTS)
+  @JsonProperty(JSON_PROPERTY_ATTACHMENT_IDS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public List<Attachment> getAttachments() {
-    return attachments;
+  public List<String> getAttachmentIds() {
+    return attachmentIds;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_ATTACHMENTS)
+  @JsonProperty(JSON_PROPERTY_ATTACHMENT_IDS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setAttachments(@jakarta.annotation.Nullable List<Attachment> attachments) {
-    this.attachments = attachments;
+  public void setAttachmentIds(@jakarta.annotation.Nullable List<String> attachmentIds) {
+    this.attachmentIds = attachmentIds;
   }
 
 
@@ -167,6 +171,30 @@ public class CreateChannelMessageRequest {
   }
 
 
+  public CreateChannelMessageRequest stickerId(@jakarta.annotation.Nullable String stickerId) {
+    this.stickerId = stickerId;
+    return this;
+  }
+
+  /**
+   * A sticker this hub holds (see POST /channels/{channel_id}/stickers). 404 unknown, 410 removed or evicted, 403 for a copy without stickers.external. Refused on alliance channels.
+   * @return stickerId
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_STICKER_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getStickerId() {
+    return stickerId;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_STICKER_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setStickerId(@jakarta.annotation.Nullable String stickerId) {
+    this.stickerId = stickerId;
+  }
+
+
   /**
    * Return true if this createChannelMessage_request object is equal to o.
    */
@@ -180,14 +208,15 @@ public class CreateChannelMessageRequest {
     }
     CreateChannelMessageRequest createChannelMessageRequest = (CreateChannelMessageRequest) o;
     return Objects.equals(this.content, createChannelMessageRequest.content) &&
-        Objects.equals(this.attachments, createChannelMessageRequest.attachments) &&
+        Objects.equals(this.attachmentIds, createChannelMessageRequest.attachmentIds) &&
         Objects.equals(this.replyTo, createChannelMessageRequest.replyTo) &&
-        Objects.equals(this.game, createChannelMessageRequest.game);
+        Objects.equals(this.game, createChannelMessageRequest.game) &&
+        Objects.equals(this.stickerId, createChannelMessageRequest.stickerId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(content, attachments, replyTo, game);
+    return Objects.hash(content, attachmentIds, replyTo, game, stickerId);
   }
 
   @Override
@@ -195,9 +224,10 @@ public class CreateChannelMessageRequest {
     StringBuilder sb = new StringBuilder();
     sb.append("class CreateChannelMessageRequest {\n");
     sb.append("    content: ").append(toIndentedString(content)).append("\n");
-    sb.append("    attachments: ").append(toIndentedString(attachments)).append("\n");
+    sb.append("    attachmentIds: ").append(toIndentedString(attachmentIds)).append("\n");
     sb.append("    replyTo: ").append(toIndentedString(replyTo)).append("\n");
     sb.append("    game: ").append(toIndentedString(game)).append("\n");
+    sb.append("    stickerId: ").append(toIndentedString(stickerId)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -250,13 +280,12 @@ public class CreateChannelMessageRequest {
       joiner.add(String.format("%scontent%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getContent()))));
     }
 
-    // add `attachments` to the URL query string
-    if (getAttachments() != null) {
-      for (int i = 0; i < getAttachments().size(); i++) {
-        if (getAttachments().get(i) != null) {
-          joiner.add(getAttachments().get(i).toUrlQueryString(String.format("%sattachments%s%s", prefix, suffix,
-          "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix))));
-        }
+    // add `attachment_ids` to the URL query string
+    if (getAttachmentIds() != null) {
+      for (int i = 0; i < getAttachmentIds().size(); i++) {
+        joiner.add(String.format("%sattachment_ids%s%s=%s", prefix, suffix,
+            "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix),
+            ApiClient.urlEncode(ApiClient.valueToString(getAttachmentIds().get(i)))));
       }
     }
 
@@ -268,6 +297,11 @@ public class CreateChannelMessageRequest {
     // add `game` to the URL query string
     if (getGame() != null) {
       joiner.add(getGame().toUrlQueryString(prefix + "game" + suffix));
+    }
+
+    // add `sticker_id` to the URL query string
+    if (getStickerId() != null) {
+      joiner.add(String.format("%ssticker_id%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getStickerId()))));
     }
 
     return joiner.toString();

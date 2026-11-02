@@ -24,18 +24,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * SurveyAnswerInput
+ * One answer; the field used follows the question&#39;s &#x60;kind&#x60;.
  */
 @JsonPropertyOrder({
   SurveyAnswerInput.JSON_PROPERTY_QUESTION_ID,
   SurveyAnswerInput.JSON_PROPERTY_CHOICE_ID,
-  SurveyAnswerInput.JSON_PROPERTY_TEXT_ANSWER
+  SurveyAnswerInput.JSON_PROPERTY_CHOICE_IDS,
+  SurveyAnswerInput.JSON_PROPERTY_TEXT_ANSWER,
+  SurveyAnswerInput.JSON_PROPERTY_CHECKED
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class SurveyAnswerInput {
@@ -47,9 +51,17 @@ public class SurveyAnswerInput {
   @jakarta.annotation.Nullable
   private String choiceId;
 
+  public static final String JSON_PROPERTY_CHOICE_IDS = "choice_ids";
+  @jakarta.annotation.Nullable
+  private List<String> choiceIds = new ArrayList<>();
+
   public static final String JSON_PROPERTY_TEXT_ANSWER = "text_answer";
   @jakarta.annotation.Nullable
   private String textAnswer;
+
+  public static final String JSON_PROPERTY_CHECKED = "checked";
+  @jakarta.annotation.Nullable
+  private Boolean checked;
 
   public SurveyAnswerInput() { 
   }
@@ -84,7 +96,7 @@ public class SurveyAnswerInput {
   }
 
   /**
-   * Get choiceId
+   * A &#x60;choice&#x60; answer.
    * @return choiceId
    */
   @jakarta.annotation.Nullable
@@ -102,13 +114,45 @@ public class SurveyAnswerInput {
   }
 
 
+  public SurveyAnswerInput choiceIds(@jakarta.annotation.Nullable List<String> choiceIds) {
+    this.choiceIds = choiceIds;
+    return this;
+  }
+
+  public SurveyAnswerInput addChoiceIdsItem(String choiceIdsItem) {
+    if (this.choiceIds == null) {
+      this.choiceIds = new ArrayList<>();
+    }
+    this.choiceIds.add(choiceIdsItem);
+    return this;
+  }
+
+  /**
+   * A &#x60;multi&#x60; answer.
+   * @return choiceIds
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CHOICE_IDS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public List<String> getChoiceIds() {
+    return choiceIds;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_CHOICE_IDS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setChoiceIds(@jakarta.annotation.Nullable List<String> choiceIds) {
+    this.choiceIds = choiceIds;
+  }
+
+
   public SurveyAnswerInput textAnswer(@jakarta.annotation.Nullable String textAnswer) {
     this.textAnswer = textAnswer;
     return this;
   }
 
   /**
-   * Get textAnswer
+   * A &#x60;text&#x60; answer.
    * @return textAnswer
    */
   @jakarta.annotation.Nullable
@@ -126,6 +170,30 @@ public class SurveyAnswerInput {
   }
 
 
+  public SurveyAnswerInput checked(@jakarta.annotation.Nullable Boolean checked) {
+    this.checked = checked;
+    return this;
+  }
+
+  /**
+   * A &#x60;consent&#x60; answer.
+   * @return checked
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CHECKED)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Boolean getChecked() {
+    return checked;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_CHECKED)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setChecked(@jakarta.annotation.Nullable Boolean checked) {
+    this.checked = checked;
+  }
+
+
   /**
    * Return true if this SurveyAnswerInput object is equal to o.
    */
@@ -140,12 +208,14 @@ public class SurveyAnswerInput {
     SurveyAnswerInput surveyAnswerInput = (SurveyAnswerInput) o;
     return Objects.equals(this.questionId, surveyAnswerInput.questionId) &&
         Objects.equals(this.choiceId, surveyAnswerInput.choiceId) &&
-        Objects.equals(this.textAnswer, surveyAnswerInput.textAnswer);
+        Objects.equals(this.choiceIds, surveyAnswerInput.choiceIds) &&
+        Objects.equals(this.textAnswer, surveyAnswerInput.textAnswer) &&
+        Objects.equals(this.checked, surveyAnswerInput.checked);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(questionId, choiceId, textAnswer);
+    return Objects.hash(questionId, choiceId, choiceIds, textAnswer, checked);
   }
 
   @Override
@@ -154,7 +224,9 @@ public class SurveyAnswerInput {
     sb.append("class SurveyAnswerInput {\n");
     sb.append("    questionId: ").append(toIndentedString(questionId)).append("\n");
     sb.append("    choiceId: ").append(toIndentedString(choiceId)).append("\n");
+    sb.append("    choiceIds: ").append(toIndentedString(choiceIds)).append("\n");
     sb.append("    textAnswer: ").append(toIndentedString(textAnswer)).append("\n");
+    sb.append("    checked: ").append(toIndentedString(checked)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -212,9 +284,23 @@ public class SurveyAnswerInput {
       joiner.add(String.format("%schoice_id%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getChoiceId()))));
     }
 
+    // add `choice_ids` to the URL query string
+    if (getChoiceIds() != null) {
+      for (int i = 0; i < getChoiceIds().size(); i++) {
+        joiner.add(String.format("%schoice_ids%s%s=%s", prefix, suffix,
+            "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix),
+            ApiClient.urlEncode(ApiClient.valueToString(getChoiceIds().get(i)))));
+      }
+    }
+
     // add `text_answer` to the URL query string
     if (getTextAnswer() != null) {
       joiner.add(String.format("%stext_answer%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getTextAnswer()))));
+    }
+
+    // add `checked` to the URL query string
+    if (getChecked() != null) {
+      joiner.add(String.format("%schecked%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getChecked()))));
     }
 
     return joiner.toString();

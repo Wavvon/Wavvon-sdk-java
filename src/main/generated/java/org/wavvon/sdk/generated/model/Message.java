@@ -27,12 +27,14 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.wavvon.sdk.generated.model.Attachment;
+import org.wavvon.sdk.generated.model.AttachmentRef;
 import org.wavvon.sdk.generated.model.ComponentRow;
 import org.wavvon.sdk.generated.model.Embed;
 import org.wavvon.sdk.generated.model.GameLaunchCard;
+import org.wavvon.sdk.generated.model.Masquerade;
 import org.wavvon.sdk.generated.model.Reaction;
 import org.wavvon.sdk.generated.model.ReplyContext;
+import org.wavvon.sdk.generated.model.Sticker;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -55,7 +57,9 @@ import org.wavvon.sdk.generated.ApiClient;
   Message.JSON_PROPERTY_REPLY_COUNT,
   Message.JSON_PROPERTY_EMBEDS,
   Message.JSON_PROPERTY_GAME,
-  Message.JSON_PROPERTY_COMPONENTS
+  Message.JSON_PROPERTY_COMPONENTS,
+  Message.JSON_PROPERTY_MASQUERADE,
+  Message.JSON_PROPERTY_STICKER
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class Message {
@@ -89,7 +93,7 @@ public class Message {
 
   public static final String JSON_PROPERTY_ATTACHMENTS = "attachments";
   @jakarta.annotation.Nullable
-  private List<Attachment> attachments = new ArrayList<>();
+  private List<AttachmentRef> attachments = new ArrayList<>();
 
   public static final String JSON_PROPERTY_REACTIONS = "reactions";
   @jakarta.annotation.Nullable
@@ -118,6 +122,14 @@ public class Message {
   public static final String JSON_PROPERTY_COMPONENTS = "components";
   @jakarta.annotation.Nullable
   private List<ComponentRow> components = new ArrayList<>();
+
+  public static final String JSON_PROPERTY_MASQUERADE = "masquerade";
+  @jakarta.annotation.Nullable
+  private Masquerade masquerade;
+
+  public static final String JSON_PROPERTY_STICKER = "sticker";
+  @jakarta.annotation.Nullable
+  private Sticker sticker;
 
   public Message() { 
   }
@@ -290,12 +302,12 @@ public class Message {
   }
 
 
-  public Message attachments(@jakarta.annotation.Nullable List<Attachment> attachments) {
+  public Message attachments(@jakarta.annotation.Nullable List<AttachmentRef> attachments) {
     this.attachments = attachments;
     return this;
   }
 
-  public Message addAttachmentsItem(Attachment attachmentsItem) {
+  public Message addAttachmentsItem(AttachmentRef attachmentsItem) {
     if (this.attachments == null) {
       this.attachments = new ArrayList<>();
     }
@@ -310,14 +322,14 @@ public class Message {
   @jakarta.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_ATTACHMENTS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public List<Attachment> getAttachments() {
+  public List<AttachmentRef> getAttachments() {
     return attachments;
   }
 
 
   @JsonProperty(JSON_PROPERTY_ATTACHMENTS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setAttachments(@jakarta.annotation.Nullable List<Attachment> attachments) {
+  public void setAttachments(@jakarta.annotation.Nullable List<AttachmentRef> attachments) {
     this.attachments = attachments;
   }
 
@@ -514,6 +526,54 @@ public class Message {
   }
 
 
+  public Message masquerade(@jakarta.annotation.Nullable Masquerade masquerade) {
+    this.masquerade = masquerade;
+    return this;
+  }
+
+  /**
+   * Omitted unless set. A name and avatar to show instead of the sender&#39;s own (a bridge relaying someone from another network, or a webhook&#39;s &#x60;username&#x60;). &#x60;sender&#x60; and &#x60;sender_name&#x60; stay the real author, and clients show both.
+   * @return masquerade
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_MASQUERADE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Masquerade getMasquerade() {
+    return masquerade;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_MASQUERADE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setMasquerade(@jakarta.annotation.Nullable Masquerade masquerade) {
+    this.masquerade = masquerade;
+  }
+
+
+  public Message sticker(@jakarta.annotation.Nullable Sticker sticker) {
+    this.sticker = sticker;
+    return this;
+  }
+
+  /**
+   * Omitted unless set. The sticker sent with this message, held by this hub (stickers.md). A removed or evicted one carries its &#x60;state&#x60; so a client renders a sentence rather than a gap.
+   * @return sticker
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_STICKER)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Sticker getSticker() {
+    return sticker;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_STICKER)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setSticker(@jakarta.annotation.Nullable Sticker sticker) {
+    this.sticker = sticker;
+  }
+
+
   /**
    * Return true if this Message object is equal to o.
    */
@@ -540,12 +600,14 @@ public class Message {
         Objects.equals(this.replyCount, message.replyCount) &&
         Objects.equals(this.embeds, message.embeds) &&
         Objects.equals(this.game, message.game) &&
-        Objects.equals(this.components, message.components);
+        Objects.equals(this.components, message.components) &&
+        Objects.equals(this.masquerade, message.masquerade) &&
+        Objects.equals(this.sticker, message.sticker);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, channelId, sender, senderName, content, createdAt, editedAt, attachments, reactions, replyTo, visibleToPubkey, replyCount, embeds, game, components);
+    return Objects.hash(id, channelId, sender, senderName, content, createdAt, editedAt, attachments, reactions, replyTo, visibleToPubkey, replyCount, embeds, game, components, masquerade, sticker);
   }
 
   @Override
@@ -567,6 +629,8 @@ public class Message {
     sb.append("    embeds: ").append(toIndentedString(embeds)).append("\n");
     sb.append("    game: ").append(toIndentedString(game)).append("\n");
     sb.append("    components: ").append(toIndentedString(components)).append("\n");
+    sb.append("    masquerade: ").append(toIndentedString(masquerade)).append("\n");
+    sb.append("    sticker: ").append(toIndentedString(sticker)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -707,6 +771,16 @@ public class Message {
           "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix))));
         }
       }
+    }
+
+    // add `masquerade` to the URL query string
+    if (getMasquerade() != null) {
+      joiner.add(getMasquerade().toUrlQueryString(prefix + "masquerade" + suffix));
+    }
+
+    // add `sticker` to the URL query string
+    if (getSticker() != null) {
+      joiner.add(getSticker().toUrlQueryString(prefix + "sticker" + suffix));
     }
 
     return joiner.toString();

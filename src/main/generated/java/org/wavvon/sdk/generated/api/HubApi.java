@@ -22,9 +22,11 @@ import org.wavvon.sdk.generated.model.CreateHubIconRequest;
 import org.wavvon.sdk.generated.model.GetAdminSettingsModeration200Response;
 import org.wavvon.sdk.generated.model.GetAdminSettingsPow200Response;
 import org.wavvon.sdk.generated.model.GetAdminSettingsTags200Response;
+import org.wavvon.sdk.generated.model.ListHubPending200ResponseInner;
 import org.wavvon.sdk.generated.model.MemberAdminInfo;
 import org.wavvon.sdk.generated.model.PatchAdminSettingsChallengeRequest;
 import org.wavvon.sdk.generated.model.PatchAdminSettingsLobbyRequest;
+import org.wavvon.sdk.generated.model.RejectHubPendingRequest;
 import org.wavvon.sdk.generated.model.UpdateAdminSettingsListingRequest;
 import org.wavvon.sdk.generated.model.UpdateAdminSettingsModerationRequest;
 import org.wavvon.sdk.generated.model.UpdateAdminSettingsPowRequest;
@@ -560,7 +562,7 @@ public class HubApi {
 
   /**
    * Get hub settings (admin)
-   * 
+   * Besides the settings, &#x60;attachments_usage&#x60; is &#x60;{used_bytes, cap_bytes, warning, evictions}&#x60;: disk used by attachment blobs against &#x60;attachments_cap_bytes&#x60;, whether it is at &#x60;attachments_warn_percent&#x60;, and the blobs evicted for space since the hub started.
    * @throws ApiException if fails to make API call
    */
   public void getHubSettings() throws ApiException {
@@ -569,7 +571,7 @@ public class HubApi {
 
   /**
    * Get hub settings (admin)
-   * 
+   * Besides the settings, &#x60;attachments_usage&#x60; is &#x60;{used_bytes, cap_bytes, warning, evictions}&#x60;: disk used by attachment blobs against &#x60;attachments_cap_bytes&#x60;, whether it is at &#x60;attachments_warn_percent&#x60;, and the blobs evicted for space since the hub started.
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -799,10 +801,12 @@ public class HubApi {
    * Oldest first — the queue is worked from the front, so the cursor moves forward through the list rather than back like the newest-first ones. Paged only on hubs advertising &#x60;list.cursor.lists&#x60;. 
    * @param limit Page size, clamped to 1..500. (optional, default to 100)
    * @param cursor Keyset cursor — the &#x60;public_key&#x60; of the previous page&#39;s last row. (optional)
+   * @return List&lt;ListHubPending200ResponseInner&gt;
    * @throws ApiException if fails to make API call
    */
-  public void listHubPending(Long limit, String cursor) throws ApiException {
-    listHubPendingWithHttpInfo(limit, cursor);
+  public List<ListHubPending200ResponseInner> listHubPending(Long limit, String cursor) throws ApiException {
+    ApiResponse<List<ListHubPending200ResponseInner>> localVarResponse = listHubPendingWithHttpInfo(limit, cursor);
+    return localVarResponse.getData();
   }
 
   /**
@@ -810,10 +814,10 @@ public class HubApi {
    * Oldest first — the queue is worked from the front, so the cursor moves forward through the list rather than back like the newest-first ones. Paged only on hubs advertising &#x60;list.cursor.lists&#x60;. 
    * @param limit Page size, clamped to 1..500. (optional, default to 100)
    * @param cursor Keyset cursor — the &#x60;public_key&#x60; of the previous page&#39;s last row. (optional)
-   * @return ApiResponse&lt;Void&gt;
+   * @return ApiResponse&lt;List&lt;ListHubPending200ResponseInner&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> listHubPendingWithHttpInfo(Long limit, String cursor) throws ApiException {
+  public ApiResponse<List<ListHubPending200ResponseInner>> listHubPendingWithHttpInfo(Long limit, String cursor) throws ApiException {
     HttpRequest.Builder localVarRequestBuilder = listHubPendingRequestBuilder(limit, cursor);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
@@ -826,17 +830,23 @@ public class HubApi {
         if (localVarResponse.statusCode()/ 100 != 2) {
           throw getApiException("listHubPending", localVarResponse);
         }
-        return new ApiResponse<>(
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<List<ListHubPending200ResponseInner>>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        localVarResponse.body().close();
+
+        return new ApiResponse<List<ListHubPending200ResponseInner>>(
             localVarResponse.statusCode(),
             localVarResponse.headers().map(),
-            null
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<List<ListHubPending200ResponseInner>>() {})
         );
       } finally {
-        // Drain the InputStream
-        while (localVarResponse.body().read() != -1) {
-          // Ignore
-        }
-        localVarResponse.body().close();
       }
     } catch (IOException e) {
       throw new ApiException(e);
@@ -1034,6 +1044,90 @@ public class HubApi {
     try {
       byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(patchAdminSettingsLobbyRequest);
       localVarRequestBuilder.method("PATCH", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Reject a pending joiner&#39;s application (hub.admission)
+   * The joiner stays pending, reads the reason at &#x60;GET /application/status&#x60;, and may apply again after a cooldown. They leave the approval queue until they do.
+   * @param pubkey  (required)
+   * @param rejectHubPendingRequest  (optional)
+   * @throws ApiException if fails to make API call
+   */
+  public void rejectHubPending(String pubkey, RejectHubPendingRequest rejectHubPendingRequest) throws ApiException {
+    rejectHubPendingWithHttpInfo(pubkey, rejectHubPendingRequest);
+  }
+
+  /**
+   * Reject a pending joiner&#39;s application (hub.admission)
+   * The joiner stays pending, reads the reason at &#x60;GET /application/status&#x60;, and may apply again after a cooldown. They leave the approval queue until they do.
+   * @param pubkey  (required)
+   * @param rejectHubPendingRequest  (optional)
+   * @return ApiResponse&lt;Void&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<Void> rejectHubPendingWithHttpInfo(String pubkey, RejectHubPendingRequest rejectHubPendingRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = rejectHubPendingRequestBuilder(pubkey, rejectHubPendingRequest);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("rejectHubPending", localVarResponse);
+        }
+        return new ApiResponse<>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            null
+        );
+      } finally {
+        // Drain the InputStream
+        while (localVarResponse.body().read() != -1) {
+          // Ignore
+        }
+        localVarResponse.body().close();
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder rejectHubPendingRequestBuilder(String pubkey, RejectHubPendingRequest rejectHubPendingRequest) throws ApiException {
+    // verify the required parameter 'pubkey' is set
+    if (pubkey == null) {
+      throw new ApiException(400, "Missing the required parameter 'pubkey' when calling rejectHubPending");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/hub/pending/{pubkey}/reject"
+        .replace("{pubkey}", ApiClient.urlEncode(pubkey.toString()));
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Content-Type", "application/json");
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(rejectHubPendingRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
     } catch (IOException e) {
       throw new ApiException(e);
     }

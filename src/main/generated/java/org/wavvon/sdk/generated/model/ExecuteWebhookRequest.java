@@ -89,7 +89,7 @@ public class ExecuteWebhookRequest {
   }
 
   /**
-   * Overrides the webhook&#39;s display name
+   * Shown instead of the webhook&#39;s display name on this message (stored as its &#x60;masquerade&#x60;)
    * @return username
    */
   @jakarta.annotation.Nullable
@@ -113,7 +113,7 @@ public class ExecuteWebhookRequest {
   }
 
   /**
-   * Get avatarUrl
+   * An http(s) URL, shown as this message&#39;s avatar (stored as its &#x60;masquerade&#x60;)
    * @return avatarUrl
    */
   @jakarta.annotation.Nullable

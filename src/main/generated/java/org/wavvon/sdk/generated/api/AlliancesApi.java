@@ -1669,6 +1669,89 @@ public class AlliancesApi {
   }
 
   /**
+   * An attachment of an allied hub, through this hub
+   * What an allied message&#39;s rewritten attachment &#x60;url&#x60; points at: this hub fetches the file from the member hub that holds it and streams it, storing nothing, so the reader&#39;s client never contacts a hub it did not choose. Public like &#x60;/uploads/{id}&#x60;. This hub&#39;s own headers apply (nosniff, sandbox CSP); only a WebP or JPEG the holder served inline stays inline.
+   * @param allianceId  (required)
+   * @param id  (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void getAllianceUpload(String allianceId, String id) throws ApiException {
+    getAllianceUploadWithHttpInfo(allianceId, id);
+  }
+
+  /**
+   * An attachment of an allied hub, through this hub
+   * What an allied message&#39;s rewritten attachment &#x60;url&#x60; points at: this hub fetches the file from the member hub that holds it and streams it, storing nothing, so the reader&#39;s client never contacts a hub it did not choose. Public like &#x60;/uploads/{id}&#x60;. This hub&#39;s own headers apply (nosniff, sandbox CSP); only a WebP or JPEG the holder served inline stays inline.
+   * @param allianceId  (required)
+   * @param id  (required)
+   * @return ApiResponse&lt;Void&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<Void> getAllianceUploadWithHttpInfo(String allianceId, String id) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = getAllianceUploadRequestBuilder(allianceId, id);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("getAllianceUpload", localVarResponse);
+        }
+        return new ApiResponse<>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            null
+        );
+      } finally {
+        // Drain the InputStream
+        while (localVarResponse.body().read() != -1) {
+          // Ignore
+        }
+        localVarResponse.body().close();
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder getAllianceUploadRequestBuilder(String allianceId, String id) throws ApiException {
+    // verify the required parameter 'allianceId' is set
+    if (allianceId == null) {
+      throw new ApiException(400, "Missing the required parameter 'allianceId' when calling getAllianceUpload");
+    }
+    // verify the required parameter 'id' is set
+    if (id == null) {
+      throw new ApiException(400, "Missing the required parameter 'id' when calling getAllianceUpload");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/alliances/{alliance_id}/uploads/{id}"
+        .replace("{alliance_id}", ApiClient.urlEncode(allianceId.toString()))
+        .replace("{id}", ApiClient.urlEncode(id.toString()));
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
    * Create an invite token for another hub to join (alliance manager)
    * 
    * @param allianceId  (required)

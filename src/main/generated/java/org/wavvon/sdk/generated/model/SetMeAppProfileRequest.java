@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.List;
 import org.wavvon.sdk.generated.model.AppCommandDef;
 import org.wavvon.sdk.generated.model.GameLaunchCard;
+import org.wavvon.sdk.generated.model.Masquerade;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -46,7 +47,8 @@ import org.wavvon.sdk.generated.ApiClient;
   SetMeAppProfileRequest.JSON_PROPERTY_CAPABILITIES,
   SetMeAppProfileRequest.JSON_PROPERTY_MINI_APP_URL,
   SetMeAppProfileRequest.JSON_PROPERTY_REQUIRES_CAMERA,
-  SetMeAppProfileRequest.JSON_PROPERTY_GAME
+  SetMeAppProfileRequest.JSON_PROPERTY_GAME,
+  SetMeAppProfileRequest.JSON_PROPERTY_MASQUERADE
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class SetMeAppProfileRequest {
@@ -89,6 +91,10 @@ public class SetMeAppProfileRequest {
   public static final String JSON_PROPERTY_GAME = "game";
   @jakarta.annotation.Nullable
   private GameLaunchCard game;
+
+  public static final String JSON_PROPERTY_MASQUERADE = "masquerade";
+  @jakarta.annotation.Nullable
+  private Masquerade masquerade;
 
   public SetMeAppProfileRequest() { 
   }
@@ -349,6 +355,30 @@ public class SetMeAppProfileRequest {
   }
 
 
+  public SetMeAppProfileRequest masquerade(@jakarta.annotation.Nullable Masquerade masquerade) {
+    this.masquerade = masquerade;
+    return this;
+  }
+
+  /**
+   * Needs &#x60;messages.masquerade&#x60; in the channel (403 without it, 400 when malformed).
+   * @return masquerade
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_MASQUERADE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Masquerade getMasquerade() {
+    return masquerade;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_MASQUERADE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setMasquerade(@jakarta.annotation.Nullable Masquerade masquerade) {
+    this.masquerade = masquerade;
+  }
+
+
   /**
    * Return true if this setMeAppProfile_request object is equal to o.
    */
@@ -370,12 +400,13 @@ public class SetMeAppProfileRequest {
         Objects.equals(this.capabilities, setMeAppProfileRequest.capabilities) &&
         Objects.equals(this.miniAppUrl, setMeAppProfileRequest.miniAppUrl) &&
         Objects.equals(this.requiresCamera, setMeAppProfileRequest.requiresCamera) &&
-        Objects.equals(this.game, setMeAppProfileRequest.game);
+        Objects.equals(this.game, setMeAppProfileRequest.game) &&
+        Objects.equals(this.masquerade, setMeAppProfileRequest.masquerade);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, avatarUrl, webhookUrl, description, homepageUrl, commands, capabilities, miniAppUrl, requiresCamera, game);
+    return Objects.hash(name, avatarUrl, webhookUrl, description, homepageUrl, commands, capabilities, miniAppUrl, requiresCamera, game, masquerade);
   }
 
   @Override
@@ -392,6 +423,7 @@ public class SetMeAppProfileRequest {
     sb.append("    miniAppUrl: ").append(toIndentedString(miniAppUrl)).append("\n");
     sb.append("    requiresCamera: ").append(toIndentedString(requiresCamera)).append("\n");
     sb.append("    game: ").append(toIndentedString(game)).append("\n");
+    sb.append("    masquerade: ").append(toIndentedString(masquerade)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -496,6 +528,11 @@ public class SetMeAppProfileRequest {
     // add `game` to the URL query string
     if (getGame() != null) {
       joiner.add(getGame().toUrlQueryString(prefix + "game" + suffix));
+    }
+
+    // add `masquerade` to the URL query string
+    if (getMasquerade() != null) {
+      joiner.add(getMasquerade().toUrlQueryString(prefix + "masquerade" + suffix));
     }
 
     return joiner.toString();

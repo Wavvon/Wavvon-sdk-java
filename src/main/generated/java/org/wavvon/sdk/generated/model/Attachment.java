@@ -30,7 +30,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * Attachment
+ * An inline DM attachment. Channel messages, posts and replies use &#x60;attachment_ids&#x60; instead.
  */
 @JsonPropertyOrder({
   Attachment.JSON_PROPERTY_NAME,

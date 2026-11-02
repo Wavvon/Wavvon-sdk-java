@@ -1095,7 +1095,7 @@ public class RolesApi {
 
   /**
    * Update a role (manage_roles)
-   * 
+   * Built-in roles are refused, except that the permissions of builtin-everyone may be changed; any other field on it is a 403.
    * @param roleId  (required)
    * @param updateRoleRequest  (required)
    * @return Role
@@ -1108,7 +1108,7 @@ public class RolesApi {
 
   /**
    * Update a role (manage_roles)
-   * 
+   * Built-in roles are refused, except that the permissions of builtin-everyone may be changed; any other field on it is a 403.
    * @param roleId  (required)
    * @param updateRoleRequest  (required)
    * @return ApiResponse&lt;Role&gt;

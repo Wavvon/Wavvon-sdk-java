@@ -20,6 +20,7 @@ import org.wavvon.sdk.generated.Pair;
 
 import org.wavvon.sdk.generated.model.CreateChannelMessageReactionRequest;
 import org.wavvon.sdk.generated.model.CreateChannelMessageRequest;
+import java.io.File;
 import org.wavvon.sdk.generated.model.GetPreview200Response;
 import org.wavvon.sdk.generated.model.ListChannelPins200ResponseInner;
 import org.wavvon.sdk.generated.model.Message;
@@ -538,6 +539,90 @@ public class MessagesApi {
     }
 
     localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * An image fetched for a link preview
+   * Serves an image an authenticated &#x60;GET /preview&#x60; already fetched; never fetches anything itself. No auth, since an &#x60;&lt;img&gt;&#x60; sends no token. Kept for the preview cache&#39;s 30 minutes.
+   * @param id  (required)
+   * @return File
+   * @throws ApiException if fails to make API call
+   */
+  public File getPreviewImage(String id) throws ApiException {
+    ApiResponse<File> localVarResponse = getPreviewImageWithHttpInfo(id);
+    return localVarResponse.getData();
+  }
+
+  /**
+   * An image fetched for a link preview
+   * Serves an image an authenticated &#x60;GET /preview&#x60; already fetched; never fetches anything itself. No auth, since an &#x60;&lt;img&gt;&#x60; sends no token. Kept for the preview cache&#39;s 30 minutes.
+   * @param id  (required)
+   * @return ApiResponse&lt;File&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<File> getPreviewImageWithHttpInfo(String id) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = getPreviewImageRequestBuilder(id);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("getPreviewImage", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<File>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        localVarResponse.body().close();
+
+        return new ApiResponse<File>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<File>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder getPreviewImageRequestBuilder(String id) throws ApiException {
+    // verify the required parameter 'id' is set
+    if (id == null) {
+      throw new ApiException(400, "Missing the required parameter 'id' when calling getPreviewImage");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/preview/image/{id}"
+        .replace("{id}", ApiClient.urlEncode(id.toString()));
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "image/*");
 
     localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
     if (memberVarReadTimeout != null) {
