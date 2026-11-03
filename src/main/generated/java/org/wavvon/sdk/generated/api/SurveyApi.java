@@ -18,6 +18,7 @@ import org.wavvon.sdk.generated.ApiResponse;
 import org.wavvon.sdk.generated.Configuration;
 import org.wavvon.sdk.generated.Pair;
 
+import org.wavvon.sdk.generated.model.GetApplicationStatus200Response;
 import org.wavvon.sdk.generated.model.SetAdminSurveyRequest;
 import org.wavvon.sdk.generated.model.SubmitSurveyRequest;
 
@@ -87,6 +88,151 @@ public class SurveyApi {
       body = "[no body]";
     }
     return operationId + " call failed with: " + statusCode + " - " + body;
+  }
+
+  /**
+   * The join application&#39;s configuration (surveys.manage)
+   * 
+   * @throws ApiException if fails to make API call
+   */
+  public void getAdminApplication() throws ApiException {
+    getAdminApplicationWithHttpInfo();
+  }
+
+  /**
+   * The join application&#39;s configuration (surveys.manage)
+   * 
+   * @return ApiResponse&lt;Void&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<Void> getAdminApplicationWithHttpInfo() throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = getAdminApplicationRequestBuilder();
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("getAdminApplication", localVarResponse);
+        }
+        return new ApiResponse<>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            null
+        );
+      } finally {
+        // Drain the InputStream
+        while (localVarResponse.body().read() != -1) {
+          // Ignore
+        }
+        localVarResponse.body().close();
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder getAdminApplicationRequestBuilder() throws ApiException {
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/admin/application";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * One joiner&#39;s application answers (hub.admission)
+   * 
+   * @param pubkey  (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void getAdminApplicationResponse(String pubkey) throws ApiException {
+    getAdminApplicationResponseWithHttpInfo(pubkey);
+  }
+
+  /**
+   * One joiner&#39;s application answers (hub.admission)
+   * 
+   * @param pubkey  (required)
+   * @return ApiResponse&lt;Void&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<Void> getAdminApplicationResponseWithHttpInfo(String pubkey) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = getAdminApplicationResponseRequestBuilder(pubkey);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("getAdminApplicationResponse", localVarResponse);
+        }
+        return new ApiResponse<>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            null
+        );
+      } finally {
+        // Drain the InputStream
+        while (localVarResponse.body().read() != -1) {
+          // Ignore
+        }
+        localVarResponse.body().close();
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder getAdminApplicationResponseRequestBuilder(String pubkey) throws ApiException {
+    // verify the required parameter 'pubkey' is set
+    if (pubkey == null) {
+      throw new ApiException(400, "Missing the required parameter 'pubkey' when calling getAdminApplicationResponse");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/admin/application/responses/{pubkey}"
+        .replace("{pubkey}", ApiClient.urlEncode(pubkey.toString()));
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
   }
 
   /**
@@ -219,6 +365,152 @@ public class SurveyApi {
 
     String localVarPath = "/admin/survey/responses/{pubkey}"
         .replace("{pubkey}", ApiClient.urlEncode(pubkey.toString()));
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * The hub&#39;s join application, if it takes one
+   * No authentication: a client shows the form from an invite link or a directory listing before the joiner has a seat. &#x60;null&#x60; when the hub takes no applications. Present on hubs advertising &#x60;admission.application&#x60; (join-forms.md).
+   * @throws ApiException if fails to make API call
+   */
+  public void getApplication() throws ApiException {
+    getApplicationWithHttpInfo();
+  }
+
+  /**
+   * The hub&#39;s join application, if it takes one
+   * No authentication: a client shows the form from an invite link or a directory listing before the joiner has a seat. &#x60;null&#x60; when the hub takes no applications. Present on hubs advertising &#x60;admission.application&#x60; (join-forms.md).
+   * @return ApiResponse&lt;Void&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<Void> getApplicationWithHttpInfo() throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = getApplicationRequestBuilder();
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("getApplication", localVarResponse);
+        }
+        return new ApiResponse<>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            null
+        );
+      } finally {
+        // Drain the InputStream
+        while (localVarResponse.body().read() != -1) {
+          // Ignore
+        }
+        localVarResponse.body().close();
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder getApplicationRequestBuilder() throws ApiException {
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/application";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Where the caller&#39;s application stands
+   * 
+   * @return GetApplicationStatus200Response
+   * @throws ApiException if fails to make API call
+   */
+  public GetApplicationStatus200Response getApplicationStatus() throws ApiException {
+    ApiResponse<GetApplicationStatus200Response> localVarResponse = getApplicationStatusWithHttpInfo();
+    return localVarResponse.getData();
+  }
+
+  /**
+   * Where the caller&#39;s application stands
+   * 
+   * @return ApiResponse&lt;GetApplicationStatus200Response&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<GetApplicationStatus200Response> getApplicationStatusWithHttpInfo() throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = getApplicationStatusRequestBuilder();
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("getApplicationStatus", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<GetApplicationStatus200Response>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        localVarResponse.body().close();
+
+        return new ApiResponse<GetApplicationStatus200Response>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<GetApplicationStatus200Response>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder getApplicationStatusRequestBuilder() throws ApiException {
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/application/status";
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
@@ -398,6 +690,87 @@ public class SurveyApi {
   }
 
   /**
+   * Create or replace the join application (surveys.manage)
+   * Same shape as the survey, except that no choice may map to a role.
+   * @param setAdminSurveyRequest  (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void setAdminApplication(SetAdminSurveyRequest setAdminSurveyRequest) throws ApiException {
+    setAdminApplicationWithHttpInfo(setAdminSurveyRequest);
+  }
+
+  /**
+   * Create or replace the join application (surveys.manage)
+   * Same shape as the survey, except that no choice may map to a role.
+   * @param setAdminSurveyRequest  (required)
+   * @return ApiResponse&lt;Void&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<Void> setAdminApplicationWithHttpInfo(SetAdminSurveyRequest setAdminSurveyRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = setAdminApplicationRequestBuilder(setAdminSurveyRequest);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("setAdminApplication", localVarResponse);
+        }
+        return new ApiResponse<>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            null
+        );
+      } finally {
+        // Drain the InputStream
+        while (localVarResponse.body().read() != -1) {
+          // Ignore
+        }
+        localVarResponse.body().close();
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder setAdminApplicationRequestBuilder(SetAdminSurveyRequest setAdminSurveyRequest) throws ApiException {
+    // verify the required parameter 'setAdminSurveyRequest' is set
+    if (setAdminSurveyRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'setAdminSurveyRequest' when calling setAdminApplication");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/admin/application";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Content-Type", "application/json");
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(setAdminSurveyRequest);
+      localVarRequestBuilder.method("PUT", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
    * Create or replace the survey (manage_hub)
    * 
    * @param setAdminSurveyRequest  (required)
@@ -466,6 +839,87 @@ public class SurveyApi {
     try {
       byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(setAdminSurveyRequest);
       localVarRequestBuilder.method("PUT", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Submit the join application (pending joiners)
+   * An enabled application seats every newcomer &#x60;pending&#x60;; this is what a moderator reads. 409 when already a member or already submitted; 429 &#x60;retry_after:&lt;unix&gt;&#x60; when a rejected applicant applies again too soon; 422 &#x60;consent_refused:&lt;question id&gt;&#x60; for an unchecked required consent.
+   * @param submitSurveyRequest  (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void submitApplication(SubmitSurveyRequest submitSurveyRequest) throws ApiException {
+    submitApplicationWithHttpInfo(submitSurveyRequest);
+  }
+
+  /**
+   * Submit the join application (pending joiners)
+   * An enabled application seats every newcomer &#x60;pending&#x60;; this is what a moderator reads. 409 when already a member or already submitted; 429 &#x60;retry_after:&lt;unix&gt;&#x60; when a rejected applicant applies again too soon; 422 &#x60;consent_refused:&lt;question id&gt;&#x60; for an unchecked required consent.
+   * @param submitSurveyRequest  (required)
+   * @return ApiResponse&lt;Void&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<Void> submitApplicationWithHttpInfo(SubmitSurveyRequest submitSurveyRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = submitApplicationRequestBuilder(submitSurveyRequest);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("submitApplication", localVarResponse);
+        }
+        return new ApiResponse<>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            null
+        );
+      } finally {
+        // Drain the InputStream
+        while (localVarResponse.body().read() != -1) {
+          // Ignore
+        }
+        localVarResponse.body().close();
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder submitApplicationRequestBuilder(SubmitSurveyRequest submitSurveyRequest) throws ApiException {
+    // verify the required parameter 'submitSurveyRequest' is set
+    if (submitSurveyRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'submitSurveyRequest' when calling submitApplication");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/application";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Content-Type", "application/json");
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(submitSurveyRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
     } catch (IOException e) {
       throw new ApiException(e);
     }

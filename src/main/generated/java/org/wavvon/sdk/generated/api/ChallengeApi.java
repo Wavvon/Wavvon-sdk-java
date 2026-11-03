@@ -86,22 +86,24 @@ public class ChallengeApi {
   /**
    * Fetch a bot-challenge prompt
    * Returns a challenge the user must solve before auth. Mode is set by the hub admin. - &#x60;click&#x60;: no SVG, user just confirms they are human. - &#x60;puzzle&#x60;: SVG math puzzle, user types the answer. - &#x60;both&#x60;: SVG puzzle shown, click confirmation also required. 
+   * @param pubkey Hex public key of the identity about to authenticate. (required)
    * @return ChallengePrompt
    * @throws ApiException if fails to make API call
    */
-  public ChallengePrompt getNewChallenge() throws ApiException {
-    ApiResponse<ChallengePrompt> localVarResponse = getNewChallengeWithHttpInfo();
+  public ChallengePrompt getNewChallenge(String pubkey) throws ApiException {
+    ApiResponse<ChallengePrompt> localVarResponse = getNewChallengeWithHttpInfo(pubkey);
     return localVarResponse.getData();
   }
 
   /**
    * Fetch a bot-challenge prompt
    * Returns a challenge the user must solve before auth. Mode is set by the hub admin. - &#x60;click&#x60;: no SVG, user just confirms they are human. - &#x60;puzzle&#x60;: SVG math puzzle, user types the answer. - &#x60;both&#x60;: SVG puzzle shown, click confirmation also required. 
+   * @param pubkey Hex public key of the identity about to authenticate. (required)
    * @return ApiResponse&lt;ChallengePrompt&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<ChallengePrompt> getNewChallengeWithHttpInfo() throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = getNewChallengeRequestBuilder();
+  public ApiResponse<ChallengePrompt> getNewChallengeWithHttpInfo(String pubkey) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = getNewChallengeRequestBuilder(pubkey);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -140,13 +142,32 @@ public class ChallengeApi {
     }
   }
 
-  private HttpRequest.Builder getNewChallengeRequestBuilder() throws ApiException {
+  private HttpRequest.Builder getNewChallengeRequestBuilder(String pubkey) throws ApiException {
+    // verify the required parameter 'pubkey' is set
+    if (pubkey == null) {
+      throw new ApiException(400, "Missing the required parameter 'pubkey' when calling getNewChallenge");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
     String localVarPath = "/challenge/new";
 
-    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+    List<Pair> localVarQueryParams = new ArrayList<>();
+    StringJoiner localVarQueryStringJoiner = new StringJoiner("&");
+    String localVarQueryParameterBaseName;
+    localVarQueryParameterBaseName = "pubkey";
+    localVarQueryParams.addAll(ApiClient.parameterToPairs("pubkey", pubkey));
+
+    if (!localVarQueryParams.isEmpty() || localVarQueryStringJoiner.length() != 0) {
+      StringJoiner queryJoiner = new StringJoiner("&");
+      localVarQueryParams.forEach(p -> queryJoiner.add(p.getName() + '=' + p.getValue()));
+      if (localVarQueryStringJoiner.length() != 0) {
+        queryJoiner.add(localVarQueryStringJoiner.toString());
+      }
+      localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath + '?' + queryJoiner.toString()));
+    } else {
+      localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+    }
 
     localVarRequestBuilder.header("Accept", "application/json");
 

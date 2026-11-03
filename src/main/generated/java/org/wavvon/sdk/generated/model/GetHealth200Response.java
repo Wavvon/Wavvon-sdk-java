@@ -33,18 +33,33 @@ import org.wavvon.sdk.generated.ApiClient;
  * GetHealth200Response
  */
 @JsonPropertyOrder({
-  GetHealth200Response.JSON_PROPERTY_STATUS
+  GetHealth200Response.JSON_PROPERTY_STATUS,
+  GetHealth200Response.JSON_PROPERTY_VERSION,
+  GetHealth200Response.JSON_PROPERTY_UPTIME_SECONDS,
+  GetHealth200Response.JSON_PROPERTY_DB_STATUS
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class GetHealth200Response {
   public static final String JSON_PROPERTY_STATUS = "status";
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   private String status;
+
+  public static final String JSON_PROPERTY_VERSION = "version";
+  @jakarta.annotation.Nonnull
+  private String version;
+
+  public static final String JSON_PROPERTY_UPTIME_SECONDS = "uptime_seconds";
+  @jakarta.annotation.Nonnull
+  private Long uptimeSeconds;
+
+  public static final String JSON_PROPERTY_DB_STATUS = "db_status";
+  @jakarta.annotation.Nonnull
+  private String dbStatus;
 
   public GetHealth200Response() { 
   }
 
-  public GetHealth200Response status(@jakarta.annotation.Nullable String status) {
+  public GetHealth200Response status(@jakarta.annotation.Nonnull String status) {
     this.status = status;
     return this;
   }
@@ -53,18 +68,90 @@ public class GetHealth200Response {
    * Get status
    * @return status
    */
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_STATUS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getStatus() {
     return status;
   }
 
 
   @JsonProperty(JSON_PROPERTY_STATUS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setStatus(@jakarta.annotation.Nullable String status) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setStatus(@jakarta.annotation.Nonnull String status) {
     this.status = status;
+  }
+
+
+  public GetHealth200Response version(@jakarta.annotation.Nonnull String version) {
+    this.version = version;
+    return this;
+  }
+
+  /**
+   * The hub&#39;s version.
+   * @return version
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_VERSION)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public String getVersion() {
+    return version;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_VERSION)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setVersion(@jakarta.annotation.Nonnull String version) {
+    this.version = version;
+  }
+
+
+  public GetHealth200Response uptimeSeconds(@jakarta.annotation.Nonnull Long uptimeSeconds) {
+    this.uptimeSeconds = uptimeSeconds;
+    return this;
+  }
+
+  /**
+   * Get uptimeSeconds
+   * @return uptimeSeconds
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_UPTIME_SECONDS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public Long getUptimeSeconds() {
+    return uptimeSeconds;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_UPTIME_SECONDS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setUptimeSeconds(@jakarta.annotation.Nonnull Long uptimeSeconds) {
+    this.uptimeSeconds = uptimeSeconds;
+  }
+
+
+  public GetHealth200Response dbStatus(@jakarta.annotation.Nonnull String dbStatus) {
+    this.dbStatus = dbStatus;
+    return this;
+  }
+
+  /**
+   * &#x60;ok&#x60;, or &#x60;error: &#x60; followed by the reason the database did not answer.
+   * @return dbStatus
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_DB_STATUS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public String getDbStatus() {
+    return dbStatus;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_DB_STATUS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setDbStatus(@jakarta.annotation.Nonnull String dbStatus) {
+    this.dbStatus = dbStatus;
   }
 
 
@@ -80,12 +167,15 @@ public class GetHealth200Response {
       return false;
     }
     GetHealth200Response getHealth200Response = (GetHealth200Response) o;
-    return Objects.equals(this.status, getHealth200Response.status);
+    return Objects.equals(this.status, getHealth200Response.status) &&
+        Objects.equals(this.version, getHealth200Response.version) &&
+        Objects.equals(this.uptimeSeconds, getHealth200Response.uptimeSeconds) &&
+        Objects.equals(this.dbStatus, getHealth200Response.dbStatus);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(status);
+    return Objects.hash(status, version, uptimeSeconds, dbStatus);
   }
 
   @Override
@@ -93,6 +183,9 @@ public class GetHealth200Response {
     StringBuilder sb = new StringBuilder();
     sb.append("class GetHealth200Response {\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    version: ").append(toIndentedString(version)).append("\n");
+    sb.append("    uptimeSeconds: ").append(toIndentedString(uptimeSeconds)).append("\n");
+    sb.append("    dbStatus: ").append(toIndentedString(dbStatus)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -143,6 +236,21 @@ public class GetHealth200Response {
     // add `status` to the URL query string
     if (getStatus() != null) {
       joiner.add(String.format("%sstatus%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getStatus()))));
+    }
+
+    // add `version` to the URL query string
+    if (getVersion() != null) {
+      joiner.add(String.format("%sversion%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getVersion()))));
+    }
+
+    // add `uptime_seconds` to the URL query string
+    if (getUptimeSeconds() != null) {
+      joiner.add(String.format("%suptime_seconds%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getUptimeSeconds()))));
+    }
+
+    // add `db_status` to the URL query string
+    if (getDbStatus() != null) {
+      joiner.add(String.format("%sdb_status%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getDbStatus()))));
     }
 
     return joiner.toString();

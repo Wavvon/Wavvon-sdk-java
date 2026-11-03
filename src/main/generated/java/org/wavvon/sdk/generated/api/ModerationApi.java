@@ -30,7 +30,7 @@ import org.wavvon.sdk.generated.model.ListChannelBans200ResponseInner;
 import org.wavvon.sdk.generated.model.ListChannelVoiceMutes200ResponseInner;
 import org.wavvon.sdk.generated.model.RaiseChannelHand201Response;
 import org.wavvon.sdk.generated.model.ReindexAdminSearch202Response;
-import org.wavvon.sdk.generated.model.ReportMessageRequest;
+import org.wavvon.sdk.generated.model.RejectHubPendingRequest;
 import org.wavvon.sdk.generated.model.ReviewAdminReportRequest;
 import org.wavvon.sdk.generated.model.SetChannelTalkPowerRequest;
 import org.wavvon.sdk.generated.model.TimeoutUserRequest;
@@ -2115,23 +2115,23 @@ public class ModerationApi {
    * Report a message for moderator review
    * 
    * @param id  (required)
-   * @param reportMessageRequest  (required)
+   * @param rejectHubPendingRequest  (required)
    * @throws ApiException if fails to make API call
    */
-  public void reportMessage(String id, ReportMessageRequest reportMessageRequest) throws ApiException {
-    reportMessageWithHttpInfo(id, reportMessageRequest);
+  public void reportMessage(String id, RejectHubPendingRequest rejectHubPendingRequest) throws ApiException {
+    reportMessageWithHttpInfo(id, rejectHubPendingRequest);
   }
 
   /**
    * Report a message for moderator review
    * 
    * @param id  (required)
-   * @param reportMessageRequest  (required)
+   * @param rejectHubPendingRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> reportMessageWithHttpInfo(String id, ReportMessageRequest reportMessageRequest) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = reportMessageRequestBuilder(id, reportMessageRequest);
+  public ApiResponse<Void> reportMessageWithHttpInfo(String id, RejectHubPendingRequest rejectHubPendingRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = reportMessageRequestBuilder(id, rejectHubPendingRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -2164,14 +2164,14 @@ public class ModerationApi {
     }
   }
 
-  private HttpRequest.Builder reportMessageRequestBuilder(String id, ReportMessageRequest reportMessageRequest) throws ApiException {
+  private HttpRequest.Builder reportMessageRequestBuilder(String id, RejectHubPendingRequest rejectHubPendingRequest) throws ApiException {
     // verify the required parameter 'id' is set
     if (id == null) {
       throw new ApiException(400, "Missing the required parameter 'id' when calling reportMessage");
     }
-    // verify the required parameter 'reportMessageRequest' is set
-    if (reportMessageRequest == null) {
-      throw new ApiException(400, "Missing the required parameter 'reportMessageRequest' when calling reportMessage");
+    // verify the required parameter 'rejectHubPendingRequest' is set
+    if (rejectHubPendingRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'rejectHubPendingRequest' when calling reportMessage");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -2185,7 +2185,7 @@ public class ModerationApi {
     localVarRequestBuilder.header("Accept", "application/json");
 
     try {
-      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(reportMessageRequest);
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(rejectHubPendingRequest);
       localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
     } catch (IOException e) {
       throw new ApiException(e);

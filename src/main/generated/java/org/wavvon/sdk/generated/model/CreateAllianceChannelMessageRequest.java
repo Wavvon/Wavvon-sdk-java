@@ -27,7 +27,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.wavvon.sdk.generated.model.Attachment;
 import org.wavvon.sdk.generated.model.GameLaunchCard;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
@@ -38,7 +37,7 @@ import org.wavvon.sdk.generated.ApiClient;
  */
 @JsonPropertyOrder({
   CreateAllianceChannelMessageRequest.JSON_PROPERTY_CONTENT,
-  CreateAllianceChannelMessageRequest.JSON_PROPERTY_ATTACHMENTS,
+  CreateAllianceChannelMessageRequest.JSON_PROPERTY_ATTACHMENT_IDS,
   CreateAllianceChannelMessageRequest.JSON_PROPERTY_REPLY_TO,
   CreateAllianceChannelMessageRequest.JSON_PROPERTY_GAME
 })
@@ -48,9 +47,9 @@ public class CreateAllianceChannelMessageRequest {
   @jakarta.annotation.Nonnull
   private String content;
 
-  public static final String JSON_PROPERTY_ATTACHMENTS = "attachments";
+  public static final String JSON_PROPERTY_ATTACHMENT_IDS = "attachment_ids";
   @jakarta.annotation.Nullable
-  private List<Attachment> attachments = new ArrayList<>();
+  private List<String> attachmentIds = new ArrayList<>();
 
   public static final String JSON_PROPERTY_REPLY_TO = "reply_to";
   @jakarta.annotation.Nullable
@@ -87,35 +86,35 @@ public class CreateAllianceChannelMessageRequest {
   }
 
 
-  public CreateAllianceChannelMessageRequest attachments(@jakarta.annotation.Nullable List<Attachment> attachments) {
-    this.attachments = attachments;
+  public CreateAllianceChannelMessageRequest attachmentIds(@jakarta.annotation.Nullable List<String> attachmentIds) {
+    this.attachmentIds = attachmentIds;
     return this;
   }
 
-  public CreateAllianceChannelMessageRequest addAttachmentsItem(Attachment attachmentsItem) {
-    if (this.attachments == null) {
-      this.attachments = new ArrayList<>();
+  public CreateAllianceChannelMessageRequest addAttachmentIdsItem(String attachmentIdsItem) {
+    if (this.attachmentIds == null) {
+      this.attachmentIds = new ArrayList<>();
     }
-    this.attachments.add(attachmentsItem);
+    this.attachmentIds.add(attachmentIdsItem);
     return this;
   }
 
   /**
-   * Get attachments
-   * @return attachments
+   * Get attachmentIds
+   * @return attachmentIds
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_ATTACHMENTS)
+  @JsonProperty(JSON_PROPERTY_ATTACHMENT_IDS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public List<Attachment> getAttachments() {
-    return attachments;
+  public List<String> getAttachmentIds() {
+    return attachmentIds;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_ATTACHMENTS)
+  @JsonProperty(JSON_PROPERTY_ATTACHMENT_IDS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setAttachments(@jakarta.annotation.Nullable List<Attachment> attachments) {
-    this.attachments = attachments;
+  public void setAttachmentIds(@jakarta.annotation.Nullable List<String> attachmentIds) {
+    this.attachmentIds = attachmentIds;
   }
 
 
@@ -180,14 +179,14 @@ public class CreateAllianceChannelMessageRequest {
     }
     CreateAllianceChannelMessageRequest createAllianceChannelMessageRequest = (CreateAllianceChannelMessageRequest) o;
     return Objects.equals(this.content, createAllianceChannelMessageRequest.content) &&
-        Objects.equals(this.attachments, createAllianceChannelMessageRequest.attachments) &&
+        Objects.equals(this.attachmentIds, createAllianceChannelMessageRequest.attachmentIds) &&
         Objects.equals(this.replyTo, createAllianceChannelMessageRequest.replyTo) &&
         Objects.equals(this.game, createAllianceChannelMessageRequest.game);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(content, attachments, replyTo, game);
+    return Objects.hash(content, attachmentIds, replyTo, game);
   }
 
   @Override
@@ -195,7 +194,7 @@ public class CreateAllianceChannelMessageRequest {
     StringBuilder sb = new StringBuilder();
     sb.append("class CreateAllianceChannelMessageRequest {\n");
     sb.append("    content: ").append(toIndentedString(content)).append("\n");
-    sb.append("    attachments: ").append(toIndentedString(attachments)).append("\n");
+    sb.append("    attachmentIds: ").append(toIndentedString(attachmentIds)).append("\n");
     sb.append("    replyTo: ").append(toIndentedString(replyTo)).append("\n");
     sb.append("    game: ").append(toIndentedString(game)).append("\n");
     sb.append("}");
@@ -250,13 +249,12 @@ public class CreateAllianceChannelMessageRequest {
       joiner.add(String.format("%scontent%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getContent()))));
     }
 
-    // add `attachments` to the URL query string
-    if (getAttachments() != null) {
-      for (int i = 0; i < getAttachments().size(); i++) {
-        if (getAttachments().get(i) != null) {
-          joiner.add(getAttachments().get(i).toUrlQueryString(String.format("%sattachments%s%s", prefix, suffix,
-          "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix))));
-        }
+    // add `attachment_ids` to the URL query string
+    if (getAttachmentIds() != null) {
+      for (int i = 0; i < getAttachmentIds().size(); i++) {
+        joiner.add(String.format("%sattachment_ids%s%s=%s", prefix, suffix,
+            "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix),
+            ApiClient.urlEncode(ApiClient.valueToString(getAttachmentIds().get(i)))));
       }
     }
 

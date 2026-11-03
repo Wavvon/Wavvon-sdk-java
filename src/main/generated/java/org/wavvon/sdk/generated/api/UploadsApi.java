@@ -18,8 +18,8 @@ import org.wavvon.sdk.generated.ApiResponse;
 import org.wavvon.sdk.generated.Configuration;
 import org.wavvon.sdk.generated.Pair;
 
+import org.wavvon.sdk.generated.model.AttachmentRef;
 import java.io.File;
-import org.wavvon.sdk.generated.model.UploadChannelFile201Response;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -90,24 +90,24 @@ public class UploadsApi {
   }
 
   /**
-   * Download an uploaded file
-   * Public — filenames are unguessable UUIDs. Always served with &#x60;Content-Disposition: attachment&#x60;.
-   * @param filename  (required)
+   * Download or show an attachment
+   * Public: an &#x60;&lt;img&gt;&#x60; sends no token and the id is a random UUID, not a hash. Always &#x60;X-Content-Type-Options: nosniff&#x60;, &#x60;Content-Security-Policy: default-src &#39;none&#39;; sandbox&#x60; and &#x60;Cache-Control: private, max-age&#x3D;31536000, immutable&#x60;. A re-encoded image is &#x60;image/webp&#x60; or &#x60;image/jpeg&#x60; with &#x60;Content-Disposition: inline&#x60;; everything else, SVG, executables and images sent as files included, is &#x60;attachment; filename*&#x3D;UTF-8&#39;&#39;&lt;name&gt;&#x60; with the sniffed type. Masquerade avatars (&#x60;remote-&lt;hash&gt;.&lt;ext&gt;&#x60;) are plain files served as downloads.
+   * @param id  (required)
    * @throws ApiException if fails to make API call
    */
-  public void getUpload(String filename) throws ApiException {
-    getUploadWithHttpInfo(filename);
+  public void getUpload(String id) throws ApiException {
+    getUploadWithHttpInfo(id);
   }
 
   /**
-   * Download an uploaded file
-   * Public — filenames are unguessable UUIDs. Always served with &#x60;Content-Disposition: attachment&#x60;.
-   * @param filename  (required)
+   * Download or show an attachment
+   * Public: an &#x60;&lt;img&gt;&#x60; sends no token and the id is a random UUID, not a hash. Always &#x60;X-Content-Type-Options: nosniff&#x60;, &#x60;Content-Security-Policy: default-src &#39;none&#39;; sandbox&#x60; and &#x60;Cache-Control: private, max-age&#x3D;31536000, immutable&#x60;. A re-encoded image is &#x60;image/webp&#x60; or &#x60;image/jpeg&#x60; with &#x60;Content-Disposition: inline&#x60;; everything else, SVG, executables and images sent as files included, is &#x60;attachment; filename*&#x3D;UTF-8&#39;&#39;&lt;name&gt;&#x60; with the sniffed type. Masquerade avatars (&#x60;remote-&lt;hash&gt;.&lt;ext&gt;&#x60;) are plain files served as downloads.
+   * @param id  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> getUploadWithHttpInfo(String filename) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = getUploadRequestBuilder(filename);
+  public ApiResponse<Void> getUploadWithHttpInfo(String id) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = getUploadRequestBuilder(id);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -140,16 +140,16 @@ public class UploadsApi {
     }
   }
 
-  private HttpRequest.Builder getUploadRequestBuilder(String filename) throws ApiException {
-    // verify the required parameter 'filename' is set
-    if (filename == null) {
-      throw new ApiException(400, "Missing the required parameter 'filename' when calling getUpload");
+  private HttpRequest.Builder getUploadRequestBuilder(String id) throws ApiException {
+    // verify the required parameter 'id' is set
+    if (id == null) {
+      throw new ApiException(400, "Missing the required parameter 'id' when calling getUpload");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
-    String localVarPath = "/uploads/{filename}"
-        .replace("{filename}", ApiClient.urlEncode(filename.toString()));
+    String localVarPath = "/uploads/{id}"
+        .replace("{id}", ApiClient.urlEncode(id.toString()));
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
@@ -166,28 +166,106 @@ public class UploadsApi {
   }
 
   /**
-   * Upload a file to a channel
-   * Multipart upload with the file in a &#x60;file&#x60; field. Max is the hub&#39;s &#x60;max_upload_bytes&#x60; setting (1–25 MB, default 25 MB; &#x60;PATCH /hub&#x60;) (512 KB for banner channels, which also only accept PNG/JPEG/GIF/WebP). SVG is rejected. Allowed types otherwise: image/_*, video/mp4, application/pdf, text/plain.
-   * @param channelId  (required)
-   * @param _file  (optional)
-   * @return UploadChannelFile201Response
+   * Remove an attachment (messages.manage in its channel)
+   * Tombstones one attachment: the row and its name stay, readers see \&quot;attachment removed\&quot;, and the bytes go unless another upload shares them.
+   * @param id  (required)
    * @throws ApiException if fails to make API call
    */
-  public UploadChannelFile201Response uploadChannelFile(String channelId, File _file) throws ApiException {
-    ApiResponse<UploadChannelFile201Response> localVarResponse = uploadChannelFileWithHttpInfo(channelId, _file);
+  public void removeUpload(String id) throws ApiException {
+    removeUploadWithHttpInfo(id);
+  }
+
+  /**
+   * Remove an attachment (messages.manage in its channel)
+   * Tombstones one attachment: the row and its name stay, readers see \&quot;attachment removed\&quot;, and the bytes go unless another upload shares them.
+   * @param id  (required)
+   * @return ApiResponse&lt;Void&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<Void> removeUploadWithHttpInfo(String id) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = removeUploadRequestBuilder(id);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("removeUpload", localVarResponse);
+        }
+        return new ApiResponse<>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            null
+        );
+      } finally {
+        // Drain the InputStream
+        while (localVarResponse.body().read() != -1) {
+          // Ignore
+        }
+        localVarResponse.body().close();
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder removeUploadRequestBuilder(String id) throws ApiException {
+    // verify the required parameter 'id' is set
+    if (id == null) {
+      throw new ApiException(400, "Missing the required parameter 'id' when calling removeUpload");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/uploads/{id}"
+        .replace("{id}", ApiClient.urlEncode(id.toString()));
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("DELETE", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Upload a file to a channel (messages.send there)
+   * The one way bytes enter, for messages, forum posts and banners alike. Multipart with the file in &#x60;file&#x60;, and optionally &#x60;as_file&#x3D;true&#x60;. The type comes from the magic bytes, never from the declared one; the response describes what was stored. PNG, APNG, JPEG, GIF and WebP are re-encoded (4096 px long edge, metadata dropped; JPEG stays JPEG, the rest becomes WebP) unless &#x60;as_file&#x60;, which keeps the original as a download. Everything else, executables and SVG included, is stored as is and only ever downloaded. The hub hashes what it stores and keeps one copy of equal bytes; the response never says whether it already held them. Send the returned &#x60;id&#x60; in &#x60;attachment_ids&#x60;; an upload nothing claims within 24 hours is deleted. Max is the hub&#39;s &#x60;max_upload_bytes&#x60; (512 KB for banner channels, which take a raster image only and always re-encode). A full disk expires the oldest attachments rather than refusing; only a disk full of something else answers 507. Advertised by &#x60;attachments.stored&#x60;.
+   * @param channelId  (required)
+   * @param _file  (optional)
+   * @param asFile Keep the original image bytes; download only. (optional)
+   * @return AttachmentRef
+   * @throws ApiException if fails to make API call
+   */
+  public AttachmentRef uploadChannelFile(String channelId, File _file, Boolean asFile) throws ApiException {
+    ApiResponse<AttachmentRef> localVarResponse = uploadChannelFileWithHttpInfo(channelId, _file, asFile);
     return localVarResponse.getData();
   }
 
   /**
-   * Upload a file to a channel
-   * Multipart upload with the file in a &#x60;file&#x60; field. Max is the hub&#39;s &#x60;max_upload_bytes&#x60; setting (1–25 MB, default 25 MB; &#x60;PATCH /hub&#x60;) (512 KB for banner channels, which also only accept PNG/JPEG/GIF/WebP). SVG is rejected. Allowed types otherwise: image/_*, video/mp4, application/pdf, text/plain.
+   * Upload a file to a channel (messages.send there)
+   * The one way bytes enter, for messages, forum posts and banners alike. Multipart with the file in &#x60;file&#x60;, and optionally &#x60;as_file&#x3D;true&#x60;. The type comes from the magic bytes, never from the declared one; the response describes what was stored. PNG, APNG, JPEG, GIF and WebP are re-encoded (4096 px long edge, metadata dropped; JPEG stays JPEG, the rest becomes WebP) unless &#x60;as_file&#x60;, which keeps the original as a download. Everything else, executables and SVG included, is stored as is and only ever downloaded. The hub hashes what it stores and keeps one copy of equal bytes; the response never says whether it already held them. Send the returned &#x60;id&#x60; in &#x60;attachment_ids&#x60;; an upload nothing claims within 24 hours is deleted. Max is the hub&#39;s &#x60;max_upload_bytes&#x60; (512 KB for banner channels, which take a raster image only and always re-encode). A full disk expires the oldest attachments rather than refusing; only a disk full of something else answers 507. Advertised by &#x60;attachments.stored&#x60;.
    * @param channelId  (required)
    * @param _file  (optional)
-   * @return ApiResponse&lt;UploadChannelFile201Response&gt;
+   * @param asFile Keep the original image bytes; download only. (optional)
+   * @return ApiResponse&lt;AttachmentRef&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<UploadChannelFile201Response> uploadChannelFileWithHttpInfo(String channelId, File _file) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = uploadChannelFileRequestBuilder(channelId, _file);
+  public ApiResponse<AttachmentRef> uploadChannelFileWithHttpInfo(String channelId, File _file, Boolean asFile) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = uploadChannelFileRequestBuilder(channelId, _file, asFile);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -200,7 +278,7 @@ public class UploadsApi {
           throw getApiException("uploadChannelFile", localVarResponse);
         }
         if (localVarResponse.body() == null) {
-          return new ApiResponse<UploadChannelFile201Response>(
+          return new ApiResponse<AttachmentRef>(
               localVarResponse.statusCode(),
               localVarResponse.headers().map(),
               null
@@ -210,10 +288,10 @@ public class UploadsApi {
         String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
-        return new ApiResponse<UploadChannelFile201Response>(
+        return new ApiResponse<AttachmentRef>(
             localVarResponse.statusCode(),
             localVarResponse.headers().map(),
-            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<UploadChannelFile201Response>() {})
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<AttachmentRef>() {})
         );
       } finally {
       }
@@ -226,7 +304,7 @@ public class UploadsApi {
     }
   }
 
-  private HttpRequest.Builder uploadChannelFileRequestBuilder(String channelId, File _file) throws ApiException {
+  private HttpRequest.Builder uploadChannelFileRequestBuilder(String channelId, File _file, Boolean asFile) throws ApiException {
     // verify the required parameter 'channelId' is set
     if (channelId == null) {
       throw new ApiException(400, "Missing the required parameter 'channelId' when calling uploadChannelFile");
@@ -245,6 +323,7 @@ public class UploadsApi {
     boolean hasFiles = false;
     multiPartBuilder.addBinaryBody("file", _file);
     hasFiles = true;
+    multiPartBuilder.addTextBody("as_file", asFile.toString());
     HttpEntity entity = multiPartBuilder.build();
     HttpRequest.BodyPublisher formDataPublisher;
     if (hasFiles) {

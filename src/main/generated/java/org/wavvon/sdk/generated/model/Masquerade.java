@@ -30,46 +30,75 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * ReportMessageRequest
+ * Masquerade
  */
 @JsonPropertyOrder({
-  ReportMessageRequest.JSON_PROPERTY_REASON
+  Masquerade.JSON_PROPERTY_NAME,
+  Masquerade.JSON_PROPERTY_AVATAR_URL
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class ReportMessageRequest {
-  public static final String JSON_PROPERTY_REASON = "reason";
-  @jakarta.annotation.Nullable
-  private String reason;
+public class Masquerade {
+  public static final String JSON_PROPERTY_NAME = "name";
+  @jakarta.annotation.Nonnull
+  private String name;
 
-  public ReportMessageRequest() { 
+  public static final String JSON_PROPERTY_AVATAR_URL = "avatar_url";
+  @jakarta.annotation.Nullable
+  private String avatarUrl;
+
+  public Masquerade() { 
   }
 
-  public ReportMessageRequest reason(@jakarta.annotation.Nullable String reason) {
-    this.reason = reason;
+  public Masquerade name(@jakarta.annotation.Nonnull String name) {
+    this.name = name;
     return this;
   }
 
   /**
-   * Get reason
-   * @return reason
+   * Get name
+   * @return name
    */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_REASON)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getReason() {
-    return reason;
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_NAME)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public String getName() {
+    return name;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_REASON)
+  @JsonProperty(JSON_PROPERTY_NAME)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setName(@jakarta.annotation.Nonnull String name) {
+    this.name = name;
+  }
+
+
+  public Masquerade avatarUrl(@jakarta.annotation.Nullable String avatarUrl) {
+    this.avatarUrl = avatarUrl;
+    return this;
+  }
+
+  /**
+   * Sent as an http(s) URL. The hub fetches it (PNG, JPEG, GIF, WebP or AVIF up to 1 MB) and stores its own copy, so on a message it is the hub-relative &#x60;/uploads/...&#x60; path; an avatar it cannot fetch is dropped and the name kept.
+   * @return avatarUrl
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_AVATAR_URL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setReason(@jakarta.annotation.Nullable String reason) {
-    this.reason = reason;
+  public String getAvatarUrl() {
+    return avatarUrl;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_AVATAR_URL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setAvatarUrl(@jakarta.annotation.Nullable String avatarUrl) {
+    this.avatarUrl = avatarUrl;
   }
 
 
   /**
-   * Return true if this reportMessage_request object is equal to o.
+   * Return true if this Masquerade object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -79,20 +108,22 @@ public class ReportMessageRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ReportMessageRequest reportMessageRequest = (ReportMessageRequest) o;
-    return Objects.equals(this.reason, reportMessageRequest.reason);
+    Masquerade masquerade = (Masquerade) o;
+    return Objects.equals(this.name, masquerade.name) &&
+        Objects.equals(this.avatarUrl, masquerade.avatarUrl);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(reason);
+    return Objects.hash(name, avatarUrl);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ReportMessageRequest {\n");
-    sb.append("    reason: ").append(toIndentedString(reason)).append("\n");
+    sb.append("class Masquerade {\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    avatarUrl: ").append(toIndentedString(avatarUrl)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -140,9 +171,14 @@ public class ReportMessageRequest {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `reason` to the URL query string
-    if (getReason() != null) {
-      joiner.add(String.format("%sreason%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getReason()))));
+    // add `name` to the URL query string
+    if (getName() != null) {
+      joiner.add(String.format("%sname%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getName()))));
+    }
+
+    // add `avatar_url` to the URL query string
+    if (getAvatarUrl() != null) {
+      joiner.add(String.format("%savatar_url%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getAvatarUrl()))));
     }
 
     return joiner.toString();

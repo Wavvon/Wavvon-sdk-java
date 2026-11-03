@@ -30,162 +30,104 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * UploadChannelFile201Response
+ * GetStickerUsage200ResponsePacks
  */
 @JsonPropertyOrder({
-  UploadChannelFile201Response.JSON_PROPERTY_ID,
-  UploadChannelFile201Response.JSON_PROPERTY_URL,
-  UploadChannelFile201Response.JSON_PROPERTY_FILENAME,
-  UploadChannelFile201Response.JSON_PROPERTY_SIZE_BYTES,
-  UploadChannelFile201Response.JSON_PROPERTY_MIME_TYPE
+  GetStickerUsage200ResponsePacks.JSON_PROPERTY_COUNT,
+  GetStickerUsage200ResponsePacks.JSON_PROPERTY_BYTES,
+  GetStickerUsage200ResponsePacks.JSON_PROPERTY_CAP_BYTES
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class UploadChannelFile201Response {
-  public static final String JSON_PROPERTY_ID = "id";
+public class GetStickerUsage200ResponsePacks {
+  public static final String JSON_PROPERTY_COUNT = "count";
   @jakarta.annotation.Nullable
-  private String id;
+  private Long count;
 
-  public static final String JSON_PROPERTY_URL = "url";
+  public static final String JSON_PROPERTY_BYTES = "bytes";
   @jakarta.annotation.Nullable
-  private String url;
+  private Long bytes;
 
-  public static final String JSON_PROPERTY_FILENAME = "filename";
+  public static final String JSON_PROPERTY_CAP_BYTES = "cap_bytes";
   @jakarta.annotation.Nullable
-  private String filename;
+  private Long capBytes;
 
-  public static final String JSON_PROPERTY_SIZE_BYTES = "size_bytes";
-  @jakarta.annotation.Nullable
-  private Long sizeBytes;
-
-  public static final String JSON_PROPERTY_MIME_TYPE = "mime_type";
-  @jakarta.annotation.Nullable
-  private String mimeType;
-
-  public UploadChannelFile201Response() { 
+  public GetStickerUsage200ResponsePacks() { 
   }
 
-  public UploadChannelFile201Response id(@jakarta.annotation.Nullable String id) {
-    this.id = id;
+  public GetStickerUsage200ResponsePacks count(@jakarta.annotation.Nullable Long count) {
+    this.count = count;
     return this;
   }
 
   /**
-   * Get id
-   * @return id
+   * Get count
+   * @return count
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_ID)
+  @JsonProperty(JSON_PROPERTY_COUNT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getId() {
-    return id;
+  public Long getCount() {
+    return count;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_ID)
+  @JsonProperty(JSON_PROPERTY_COUNT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setId(@jakarta.annotation.Nullable String id) {
-    this.id = id;
+  public void setCount(@jakarta.annotation.Nullable Long count) {
+    this.count = count;
   }
 
 
-  public UploadChannelFile201Response url(@jakarta.annotation.Nullable String url) {
-    this.url = url;
+  public GetStickerUsage200ResponsePacks bytes(@jakarta.annotation.Nullable Long bytes) {
+    this.bytes = bytes;
     return this;
   }
 
   /**
-   * Path under /uploads/
-   * @return url
+   * Get bytes
+   * @return bytes
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_URL)
+  @JsonProperty(JSON_PROPERTY_BYTES)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getUrl() {
-    return url;
+  public Long getBytes() {
+    return bytes;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_URL)
+  @JsonProperty(JSON_PROPERTY_BYTES)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setUrl(@jakarta.annotation.Nullable String url) {
-    this.url = url;
+  public void setBytes(@jakarta.annotation.Nullable Long bytes) {
+    this.bytes = bytes;
   }
 
 
-  public UploadChannelFile201Response filename(@jakarta.annotation.Nullable String filename) {
-    this.filename = filename;
+  public GetStickerUsage200ResponsePacks capBytes(@jakarta.annotation.Nullable Long capBytes) {
+    this.capBytes = capBytes;
     return this;
   }
 
   /**
-   * Get filename
-   * @return filename
+   * Get capBytes
+   * @return capBytes
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_FILENAME)
+  @JsonProperty(JSON_PROPERTY_CAP_BYTES)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getFilename() {
-    return filename;
+  public Long getCapBytes() {
+    return capBytes;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_FILENAME)
+  @JsonProperty(JSON_PROPERTY_CAP_BYTES)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setFilename(@jakarta.annotation.Nullable String filename) {
-    this.filename = filename;
-  }
-
-
-  public UploadChannelFile201Response sizeBytes(@jakarta.annotation.Nullable Long sizeBytes) {
-    this.sizeBytes = sizeBytes;
-    return this;
-  }
-
-  /**
-   * Get sizeBytes
-   * @return sizeBytes
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_SIZE_BYTES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Long getSizeBytes() {
-    return sizeBytes;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_SIZE_BYTES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setSizeBytes(@jakarta.annotation.Nullable Long sizeBytes) {
-    this.sizeBytes = sizeBytes;
-  }
-
-
-  public UploadChannelFile201Response mimeType(@jakarta.annotation.Nullable String mimeType) {
-    this.mimeType = mimeType;
-    return this;
-  }
-
-  /**
-   * Get mimeType
-   * @return mimeType
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_MIME_TYPE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getMimeType() {
-    return mimeType;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_MIME_TYPE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setMimeType(@jakarta.annotation.Nullable String mimeType) {
-    this.mimeType = mimeType;
+  public void setCapBytes(@jakarta.annotation.Nullable Long capBytes) {
+    this.capBytes = capBytes;
   }
 
 
   /**
-   * Return true if this uploadChannelFile_201_response object is equal to o.
+   * Return true if this getStickerUsage_200_response_packs object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -195,28 +137,24 @@ public class UploadChannelFile201Response {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UploadChannelFile201Response uploadChannelFile201Response = (UploadChannelFile201Response) o;
-    return Objects.equals(this.id, uploadChannelFile201Response.id) &&
-        Objects.equals(this.url, uploadChannelFile201Response.url) &&
-        Objects.equals(this.filename, uploadChannelFile201Response.filename) &&
-        Objects.equals(this.sizeBytes, uploadChannelFile201Response.sizeBytes) &&
-        Objects.equals(this.mimeType, uploadChannelFile201Response.mimeType);
+    GetStickerUsage200ResponsePacks getStickerUsage200ResponsePacks = (GetStickerUsage200ResponsePacks) o;
+    return Objects.equals(this.count, getStickerUsage200ResponsePacks.count) &&
+        Objects.equals(this.bytes, getStickerUsage200ResponsePacks.bytes) &&
+        Objects.equals(this.capBytes, getStickerUsage200ResponsePacks.capBytes);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, url, filename, sizeBytes, mimeType);
+    return Objects.hash(count, bytes, capBytes);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class UploadChannelFile201Response {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    url: ").append(toIndentedString(url)).append("\n");
-    sb.append("    filename: ").append(toIndentedString(filename)).append("\n");
-    sb.append("    sizeBytes: ").append(toIndentedString(sizeBytes)).append("\n");
-    sb.append("    mimeType: ").append(toIndentedString(mimeType)).append("\n");
+    sb.append("class GetStickerUsage200ResponsePacks {\n");
+    sb.append("    count: ").append(toIndentedString(count)).append("\n");
+    sb.append("    bytes: ").append(toIndentedString(bytes)).append("\n");
+    sb.append("    capBytes: ").append(toIndentedString(capBytes)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -264,29 +202,19 @@ public class UploadChannelFile201Response {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `id` to the URL query string
-    if (getId() != null) {
-      joiner.add(String.format("%sid%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getId()))));
+    // add `count` to the URL query string
+    if (getCount() != null) {
+      joiner.add(String.format("%scount%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCount()))));
     }
 
-    // add `url` to the URL query string
-    if (getUrl() != null) {
-      joiner.add(String.format("%surl%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getUrl()))));
+    // add `bytes` to the URL query string
+    if (getBytes() != null) {
+      joiner.add(String.format("%sbytes%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getBytes()))));
     }
 
-    // add `filename` to the URL query string
-    if (getFilename() != null) {
-      joiner.add(String.format("%sfilename%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getFilename()))));
-    }
-
-    // add `size_bytes` to the URL query string
-    if (getSizeBytes() != null) {
-      joiner.add(String.format("%ssize_bytes%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getSizeBytes()))));
-    }
-
-    // add `mime_type` to the URL query string
-    if (getMimeType() != null) {
-      joiner.add(String.format("%smime_type%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getMimeType()))));
+    // add `cap_bytes` to the URL query string
+    if (getCapBytes() != null) {
+      joiner.add(String.format("%scap_bytes%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCapBytes()))));
     }
 
     return joiner.toString();

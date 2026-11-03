@@ -49,7 +49,20 @@ import org.wavvon.sdk.generated.ApiClient;
   UpdateHubRequest.JSON_PROPERTY_AFK_TIMEOUT_SECS,
   UpdateHubRequest.JSON_PROPERTY_MAX_ATTACHMENT_BYTES,
   UpdateHubRequest.JSON_PROPERTY_MAX_UPLOAD_BYTES,
-  UpdateHubRequest.JSON_PROPERTY_NAME_COLOR_MODE
+  UpdateHubRequest.JSON_PROPERTY_MAX_ATTACHMENTS_PER_MESSAGE,
+  UpdateHubRequest.JSON_PROPERTY_ATTACHMENTS_CAP_BYTES,
+  UpdateHubRequest.JSON_PROPERTY_ATTACHMENTS_WARN_PERCENT,
+  UpdateHubRequest.JSON_PROPERTY_ATTACHMENTS_RETENTION_DAYS,
+  UpdateHubRequest.JSON_PROPERTY_MAX_PREVIEW_IMAGE_BYTES,
+  UpdateHubRequest.JSON_PROPERTY_NAME_COLOR_MODE,
+  UpdateHubRequest.JSON_PROPERTY_STICKERS_MAX_FILE_BYTES,
+  UpdateHubRequest.JSON_PROPERTY_STICKERS_PACKS_CAP_BYTES,
+  UpdateHubRequest.JSON_PROPERTY_STICKERS_PACKS_WARN_PERCENT,
+  UpdateHubRequest.JSON_PROPERTY_STICKERS_COPIES_CAP_BYTES,
+  UpdateHubRequest.JSON_PROPERTY_STICKERS_PER_PACK,
+  UpdateHubRequest.JSON_PROPERTY_STICKER_PACKS_PER_HUB,
+  UpdateHubRequest.JSON_PROPERTY_STICKERS_ORPHAN_GC_DAYS,
+  UpdateHubRequest.JSON_PROPERTY_STICKERS_EXPORT
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class UpdateHubRequest {
@@ -117,9 +130,61 @@ public class UpdateHubRequest {
   @jakarta.annotation.Nullable
   private Long maxUploadBytes;
 
+  public static final String JSON_PROPERTY_MAX_ATTACHMENTS_PER_MESSAGE = "max_attachments_per_message";
+  @jakarta.annotation.Nullable
+  private Integer maxAttachmentsPerMessage;
+
+  public static final String JSON_PROPERTY_ATTACHMENTS_CAP_BYTES = "attachments_cap_bytes";
+  @jakarta.annotation.Nullable
+  private Long attachmentsCapBytes;
+
+  public static final String JSON_PROPERTY_ATTACHMENTS_WARN_PERCENT = "attachments_warn_percent";
+  @jakarta.annotation.Nullable
+  private Integer attachmentsWarnPercent;
+
+  public static final String JSON_PROPERTY_ATTACHMENTS_RETENTION_DAYS = "attachments_retention_days";
+  @jakarta.annotation.Nullable
+  private Integer attachmentsRetentionDays;
+
+  public static final String JSON_PROPERTY_MAX_PREVIEW_IMAGE_BYTES = "max_preview_image_bytes";
+  @jakarta.annotation.Nullable
+  private Long maxPreviewImageBytes;
+
   public static final String JSON_PROPERTY_NAME_COLOR_MODE = "name_color_mode";
   @jakarta.annotation.Nullable
   private String nameColorMode;
+
+  public static final String JSON_PROPERTY_STICKERS_MAX_FILE_BYTES = "stickers_max_file_bytes";
+  @jakarta.annotation.Nullable
+  private Long stickersMaxFileBytes;
+
+  public static final String JSON_PROPERTY_STICKERS_PACKS_CAP_BYTES = "stickers_packs_cap_bytes";
+  @jakarta.annotation.Nullable
+  private Long stickersPacksCapBytes;
+
+  public static final String JSON_PROPERTY_STICKERS_PACKS_WARN_PERCENT = "stickers_packs_warn_percent";
+  @jakarta.annotation.Nullable
+  private Integer stickersPacksWarnPercent;
+
+  public static final String JSON_PROPERTY_STICKERS_COPIES_CAP_BYTES = "stickers_copies_cap_bytes";
+  @jakarta.annotation.Nullable
+  private Long stickersCopiesCapBytes;
+
+  public static final String JSON_PROPERTY_STICKERS_PER_PACK = "stickers_per_pack";
+  @jakarta.annotation.Nullable
+  private Integer stickersPerPack;
+
+  public static final String JSON_PROPERTY_STICKER_PACKS_PER_HUB = "sticker_packs_per_hub";
+  @jakarta.annotation.Nullable
+  private Integer stickerPacksPerHub;
+
+  public static final String JSON_PROPERTY_STICKERS_ORPHAN_GC_DAYS = "stickers_orphan_gc_days";
+  @jakarta.annotation.Nullable
+  private Integer stickersOrphanGcDays;
+
+  public static final String JSON_PROPERTY_STICKERS_EXPORT = "stickers_export";
+  @jakarta.annotation.Nullable
+  private Boolean stickersExport;
 
   public UpdateHubRequest() { 
   }
@@ -508,6 +573,126 @@ public class UpdateHubRequest {
   }
 
 
+  public UpdateHubRequest maxAttachmentsPerMessage(@jakarta.annotation.Nullable Integer maxAttachmentsPerMessage) {
+    this.maxAttachmentsPerMessage = maxAttachmentsPerMessage;
+    return this;
+  }
+
+  /**
+   * 1 to 25, default 10. That message is refused.
+   * @return maxAttachmentsPerMessage
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_MAX_ATTACHMENTS_PER_MESSAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Integer getMaxAttachmentsPerMessage() {
+    return maxAttachmentsPerMessage;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_MAX_ATTACHMENTS_PER_MESSAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setMaxAttachmentsPerMessage(@jakarta.annotation.Nullable Integer maxAttachmentsPerMessage) {
+    this.maxAttachmentsPerMessage = maxAttachmentsPerMessage;
+  }
+
+
+  public UpdateHubRequest attachmentsCapBytes(@jakarta.annotation.Nullable Long attachmentsCapBytes) {
+    this.attachmentsCapBytes = attachmentsCapBytes;
+    return this;
+  }
+
+  /**
+   * 64 MB to 10 TB, default 10 GB. Whole blobs, orphans first and then least recently linked (banners excepted), expire; the upload succeeds. Never per member.
+   * @return attachmentsCapBytes
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_ATTACHMENTS_CAP_BYTES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Long getAttachmentsCapBytes() {
+    return attachmentsCapBytes;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_ATTACHMENTS_CAP_BYTES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setAttachmentsCapBytes(@jakarta.annotation.Nullable Long attachmentsCapBytes) {
+    this.attachmentsCapBytes = attachmentsCapBytes;
+  }
+
+
+  public UpdateHubRequest attachmentsWarnPercent(@jakarta.annotation.Nullable Integer attachmentsWarnPercent) {
+    this.attachmentsWarnPercent = attachmentsWarnPercent;
+    return this;
+  }
+
+  /**
+   * 50 to 99, default 90. Sets attachments_usage.warning.
+   * @return attachmentsWarnPercent
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_ATTACHMENTS_WARN_PERCENT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Integer getAttachmentsWarnPercent() {
+    return attachmentsWarnPercent;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_ATTACHMENTS_WARN_PERCENT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setAttachmentsWarnPercent(@jakarta.annotation.Nullable Integer attachmentsWarnPercent) {
+    this.attachmentsWarnPercent = attachmentsWarnPercent;
+  }
+
+
+  public UpdateHubRequest attachmentsRetentionDays(@jakarta.annotation.Nullable Integer attachmentsRetentionDays) {
+    this.attachmentsRetentionDays = attachmentsRetentionDays;
+    return this;
+  }
+
+  /**
+   * 0 (never) to 3650, default 0. Older attachments expire.
+   * @return attachmentsRetentionDays
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_ATTACHMENTS_RETENTION_DAYS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Integer getAttachmentsRetentionDays() {
+    return attachmentsRetentionDays;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_ATTACHMENTS_RETENTION_DAYS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setAttachmentsRetentionDays(@jakarta.annotation.Nullable Integer attachmentsRetentionDays) {
+    this.attachmentsRetentionDays = attachmentsRetentionDays;
+  }
+
+
+  public UpdateHubRequest maxPreviewImageBytes(@jakarta.annotation.Nullable Long maxPreviewImageBytes) {
+    this.maxPreviewImageBytes = maxPreviewImageBytes;
+    return this;
+  }
+
+  /**
+   * Largest link-preview image in bytes, 262144 to 16777216, default 4194304. Also returned by GET /hub/settings.
+   * @return maxPreviewImageBytes
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_MAX_PREVIEW_IMAGE_BYTES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Long getMaxPreviewImageBytes() {
+    return maxPreviewImageBytes;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_MAX_PREVIEW_IMAGE_BYTES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setMaxPreviewImageBytes(@jakarta.annotation.Nullable Long maxPreviewImageBytes) {
+    this.maxPreviewImageBytes = maxPreviewImageBytes;
+  }
+
+
   public UpdateHubRequest nameColorMode(@jakarta.annotation.Nullable String nameColorMode) {
     this.nameColorMode = nameColorMode;
     return this;
@@ -529,6 +714,198 @@ public class UpdateHubRequest {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setNameColorMode(@jakarta.annotation.Nullable String nameColorMode) {
     this.nameColorMode = nameColorMode;
+  }
+
+
+  public UpdateHubRequest stickersMaxFileBytes(@jakarta.annotation.Nullable Long stickersMaxFileBytes) {
+    this.stickersMaxFileBytes = stickersMaxFileBytes;
+    return this;
+  }
+
+  /**
+   * 65536 to 4194304, default 524288. Also returned by GET /hub/settings, as are the other stickers_* settings.
+   * @return stickersMaxFileBytes
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_STICKERS_MAX_FILE_BYTES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Long getStickersMaxFileBytes() {
+    return stickersMaxFileBytes;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_STICKERS_MAX_FILE_BYTES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setStickersMaxFileBytes(@jakarta.annotation.Nullable Long stickersMaxFileBytes) {
+    this.stickersMaxFileBytes = stickersMaxFileBytes;
+  }
+
+
+  public UpdateHubRequest stickersPacksCapBytes(@jakarta.annotation.Nullable Long stickersPacksCapBytes) {
+    this.stickersPacksCapBytes = stickersPacksCapBytes;
+    return this;
+  }
+
+  /**
+   * 16 MB to 100 GB, default 512 MB. Pack additions are refused at the cap.
+   * @return stickersPacksCapBytes
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_STICKERS_PACKS_CAP_BYTES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Long getStickersPacksCapBytes() {
+    return stickersPacksCapBytes;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_STICKERS_PACKS_CAP_BYTES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setStickersPacksCapBytes(@jakarta.annotation.Nullable Long stickersPacksCapBytes) {
+    this.stickersPacksCapBytes = stickersPacksCapBytes;
+  }
+
+
+  public UpdateHubRequest stickersPacksWarnPercent(@jakarta.annotation.Nullable Integer stickersPacksWarnPercent) {
+    this.stickersPacksWarnPercent = stickersPacksWarnPercent;
+    return this;
+  }
+
+  /**
+   * 50 to 99, default 90
+   * @return stickersPacksWarnPercent
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_STICKERS_PACKS_WARN_PERCENT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Integer getStickersPacksWarnPercent() {
+    return stickersPacksWarnPercent;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_STICKERS_PACKS_WARN_PERCENT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setStickersPacksWarnPercent(@jakarta.annotation.Nullable Integer stickersPacksWarnPercent) {
+    this.stickersPacksWarnPercent = stickersPacksWarnPercent;
+  }
+
+
+  public UpdateHubRequest stickersCopiesCapBytes(@jakarta.annotation.Nullable Long stickersCopiesCapBytes) {
+    this.stickersCopiesCapBytes = stickersCopiesCapBytes;
+    return this;
+  }
+
+  /**
+   * 64 MB to 1 TB, default 1 GB. Orphans, then least recently used copies, are evicted; a send is never refused.
+   * @return stickersCopiesCapBytes
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_STICKERS_COPIES_CAP_BYTES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Long getStickersCopiesCapBytes() {
+    return stickersCopiesCapBytes;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_STICKERS_COPIES_CAP_BYTES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setStickersCopiesCapBytes(@jakarta.annotation.Nullable Long stickersCopiesCapBytes) {
+    this.stickersCopiesCapBytes = stickersCopiesCapBytes;
+  }
+
+
+  public UpdateHubRequest stickersPerPack(@jakarta.annotation.Nullable Integer stickersPerPack) {
+    this.stickersPerPack = stickersPerPack;
+    return this;
+  }
+
+  /**
+   * 1 to 500, default 60
+   * @return stickersPerPack
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_STICKERS_PER_PACK)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Integer getStickersPerPack() {
+    return stickersPerPack;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_STICKERS_PER_PACK)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setStickersPerPack(@jakarta.annotation.Nullable Integer stickersPerPack) {
+    this.stickersPerPack = stickersPerPack;
+  }
+
+
+  public UpdateHubRequest stickerPacksPerHub(@jakarta.annotation.Nullable Integer stickerPacksPerHub) {
+    this.stickerPacksPerHub = stickerPacksPerHub;
+    return this;
+  }
+
+  /**
+   * 1 to 200, default 20
+   * @return stickerPacksPerHub
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_STICKER_PACKS_PER_HUB)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Integer getStickerPacksPerHub() {
+    return stickerPacksPerHub;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_STICKER_PACKS_PER_HUB)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setStickerPacksPerHub(@jakarta.annotation.Nullable Integer stickerPacksPerHub) {
+    this.stickerPacksPerHub = stickerPacksPerHub;
+  }
+
+
+  public UpdateHubRequest stickersOrphanGcDays(@jakarta.annotation.Nullable Integer stickersOrphanGcDays) {
+    this.stickersOrphanGcDays = stickersOrphanGcDays;
+    return this;
+  }
+
+  /**
+   * 1 to 365, default 30
+   * @return stickersOrphanGcDays
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_STICKERS_ORPHAN_GC_DAYS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Integer getStickersOrphanGcDays() {
+    return stickersOrphanGcDays;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_STICKERS_ORPHAN_GC_DAYS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setStickersOrphanGcDays(@jakarta.annotation.Nullable Integer stickersOrphanGcDays) {
+    this.stickersOrphanGcDays = stickersOrphanGcDays;
+  }
+
+
+  public UpdateHubRequest stickersExport(@jakarta.annotation.Nullable Boolean stickersExport) {
+    this.stickersExport = stickersExport;
+    return this;
+  }
+
+  /**
+   * Default true. Off: GET /federation/stickers/{sha256} answers 403.
+   * @return stickersExport
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_STICKERS_EXPORT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Boolean getStickersExport() {
+    return stickersExport;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_STICKERS_EXPORT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setStickersExport(@jakarta.annotation.Nullable Boolean stickersExport) {
+    this.stickersExport = stickersExport;
   }
 
 
@@ -560,12 +937,25 @@ public class UpdateHubRequest {
         Objects.equals(this.afkTimeoutSecs, updateHubRequest.afkTimeoutSecs) &&
         Objects.equals(this.maxAttachmentBytes, updateHubRequest.maxAttachmentBytes) &&
         Objects.equals(this.maxUploadBytes, updateHubRequest.maxUploadBytes) &&
-        Objects.equals(this.nameColorMode, updateHubRequest.nameColorMode);
+        Objects.equals(this.maxAttachmentsPerMessage, updateHubRequest.maxAttachmentsPerMessage) &&
+        Objects.equals(this.attachmentsCapBytes, updateHubRequest.attachmentsCapBytes) &&
+        Objects.equals(this.attachmentsWarnPercent, updateHubRequest.attachmentsWarnPercent) &&
+        Objects.equals(this.attachmentsRetentionDays, updateHubRequest.attachmentsRetentionDays) &&
+        Objects.equals(this.maxPreviewImageBytes, updateHubRequest.maxPreviewImageBytes) &&
+        Objects.equals(this.nameColorMode, updateHubRequest.nameColorMode) &&
+        Objects.equals(this.stickersMaxFileBytes, updateHubRequest.stickersMaxFileBytes) &&
+        Objects.equals(this.stickersPacksCapBytes, updateHubRequest.stickersPacksCapBytes) &&
+        Objects.equals(this.stickersPacksWarnPercent, updateHubRequest.stickersPacksWarnPercent) &&
+        Objects.equals(this.stickersCopiesCapBytes, updateHubRequest.stickersCopiesCapBytes) &&
+        Objects.equals(this.stickersPerPack, updateHubRequest.stickersPerPack) &&
+        Objects.equals(this.stickerPacksPerHub, updateHubRequest.stickerPacksPerHub) &&
+        Objects.equals(this.stickersOrphanGcDays, updateHubRequest.stickersOrphanGcDays) &&
+        Objects.equals(this.stickersExport, updateHubRequest.stickersExport);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, description, icon, requireApproval, minSecurityLevel, maxChannelDepth, welcomeLabel, welcomeInviteUrl, farewellLabel, defaultInviteRoleId, timezone, birthdaysEnabled, afkChannelId, afkTimeoutSecs, maxAttachmentBytes, maxUploadBytes, nameColorMode);
+    return Objects.hash(name, description, icon, requireApproval, minSecurityLevel, maxChannelDepth, welcomeLabel, welcomeInviteUrl, farewellLabel, defaultInviteRoleId, timezone, birthdaysEnabled, afkChannelId, afkTimeoutSecs, maxAttachmentBytes, maxUploadBytes, maxAttachmentsPerMessage, attachmentsCapBytes, attachmentsWarnPercent, attachmentsRetentionDays, maxPreviewImageBytes, nameColorMode, stickersMaxFileBytes, stickersPacksCapBytes, stickersPacksWarnPercent, stickersCopiesCapBytes, stickersPerPack, stickerPacksPerHub, stickersOrphanGcDays, stickersExport);
   }
 
   @Override
@@ -588,7 +978,20 @@ public class UpdateHubRequest {
     sb.append("    afkTimeoutSecs: ").append(toIndentedString(afkTimeoutSecs)).append("\n");
     sb.append("    maxAttachmentBytes: ").append(toIndentedString(maxAttachmentBytes)).append("\n");
     sb.append("    maxUploadBytes: ").append(toIndentedString(maxUploadBytes)).append("\n");
+    sb.append("    maxAttachmentsPerMessage: ").append(toIndentedString(maxAttachmentsPerMessage)).append("\n");
+    sb.append("    attachmentsCapBytes: ").append(toIndentedString(attachmentsCapBytes)).append("\n");
+    sb.append("    attachmentsWarnPercent: ").append(toIndentedString(attachmentsWarnPercent)).append("\n");
+    sb.append("    attachmentsRetentionDays: ").append(toIndentedString(attachmentsRetentionDays)).append("\n");
+    sb.append("    maxPreviewImageBytes: ").append(toIndentedString(maxPreviewImageBytes)).append("\n");
     sb.append("    nameColorMode: ").append(toIndentedString(nameColorMode)).append("\n");
+    sb.append("    stickersMaxFileBytes: ").append(toIndentedString(stickersMaxFileBytes)).append("\n");
+    sb.append("    stickersPacksCapBytes: ").append(toIndentedString(stickersPacksCapBytes)).append("\n");
+    sb.append("    stickersPacksWarnPercent: ").append(toIndentedString(stickersPacksWarnPercent)).append("\n");
+    sb.append("    stickersCopiesCapBytes: ").append(toIndentedString(stickersCopiesCapBytes)).append("\n");
+    sb.append("    stickersPerPack: ").append(toIndentedString(stickersPerPack)).append("\n");
+    sb.append("    stickerPacksPerHub: ").append(toIndentedString(stickerPacksPerHub)).append("\n");
+    sb.append("    stickersOrphanGcDays: ").append(toIndentedString(stickersOrphanGcDays)).append("\n");
+    sb.append("    stickersExport: ").append(toIndentedString(stickersExport)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -716,9 +1119,74 @@ public class UpdateHubRequest {
       joiner.add(String.format("%smax_upload_bytes%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getMaxUploadBytes()))));
     }
 
+    // add `max_attachments_per_message` to the URL query string
+    if (getMaxAttachmentsPerMessage() != null) {
+      joiner.add(String.format("%smax_attachments_per_message%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getMaxAttachmentsPerMessage()))));
+    }
+
+    // add `attachments_cap_bytes` to the URL query string
+    if (getAttachmentsCapBytes() != null) {
+      joiner.add(String.format("%sattachments_cap_bytes%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getAttachmentsCapBytes()))));
+    }
+
+    // add `attachments_warn_percent` to the URL query string
+    if (getAttachmentsWarnPercent() != null) {
+      joiner.add(String.format("%sattachments_warn_percent%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getAttachmentsWarnPercent()))));
+    }
+
+    // add `attachments_retention_days` to the URL query string
+    if (getAttachmentsRetentionDays() != null) {
+      joiner.add(String.format("%sattachments_retention_days%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getAttachmentsRetentionDays()))));
+    }
+
+    // add `max_preview_image_bytes` to the URL query string
+    if (getMaxPreviewImageBytes() != null) {
+      joiner.add(String.format("%smax_preview_image_bytes%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getMaxPreviewImageBytes()))));
+    }
+
     // add `name_color_mode` to the URL query string
     if (getNameColorMode() != null) {
       joiner.add(String.format("%sname_color_mode%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getNameColorMode()))));
+    }
+
+    // add `stickers_max_file_bytes` to the URL query string
+    if (getStickersMaxFileBytes() != null) {
+      joiner.add(String.format("%sstickers_max_file_bytes%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getStickersMaxFileBytes()))));
+    }
+
+    // add `stickers_packs_cap_bytes` to the URL query string
+    if (getStickersPacksCapBytes() != null) {
+      joiner.add(String.format("%sstickers_packs_cap_bytes%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getStickersPacksCapBytes()))));
+    }
+
+    // add `stickers_packs_warn_percent` to the URL query string
+    if (getStickersPacksWarnPercent() != null) {
+      joiner.add(String.format("%sstickers_packs_warn_percent%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getStickersPacksWarnPercent()))));
+    }
+
+    // add `stickers_copies_cap_bytes` to the URL query string
+    if (getStickersCopiesCapBytes() != null) {
+      joiner.add(String.format("%sstickers_copies_cap_bytes%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getStickersCopiesCapBytes()))));
+    }
+
+    // add `stickers_per_pack` to the URL query string
+    if (getStickersPerPack() != null) {
+      joiner.add(String.format("%sstickers_per_pack%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getStickersPerPack()))));
+    }
+
+    // add `sticker_packs_per_hub` to the URL query string
+    if (getStickerPacksPerHub() != null) {
+      joiner.add(String.format("%ssticker_packs_per_hub%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getStickerPacksPerHub()))));
+    }
+
+    // add `stickers_orphan_gc_days` to the URL query string
+    if (getStickersOrphanGcDays() != null) {
+      joiner.add(String.format("%sstickers_orphan_gc_days%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getStickersOrphanGcDays()))));
+    }
+
+    // add `stickers_export` to the URL query string
+    if (getStickersExport() != null) {
+      joiner.add(String.format("%sstickers_export%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getStickersExport()))));
     }
 
     return joiner.toString();

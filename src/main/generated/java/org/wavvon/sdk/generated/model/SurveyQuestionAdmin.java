@@ -41,6 +41,11 @@ import org.wavvon.sdk.generated.ApiClient;
   SurveyQuestionAdmin.JSON_PROPERTY_KIND,
   SurveyQuestionAdmin.JSON_PROPERTY_REQUIRED,
   SurveyQuestionAdmin.JSON_PROPERTY_DISPLAY_ORDER,
+  SurveyQuestionAdmin.JSON_PROPERTY_HELP,
+  SurveyQuestionAdmin.JSON_PROPERTY_MULTILINE,
+  SurveyQuestionAdmin.JSON_PROPERTY_MAX_LEN,
+  SurveyQuestionAdmin.JSON_PROPERTY_MIN_CHOICES,
+  SurveyQuestionAdmin.JSON_PROPERTY_MAX_CHOICES,
   SurveyQuestionAdmin.JSON_PROPERTY_CHOICES
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
@@ -53,9 +58,48 @@ public class SurveyQuestionAdmin {
   @jakarta.annotation.Nonnull
   private String prompt;
 
+  /**
+   * A required &#x60;consent&#x60; must be checked; an unchecked one is refused with 422 &#x60;consent_refused:&lt;question id&gt;&#x60;.
+   */
+  public enum KindEnum {
+    TEXT(String.valueOf("text")),
+    
+    CHOICE(String.valueOf("choice")),
+    
+    MULTI(String.valueOf("multi")),
+    
+    CONSENT(String.valueOf("consent"));
+
+    private String value;
+
+    KindEnum(String value) {
+      this.value = value;
+    }
+
+    @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static KindEnum fromValue(String value) {
+      for (KindEnum b : KindEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+  }
+
   public static final String JSON_PROPERTY_KIND = "kind";
   @jakarta.annotation.Nonnull
-  private String kind;
+  private KindEnum kind;
 
   public static final String JSON_PROPERTY_REQUIRED = "required";
   @jakarta.annotation.Nonnull
@@ -64,6 +108,26 @@ public class SurveyQuestionAdmin {
   public static final String JSON_PROPERTY_DISPLAY_ORDER = "display_order";
   @jakarta.annotation.Nonnull
   private Long displayOrder;
+
+  public static final String JSON_PROPERTY_HELP = "help";
+  @jakarta.annotation.Nullable
+  private String help;
+
+  public static final String JSON_PROPERTY_MULTILINE = "multiline";
+  @jakarta.annotation.Nullable
+  private Boolean multiline = false;
+
+  public static final String JSON_PROPERTY_MAX_LEN = "max_len";
+  @jakarta.annotation.Nullable
+  private Integer maxLen;
+
+  public static final String JSON_PROPERTY_MIN_CHOICES = "min_choices";
+  @jakarta.annotation.Nullable
+  private Integer minChoices;
+
+  public static final String JSON_PROPERTY_MAX_CHOICES = "max_choices";
+  @jakarta.annotation.Nullable
+  private Integer maxChoices;
 
   public static final String JSON_PROPERTY_CHOICES = "choices";
   @jakarta.annotation.Nullable
@@ -120,26 +184,26 @@ public class SurveyQuestionAdmin {
   }
 
 
-  public SurveyQuestionAdmin kind(@jakarta.annotation.Nonnull String kind) {
+  public SurveyQuestionAdmin kind(@jakarta.annotation.Nonnull KindEnum kind) {
     this.kind = kind;
     return this;
   }
 
   /**
-   * Get kind
+   * A required &#x60;consent&#x60; must be checked; an unchecked one is refused with 422 &#x60;consent_refused:&lt;question id&gt;&#x60;.
    * @return kind
    */
   @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_KIND)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public String getKind() {
+  public KindEnum getKind() {
     return kind;
   }
 
 
   @JsonProperty(JSON_PROPERTY_KIND)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setKind(@jakarta.annotation.Nonnull String kind) {
+  public void setKind(@jakarta.annotation.Nonnull KindEnum kind) {
     this.kind = kind;
   }
 
@@ -192,6 +256,126 @@ public class SurveyQuestionAdmin {
   }
 
 
+  public SurveyQuestionAdmin help(@jakarta.annotation.Nullable String help) {
+    this.help = help;
+    return this;
+  }
+
+  /**
+   * Get help
+   * @return help
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_HELP)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getHelp() {
+    return help;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_HELP)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setHelp(@jakarta.annotation.Nullable String help) {
+    this.help = help;
+  }
+
+
+  public SurveyQuestionAdmin multiline(@jakarta.annotation.Nullable Boolean multiline) {
+    this.multiline = multiline;
+    return this;
+  }
+
+  /**
+   * Get multiline
+   * @return multiline
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_MULTILINE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Boolean getMultiline() {
+    return multiline;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_MULTILINE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setMultiline(@jakarta.annotation.Nullable Boolean multiline) {
+    this.multiline = multiline;
+  }
+
+
+  public SurveyQuestionAdmin maxLen(@jakarta.annotation.Nullable Integer maxLen) {
+    this.maxLen = maxLen;
+    return this;
+  }
+
+  /**
+   * Get maxLen
+   * @return maxLen
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_MAX_LEN)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Integer getMaxLen() {
+    return maxLen;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_MAX_LEN)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setMaxLen(@jakarta.annotation.Nullable Integer maxLen) {
+    this.maxLen = maxLen;
+  }
+
+
+  public SurveyQuestionAdmin minChoices(@jakarta.annotation.Nullable Integer minChoices) {
+    this.minChoices = minChoices;
+    return this;
+  }
+
+  /**
+   * Get minChoices
+   * @return minChoices
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_MIN_CHOICES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Integer getMinChoices() {
+    return minChoices;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_MIN_CHOICES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setMinChoices(@jakarta.annotation.Nullable Integer minChoices) {
+    this.minChoices = minChoices;
+  }
+
+
+  public SurveyQuestionAdmin maxChoices(@jakarta.annotation.Nullable Integer maxChoices) {
+    this.maxChoices = maxChoices;
+    return this;
+  }
+
+  /**
+   * Get maxChoices
+   * @return maxChoices
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_MAX_CHOICES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Integer getMaxChoices() {
+    return maxChoices;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_MAX_CHOICES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setMaxChoices(@jakarta.annotation.Nullable Integer maxChoices) {
+    this.maxChoices = maxChoices;
+  }
+
+
   public SurveyQuestionAdmin choices(@jakarta.annotation.Nullable List<SurveyChoiceAdmin> choices) {
     this.choices = choices;
     return this;
@@ -241,12 +425,17 @@ public class SurveyQuestionAdmin {
         Objects.equals(this.kind, surveyQuestionAdmin.kind) &&
         Objects.equals(this.required, surveyQuestionAdmin.required) &&
         Objects.equals(this.displayOrder, surveyQuestionAdmin.displayOrder) &&
+        Objects.equals(this.help, surveyQuestionAdmin.help) &&
+        Objects.equals(this.multiline, surveyQuestionAdmin.multiline) &&
+        Objects.equals(this.maxLen, surveyQuestionAdmin.maxLen) &&
+        Objects.equals(this.minChoices, surveyQuestionAdmin.minChoices) &&
+        Objects.equals(this.maxChoices, surveyQuestionAdmin.maxChoices) &&
         Objects.equals(this.choices, surveyQuestionAdmin.choices);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, prompt, kind, required, displayOrder, choices);
+    return Objects.hash(id, prompt, kind, required, displayOrder, help, multiline, maxLen, minChoices, maxChoices, choices);
   }
 
   @Override
@@ -258,6 +447,11 @@ public class SurveyQuestionAdmin {
     sb.append("    kind: ").append(toIndentedString(kind)).append("\n");
     sb.append("    required: ").append(toIndentedString(required)).append("\n");
     sb.append("    displayOrder: ").append(toIndentedString(displayOrder)).append("\n");
+    sb.append("    help: ").append(toIndentedString(help)).append("\n");
+    sb.append("    multiline: ").append(toIndentedString(multiline)).append("\n");
+    sb.append("    maxLen: ").append(toIndentedString(maxLen)).append("\n");
+    sb.append("    minChoices: ").append(toIndentedString(minChoices)).append("\n");
+    sb.append("    maxChoices: ").append(toIndentedString(maxChoices)).append("\n");
     sb.append("    choices: ").append(toIndentedString(choices)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -329,6 +523,31 @@ public class SurveyQuestionAdmin {
     // add `display_order` to the URL query string
     if (getDisplayOrder() != null) {
       joiner.add(String.format("%sdisplay_order%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getDisplayOrder()))));
+    }
+
+    // add `help` to the URL query string
+    if (getHelp() != null) {
+      joiner.add(String.format("%shelp%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getHelp()))));
+    }
+
+    // add `multiline` to the URL query string
+    if (getMultiline() != null) {
+      joiner.add(String.format("%smultiline%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getMultiline()))));
+    }
+
+    // add `max_len` to the URL query string
+    if (getMaxLen() != null) {
+      joiner.add(String.format("%smax_len%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getMaxLen()))));
+    }
+
+    // add `min_choices` to the URL query string
+    if (getMinChoices() != null) {
+      joiner.add(String.format("%smin_choices%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getMinChoices()))));
+    }
+
+    // add `max_choices` to the URL query string
+    if (getMaxChoices() != null) {
+      joiner.add(String.format("%smax_choices%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getMaxChoices()))));
     }
 
     // add `choices` to the URL query string

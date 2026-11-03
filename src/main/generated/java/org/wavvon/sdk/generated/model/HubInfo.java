@@ -114,7 +114,7 @@ public class HubInfo {
    * Gets or Sets challengeMode
    */
   public enum ChallengeModeEnum {
-    FALSE(String.valueOf("false")),
+    OFF(String.valueOf("off")),
     
     CLICK(String.valueOf("click")),
     

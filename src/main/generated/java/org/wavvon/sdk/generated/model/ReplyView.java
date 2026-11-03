@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.wavvon.sdk.generated.model.CreateAllianceChannelPostRequestAttachmentsInner;
+import org.wavvon.sdk.generated.model.AttachmentRef;
 import org.wavvon.sdk.generated.model.Reaction;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
@@ -89,7 +89,7 @@ public class ReplyView {
 
   public static final String JSON_PROPERTY_ATTACHMENTS = "attachments";
   @jakarta.annotation.Nonnull
-  private List<CreateAllianceChannelPostRequestAttachmentsInner> attachments = new ArrayList<>();
+  private List<AttachmentRef> attachments = new ArrayList<>();
 
   public static final String JSON_PROPERTY_AUTHOR_HUB = "author_hub";
   @jakarta.annotation.Nullable
@@ -322,12 +322,12 @@ public class ReplyView {
   }
 
 
-  public ReplyView attachments(@jakarta.annotation.Nonnull List<CreateAllianceChannelPostRequestAttachmentsInner> attachments) {
+  public ReplyView attachments(@jakarta.annotation.Nonnull List<AttachmentRef> attachments) {
     this.attachments = attachments;
     return this;
   }
 
-  public ReplyView addAttachmentsItem(CreateAllianceChannelPostRequestAttachmentsInner attachmentsItem) {
+  public ReplyView addAttachmentsItem(AttachmentRef attachmentsItem) {
     if (this.attachments == null) {
       this.attachments = new ArrayList<>();
     }
@@ -342,14 +342,14 @@ public class ReplyView {
   @jakarta.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_ATTACHMENTS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public List<CreateAllianceChannelPostRequestAttachmentsInner> getAttachments() {
+  public List<AttachmentRef> getAttachments() {
     return attachments;
   }
 
 
   @JsonProperty(JSON_PROPERTY_ATTACHMENTS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setAttachments(@jakarta.annotation.Nonnull List<CreateAllianceChannelPostRequestAttachmentsInner> attachments) {
+  public void setAttachments(@jakarta.annotation.Nonnull List<AttachmentRef> attachments) {
     this.attachments = attachments;
   }
 

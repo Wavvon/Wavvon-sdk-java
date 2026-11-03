@@ -23,6 +23,7 @@ import org.wavvon.sdk.generated.model.CreateAllianceChannelPostRequest;
 import org.wavvon.sdk.generated.model.CreateChannelMessageReactionRequest;
 import org.wavvon.sdk.generated.model.CreateChannelPostReactionRequest;
 import org.wavvon.sdk.generated.model.CreateChannelPostReplyRequest;
+import org.wavvon.sdk.generated.model.CreateChannelPostRequest;
 import org.wavvon.sdk.generated.model.CreateChannelTagRequest;
 import org.wavvon.sdk.generated.model.CreateFederationForumChannelPostReactionRequest;
 import org.wavvon.sdk.generated.model.CreateFederationForumChannelPostReplyRequest;
@@ -418,12 +419,12 @@ public class ForumApi {
    * Create a post (create_posts)
    * 
    * @param channelId  (required)
-   * @param createAllianceChannelPostRequest  (required)
+   * @param createChannelPostRequest  (required)
    * @return PostDetail
    * @throws ApiException if fails to make API call
    */
-  public PostDetail createChannelPost(String channelId, CreateAllianceChannelPostRequest createAllianceChannelPostRequest) throws ApiException {
-    ApiResponse<PostDetail> localVarResponse = createChannelPostWithHttpInfo(channelId, createAllianceChannelPostRequest);
+  public PostDetail createChannelPost(String channelId, CreateChannelPostRequest createChannelPostRequest) throws ApiException {
+    ApiResponse<PostDetail> localVarResponse = createChannelPostWithHttpInfo(channelId, createChannelPostRequest);
     return localVarResponse.getData();
   }
 
@@ -431,12 +432,12 @@ public class ForumApi {
    * Create a post (create_posts)
    * 
    * @param channelId  (required)
-   * @param createAllianceChannelPostRequest  (required)
+   * @param createChannelPostRequest  (required)
    * @return ApiResponse&lt;PostDetail&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<PostDetail> createChannelPostWithHttpInfo(String channelId, CreateAllianceChannelPostRequest createAllianceChannelPostRequest) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = createChannelPostRequestBuilder(channelId, createAllianceChannelPostRequest);
+  public ApiResponse<PostDetail> createChannelPostWithHttpInfo(String channelId, CreateChannelPostRequest createChannelPostRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = createChannelPostRequestBuilder(channelId, createChannelPostRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -475,14 +476,14 @@ public class ForumApi {
     }
   }
 
-  private HttpRequest.Builder createChannelPostRequestBuilder(String channelId, CreateAllianceChannelPostRequest createAllianceChannelPostRequest) throws ApiException {
+  private HttpRequest.Builder createChannelPostRequestBuilder(String channelId, CreateChannelPostRequest createChannelPostRequest) throws ApiException {
     // verify the required parameter 'channelId' is set
     if (channelId == null) {
       throw new ApiException(400, "Missing the required parameter 'channelId' when calling createChannelPost");
     }
-    // verify the required parameter 'createAllianceChannelPostRequest' is set
-    if (createAllianceChannelPostRequest == null) {
-      throw new ApiException(400, "Missing the required parameter 'createAllianceChannelPostRequest' when calling createChannelPost");
+    // verify the required parameter 'createChannelPostRequest' is set
+    if (createChannelPostRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createChannelPostRequest' when calling createChannelPost");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -496,7 +497,7 @@ public class ForumApi {
     localVarRequestBuilder.header("Accept", "application/json");
 
     try {
-      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(createAllianceChannelPostRequest);
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(createChannelPostRequest);
       localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
     } catch (IOException e) {
       throw new ApiException(e);

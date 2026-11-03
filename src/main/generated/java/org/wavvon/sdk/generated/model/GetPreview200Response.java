@@ -137,7 +137,7 @@ public class GetPreview200Response {
   }
 
   /**
-   * Get imageUrl
+   * The page&#39;s image as fetched and served by this hub (&#x60;/preview/image/{id}&#x60; under its public URL), so readers never contact the third-party host. Null when the page has no PNG/JPEG/GIF/WebP/AVIF image of at most 1 MB, or the hub has no public URL.
    * @return imageUrl
    */
   @jakarta.annotation.Nullable
