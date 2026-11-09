@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 class AuthTest {
   static final String SEED = "5a".repeat(32);
   static final byte[] C32 = filled(32, 9);
+  static final String HUB_KEY = "cd".repeat(32);
   static final RetryOptions FAST =
       RetryOptions.DEFAULTS.withDelays(Duration.ofMillis(1), Duration.ofMillis(1));
 
@@ -29,16 +30,35 @@ class AuthTest {
 
   @Test
   void prefixesTheTagUnderTaggedV1() {
-    byte[] b = Auth.challengeSigningBytes(C32, "tagged-v1");
+    byte[] b = Auth.challengeSigningBytes(C32, "tagged-v1", null);
     assertArrayEquals(Bytes.utf8("wavvon/auth-challenge/v1\0"), Arrays.copyOf(b, 25));
     assertArrayEquals(C32, Arrays.copyOfRange(b, 25, b.length));
   }
 
   @Test
+  void bindsTheServerKeyUnderTaggedV2() {
+    byte[] b = Auth.challengeSigningBytes(C32, "tagged-v2", "ab");
+    assertArrayEquals(
+        Bytes.concat(
+            Bytes.utf8("wavvon/auth-challenge/v2\0"), new byte[] {2, 0, 0, 0, 0x61, 0x62}, C32),
+        b);
+  }
+
+  @Test
+  void refusesAChallengeThatIsNot32Bytes() {
+    for (String scheme : List.of("tagged-v1", "tagged-v2")) {
+      assertThrows(
+          AuthSchemeException.class,
+          () -> Auth.challengeSigningBytes(filled(31, 9), scheme, HUB_KEY));
+    }
+  }
+
+  @Test
   void refusesAMissingOrUnknownSchemeInsteadOfSigningRaw() {
-    assertThrows(AuthSchemeException.class, () -> Auth.challengeSigningBytes(C32, null));
-    assertThrows(AuthSchemeException.class, () -> Auth.challengeSigningBytes(C32, "tagged-v2"));
-    assertThrows(AuthSchemeException.class, () -> Auth.challengeSigningBytes(C32, ""));
+    assertThrows(AuthSchemeException.class, () -> Auth.challengeSigningBytes(C32, null, HUB_KEY));
+    assertThrows(
+        AuthSchemeException.class, () -> Auth.challengeSigningBytes(C32, "tagged-v3", HUB_KEY));
+    assertThrows(AuthSchemeException.class, () -> Auth.challengeSigningBytes(C32, "", HUB_KEY));
   }
 
   @Test
@@ -59,6 +79,9 @@ class AuthTest {
       hub =
           new TestHub(
               req -> {
+                if (req.path().equals("/info")) {
+                  return TestHub.Res.json("{\"public_key\":\"" + HUB_KEY + "\"}");
+                }
                 JsonNode body = Json.MAPPER.readTree(req.body());
                 if (req.path().equals("/auth/challenge")) {
                   String ch = Bytes.toHex(filled(32, challenges.size() + 1));
@@ -75,7 +98,7 @@ class AuthTest {
                 }
                 byte[] msg =
                     Auth.challengeSigningBytes(
-                        Bytes.fromHex(body.get("challenge").asText()), scheme);
+                        Bytes.fromHex(body.get("challenge").asText()), scheme, HUB_KEY);
                 boolean ok =
                     Identity.verify(
                         body.get("public_key").asText(),
@@ -92,6 +115,14 @@ class AuthTest {
     Session login(String invite) throws InterruptedException {
       return Auth.authenticate(
           HttpClient.newHttpClient(), hub.url() + "/", Identity.fromSeed(SEED), invite, FAST);
+    }
+  }
+
+  @Test
+  void logsInWithTaggedV2ForTheKeyInfoPresented() throws Exception {
+    FakeHub f = new FakeHub("tagged-v2", 0, 0);
+    try (f.hub) {
+      assertEquals("tok", f.login(null).token());
     }
   }
 
