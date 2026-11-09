@@ -34,7 +34,7 @@ class ClientTest {
                         "{\"public_key\":\"aa\",\"capabilities\":[" + capabilities + "]}");
                   case "/auth/challenge":
                     return TestHub.Res.json(
-                        "{\"challenge\":\"" + "00".repeat(32) + "\",\"scheme\":\"tagged-v1\"}");
+                        "{\"challenge\":\"" + "00".repeat(32) + "\",\"scheme\":\"tagged-v2\"}");
                   case "/auth/verify":
                     valid.set("t" + tokens.incrementAndGet());
                     return TestHub.Res.json(

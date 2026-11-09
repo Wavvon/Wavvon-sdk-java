@@ -78,7 +78,22 @@ class ConformanceTest {
   void authChallenge() {
     JsonNode v = vector("auth_challenge");
     byte[] bytes =
-        Auth.challengeSigningBytes(Bytes.fromHex(v.at("/inputs/challenge").asText()), "tagged-v1");
+        Auth.challengeSigningBytes(
+            Bytes.fromHex(v.at("/inputs/challenge").asText()), "tagged-v1", null);
+    assertEquals(hex(v, "signing_bytes"), Bytes.toHex(bytes));
+    assertEquals(
+        hex(v, "signature"),
+        Bytes.toHex(Identity.fromSeed(v.at("/inputs/signer_seed").asText()).sign(bytes)));
+  }
+
+  @Test
+  void boundAuthChallenge() {
+    JsonNode v = vector("bound_auth_challenge");
+    byte[] bytes =
+        Auth.challengeSigningBytes(
+            Bytes.fromHex(v.at("/inputs/challenge").asText()),
+            "tagged-v2",
+            v.at("/inputs/server_pubkey").asText());
     assertEquals(hex(v, "signing_bytes"), Bytes.toHex(bytes));
     assertEquals(
         hex(v, "signature"),
