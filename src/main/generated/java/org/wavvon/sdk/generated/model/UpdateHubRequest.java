@@ -1,6 +1,6 @@
 /*
  * Wavvon Hub API
- * REST + WebSocket API for a Wavvon hub server. This file is the protocol contract — implement a client in any language against this spec without reading Rust source.  ## Authentication  All endpoints (except `/health`, `/info`, `/auth/_*`, `/join/:code`) require a Bearer token obtained from `POST /auth/verify`.  ### Auth flow  1. `POST /auth/challenge` with your hex-encoded Ed25519 public key. 2. Sign the returned `challenge` with your Ed25519 private key.    - The challenge is hex: hex-decode it to its 32 bytes first.    - If the response carries `scheme: \"tagged-v1\"`, sign      `b\"wavvon/auth-challenge/v1\\0\" || challenge_bytes` (wire-format.md).      With no `scheme`, sign the raw 32 bytes. Refuse an unknown scheme.    - Encode the 64-byte signature as lowercase hex. 3. `POST /auth/verify` with your public key, the challenge, and the hex signature.    - Optionally include a `security_nonce` + `security_level` for PoW (see below). 4. On success, receive a `token`. Send it as `Authorization: Bearer <token>` on all    subsequent requests.  ### Proof-of-Work (PoW)  Some hubs require callers to prove a security level before granting membership. The algorithm:  ``` hash = SHA256(utf8(public_key_hex) || little_endian_u64(nonce)) level = number of leading zero BITS in hash ```  To reach level N, iterate nonces starting from 1 until a hash with ≥ N leading zero bits is found. Level 0 = no work required. Level 20 takes ~1M hashes on average.  Submit `security_nonce` (the winning nonce as a u64) and `security_level` (the claimed level) in `POST /auth/verify`. The hub verifies independently.  ### Session scope  `POST /auth/verify` returns a `scope` field: - `\"member\"` — full access. - `\"lobby\"` — hub has a security lobby and your PoW level is below the minimum.   You can only call `/lobby/_*` endpoints until promoted.  ## Programs  There is no separate authentication for a program. It holds a keypair, answers the same challenge, carries the same session token, and is bound by the same permissions. A member running one holds `apps.register`, which is what `/me/app/_*` and the message shapes an app authors are gated on.  ## WebSocket protocol  All realtime traffic (chat events, typing, DMs, voice presence, proximity voice zones, video and screen-share WebRTC signaling, screen-share chunk relay, forum/poll/pin events, and hub-event push) runs over a single WebSocket at `GET /ws`.  - **Connect:** `GET /ws?token=<token>` — the token goes in the **`token`   query parameter**, not a header. It is the session token from   `POST /auth/verify` (a program uses the same kind), with the same   expiry / revocation / approval / ban checks as REST. - **Framing:** every protocol message is a JSON text frame with a `type`   discriminator and the payload fields at the same level   (e.g. `{\"type\":\"subscribe\",\"channel_id\":\"...\"}`). Binary frames are used   only for screen-share chunk data and are always preceded by a   `screen_share_chunk` JSON envelope. - **On connect** the hub sends `{\"type\":\"hello\",\"live_seq\":<n>}`,   auto-subscribes the connection to every non-banned channel, and replays   `screen_share_started` for shares already in progress. - Unknown or malformed client frames are silently ignored; recoverable   command failures come back as `{\"type\":\"error\",\"context\":...,\"message\":...}`.  OpenAPI 3.0 cannot model WebSocket messages natively, so the **complete message-by-message wire reference** (client→server and server→client messages, including the app-only pushes, with exact field names and types) lives in [`docs/ws-protocol.md`](docs/ws-protocol.md). That file is part of this protocol contract: implement the WS side against it. 
+ * REST + WebSocket API for a Wavvon hub server. This file is the protocol contract — implement a client in any language against this spec without reading Rust source.  ## Authentication  All endpoints (except `/health`, `/info`, `/auth/_*`, `/join/:code`) require a Bearer token obtained from `POST /auth/verify`.  ### Auth flow  1. `POST /auth/challenge` with your hex-encoded Ed25519 public key. 2. Sign the returned `challenge` with your Ed25519 private key.    - The challenge is hex: hex-decode it to its 32 bytes first.    - If the response carries `scheme: \"tagged-v2\"` (every current hub      and farm), sign `b\"wavvon/auth-challenge/v2\\0\" || u32le(len(key)) ||      key || challenge_bytes`, where `key` is the hex public key that the      server you are talking to presents on its own `GET /info` (a farm:      `GET /farm/info`), never anything from the challenge response.      An older server names `tagged-v1`: sign      `b\"wavvon/auth-challenge/v1\\0\" || challenge_bytes` (wire-format.md).      Refuse a missing or unknown scheme.    - Encode the 64-byte signature as lowercase hex. 3. `POST /auth/verify` with your public key, the challenge, and the hex signature.    - Optionally include a `security_nonce` + `security_level` for PoW (see below). 4. On success, receive a `token`. Send it as `Authorization: Bearer <token>` on all    subsequent requests.  ### Proof-of-Work (PoW)  Some hubs require callers to prove a security level before granting membership. The algorithm:  ``` hash = SHA256(utf8(public_key_hex) || little_endian_u64(nonce)) level = number of leading zero BITS in hash ```  To reach level N, iterate nonces starting from 1 until a hash with ≥ N leading zero bits is found. Level 0 = no work required. Level 20 takes ~1M hashes on average.  Submit `security_nonce` (the winning nonce as a u64) and `security_level` (the claimed level) in `POST /auth/verify`. The hub verifies independently.  ### Session scope  `POST /auth/verify` returns a `scope` field: - `\"member\"` — full access. - `\"lobby\"` — hub has a security lobby and your PoW level is below the minimum.   You can only call `/lobby/_*` endpoints until promoted.  ## Programs  There is no separate authentication for a program. It holds a keypair, answers the same challenge, carries the same session token, and is bound by the same permissions. A member running one holds `apps.register`, which is what `/me/app/_*` and the message shapes an app authors are gated on.  ## WebSocket protocol  All realtime traffic (chat events, typing, DMs, voice presence, proximity voice zones, video and screen-share WebRTC signaling, screen-share chunk relay, forum/poll/pin events, and hub-event push) runs over a single WebSocket at `GET /ws`.  - **Connect:** `GET /ws?token=<token>` — the token goes in the **`token`   query parameter**, not a header. It is the session token from   `POST /auth/verify` (a program uses the same kind), with the same   expiry / revocation / approval / ban checks as REST. - **Framing:** every protocol message is a JSON text frame with a `type`   discriminator and the payload fields at the same level   (e.g. `{\"type\":\"subscribe\",\"channel_id\":\"...\"}`). Binary frames are used   only for screen-share chunk data and are always preceded by a   `screen_share_chunk` JSON envelope. - **On connect** the hub sends `{\"type\":\"hello\",\"live_seq\":<n>}`,   auto-subscribes the connection to every non-banned channel, and replays   `screen_share_started` for shares already in progress. - Unknown or malformed client frames are silently ignored; recoverable   command failures come back as `{\"type\":\"error\",\"context\":...,\"message\":...}`.  OpenAPI 3.0 cannot model WebSocket messages natively, so the **complete message-by-message wire reference** (client→server and server→client messages, including the app-only pushes, with exact field names and types) lives in [`docs/ws-protocol.md`](docs/ws-protocol.md). That file is part of this protocol contract: implement the WS side against it. 
  *
  * The version of the OpenAPI document: 1.0
  * 
@@ -24,7 +24,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import org.wavvon.sdk.generated.model.StreamLimits;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -49,6 +52,9 @@ import org.wavvon.sdk.generated.ApiClient;
   UpdateHubRequest.JSON_PROPERTY_AFK_TIMEOUT_SECS,
   UpdateHubRequest.JSON_PROPERTY_MAX_ATTACHMENT_BYTES,
   UpdateHubRequest.JSON_PROPERTY_MAX_UPLOAD_BYTES,
+  UpdateHubRequest.JSON_PROPERTY_STREAM_LIMITS,
+  UpdateHubRequest.JSON_PROPERTY_LANDING_IMAGE,
+  UpdateHubRequest.JSON_PROPERTY_LANDING_COLORS,
   UpdateHubRequest.JSON_PROPERTY_MAX_ATTACHMENTS_PER_MESSAGE,
   UpdateHubRequest.JSON_PROPERTY_ATTACHMENTS_CAP_BYTES,
   UpdateHubRequest.JSON_PROPERTY_ATTACHMENTS_WARN_PERCENT,
@@ -129,6 +135,18 @@ public class UpdateHubRequest {
   public static final String JSON_PROPERTY_MAX_UPLOAD_BYTES = "max_upload_bytes";
   @jakarta.annotation.Nullable
   private Long maxUploadBytes;
+
+  public static final String JSON_PROPERTY_STREAM_LIMITS = "stream_limits";
+  @jakarta.annotation.Nullable
+  private StreamLimits streamLimits;
+
+  public static final String JSON_PROPERTY_LANDING_IMAGE = "landing_image";
+  @jakarta.annotation.Nullable
+  private String landingImage;
+
+  public static final String JSON_PROPERTY_LANDING_COLORS = "landing_colors";
+  @jakarta.annotation.Nullable
+  private List<String> landingColors = new ArrayList<>();
 
   public static final String JSON_PROPERTY_MAX_ATTACHMENTS_PER_MESSAGE = "max_attachments_per_message";
   @jakarta.annotation.Nullable
@@ -573,6 +591,86 @@ public class UpdateHubRequest {
   }
 
 
+  public UpdateHubRequest streamLimits(@jakarta.annotation.Nullable StreamLimits streamLimits) {
+    this.streamLimits = streamLimits;
+    return this;
+  }
+
+  /**
+   * Get streamLimits
+   * @return streamLimits
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_STREAM_LIMITS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public StreamLimits getStreamLimits() {
+    return streamLimits;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_STREAM_LIMITS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setStreamLimits(@jakarta.annotation.Nullable StreamLimits streamLimits) {
+    this.streamLimits = streamLimits;
+  }
+
+
+  public UpdateHubRequest landingImage(@jakarta.annotation.Nullable String landingImage) {
+    this.landingImage = landingImage;
+    return this;
+  }
+
+  /**
+   * Invite landing image as a base64 data: URL, at most 1 MB decoded, re-encoded by the hub. Empty clears it. 413 when too large, 400 when not an image.
+   * @return landingImage
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_LANDING_IMAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getLandingImage() {
+    return landingImage;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_LANDING_IMAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setLandingImage(@jakarta.annotation.Nullable String landingImage) {
+    this.landingImage = landingImage;
+  }
+
+
+  public UpdateHubRequest landingColors(@jakarta.annotation.Nullable List<String> landingColors) {
+    this.landingColors = landingColors;
+    return this;
+  }
+
+  public UpdateHubRequest addLandingColorsItem(String landingColorsItem) {
+    if (this.landingColors == null) {
+      this.landingColors = new ArrayList<>();
+    }
+    this.landingColors.add(landingColorsItem);
+    return this;
+  }
+
+  /**
+   * Two colours for the invite landing; an empty array clears them.
+   * @return landingColors
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_LANDING_COLORS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public List<String> getLandingColors() {
+    return landingColors;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_LANDING_COLORS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setLandingColors(@jakarta.annotation.Nullable List<String> landingColors) {
+    this.landingColors = landingColors;
+  }
+
+
   public UpdateHubRequest maxAttachmentsPerMessage(@jakarta.annotation.Nullable Integer maxAttachmentsPerMessage) {
     this.maxAttachmentsPerMessage = maxAttachmentsPerMessage;
     return this;
@@ -937,6 +1035,9 @@ public class UpdateHubRequest {
         Objects.equals(this.afkTimeoutSecs, updateHubRequest.afkTimeoutSecs) &&
         Objects.equals(this.maxAttachmentBytes, updateHubRequest.maxAttachmentBytes) &&
         Objects.equals(this.maxUploadBytes, updateHubRequest.maxUploadBytes) &&
+        Objects.equals(this.streamLimits, updateHubRequest.streamLimits) &&
+        Objects.equals(this.landingImage, updateHubRequest.landingImage) &&
+        Objects.equals(this.landingColors, updateHubRequest.landingColors) &&
         Objects.equals(this.maxAttachmentsPerMessage, updateHubRequest.maxAttachmentsPerMessage) &&
         Objects.equals(this.attachmentsCapBytes, updateHubRequest.attachmentsCapBytes) &&
         Objects.equals(this.attachmentsWarnPercent, updateHubRequest.attachmentsWarnPercent) &&
@@ -955,7 +1056,7 @@ public class UpdateHubRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, description, icon, requireApproval, minSecurityLevel, maxChannelDepth, welcomeLabel, welcomeInviteUrl, farewellLabel, defaultInviteRoleId, timezone, birthdaysEnabled, afkChannelId, afkTimeoutSecs, maxAttachmentBytes, maxUploadBytes, maxAttachmentsPerMessage, attachmentsCapBytes, attachmentsWarnPercent, attachmentsRetentionDays, maxPreviewImageBytes, nameColorMode, stickersMaxFileBytes, stickersPacksCapBytes, stickersPacksWarnPercent, stickersCopiesCapBytes, stickersPerPack, stickerPacksPerHub, stickersOrphanGcDays, stickersExport);
+    return Objects.hash(name, description, icon, requireApproval, minSecurityLevel, maxChannelDepth, welcomeLabel, welcomeInviteUrl, farewellLabel, defaultInviteRoleId, timezone, birthdaysEnabled, afkChannelId, afkTimeoutSecs, maxAttachmentBytes, maxUploadBytes, streamLimits, landingImage, landingColors, maxAttachmentsPerMessage, attachmentsCapBytes, attachmentsWarnPercent, attachmentsRetentionDays, maxPreviewImageBytes, nameColorMode, stickersMaxFileBytes, stickersPacksCapBytes, stickersPacksWarnPercent, stickersCopiesCapBytes, stickersPerPack, stickerPacksPerHub, stickersOrphanGcDays, stickersExport);
   }
 
   @Override
@@ -978,6 +1079,9 @@ public class UpdateHubRequest {
     sb.append("    afkTimeoutSecs: ").append(toIndentedString(afkTimeoutSecs)).append("\n");
     sb.append("    maxAttachmentBytes: ").append(toIndentedString(maxAttachmentBytes)).append("\n");
     sb.append("    maxUploadBytes: ").append(toIndentedString(maxUploadBytes)).append("\n");
+    sb.append("    streamLimits: ").append(toIndentedString(streamLimits)).append("\n");
+    sb.append("    landingImage: ").append(toIndentedString(landingImage)).append("\n");
+    sb.append("    landingColors: ").append(toIndentedString(landingColors)).append("\n");
     sb.append("    maxAttachmentsPerMessage: ").append(toIndentedString(maxAttachmentsPerMessage)).append("\n");
     sb.append("    attachmentsCapBytes: ").append(toIndentedString(attachmentsCapBytes)).append("\n");
     sb.append("    attachmentsWarnPercent: ").append(toIndentedString(attachmentsWarnPercent)).append("\n");
@@ -1117,6 +1221,25 @@ public class UpdateHubRequest {
     // add `max_upload_bytes` to the URL query string
     if (getMaxUploadBytes() != null) {
       joiner.add(String.format("%smax_upload_bytes%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getMaxUploadBytes()))));
+    }
+
+    // add `stream_limits` to the URL query string
+    if (getStreamLimits() != null) {
+      joiner.add(getStreamLimits().toUrlQueryString(prefix + "stream_limits" + suffix));
+    }
+
+    // add `landing_image` to the URL query string
+    if (getLandingImage() != null) {
+      joiner.add(String.format("%slanding_image%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getLandingImage()))));
+    }
+
+    // add `landing_colors` to the URL query string
+    if (getLandingColors() != null) {
+      for (int i = 0; i < getLandingColors().size(); i++) {
+        joiner.add(String.format("%slanding_colors%s%s=%s", prefix, suffix,
+            "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix),
+            ApiClient.urlEncode(ApiClient.valueToString(getLandingColors().get(i)))));
+      }
     }
 
     // add `max_attachments_per_message` to the URL query string

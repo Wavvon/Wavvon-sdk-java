@@ -1,6 +1,6 @@
 /*
  * Wavvon Hub API
- * REST + WebSocket API for a Wavvon hub server. This file is the protocol contract — implement a client in any language against this spec without reading Rust source.  ## Authentication  All endpoints (except `/health`, `/info`, `/auth/_*`, `/join/:code`) require a Bearer token obtained from `POST /auth/verify`.  ### Auth flow  1. `POST /auth/challenge` with your hex-encoded Ed25519 public key. 2. Sign the returned `challenge` with your Ed25519 private key.    - The challenge is hex: hex-decode it to its 32 bytes first.    - If the response carries `scheme: \"tagged-v1\"`, sign      `b\"wavvon/auth-challenge/v1\\0\" || challenge_bytes` (wire-format.md).      With no `scheme`, sign the raw 32 bytes. Refuse an unknown scheme.    - Encode the 64-byte signature as lowercase hex. 3. `POST /auth/verify` with your public key, the challenge, and the hex signature.    - Optionally include a `security_nonce` + `security_level` for PoW (see below). 4. On success, receive a `token`. Send it as `Authorization: Bearer <token>` on all    subsequent requests.  ### Proof-of-Work (PoW)  Some hubs require callers to prove a security level before granting membership. The algorithm:  ``` hash = SHA256(utf8(public_key_hex) || little_endian_u64(nonce)) level = number of leading zero BITS in hash ```  To reach level N, iterate nonces starting from 1 until a hash with ≥ N leading zero bits is found. Level 0 = no work required. Level 20 takes ~1M hashes on average.  Submit `security_nonce` (the winning nonce as a u64) and `security_level` (the claimed level) in `POST /auth/verify`. The hub verifies independently.  ### Session scope  `POST /auth/verify` returns a `scope` field: - `\"member\"` — full access. - `\"lobby\"` — hub has a security lobby and your PoW level is below the minimum.   You can only call `/lobby/_*` endpoints until promoted.  ## Programs  There is no separate authentication for a program. It holds a keypair, answers the same challenge, carries the same session token, and is bound by the same permissions. A member running one holds `apps.register`, which is what `/me/app/_*` and the message shapes an app authors are gated on.  ## WebSocket protocol  All realtime traffic (chat events, typing, DMs, voice presence, proximity voice zones, video and screen-share WebRTC signaling, screen-share chunk relay, forum/poll/pin events, and hub-event push) runs over a single WebSocket at `GET /ws`.  - **Connect:** `GET /ws?token=<token>` — the token goes in the **`token`   query parameter**, not a header. It is the session token from   `POST /auth/verify` (a program uses the same kind), with the same   expiry / revocation / approval / ban checks as REST. - **Framing:** every protocol message is a JSON text frame with a `type`   discriminator and the payload fields at the same level   (e.g. `{\"type\":\"subscribe\",\"channel_id\":\"...\"}`). Binary frames are used   only for screen-share chunk data and are always preceded by a   `screen_share_chunk` JSON envelope. - **On connect** the hub sends `{\"type\":\"hello\",\"live_seq\":<n>}`,   auto-subscribes the connection to every non-banned channel, and replays   `screen_share_started` for shares already in progress. - Unknown or malformed client frames are silently ignored; recoverable   command failures come back as `{\"type\":\"error\",\"context\":...,\"message\":...}`.  OpenAPI 3.0 cannot model WebSocket messages natively, so the **complete message-by-message wire reference** (client→server and server→client messages, including the app-only pushes, with exact field names and types) lives in [`docs/ws-protocol.md`](docs/ws-protocol.md). That file is part of this protocol contract: implement the WS side against it. 
+ * REST + WebSocket API for a Wavvon hub server. This file is the protocol contract — implement a client in any language against this spec without reading Rust source.  ## Authentication  All endpoints (except `/health`, `/info`, `/auth/_*`, `/join/:code`) require a Bearer token obtained from `POST /auth/verify`.  ### Auth flow  1. `POST /auth/challenge` with your hex-encoded Ed25519 public key. 2. Sign the returned `challenge` with your Ed25519 private key.    - The challenge is hex: hex-decode it to its 32 bytes first.    - If the response carries `scheme: \"tagged-v2\"` (every current hub      and farm), sign `b\"wavvon/auth-challenge/v2\\0\" || u32le(len(key)) ||      key || challenge_bytes`, where `key` is the hex public key that the      server you are talking to presents on its own `GET /info` (a farm:      `GET /farm/info`), never anything from the challenge response.      An older server names `tagged-v1`: sign      `b\"wavvon/auth-challenge/v1\\0\" || challenge_bytes` (wire-format.md).      Refuse a missing or unknown scheme.    - Encode the 64-byte signature as lowercase hex. 3. `POST /auth/verify` with your public key, the challenge, and the hex signature.    - Optionally include a `security_nonce` + `security_level` for PoW (see below). 4. On success, receive a `token`. Send it as `Authorization: Bearer <token>` on all    subsequent requests.  ### Proof-of-Work (PoW)  Some hubs require callers to prove a security level before granting membership. The algorithm:  ``` hash = SHA256(utf8(public_key_hex) || little_endian_u64(nonce)) level = number of leading zero BITS in hash ```  To reach level N, iterate nonces starting from 1 until a hash with ≥ N leading zero bits is found. Level 0 = no work required. Level 20 takes ~1M hashes on average.  Submit `security_nonce` (the winning nonce as a u64) and `security_level` (the claimed level) in `POST /auth/verify`. The hub verifies independently.  ### Session scope  `POST /auth/verify` returns a `scope` field: - `\"member\"` — full access. - `\"lobby\"` — hub has a security lobby and your PoW level is below the minimum.   You can only call `/lobby/_*` endpoints until promoted.  ## Programs  There is no separate authentication for a program. It holds a keypair, answers the same challenge, carries the same session token, and is bound by the same permissions. A member running one holds `apps.register`, which is what `/me/app/_*` and the message shapes an app authors are gated on.  ## WebSocket protocol  All realtime traffic (chat events, typing, DMs, voice presence, proximity voice zones, video and screen-share WebRTC signaling, screen-share chunk relay, forum/poll/pin events, and hub-event push) runs over a single WebSocket at `GET /ws`.  - **Connect:** `GET /ws?token=<token>` — the token goes in the **`token`   query parameter**, not a header. It is the session token from   `POST /auth/verify` (a program uses the same kind), with the same   expiry / revocation / approval / ban checks as REST. - **Framing:** every protocol message is a JSON text frame with a `type`   discriminator and the payload fields at the same level   (e.g. `{\"type\":\"subscribe\",\"channel_id\":\"...\"}`). Binary frames are used   only for screen-share chunk data and are always preceded by a   `screen_share_chunk` JSON envelope. - **On connect** the hub sends `{\"type\":\"hello\",\"live_seq\":<n>}`,   auto-subscribes the connection to every non-banned channel, and replays   `screen_share_started` for shares already in progress. - Unknown or malformed client frames are silently ignored; recoverable   command failures come back as `{\"type\":\"error\",\"context\":...,\"message\":...}`.  OpenAPI 3.0 cannot model WebSocket messages natively, so the **complete message-by-message wire reference** (client→server and server→client messages, including the app-only pushes, with exact field names and types) lives in [`docs/ws-protocol.md`](docs/ws-protocol.md). That file is part of this protocol contract: implement the WS side against it. 
  *
  * The version of the OpenAPI document: 1.0
  * 
@@ -18,6 +18,7 @@ import org.wavvon.sdk.generated.ApiResponse;
 import org.wavvon.sdk.generated.Configuration;
 import org.wavvon.sdk.generated.Pair;
 
+import org.wavvon.sdk.generated.model.CreateWsTicket200Response;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -89,23 +90,25 @@ public class WebSocketApi {
 
   /**
    * Realtime WebSocket endpoint
-   * Upgrades to a WebSocket carrying all realtime traffic. Authenticate with the &#x60;token&#x60; query parameter (the session token); the upgrade is rejected with &#x60;401&#x60;/&#x60;403&#x60; on invalid, expired, or banned credentials.  The full message catalogue — every client→server and server→client JSON message with exact field names and types — is documented in [&#x60;docs/ws-protocol.md&#x60;](docs/ws-protocol.md) (see also the \&quot;WebSocket protocol\&quot; section of this file&#39;s description). 
-   * @param token Session token from &#x60;POST /auth/verify&#x60;. (required)
+   * Upgrades to a WebSocket carrying all realtime traffic. Authenticate with a single-use &#x60;ticket&#x60; from &#x60;POST /ws/ticket&#x60; (hubs advertising the &#x60;ws.ticket&#x60; capability), or with the &#x60;token&#x60; query parameter (the session token itself, which then sits in the URL). The upgrade is rejected with &#x60;401&#x60;/&#x60;403&#x60; on invalid, expired, or banned credentials, and &#x60;429&#x60; when the identity already holds the maximum number of open sockets.  The full message catalogue — every client→server and server→client JSON message with exact field names and types — is documented in [&#x60;docs/ws-protocol.md&#x60;](docs/ws-protocol.md) (see also the \&quot;WebSocket protocol\&quot; section of this file&#39;s description). 
+   * @param ticket Single-use ticket from &#x60;POST /ws/ticket&#x60;, valid 30 seconds. (optional)
+   * @param token Session token from &#x60;POST /auth/verify&#x60;, when no ticket is used. (optional)
    * @throws ApiException if fails to make API call
    */
-  public void connectWebSocket(String token) throws ApiException {
-    connectWebSocketWithHttpInfo(token);
+  public void connectWebSocket(String ticket, String token) throws ApiException {
+    connectWebSocketWithHttpInfo(ticket, token);
   }
 
   /**
    * Realtime WebSocket endpoint
-   * Upgrades to a WebSocket carrying all realtime traffic. Authenticate with the &#x60;token&#x60; query parameter (the session token); the upgrade is rejected with &#x60;401&#x60;/&#x60;403&#x60; on invalid, expired, or banned credentials.  The full message catalogue — every client→server and server→client JSON message with exact field names and types — is documented in [&#x60;docs/ws-protocol.md&#x60;](docs/ws-protocol.md) (see also the \&quot;WebSocket protocol\&quot; section of this file&#39;s description). 
-   * @param token Session token from &#x60;POST /auth/verify&#x60;. (required)
+   * Upgrades to a WebSocket carrying all realtime traffic. Authenticate with a single-use &#x60;ticket&#x60; from &#x60;POST /ws/ticket&#x60; (hubs advertising the &#x60;ws.ticket&#x60; capability), or with the &#x60;token&#x60; query parameter (the session token itself, which then sits in the URL). The upgrade is rejected with &#x60;401&#x60;/&#x60;403&#x60; on invalid, expired, or banned credentials, and &#x60;429&#x60; when the identity already holds the maximum number of open sockets.  The full message catalogue — every client→server and server→client JSON message with exact field names and types — is documented in [&#x60;docs/ws-protocol.md&#x60;](docs/ws-protocol.md) (see also the \&quot;WebSocket protocol\&quot; section of this file&#39;s description). 
+   * @param ticket Single-use ticket from &#x60;POST /ws/ticket&#x60;, valid 30 seconds. (optional)
+   * @param token Session token from &#x60;POST /auth/verify&#x60;, when no ticket is used. (optional)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> connectWebSocketWithHttpInfo(String token) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = connectWebSocketRequestBuilder(token);
+  public ApiResponse<Void> connectWebSocketWithHttpInfo(String ticket, String token) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = connectWebSocketRequestBuilder(ticket, token);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -138,11 +141,7 @@ public class WebSocketApi {
     }
   }
 
-  private HttpRequest.Builder connectWebSocketRequestBuilder(String token) throws ApiException {
-    // verify the required parameter 'token' is set
-    if (token == null) {
-      throw new ApiException(400, "Missing the required parameter 'token' when calling connectWebSocket");
-    }
+  private HttpRequest.Builder connectWebSocketRequestBuilder(String ticket, String token) throws ApiException {
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -151,6 +150,8 @@ public class WebSocketApi {
     List<Pair> localVarQueryParams = new ArrayList<>();
     StringJoiner localVarQueryStringJoiner = new StringJoiner("&");
     String localVarQueryParameterBaseName;
+    localVarQueryParameterBaseName = "ticket";
+    localVarQueryParams.addAll(ApiClient.parameterToPairs("ticket", ticket));
     localVarQueryParameterBaseName = "token";
     localVarQueryParams.addAll(ApiClient.parameterToPairs("token", token));
 
@@ -168,6 +169,83 @@ public class WebSocketApi {
     localVarRequestBuilder.header("Accept", "application/json");
 
     localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Trade the session token for a WebSocket ticket
+   * Returns a ticket for &#x60;GET /ws?ticket&#x3D;&#x60;, so the session token never appears in a URL. Single use, valid for &#x60;expires_in&#x60; seconds. Advertised as the &#x60;ws.ticket&#x60; capability. 
+   * @return CreateWsTicket200Response
+   * @throws ApiException if fails to make API call
+   */
+  public CreateWsTicket200Response createWsTicket() throws ApiException {
+    ApiResponse<CreateWsTicket200Response> localVarResponse = createWsTicketWithHttpInfo();
+    return localVarResponse.getData();
+  }
+
+  /**
+   * Trade the session token for a WebSocket ticket
+   * Returns a ticket for &#x60;GET /ws?ticket&#x3D;&#x60;, so the session token never appears in a URL. Single use, valid for &#x60;expires_in&#x60; seconds. Advertised as the &#x60;ws.ticket&#x60; capability. 
+   * @return ApiResponse&lt;CreateWsTicket200Response&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<CreateWsTicket200Response> createWsTicketWithHttpInfo() throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = createWsTicketRequestBuilder();
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("createWsTicket", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<CreateWsTicket200Response>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        localVarResponse.body().close();
+
+        return new ApiResponse<CreateWsTicket200Response>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<CreateWsTicket200Response>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder createWsTicketRequestBuilder() throws ApiException {
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/ws/ticket";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }

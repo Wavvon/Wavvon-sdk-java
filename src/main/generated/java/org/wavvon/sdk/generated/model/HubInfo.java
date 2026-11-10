@@ -1,6 +1,6 @@
 /*
  * Wavvon Hub API
- * REST + WebSocket API for a Wavvon hub server. This file is the protocol contract — implement a client in any language against this spec without reading Rust source.  ## Authentication  All endpoints (except `/health`, `/info`, `/auth/_*`, `/join/:code`) require a Bearer token obtained from `POST /auth/verify`.  ### Auth flow  1. `POST /auth/challenge` with your hex-encoded Ed25519 public key. 2. Sign the returned `challenge` with your Ed25519 private key.    - The challenge is hex: hex-decode it to its 32 bytes first.    - If the response carries `scheme: \"tagged-v1\"`, sign      `b\"wavvon/auth-challenge/v1\\0\" || challenge_bytes` (wire-format.md).      With no `scheme`, sign the raw 32 bytes. Refuse an unknown scheme.    - Encode the 64-byte signature as lowercase hex. 3. `POST /auth/verify` with your public key, the challenge, and the hex signature.    - Optionally include a `security_nonce` + `security_level` for PoW (see below). 4. On success, receive a `token`. Send it as `Authorization: Bearer <token>` on all    subsequent requests.  ### Proof-of-Work (PoW)  Some hubs require callers to prove a security level before granting membership. The algorithm:  ``` hash = SHA256(utf8(public_key_hex) || little_endian_u64(nonce)) level = number of leading zero BITS in hash ```  To reach level N, iterate nonces starting from 1 until a hash with ≥ N leading zero bits is found. Level 0 = no work required. Level 20 takes ~1M hashes on average.  Submit `security_nonce` (the winning nonce as a u64) and `security_level` (the claimed level) in `POST /auth/verify`. The hub verifies independently.  ### Session scope  `POST /auth/verify` returns a `scope` field: - `\"member\"` — full access. - `\"lobby\"` — hub has a security lobby and your PoW level is below the minimum.   You can only call `/lobby/_*` endpoints until promoted.  ## Programs  There is no separate authentication for a program. It holds a keypair, answers the same challenge, carries the same session token, and is bound by the same permissions. A member running one holds `apps.register`, which is what `/me/app/_*` and the message shapes an app authors are gated on.  ## WebSocket protocol  All realtime traffic (chat events, typing, DMs, voice presence, proximity voice zones, video and screen-share WebRTC signaling, screen-share chunk relay, forum/poll/pin events, and hub-event push) runs over a single WebSocket at `GET /ws`.  - **Connect:** `GET /ws?token=<token>` — the token goes in the **`token`   query parameter**, not a header. It is the session token from   `POST /auth/verify` (a program uses the same kind), with the same   expiry / revocation / approval / ban checks as REST. - **Framing:** every protocol message is a JSON text frame with a `type`   discriminator and the payload fields at the same level   (e.g. `{\"type\":\"subscribe\",\"channel_id\":\"...\"}`). Binary frames are used   only for screen-share chunk data and are always preceded by a   `screen_share_chunk` JSON envelope. - **On connect** the hub sends `{\"type\":\"hello\",\"live_seq\":<n>}`,   auto-subscribes the connection to every non-banned channel, and replays   `screen_share_started` for shares already in progress. - Unknown or malformed client frames are silently ignored; recoverable   command failures come back as `{\"type\":\"error\",\"context\":...,\"message\":...}`.  OpenAPI 3.0 cannot model WebSocket messages natively, so the **complete message-by-message wire reference** (client→server and server→client messages, including the app-only pushes, with exact field names and types) lives in [`docs/ws-protocol.md`](docs/ws-protocol.md). That file is part of this protocol contract: implement the WS side against it. 
+ * REST + WebSocket API for a Wavvon hub server. This file is the protocol contract — implement a client in any language against this spec without reading Rust source.  ## Authentication  All endpoints (except `/health`, `/info`, `/auth/_*`, `/join/:code`) require a Bearer token obtained from `POST /auth/verify`.  ### Auth flow  1. `POST /auth/challenge` with your hex-encoded Ed25519 public key. 2. Sign the returned `challenge` with your Ed25519 private key.    - The challenge is hex: hex-decode it to its 32 bytes first.    - If the response carries `scheme: \"tagged-v2\"` (every current hub      and farm), sign `b\"wavvon/auth-challenge/v2\\0\" || u32le(len(key)) ||      key || challenge_bytes`, where `key` is the hex public key that the      server you are talking to presents on its own `GET /info` (a farm:      `GET /farm/info`), never anything from the challenge response.      An older server names `tagged-v1`: sign      `b\"wavvon/auth-challenge/v1\\0\" || challenge_bytes` (wire-format.md).      Refuse a missing or unknown scheme.    - Encode the 64-byte signature as lowercase hex. 3. `POST /auth/verify` with your public key, the challenge, and the hex signature.    - Optionally include a `security_nonce` + `security_level` for PoW (see below). 4. On success, receive a `token`. Send it as `Authorization: Bearer <token>` on all    subsequent requests.  ### Proof-of-Work (PoW)  Some hubs require callers to prove a security level before granting membership. The algorithm:  ``` hash = SHA256(utf8(public_key_hex) || little_endian_u64(nonce)) level = number of leading zero BITS in hash ```  To reach level N, iterate nonces starting from 1 until a hash with ≥ N leading zero bits is found. Level 0 = no work required. Level 20 takes ~1M hashes on average.  Submit `security_nonce` (the winning nonce as a u64) and `security_level` (the claimed level) in `POST /auth/verify`. The hub verifies independently.  ### Session scope  `POST /auth/verify` returns a `scope` field: - `\"member\"` — full access. - `\"lobby\"` — hub has a security lobby and your PoW level is below the minimum.   You can only call `/lobby/_*` endpoints until promoted.  ## Programs  There is no separate authentication for a program. It holds a keypair, answers the same challenge, carries the same session token, and is bound by the same permissions. A member running one holds `apps.register`, which is what `/me/app/_*` and the message shapes an app authors are gated on.  ## WebSocket protocol  All realtime traffic (chat events, typing, DMs, voice presence, proximity voice zones, video and screen-share WebRTC signaling, screen-share chunk relay, forum/poll/pin events, and hub-event push) runs over a single WebSocket at `GET /ws`.  - **Connect:** `GET /ws?token=<token>` — the token goes in the **`token`   query parameter**, not a header. It is the session token from   `POST /auth/verify` (a program uses the same kind), with the same   expiry / revocation / approval / ban checks as REST. - **Framing:** every protocol message is a JSON text frame with a `type`   discriminator and the payload fields at the same level   (e.g. `{\"type\":\"subscribe\",\"channel_id\":\"...\"}`). Binary frames are used   only for screen-share chunk data and are always preceded by a   `screen_share_chunk` JSON envelope. - **On connect** the hub sends `{\"type\":\"hello\",\"live_seq\":<n>}`,   auto-subscribes the connection to every non-banned channel, and replays   `screen_share_started` for shares already in progress. - Unknown or malformed client frames are silently ignored; recoverable   command failures come back as `{\"type\":\"error\",\"context\":...,\"message\":...}`.  OpenAPI 3.0 cannot model WebSocket messages natively, so the **complete message-by-message wire reference** (client→server and server→client messages, including the app-only pushes, with exact field names and types) lives in [`docs/ws-protocol.md`](docs/ws-protocol.md). That file is part of this protocol contract: implement the WS side against it. 
  *
  * The version of the OpenAPI document: 1.0
  * 
@@ -29,6 +29,8 @@ import java.util.Arrays;
 import java.util.List;
 import org.wavvon.sdk.generated.model.HubInfoBadgesInner;
 import org.wavvon.sdk.generated.model.HubInfoCertRequirement;
+import org.wavvon.sdk.generated.model.Landing;
+import org.wavvon.sdk.generated.model.StreamLimits;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -44,6 +46,7 @@ import org.wavvon.sdk.generated.ApiClient;
   HubInfo.JSON_PROPERTY_VERSION,
   HubInfo.JSON_PROPERTY_CAPABILITIES,
   HubInfo.JSON_PROPERTY_CANONICAL_URL,
+  HubInfo.JSON_PROPERTY_LANDING,
   HubInfo.JSON_PROPERTY_INVITE_ONLY,
   HubInfo.JSON_PROPERTY_MIN_SECURITY_LEVEL,
   HubInfo.JSON_PROPERTY_MIN_POW_LEVEL,
@@ -66,7 +69,8 @@ import org.wavvon.sdk.generated.ApiClient;
   HubInfo.JSON_PROPERTY_VOICE_CERT_HASH,
   HubInfo.JSON_PROPERTY_TIMEZONE,
   HubInfo.JSON_PROPERTY_BIRTHDAYS_ENABLED,
-  HubInfo.JSON_PROPERTY_MAX_ATTACHMENT_BYTES
+  HubInfo.JSON_PROPERTY_MAX_ATTACHMENT_BYTES,
+  HubInfo.JSON_PROPERTY_STREAM_LIMITS
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class HubInfo {
@@ -97,6 +101,10 @@ public class HubInfo {
   public static final String JSON_PROPERTY_CANONICAL_URL = "canonical_url";
   @jakarta.annotation.Nullable
   private String canonicalUrl;
+
+  public static final String JSON_PROPERTY_LANDING = "landing";
+  @jakarta.annotation.Nullable
+  private Landing landing;
 
   public static final String JSON_PROPERTY_INVITE_ONLY = "invite_only";
   @jakarta.annotation.Nonnull
@@ -228,6 +236,10 @@ public class HubInfo {
   public static final String JSON_PROPERTY_MAX_ATTACHMENT_BYTES = "max_attachment_bytes";
   @jakarta.annotation.Nonnull
   private Long maxAttachmentBytes;
+
+  public static final String JSON_PROPERTY_STREAM_LIMITS = "stream_limits";
+  @jakarta.annotation.Nullable
+  private StreamLimits streamLimits;
 
   public HubInfo() { 
   }
@@ -405,6 +417,30 @@ public class HubInfo {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCanonicalUrl(@jakarta.annotation.Nullable String canonicalUrl) {
     this.canonicalUrl = canonicalUrl;
+  }
+
+
+  public HubInfo landing(@jakarta.annotation.Nullable Landing landing) {
+    this.landing = landing;
+    return this;
+  }
+
+  /**
+   * The invite landing look, the same value as the invite preview&#39;s. &#x60;image&#x60; is present only when an image is set, so a client can skip requesting it. Absent on hubs that predate the field.
+   * @return landing
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_LANDING)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Landing getLanding() {
+    return landing;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_LANDING)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setLanding(@jakarta.annotation.Nullable Landing landing) {
+    this.landing = landing;
   }
 
 
@@ -976,6 +1012,30 @@ public class HubInfo {
   }
 
 
+  public HubInfo streamLimits(@jakarta.annotation.Nullable StreamLimits streamLimits) {
+    this.streamLimits = streamLimits;
+    return this;
+  }
+
+  /**
+   * Get streamLimits
+   * @return streamLimits
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_STREAM_LIMITS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public StreamLimits getStreamLimits() {
+    return streamLimits;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_STREAM_LIMITS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setStreamLimits(@jakarta.annotation.Nullable StreamLimits streamLimits) {
+    this.streamLimits = streamLimits;
+  }
+
+
   /**
    * Return true if this HubInfo object is equal to o.
    */
@@ -995,6 +1055,7 @@ public class HubInfo {
         Objects.equals(this.version, hubInfo.version) &&
         Objects.equals(this.capabilities, hubInfo.capabilities) &&
         Objects.equals(this.canonicalUrl, hubInfo.canonicalUrl) &&
+        Objects.equals(this.landing, hubInfo.landing) &&
         Objects.equals(this.inviteOnly, hubInfo.inviteOnly) &&
         Objects.equals(this.minSecurityLevel, hubInfo.minSecurityLevel) &&
         Objects.equals(this.minPowLevel, hubInfo.minPowLevel) &&
@@ -1017,12 +1078,13 @@ public class HubInfo {
         Objects.equals(this.voiceCertHash, hubInfo.voiceCertHash) &&
         Objects.equals(this.timezone, hubInfo.timezone) &&
         Objects.equals(this.birthdaysEnabled, hubInfo.birthdaysEnabled) &&
-        Objects.equals(this.maxAttachmentBytes, hubInfo.maxAttachmentBytes);
+        Objects.equals(this.maxAttachmentBytes, hubInfo.maxAttachmentBytes) &&
+        Objects.equals(this.streamLimits, hubInfo.streamLimits);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, description, icon, publicKey, version, capabilities, canonicalUrl, inviteOnly, minSecurityLevel, minPowLevel, challengeMode, farmUrl, selfTags, nsfw, badges, certRequirement, sfuUrl, emojiCount, rotation, lanMode, lanTls, lanFingerprint, welcomeLabel, welcomeInviteUrl, farewellLabel, voiceWtUrl, voiceCertHash, timezone, birthdaysEnabled, maxAttachmentBytes);
+    return Objects.hash(name, description, icon, publicKey, version, capabilities, canonicalUrl, landing, inviteOnly, minSecurityLevel, minPowLevel, challengeMode, farmUrl, selfTags, nsfw, badges, certRequirement, sfuUrl, emojiCount, rotation, lanMode, lanTls, lanFingerprint, welcomeLabel, welcomeInviteUrl, farewellLabel, voiceWtUrl, voiceCertHash, timezone, birthdaysEnabled, maxAttachmentBytes, streamLimits);
   }
 
   @Override
@@ -1036,6 +1098,7 @@ public class HubInfo {
     sb.append("    version: ").append(toIndentedString(version)).append("\n");
     sb.append("    capabilities: ").append(toIndentedString(capabilities)).append("\n");
     sb.append("    canonicalUrl: ").append(toIndentedString(canonicalUrl)).append("\n");
+    sb.append("    landing: ").append(toIndentedString(landing)).append("\n");
     sb.append("    inviteOnly: ").append(toIndentedString(inviteOnly)).append("\n");
     sb.append("    minSecurityLevel: ").append(toIndentedString(minSecurityLevel)).append("\n");
     sb.append("    minPowLevel: ").append(toIndentedString(minPowLevel)).append("\n");
@@ -1059,6 +1122,7 @@ public class HubInfo {
     sb.append("    timezone: ").append(toIndentedString(timezone)).append("\n");
     sb.append("    birthdaysEnabled: ").append(toIndentedString(birthdaysEnabled)).append("\n");
     sb.append("    maxAttachmentBytes: ").append(toIndentedString(maxAttachmentBytes)).append("\n");
+    sb.append("    streamLimits: ").append(toIndentedString(streamLimits)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -1143,6 +1207,11 @@ public class HubInfo {
     // add `canonical_url` to the URL query string
     if (getCanonicalUrl() != null) {
       joiner.add(String.format("%scanonical_url%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCanonicalUrl()))));
+    }
+
+    // add `landing` to the URL query string
+    if (getLanding() != null) {
+      joiner.add(getLanding().toUrlQueryString(prefix + "landing" + suffix));
     }
 
     // add `invite_only` to the URL query string
@@ -1267,6 +1336,11 @@ public class HubInfo {
     // add `max_attachment_bytes` to the URL query string
     if (getMaxAttachmentBytes() != null) {
       joiner.add(String.format("%smax_attachment_bytes%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getMaxAttachmentBytes()))));
+    }
+
+    // add `stream_limits` to the URL query string
+    if (getStreamLimits() != null) {
+      joiner.add(getStreamLimits().toUrlQueryString(prefix + "stream_limits" + suffix));
     }
 
     return joiner.toString();
