@@ -1,6 +1,6 @@
 /*
  * Wavvon Hub API
- * REST + WebSocket API for a Wavvon hub server. This file is the protocol contract — implement a client in any language against this spec without reading Rust source.  ## Authentication  All endpoints (except `/health`, `/info`, `/auth/_*`, `/join/:code`) require a Bearer token obtained from `POST /auth/verify`.  ### Auth flow  1. `POST /auth/challenge` with your hex-encoded Ed25519 public key. 2. Sign the returned `challenge` with your Ed25519 private key.    - The challenge is hex: hex-decode it to its 32 bytes first.    - If the response carries `scheme: \"tagged-v1\"`, sign      `b\"wavvon/auth-challenge/v1\\0\" || challenge_bytes` (wire-format.md).      With no `scheme`, sign the raw 32 bytes. Refuse an unknown scheme.    - Encode the 64-byte signature as lowercase hex. 3. `POST /auth/verify` with your public key, the challenge, and the hex signature.    - Optionally include a `security_nonce` + `security_level` for PoW (see below). 4. On success, receive a `token`. Send it as `Authorization: Bearer <token>` on all    subsequent requests.  ### Proof-of-Work (PoW)  Some hubs require callers to prove a security level before granting membership. The algorithm:  ``` hash = SHA256(utf8(public_key_hex) || little_endian_u64(nonce)) level = number of leading zero BITS in hash ```  To reach level N, iterate nonces starting from 1 until a hash with ≥ N leading zero bits is found. Level 0 = no work required. Level 20 takes ~1M hashes on average.  Submit `security_nonce` (the winning nonce as a u64) and `security_level` (the claimed level) in `POST /auth/verify`. The hub verifies independently.  ### Session scope  `POST /auth/verify` returns a `scope` field: - `\"member\"` — full access. - `\"lobby\"` — hub has a security lobby and your PoW level is below the minimum.   You can only call `/lobby/_*` endpoints until promoted.  ## Programs  There is no separate authentication for a program. It holds a keypair, answers the same challenge, carries the same session token, and is bound by the same permissions. A member running one holds `apps.register`, which is what `/me/app/_*` and the message shapes an app authors are gated on.  ## WebSocket protocol  All realtime traffic (chat events, typing, DMs, voice presence, proximity voice zones, video and screen-share WebRTC signaling, screen-share chunk relay, forum/poll/pin events, and hub-event push) runs over a single WebSocket at `GET /ws`.  - **Connect:** `GET /ws?token=<token>` — the token goes in the **`token`   query parameter**, not a header. It is the session token from   `POST /auth/verify` (a program uses the same kind), with the same   expiry / revocation / approval / ban checks as REST. - **Framing:** every protocol message is a JSON text frame with a `type`   discriminator and the payload fields at the same level   (e.g. `{\"type\":\"subscribe\",\"channel_id\":\"...\"}`). Binary frames are used   only for screen-share chunk data and are always preceded by a   `screen_share_chunk` JSON envelope. - **On connect** the hub sends `{\"type\":\"hello\",\"live_seq\":<n>}`,   auto-subscribes the connection to every non-banned channel, and replays   `screen_share_started` for shares already in progress. - Unknown or malformed client frames are silently ignored; recoverable   command failures come back as `{\"type\":\"error\",\"context\":...,\"message\":...}`.  OpenAPI 3.0 cannot model WebSocket messages natively, so the **complete message-by-message wire reference** (client→server and server→client messages, including the app-only pushes, with exact field names and types) lives in [`docs/ws-protocol.md`](docs/ws-protocol.md). That file is part of this protocol contract: implement the WS side against it. 
+ * REST + WebSocket API for a Wavvon hub server. This file is the protocol contract — implement a client in any language against this spec without reading Rust source.  ## Authentication  All endpoints (except `/health`, `/info`, `/auth/_*`, `/join/:code`) require a Bearer token obtained from `POST /auth/verify`.  ### Auth flow  1. `POST /auth/challenge` with your hex-encoded Ed25519 public key. 2. Sign the returned `challenge` with your Ed25519 private key.    - The challenge is hex: hex-decode it to its 32 bytes first.    - If the response carries `scheme: \"tagged-v2\"` (every current hub      and farm), sign `b\"wavvon/auth-challenge/v2\\0\" || u32le(len(key)) ||      key || challenge_bytes`, where `key` is the hex public key that the      server you are talking to presents on its own `GET /info` (a farm:      `GET /farm/info`), never anything from the challenge response.      An older server names `tagged-v1`: sign      `b\"wavvon/auth-challenge/v1\\0\" || challenge_bytes` (wire-format.md).      Refuse a missing or unknown scheme.    - Encode the 64-byte signature as lowercase hex. 3. `POST /auth/verify` with your public key, the challenge, and the hex signature.    - Optionally include a `security_nonce` + `security_level` for PoW (see below). 4. On success, receive a `token`. Send it as `Authorization: Bearer <token>` on all    subsequent requests.  ### Proof-of-Work (PoW)  Some hubs require callers to prove a security level before granting membership. The algorithm:  ``` hash = SHA256(utf8(public_key_hex) || little_endian_u64(nonce)) level = number of leading zero BITS in hash ```  To reach level N, iterate nonces starting from 1 until a hash with ≥ N leading zero bits is found. Level 0 = no work required. Level 20 takes ~1M hashes on average.  Submit `security_nonce` (the winning nonce as a u64) and `security_level` (the claimed level) in `POST /auth/verify`. The hub verifies independently.  ### Session scope  `POST /auth/verify` returns a `scope` field: - `\"member\"` — full access. - `\"lobby\"` — hub has a security lobby and your PoW level is below the minimum.   You can only call `/lobby/_*` endpoints until promoted.  ## Programs  There is no separate authentication for a program. It holds a keypair, answers the same challenge, carries the same session token, and is bound by the same permissions. A member running one holds `apps.register`, which is what `/me/app/_*` and the message shapes an app authors are gated on.  ## WebSocket protocol  All realtime traffic (chat events, typing, DMs, voice presence, proximity voice zones, video and screen-share WebRTC signaling, screen-share chunk relay, forum/poll/pin events, and hub-event push) runs over a single WebSocket at `GET /ws`.  - **Connect:** `GET /ws?token=<token>` — the token goes in the **`token`   query parameter**, not a header. It is the session token from   `POST /auth/verify` (a program uses the same kind), with the same   expiry / revocation / approval / ban checks as REST. - **Framing:** every protocol message is a JSON text frame with a `type`   discriminator and the payload fields at the same level   (e.g. `{\"type\":\"subscribe\",\"channel_id\":\"...\"}`). Binary frames are used   only for screen-share chunk data and are always preceded by a   `screen_share_chunk` JSON envelope. - **On connect** the hub sends `{\"type\":\"hello\",\"live_seq\":<n>}`,   auto-subscribes the connection to every non-banned channel, and replays   `screen_share_started` for shares already in progress. - Unknown or malformed client frames are silently ignored; recoverable   command failures come back as `{\"type\":\"error\",\"context\":...,\"message\":...}`.  OpenAPI 3.0 cannot model WebSocket messages natively, so the **complete message-by-message wire reference** (client→server and server→client messages, including the app-only pushes, with exact field names and types) lives in [`docs/ws-protocol.md`](docs/ws-protocol.md). That file is part of this protocol contract: implement the WS side against it. 
  *
  * The version of the OpenAPI document: 1.0
  * 
@@ -43,6 +43,7 @@ import org.wavvon.sdk.generated.ApiClient;
   PostDetail.JSON_PROPERTY_CHANNEL_ID,
   PostDetail.JSON_PROPERTY_AUTHOR_PUBKEY,
   PostDetail.JSON_PROPERTY_TITLE,
+  PostDetail.JSON_PROPERTY_EXCERPT,
   PostDetail.JSON_PROPERTY_CREATED_AT,
   PostDetail.JSON_PROPERTY_EDITED_AT,
   PostDetail.JSON_PROPERTY_IS_PINNED,
@@ -76,6 +77,10 @@ public class PostDetail {
   public static final String JSON_PROPERTY_TITLE = "title";
   @jakarta.annotation.Nullable
   private String title;
+
+  public static final String JSON_PROPERTY_EXCERPT = "excerpt";
+  @jakarta.annotation.Nullable
+  private String excerpt;
 
   public static final String JSON_PROPERTY_CREATED_AT = "created_at";
   @jakarta.annotation.Nullable
@@ -233,6 +238,30 @@ public class PostDetail {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTitle(@jakarta.annotation.Nullable String title) {
     this.title = title;
+  }
+
+
+  public PostDetail excerpt(@jakarta.annotation.Nullable String excerpt) {
+    this.excerpt = excerpt;
+    return this;
+  }
+
+  /**
+   * The body on one line, at most 240 characters and an ellipsis when cut. Omitted on a deleted post.
+   * @return excerpt
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_EXCERPT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getExcerpt() {
+    return excerpt;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_EXCERPT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setExcerpt(@jakarta.annotation.Nullable String excerpt) {
+    this.excerpt = excerpt;
   }
 
 
@@ -644,6 +673,7 @@ public class PostDetail {
         Objects.equals(this.channelId, postDetail.channelId) &&
         Objects.equals(this.authorPubkey, postDetail.authorPubkey) &&
         Objects.equals(this.title, postDetail.title) &&
+        Objects.equals(this.excerpt, postDetail.excerpt) &&
         Objects.equals(this.createdAt, postDetail.createdAt) &&
         Objects.equals(this.editedAt, postDetail.editedAt) &&
         Objects.equals(this.isPinned, postDetail.isPinned) &&
@@ -663,7 +693,7 @@ public class PostDetail {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, channelId, authorPubkey, title, createdAt, editedAt, isPinned, isLocked, replyCount, lastActivityAt, isDeleted, unreadReplyCount, reactions, attachments, authorHub, tags, body, replies, replyCursor);
+    return Objects.hash(id, channelId, authorPubkey, title, excerpt, createdAt, editedAt, isPinned, isLocked, replyCount, lastActivityAt, isDeleted, unreadReplyCount, reactions, attachments, authorHub, tags, body, replies, replyCursor);
   }
 
   @Override
@@ -674,6 +704,7 @@ public class PostDetail {
     sb.append("    channelId: ").append(toIndentedString(channelId)).append("\n");
     sb.append("    authorPubkey: ").append(toIndentedString(authorPubkey)).append("\n");
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
+    sb.append("    excerpt: ").append(toIndentedString(excerpt)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    editedAt: ").append(toIndentedString(editedAt)).append("\n");
     sb.append("    isPinned: ").append(toIndentedString(isPinned)).append("\n");
@@ -754,6 +785,11 @@ public class PostDetail {
     // add `title` to the URL query string
     if (getTitle() != null) {
       joiner.add(String.format("%stitle%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getTitle()))));
+    }
+
+    // add `excerpt` to the URL query string
+    if (getExcerpt() != null) {
+      joiner.add(String.format("%sexcerpt%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getExcerpt()))));
     }
 
     // add `created_at` to the URL query string

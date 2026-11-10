@@ -15,6 +15,8 @@ import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 import org.wavvon.sdk.generated.ApiClient;
+import org.wavvon.sdk.generated.ApiException;
+import org.wavvon.sdk.generated.api.WebSocketApi;
 
 /**
  * A program's connection to one hub: a session that renews itself, the generated REST client
@@ -354,6 +356,23 @@ public final class WavvonClient {
     return connect(null);
   }
 
+  // A single-use ticket keeps the session token out of URLs, and so out of proxy logs. An older
+  // hub only takes the token, and a ticket request that fails falls back to it: the socket then
+  // answers 401 and the stream re-authenticates as before.
+  private String socketQuery(Session session) {
+    if (hasCapability("ws.ticket")) {
+      try {
+        String ticket = new WebSocketApi(api).createWsTicket().getTicket();
+        if (ticket != null && !ticket.isEmpty()) {
+          return "ticket=" + URLEncoder.encode(ticket, StandardCharsets.UTF_8);
+        }
+      } catch (ApiException e) {
+        // fall back to the token
+      }
+    }
+    return "token=" + URLEncoder.encode(session.token(), StandardCharsets.UTF_8);
+  }
+
   /**
    * Opens the hub WebSocket.
    *
@@ -364,10 +383,7 @@ public final class WavvonClient {
   public EventStream connect(Long sinceSeq) {
     String wsBase = hubUrl.replaceFirst("^http", "ws");
     return new EventStream(
-        () ->
-            wsBase
-                + "/ws?token="
-                + URLEncoder.encode(loginInterruptibly().token(), StandardCharsets.UTF_8),
+        () -> wsBase + "/ws?" + socketQuery(loginInterruptibly()),
         () -> {
           Session s = session;
           relogin(s == null ? null : s.token());

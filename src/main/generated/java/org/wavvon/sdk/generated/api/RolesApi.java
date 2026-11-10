@@ -1,6 +1,6 @@
 /*
  * Wavvon Hub API
- * REST + WebSocket API for a Wavvon hub server. This file is the protocol contract — implement a client in any language against this spec without reading Rust source.  ## Authentication  All endpoints (except `/health`, `/info`, `/auth/_*`, `/join/:code`) require a Bearer token obtained from `POST /auth/verify`.  ### Auth flow  1. `POST /auth/challenge` with your hex-encoded Ed25519 public key. 2. Sign the returned `challenge` with your Ed25519 private key.    - The challenge is hex: hex-decode it to its 32 bytes first.    - If the response carries `scheme: \"tagged-v1\"`, sign      `b\"wavvon/auth-challenge/v1\\0\" || challenge_bytes` (wire-format.md).      With no `scheme`, sign the raw 32 bytes. Refuse an unknown scheme.    - Encode the 64-byte signature as lowercase hex. 3. `POST /auth/verify` with your public key, the challenge, and the hex signature.    - Optionally include a `security_nonce` + `security_level` for PoW (see below). 4. On success, receive a `token`. Send it as `Authorization: Bearer <token>` on all    subsequent requests.  ### Proof-of-Work (PoW)  Some hubs require callers to prove a security level before granting membership. The algorithm:  ``` hash = SHA256(utf8(public_key_hex) || little_endian_u64(nonce)) level = number of leading zero BITS in hash ```  To reach level N, iterate nonces starting from 1 until a hash with ≥ N leading zero bits is found. Level 0 = no work required. Level 20 takes ~1M hashes on average.  Submit `security_nonce` (the winning nonce as a u64) and `security_level` (the claimed level) in `POST /auth/verify`. The hub verifies independently.  ### Session scope  `POST /auth/verify` returns a `scope` field: - `\"member\"` — full access. - `\"lobby\"` — hub has a security lobby and your PoW level is below the minimum.   You can only call `/lobby/_*` endpoints until promoted.  ## Programs  There is no separate authentication for a program. It holds a keypair, answers the same challenge, carries the same session token, and is bound by the same permissions. A member running one holds `apps.register`, which is what `/me/app/_*` and the message shapes an app authors are gated on.  ## WebSocket protocol  All realtime traffic (chat events, typing, DMs, voice presence, proximity voice zones, video and screen-share WebRTC signaling, screen-share chunk relay, forum/poll/pin events, and hub-event push) runs over a single WebSocket at `GET /ws`.  - **Connect:** `GET /ws?token=<token>` — the token goes in the **`token`   query parameter**, not a header. It is the session token from   `POST /auth/verify` (a program uses the same kind), with the same   expiry / revocation / approval / ban checks as REST. - **Framing:** every protocol message is a JSON text frame with a `type`   discriminator and the payload fields at the same level   (e.g. `{\"type\":\"subscribe\",\"channel_id\":\"...\"}`). Binary frames are used   only for screen-share chunk data and are always preceded by a   `screen_share_chunk` JSON envelope. - **On connect** the hub sends `{\"type\":\"hello\",\"live_seq\":<n>}`,   auto-subscribes the connection to every non-banned channel, and replays   `screen_share_started` for shares already in progress. - Unknown or malformed client frames are silently ignored; recoverable   command failures come back as `{\"type\":\"error\",\"context\":...,\"message\":...}`.  OpenAPI 3.0 cannot model WebSocket messages natively, so the **complete message-by-message wire reference** (client→server and server→client messages, including the app-only pushes, with exact field names and types) lives in [`docs/ws-protocol.md`](docs/ws-protocol.md). That file is part of this protocol contract: implement the WS side against it. 
+ * REST + WebSocket API for a Wavvon hub server. This file is the protocol contract — implement a client in any language against this spec without reading Rust source.  ## Authentication  All endpoints (except `/health`, `/info`, `/auth/_*`, `/join/:code`) require a Bearer token obtained from `POST /auth/verify`.  ### Auth flow  1. `POST /auth/challenge` with your hex-encoded Ed25519 public key. 2. Sign the returned `challenge` with your Ed25519 private key.    - The challenge is hex: hex-decode it to its 32 bytes first.    - If the response carries `scheme: \"tagged-v2\"` (every current hub      and farm), sign `b\"wavvon/auth-challenge/v2\\0\" || u32le(len(key)) ||      key || challenge_bytes`, where `key` is the hex public key that the      server you are talking to presents on its own `GET /info` (a farm:      `GET /farm/info`), never anything from the challenge response.      An older server names `tagged-v1`: sign      `b\"wavvon/auth-challenge/v1\\0\" || challenge_bytes` (wire-format.md).      Refuse a missing or unknown scheme.    - Encode the 64-byte signature as lowercase hex. 3. `POST /auth/verify` with your public key, the challenge, and the hex signature.    - Optionally include a `security_nonce` + `security_level` for PoW (see below). 4. On success, receive a `token`. Send it as `Authorization: Bearer <token>` on all    subsequent requests.  ### Proof-of-Work (PoW)  Some hubs require callers to prove a security level before granting membership. The algorithm:  ``` hash = SHA256(utf8(public_key_hex) || little_endian_u64(nonce)) level = number of leading zero BITS in hash ```  To reach level N, iterate nonces starting from 1 until a hash with ≥ N leading zero bits is found. Level 0 = no work required. Level 20 takes ~1M hashes on average.  Submit `security_nonce` (the winning nonce as a u64) and `security_level` (the claimed level) in `POST /auth/verify`. The hub verifies independently.  ### Session scope  `POST /auth/verify` returns a `scope` field: - `\"member\"` — full access. - `\"lobby\"` — hub has a security lobby and your PoW level is below the minimum.   You can only call `/lobby/_*` endpoints until promoted.  ## Programs  There is no separate authentication for a program. It holds a keypair, answers the same challenge, carries the same session token, and is bound by the same permissions. A member running one holds `apps.register`, which is what `/me/app/_*` and the message shapes an app authors are gated on.  ## WebSocket protocol  All realtime traffic (chat events, typing, DMs, voice presence, proximity voice zones, video and screen-share WebRTC signaling, screen-share chunk relay, forum/poll/pin events, and hub-event push) runs over a single WebSocket at `GET /ws`.  - **Connect:** `GET /ws?token=<token>` — the token goes in the **`token`   query parameter**, not a header. It is the session token from   `POST /auth/verify` (a program uses the same kind), with the same   expiry / revocation / approval / ban checks as REST. - **Framing:** every protocol message is a JSON text frame with a `type`   discriminator and the payload fields at the same level   (e.g. `{\"type\":\"subscribe\",\"channel_id\":\"...\"}`). Binary frames are used   only for screen-share chunk data and are always preceded by a   `screen_share_chunk` JSON envelope. - **On connect** the hub sends `{\"type\":\"hello\",\"live_seq\":<n>}`,   auto-subscribes the connection to every non-banned channel, and replays   `screen_share_started` for shares already in progress. - Unknown or malformed client frames are silently ignored; recoverable   command failures come back as `{\"type\":\"error\",\"context\":...,\"message\":...}`.  OpenAPI 3.0 cannot model WebSocket messages natively, so the **complete message-by-message wire reference** (client→server and server→client messages, including the app-only pushes, with exact field names and types) lives in [`docs/ws-protocol.md`](docs/ws-protocol.md). That file is part of this protocol contract: implement the WS side against it. 
  *
  * The version of the OpenAPI document: 1.0
  * 
@@ -22,6 +22,7 @@ import org.wavvon.sdk.generated.model.CreateRoleCategoryRequest;
 import org.wavvon.sdk.generated.model.CreateRoleRequest;
 import org.wavvon.sdk.generated.model.ExplainUserPermissions200Response;
 import org.wavvon.sdk.generated.model.ListPermissions200Response;
+import org.wavvon.sdk.generated.model.ReorderRolesRequest;
 import org.wavvon.sdk.generated.model.Role;
 import org.wavvon.sdk.generated.model.RoleCategory;
 import org.wavvon.sdk.generated.model.UpdateRoleCategoryRequest;
@@ -1001,6 +1002,95 @@ public class RolesApi {
     localVarRequestBuilder.header("Accept", "application/json");
 
     localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Reorder every role below the caller in one call (roles.manage)
+   * &#x60;role_ids&#x60; must name exactly the roles the caller may move: every role except the built-ins whose priority is below the caller&#39;s highest. They keep the priorities they held between them, handed out in the new order (equal ones nudged apart), in one transaction. Capability &#x60;roles.order&#x60;.
+   * @param reorderRolesRequest  (required)
+   * @return List&lt;Role&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public List<Role> reorderRoles(ReorderRolesRequest reorderRolesRequest) throws ApiException {
+    ApiResponse<List<Role>> localVarResponse = reorderRolesWithHttpInfo(reorderRolesRequest);
+    return localVarResponse.getData();
+  }
+
+  /**
+   * Reorder every role below the caller in one call (roles.manage)
+   * &#x60;role_ids&#x60; must name exactly the roles the caller may move: every role except the built-ins whose priority is below the caller&#39;s highest. They keep the priorities they held between them, handed out in the new order (equal ones nudged apart), in one transaction. Capability &#x60;roles.order&#x60;.
+   * @param reorderRolesRequest  (required)
+   * @return ApiResponse&lt;List&lt;Role&gt;&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<List<Role>> reorderRolesWithHttpInfo(ReorderRolesRequest reorderRolesRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = reorderRolesRequestBuilder(reorderRolesRequest);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("reorderRoles", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<List<Role>>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        localVarResponse.body().close();
+
+        return new ApiResponse<List<Role>>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<List<Role>>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder reorderRolesRequestBuilder(ReorderRolesRequest reorderRolesRequest) throws ApiException {
+    // verify the required parameter 'reorderRolesRequest' is set
+    if (reorderRolesRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'reorderRolesRequest' when calling reorderRoles");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/roles/order";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Content-Type", "application/json");
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(reorderRolesRequest);
+      localVarRequestBuilder.method("PUT", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }

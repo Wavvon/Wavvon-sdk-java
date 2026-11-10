@@ -1,6 +1,6 @@
 /*
  * Wavvon Hub API
- * REST + WebSocket API for a Wavvon hub server. This file is the protocol contract — implement a client in any language against this spec without reading Rust source.  ## Authentication  All endpoints (except `/health`, `/info`, `/auth/_*`, `/join/:code`) require a Bearer token obtained from `POST /auth/verify`.  ### Auth flow  1. `POST /auth/challenge` with your hex-encoded Ed25519 public key. 2. Sign the returned `challenge` with your Ed25519 private key.    - The challenge is hex: hex-decode it to its 32 bytes first.    - If the response carries `scheme: \"tagged-v1\"`, sign      `b\"wavvon/auth-challenge/v1\\0\" || challenge_bytes` (wire-format.md).      With no `scheme`, sign the raw 32 bytes. Refuse an unknown scheme.    - Encode the 64-byte signature as lowercase hex. 3. `POST /auth/verify` with your public key, the challenge, and the hex signature.    - Optionally include a `security_nonce` + `security_level` for PoW (see below). 4. On success, receive a `token`. Send it as `Authorization: Bearer <token>` on all    subsequent requests.  ### Proof-of-Work (PoW)  Some hubs require callers to prove a security level before granting membership. The algorithm:  ``` hash = SHA256(utf8(public_key_hex) || little_endian_u64(nonce)) level = number of leading zero BITS in hash ```  To reach level N, iterate nonces starting from 1 until a hash with ≥ N leading zero bits is found. Level 0 = no work required. Level 20 takes ~1M hashes on average.  Submit `security_nonce` (the winning nonce as a u64) and `security_level` (the claimed level) in `POST /auth/verify`. The hub verifies independently.  ### Session scope  `POST /auth/verify` returns a `scope` field: - `\"member\"` — full access. - `\"lobby\"` — hub has a security lobby and your PoW level is below the minimum.   You can only call `/lobby/_*` endpoints until promoted.  ## Programs  There is no separate authentication for a program. It holds a keypair, answers the same challenge, carries the same session token, and is bound by the same permissions. A member running one holds `apps.register`, which is what `/me/app/_*` and the message shapes an app authors are gated on.  ## WebSocket protocol  All realtime traffic (chat events, typing, DMs, voice presence, proximity voice zones, video and screen-share WebRTC signaling, screen-share chunk relay, forum/poll/pin events, and hub-event push) runs over a single WebSocket at `GET /ws`.  - **Connect:** `GET /ws?token=<token>` — the token goes in the **`token`   query parameter**, not a header. It is the session token from   `POST /auth/verify` (a program uses the same kind), with the same   expiry / revocation / approval / ban checks as REST. - **Framing:** every protocol message is a JSON text frame with a `type`   discriminator and the payload fields at the same level   (e.g. `{\"type\":\"subscribe\",\"channel_id\":\"...\"}`). Binary frames are used   only for screen-share chunk data and are always preceded by a   `screen_share_chunk` JSON envelope. - **On connect** the hub sends `{\"type\":\"hello\",\"live_seq\":<n>}`,   auto-subscribes the connection to every non-banned channel, and replays   `screen_share_started` for shares already in progress. - Unknown or malformed client frames are silently ignored; recoverable   command failures come back as `{\"type\":\"error\",\"context\":...,\"message\":...}`.  OpenAPI 3.0 cannot model WebSocket messages natively, so the **complete message-by-message wire reference** (client→server and server→client messages, including the app-only pushes, with exact field names and types) lives in [`docs/ws-protocol.md`](docs/ws-protocol.md). That file is part of this protocol contract: implement the WS side against it. 
+ * REST + WebSocket API for a Wavvon hub server. This file is the protocol contract — implement a client in any language against this spec without reading Rust source.  ## Authentication  All endpoints (except `/health`, `/info`, `/auth/_*`, `/join/:code`) require a Bearer token obtained from `POST /auth/verify`.  ### Auth flow  1. `POST /auth/challenge` with your hex-encoded Ed25519 public key. 2. Sign the returned `challenge` with your Ed25519 private key.    - The challenge is hex: hex-decode it to its 32 bytes first.    - If the response carries `scheme: \"tagged-v2\"` (every current hub      and farm), sign `b\"wavvon/auth-challenge/v2\\0\" || u32le(len(key)) ||      key || challenge_bytes`, where `key` is the hex public key that the      server you are talking to presents on its own `GET /info` (a farm:      `GET /farm/info`), never anything from the challenge response.      An older server names `tagged-v1`: sign      `b\"wavvon/auth-challenge/v1\\0\" || challenge_bytes` (wire-format.md).      Refuse a missing or unknown scheme.    - Encode the 64-byte signature as lowercase hex. 3. `POST /auth/verify` with your public key, the challenge, and the hex signature.    - Optionally include a `security_nonce` + `security_level` for PoW (see below). 4. On success, receive a `token`. Send it as `Authorization: Bearer <token>` on all    subsequent requests.  ### Proof-of-Work (PoW)  Some hubs require callers to prove a security level before granting membership. The algorithm:  ``` hash = SHA256(utf8(public_key_hex) || little_endian_u64(nonce)) level = number of leading zero BITS in hash ```  To reach level N, iterate nonces starting from 1 until a hash with ≥ N leading zero bits is found. Level 0 = no work required. Level 20 takes ~1M hashes on average.  Submit `security_nonce` (the winning nonce as a u64) and `security_level` (the claimed level) in `POST /auth/verify`. The hub verifies independently.  ### Session scope  `POST /auth/verify` returns a `scope` field: - `\"member\"` — full access. - `\"lobby\"` — hub has a security lobby and your PoW level is below the minimum.   You can only call `/lobby/_*` endpoints until promoted.  ## Programs  There is no separate authentication for a program. It holds a keypair, answers the same challenge, carries the same session token, and is bound by the same permissions. A member running one holds `apps.register`, which is what `/me/app/_*` and the message shapes an app authors are gated on.  ## WebSocket protocol  All realtime traffic (chat events, typing, DMs, voice presence, proximity voice zones, video and screen-share WebRTC signaling, screen-share chunk relay, forum/poll/pin events, and hub-event push) runs over a single WebSocket at `GET /ws`.  - **Connect:** `GET /ws?token=<token>` — the token goes in the **`token`   query parameter**, not a header. It is the session token from   `POST /auth/verify` (a program uses the same kind), with the same   expiry / revocation / approval / ban checks as REST. - **Framing:** every protocol message is a JSON text frame with a `type`   discriminator and the payload fields at the same level   (e.g. `{\"type\":\"subscribe\",\"channel_id\":\"...\"}`). Binary frames are used   only for screen-share chunk data and are always preceded by a   `screen_share_chunk` JSON envelope. - **On connect** the hub sends `{\"type\":\"hello\",\"live_seq\":<n>}`,   auto-subscribes the connection to every non-banned channel, and replays   `screen_share_started` for shares already in progress. - Unknown or malformed client frames are silently ignored; recoverable   command failures come back as `{\"type\":\"error\",\"context\":...,\"message\":...}`.  OpenAPI 3.0 cannot model WebSocket messages natively, so the **complete message-by-message wire reference** (client→server and server→client messages, including the app-only pushes, with exact field names and types) lives in [`docs/ws-protocol.md`](docs/ws-protocol.md). That file is part of this protocol contract: implement the WS side against it. 
  *
  * The version of the OpenAPI document: 1.0
  * 
@@ -19,6 +19,7 @@ import org.wavvon.sdk.generated.Configuration;
 import org.wavvon.sdk.generated.Pair;
 
 import org.wavvon.sdk.generated.model.CreateHubIconRequest;
+import java.io.File;
 import org.wavvon.sdk.generated.model.GetAdminSettingsModeration200Response;
 import org.wavvon.sdk.generated.model.GetAdminSettingsPow200Response;
 import org.wavvon.sdk.generated.model.GetAdminSettingsTags200Response;
@@ -33,6 +34,7 @@ import org.wavvon.sdk.generated.model.UpdateAdminSettingsPowRequest;
 import org.wavvon.sdk.generated.model.UpdateAdminSettingsTagsRequest;
 import org.wavvon.sdk.generated.model.UpdateHubIconRequest;
 import org.wavvon.sdk.generated.model.UpdateHubRequest;
+import org.wavvon.sdk.generated.model.WidgetData;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -561,8 +563,85 @@ public class HubApi {
   }
 
   /**
+   * The invite landing image (public)
+   * 
+   * @return File
+   * @throws ApiException if fails to make API call
+   */
+  public File getHubLandingImage() throws ApiException {
+    ApiResponse<File> localVarResponse = getHubLandingImageWithHttpInfo();
+    return localVarResponse.getData();
+  }
+
+  /**
+   * The invite landing image (public)
+   * 
+   * @return ApiResponse&lt;File&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<File> getHubLandingImageWithHttpInfo() throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = getHubLandingImageRequestBuilder();
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("getHubLandingImage", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<File>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        localVarResponse.body().close();
+
+        return new ApiResponse<File>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<File>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder getHubLandingImageRequestBuilder() throws ApiException {
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/hub/landing-image";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "image/*");
+
+    localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
    * Get hub settings (admin)
-   * Besides the settings, &#x60;attachments_usage&#x60; is &#x60;{used_bytes, cap_bytes, warning, evictions}&#x60;: disk used by attachment blobs against &#x60;attachments_cap_bytes&#x60;, whether it is at &#x60;attachments_warn_percent&#x60;, and the blobs evicted for space since the hub started.
+   * Besides the settings, &#x60;attachments_usage&#x60; is &#x60;{used_bytes, cap_bytes, warning, evictions}&#x60;: disk used by attachment blobs against &#x60;attachments_cap_bytes&#x60;, whether it is at &#x60;attachments_warn_percent&#x60;, and the blobs evicted for space since the hub started. &#x60;stream_limits&#x60; is the same object as on &#x60;/info&#x60;, and &#x60;landing&#x60; the one on the invite preview.
    * @throws ApiException if fails to make API call
    */
   public void getHubSettings() throws ApiException {
@@ -571,7 +650,7 @@ public class HubApi {
 
   /**
    * Get hub settings (admin)
-   * Besides the settings, &#x60;attachments_usage&#x60; is &#x60;{used_bytes, cap_bytes, warning, evictions}&#x60;: disk used by attachment blobs against &#x60;attachments_cap_bytes&#x60;, whether it is at &#x60;attachments_warn_percent&#x60;, and the blobs evicted for space since the hub started.
+   * Besides the settings, &#x60;attachments_usage&#x60; is &#x60;{used_bytes, cap_bytes, warning, evictions}&#x60;: disk used by attachment blobs against &#x60;attachments_cap_bytes&#x60;, whether it is at &#x60;attachments_warn_percent&#x60;, and the blobs evicted for space since the hub started. &#x60;stream_limits&#x60; is the same object as on &#x60;/info&#x60;, and &#x60;landing&#x60; the one on the invite preview.
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
@@ -618,6 +697,177 @@ public class HubApi {
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
     localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Who is online, for a community&#39;s own website
+   * Public, unauthenticated, rate limited per address, cached for ten seconds and served with &#x60;Access-Control-Allow-Origin: *&#x60;. Capability &#x60;hub.widget&#x60;.
+   * @return WidgetData
+   * @throws ApiException if fails to make API call
+   */
+  public WidgetData getPublicWidget() throws ApiException {
+    ApiResponse<WidgetData> localVarResponse = getPublicWidgetWithHttpInfo();
+    return localVarResponse.getData();
+  }
+
+  /**
+   * Who is online, for a community&#39;s own website
+   * Public, unauthenticated, rate limited per address, cached for ten seconds and served with &#x60;Access-Control-Allow-Origin: *&#x60;. Capability &#x60;hub.widget&#x60;.
+   * @return ApiResponse&lt;WidgetData&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<WidgetData> getPublicWidgetWithHttpInfo() throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = getPublicWidgetRequestBuilder();
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("getPublicWidget", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<WidgetData>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        localVarResponse.body().close();
+
+        return new ApiResponse<WidgetData>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<WidgetData>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder getPublicWidgetRequestBuilder() throws ApiException {
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/public/widget.json";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * The online widget as a page for an iframe
+   * Script-free HTML whose Content-Security-Policy allows any site to frame it. Capability &#x60;hub.widget&#x60;.
+   * @param theme  (optional)
+   * @return String
+   * @throws ApiException if fails to make API call
+   */
+  public String getWidgetPage(String theme) throws ApiException {
+    ApiResponse<String> localVarResponse = getWidgetPageWithHttpInfo(theme);
+    return localVarResponse.getData();
+  }
+
+  /**
+   * The online widget as a page for an iframe
+   * Script-free HTML whose Content-Security-Policy allows any site to frame it. Capability &#x60;hub.widget&#x60;.
+   * @param theme  (optional)
+   * @return ApiResponse&lt;String&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<String> getWidgetPageWithHttpInfo(String theme) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = getWidgetPageRequestBuilder(theme);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("getWidgetPage", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<String>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        localVarResponse.body().close();
+
+        return new ApiResponse<String>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<String>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder getWidgetPageRequestBuilder(String theme) throws ApiException {
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/widget";
+
+    List<Pair> localVarQueryParams = new ArrayList<>();
+    StringJoiner localVarQueryStringJoiner = new StringJoiner("&");
+    String localVarQueryParameterBaseName;
+    localVarQueryParameterBaseName = "theme";
+    localVarQueryParams.addAll(ApiClient.parameterToPairs("theme", theme));
+
+    if (!localVarQueryParams.isEmpty() || localVarQueryStringJoiner.length() != 0) {
+      StringJoiner queryJoiner = new StringJoiner("&");
+      localVarQueryParams.forEach(p -> queryJoiner.add(p.getName() + '=' + p.getValue()));
+      if (localVarQueryStringJoiner.length() != 0) {
+        queryJoiner.add(localVarQueryStringJoiner.toString());
+      }
+      localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath + '?' + queryJoiner.toString()));
+    } else {
+      localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+    }
+
+    localVarRequestBuilder.header("Accept", "text/html");
 
     localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
     if (memberVarReadTimeout != null) {

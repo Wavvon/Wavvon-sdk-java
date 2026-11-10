@@ -1,6 +1,6 @@
 /*
  * Wavvon Hub API
- * REST + WebSocket API for a Wavvon hub server. This file is the protocol contract — implement a client in any language against this spec without reading Rust source.  ## Authentication  All endpoints (except `/health`, `/info`, `/auth/_*`, `/join/:code`) require a Bearer token obtained from `POST /auth/verify`.  ### Auth flow  1. `POST /auth/challenge` with your hex-encoded Ed25519 public key. 2. Sign the returned `challenge` with your Ed25519 private key.    - The challenge is hex: hex-decode it to its 32 bytes first.    - If the response carries `scheme: \"tagged-v1\"`, sign      `b\"wavvon/auth-challenge/v1\\0\" || challenge_bytes` (wire-format.md).      With no `scheme`, sign the raw 32 bytes. Refuse an unknown scheme.    - Encode the 64-byte signature as lowercase hex. 3. `POST /auth/verify` with your public key, the challenge, and the hex signature.    - Optionally include a `security_nonce` + `security_level` for PoW (see below). 4. On success, receive a `token`. Send it as `Authorization: Bearer <token>` on all    subsequent requests.  ### Proof-of-Work (PoW)  Some hubs require callers to prove a security level before granting membership. The algorithm:  ``` hash = SHA256(utf8(public_key_hex) || little_endian_u64(nonce)) level = number of leading zero BITS in hash ```  To reach level N, iterate nonces starting from 1 until a hash with ≥ N leading zero bits is found. Level 0 = no work required. Level 20 takes ~1M hashes on average.  Submit `security_nonce` (the winning nonce as a u64) and `security_level` (the claimed level) in `POST /auth/verify`. The hub verifies independently.  ### Session scope  `POST /auth/verify` returns a `scope` field: - `\"member\"` — full access. - `\"lobby\"` — hub has a security lobby and your PoW level is below the minimum.   You can only call `/lobby/_*` endpoints until promoted.  ## Programs  There is no separate authentication for a program. It holds a keypair, answers the same challenge, carries the same session token, and is bound by the same permissions. A member running one holds `apps.register`, which is what `/me/app/_*` and the message shapes an app authors are gated on.  ## WebSocket protocol  All realtime traffic (chat events, typing, DMs, voice presence, proximity voice zones, video and screen-share WebRTC signaling, screen-share chunk relay, forum/poll/pin events, and hub-event push) runs over a single WebSocket at `GET /ws`.  - **Connect:** `GET /ws?token=<token>` — the token goes in the **`token`   query parameter**, not a header. It is the session token from   `POST /auth/verify` (a program uses the same kind), with the same   expiry / revocation / approval / ban checks as REST. - **Framing:** every protocol message is a JSON text frame with a `type`   discriminator and the payload fields at the same level   (e.g. `{\"type\":\"subscribe\",\"channel_id\":\"...\"}`). Binary frames are used   only for screen-share chunk data and are always preceded by a   `screen_share_chunk` JSON envelope. - **On connect** the hub sends `{\"type\":\"hello\",\"live_seq\":<n>}`,   auto-subscribes the connection to every non-banned channel, and replays   `screen_share_started` for shares already in progress. - Unknown or malformed client frames are silently ignored; recoverable   command failures come back as `{\"type\":\"error\",\"context\":...,\"message\":...}`.  OpenAPI 3.0 cannot model WebSocket messages natively, so the **complete message-by-message wire reference** (client→server and server→client messages, including the app-only pushes, with exact field names and types) lives in [`docs/ws-protocol.md`](docs/ws-protocol.md). That file is part of this protocol contract: implement the WS side against it. 
+ * REST + WebSocket API for a Wavvon hub server. This file is the protocol contract — implement a client in any language against this spec without reading Rust source.  ## Authentication  All endpoints (except `/health`, `/info`, `/auth/_*`, `/join/:code`) require a Bearer token obtained from `POST /auth/verify`.  ### Auth flow  1. `POST /auth/challenge` with your hex-encoded Ed25519 public key. 2. Sign the returned `challenge` with your Ed25519 private key.    - The challenge is hex: hex-decode it to its 32 bytes first.    - If the response carries `scheme: \"tagged-v2\"` (every current hub      and farm), sign `b\"wavvon/auth-challenge/v2\\0\" || u32le(len(key)) ||      key || challenge_bytes`, where `key` is the hex public key that the      server you are talking to presents on its own `GET /info` (a farm:      `GET /farm/info`), never anything from the challenge response.      An older server names `tagged-v1`: sign      `b\"wavvon/auth-challenge/v1\\0\" || challenge_bytes` (wire-format.md).      Refuse a missing or unknown scheme.    - Encode the 64-byte signature as lowercase hex. 3. `POST /auth/verify` with your public key, the challenge, and the hex signature.    - Optionally include a `security_nonce` + `security_level` for PoW (see below). 4. On success, receive a `token`. Send it as `Authorization: Bearer <token>` on all    subsequent requests.  ### Proof-of-Work (PoW)  Some hubs require callers to prove a security level before granting membership. The algorithm:  ``` hash = SHA256(utf8(public_key_hex) || little_endian_u64(nonce)) level = number of leading zero BITS in hash ```  To reach level N, iterate nonces starting from 1 until a hash with ≥ N leading zero bits is found. Level 0 = no work required. Level 20 takes ~1M hashes on average.  Submit `security_nonce` (the winning nonce as a u64) and `security_level` (the claimed level) in `POST /auth/verify`. The hub verifies independently.  ### Session scope  `POST /auth/verify` returns a `scope` field: - `\"member\"` — full access. - `\"lobby\"` — hub has a security lobby and your PoW level is below the minimum.   You can only call `/lobby/_*` endpoints until promoted.  ## Programs  There is no separate authentication for a program. It holds a keypair, answers the same challenge, carries the same session token, and is bound by the same permissions. A member running one holds `apps.register`, which is what `/me/app/_*` and the message shapes an app authors are gated on.  ## WebSocket protocol  All realtime traffic (chat events, typing, DMs, voice presence, proximity voice zones, video and screen-share WebRTC signaling, screen-share chunk relay, forum/poll/pin events, and hub-event push) runs over a single WebSocket at `GET /ws`.  - **Connect:** `GET /ws?token=<token>` — the token goes in the **`token`   query parameter**, not a header. It is the session token from   `POST /auth/verify` (a program uses the same kind), with the same   expiry / revocation / approval / ban checks as REST. - **Framing:** every protocol message is a JSON text frame with a `type`   discriminator and the payload fields at the same level   (e.g. `{\"type\":\"subscribe\",\"channel_id\":\"...\"}`). Binary frames are used   only for screen-share chunk data and are always preceded by a   `screen_share_chunk` JSON envelope. - **On connect** the hub sends `{\"type\":\"hello\",\"live_seq\":<n>}`,   auto-subscribes the connection to every non-banned channel, and replays   `screen_share_started` for shares already in progress. - Unknown or malformed client frames are silently ignored; recoverable   command failures come back as `{\"type\":\"error\",\"context\":...,\"message\":...}`.  OpenAPI 3.0 cannot model WebSocket messages natively, so the **complete message-by-message wire reference** (client→server and server→client messages, including the app-only pushes, with exact field names and types) lives in [`docs/ws-protocol.md`](docs/ws-protocol.md). That file is part of this protocol contract: implement the WS side against it. 
  *
  * The version of the OpenAPI document: 1.0
  * 
@@ -45,6 +45,7 @@ import org.wavvon.sdk.generated.ApiClient;
   UpdateChannelRequest.JSON_PROPERTY_BANNER_FILE_ID,
   UpdateChannelRequest.JSON_PROPERTY_FORUM_REQUIRE_TAG,
   UpdateChannelRequest.JSON_PROPERTY_NSFW,
+  UpdateChannelRequest.JSON_PROPERTY_SLOWMODE_SECS,
   UpdateChannelRequest.JSON_PROPERTY_CHANNEL_TYPE
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
@@ -96,6 +97,10 @@ public class UpdateChannelRequest {
   public static final String JSON_PROPERTY_NSFW = "nsfw";
   @jakarta.annotation.Nullable
   private Boolean nsfw;
+
+  public static final String JSON_PROPERTY_SLOWMODE_SECS = "slowmode_secs";
+  @jakarta.annotation.Nullable
+  private Integer slowmodeSecs;
 
   /**
    * Switch between text and voice; both keep their chat.
@@ -427,6 +432,32 @@ public class UpdateChannelRequest {
   }
 
 
+  public UpdateChannelRequest slowmodeSecs(@jakarta.annotation.Nullable Integer slowmodeSecs) {
+    this.slowmodeSecs = slowmodeSecs;
+    return this;
+  }
+
+  /**
+   * Seconds between one member&#39;s messages here, 0 to turn slowmode off. Needs channels.manage.
+   * minimum: 0
+   * maximum: 21600
+   * @return slowmodeSecs
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_SLOWMODE_SECS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Integer getSlowmodeSecs() {
+    return slowmodeSecs;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_SLOWMODE_SECS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setSlowmodeSecs(@jakarta.annotation.Nullable Integer slowmodeSecs) {
+    this.slowmodeSecs = slowmodeSecs;
+  }
+
+
   public UpdateChannelRequest channelType(@jakarta.annotation.Nullable ChannelTypeEnum channelType) {
     this.channelType = channelType;
     return this;
@@ -475,12 +506,13 @@ public class UpdateChannelRequest {
         Objects.equals(this.bannerFileId, updateChannelRequest.bannerFileId) &&
         Objects.equals(this.forumRequireTag, updateChannelRequest.forumRequireTag) &&
         Objects.equals(this.nsfw, updateChannelRequest.nsfw) &&
+        Objects.equals(this.slowmodeSecs, updateChannelRequest.slowmodeSecs) &&
         Objects.equals(this.channelType, updateChannelRequest.channelType);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, description, parentId, icon, color, customIconSvg, minTalkPower, retentionDays, bannerUrl, bannerFileId, forumRequireTag, nsfw, channelType);
+    return Objects.hash(name, description, parentId, icon, color, customIconSvg, minTalkPower, retentionDays, bannerUrl, bannerFileId, forumRequireTag, nsfw, slowmodeSecs, channelType);
   }
 
   @Override
@@ -499,6 +531,7 @@ public class UpdateChannelRequest {
     sb.append("    bannerFileId: ").append(toIndentedString(bannerFileId)).append("\n");
     sb.append("    forumRequireTag: ").append(toIndentedString(forumRequireTag)).append("\n");
     sb.append("    nsfw: ").append(toIndentedString(nsfw)).append("\n");
+    sb.append("    slowmodeSecs: ").append(toIndentedString(slowmodeSecs)).append("\n");
     sb.append("    channelType: ").append(toIndentedString(channelType)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -605,6 +638,11 @@ public class UpdateChannelRequest {
     // add `nsfw` to the URL query string
     if (getNsfw() != null) {
       joiner.add(String.format("%snsfw%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getNsfw()))));
+    }
+
+    // add `slowmode_secs` to the URL query string
+    if (getSlowmodeSecs() != null) {
+      joiner.add(String.format("%sslowmode_secs%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getSlowmodeSecs()))));
     }
 
     // add `channel_type` to the URL query string
