@@ -1,0 +1,85 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.ver.outputs.version }}
+      release: ${{ steps.tag.outputs.exists == 'false' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+      - id: ver
+        run: echo "version=$(./mvnw -B -q help:evaluate -Dexpression=project.version -DforceStdout)" >> "$GITHUB_OUTPUT"
+      - run: test -n "${{ steps.ver.outputs.version }}"
+      - run: "! echo '${{ steps.ver.outputs.version }}' | grep -q SNAPSHOT"
+      - id: tag
+        run: |
+          if git ls-remote --exit-code --tags origin "refs/tags/v${{ steps.ver.outputs.version }}" >/dev/null; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+      - if: steps.tag.outputs.exists == 'false'
+        uses: actions/checkout@v4
+        with:
+          repository: Wavvon/Wavvon-server
+          ref: 78ff4aab3ba905ef4480d02d47f24d63762cc697
+          path: wavvon-server
+          sparse-checkout: crates/identity/wire-vectors.json
+          sparse-checkout-cone-mode: false
+      - if: steps.tag.outputs.exists == 'false'
+        run: sh scripts/check
+        env:
+          CI: "true"
+          WAVVON_WIRE_VECTORS: wavvon-server/crates/identity/wire-vectors.json
+
+  publish:
+    needs: build
+    if: needs.build.outputs.release == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: maven
+      url: https://central.sonatype.com/artifact/io.github.wavvon/wavvon-sdk/${{ needs.build.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+          server-id: central
+          server-username: MAVEN_CENTRAL_USERNAME
+          server-password: MAVEN_CENTRAL_PASSWORD
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+      - run: ./mvnw -B -Prelease -DskipTests -Dspotless.check.skip=true deploy
+        env:
+          MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+
+  tag:
+    needs: [build, publish]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git tag "v${{ needs.build.outputs.version }}"
+          git push origin "v${{ needs.build.outputs.version }}"
+          gh release create "v${{ needs.build.outputs.version }}" --generate-notes --title "v${{ needs.build.outputs.version }}"

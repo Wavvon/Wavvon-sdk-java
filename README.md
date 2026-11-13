@@ -24,17 +24,13 @@ library implements is
 
 ## Install
 
-Until it is published, build it locally:
-
-```sh
-./mvnw -B install
-```
+From Maven Central:
 
 ```xml
 <dependency>
-  <groupId>org.wavvon</groupId>
+  <groupId>io.github.wavvon</groupId>
   <artifactId>wavvon-sdk</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>0.2.0</version>
 </dependency>
 ```
 

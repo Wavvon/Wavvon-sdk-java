@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Guidance for working in this repo: `org.wavvon:wavvon-sdk`, the Java SDK for
+Guidance for working in this repo: `io.github.wavvon:wavvon-sdk` (Java package `org.wavvon.sdk`), the Java SDK for
 programs (bots and apps) that talk to a Wavvon hub. The design is
 [sdk.md](https://github.com/Wavvon/Wavvon-docs/blob/main/docs/sdk.md); this is
 its tier 1. Hub code lives in
