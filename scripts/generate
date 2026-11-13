@@ -1,0 +1,35 @@
+#!/bin/sh
+# Regenerates src/main/generated/java from a Wavvon-docs checkout with
+# openapi-generator (java, native HttpClient, Jackson) and records the docs
+# commit in src/main/generated/SPEC_COMMIT.
+#
+#   scripts/generate [docs-path] [git-ref]
+#
+# docs-path defaults to ../../docs (the monorepo layout), git-ref to HEAD. The
+# spec is always read from a commit, never the working tree, so the output is
+# reproducible from SPEC_COMMIT alone. The spec is used unpatched: a spec the
+# generator cannot use is a Wavvon-docs bug, fixed there.
+set -eu
+
+root=$(cd "$(dirname "$0")/.." && pwd)
+docs=${1:-"$root/../../docs"}
+ref=${2:-HEAD}
+out="$root/src/main/generated"
+spec="$root/target/spec/openapi.yaml"
+
+commit=$(git -C "$docs" rev-parse "$ref")
+mkdir -p "$(dirname "$spec")"
+git -C "$docs" show "$commit:openapi.yaml" >"$spec"
+
+cd "$root"
+rm -rf target/openapi
+./mvnw -B -q -Pgenerate initialize -Dspec="$spec"
+rm -rf "$out/java"
+mkdir -p "$out"
+cp -r target/openapi/src/main/java "$out/java"
+# The native templates decode response bodies with the platform charset, which
+# is not UTF-8 on Java 17 under Windows; the hub always sends UTF-8.
+echo "PATCH: decoding generated response bodies as UTF-8" >&2
+find "$out/java" -name "*.java" -exec sed -i "s/new String(\([a-zA-Z]*\)\.body()\.readAllBytes())/new String(\1.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8)/g" {} +
+echo "$commit" >"$out/SPEC_COMMIT"
+echo "generated from Wavvon-docs $commit"

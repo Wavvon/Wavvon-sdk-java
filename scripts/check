@@ -1,0 +1,5 @@
+#!/bin/sh
+# Format check, build, unit and conformance tests. Must pass before a commit.
+set -eu
+cd "$(dirname "$0")/.."
+exec ./mvnw -B verify "$@"
