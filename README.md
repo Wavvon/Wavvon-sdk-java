@@ -1,10 +1,16 @@
 # Wavvon SDK for Java
 
+[![Maven Central](https://img.shields.io/badge/dynamic/xml?url=https%3A%2F%2Frepo1.maven.org%2Fmaven2%2Fio%2Fgithub%2Fwavvon%2Fwavvon-sdk%2Fmaven-metadata.xml&query=%2F%2Flatest&label=maven-central)](https://central.sonatype.com/artifact/io.github.wavvon/wavvon-sdk)
+[![CI](https://github.com/Wavvon/Wavvon-sdk-java/actions/workflows/ci.yml/badge.svg)](https://github.com/Wavvon/Wavvon-sdk-java/actions/workflows/ci.yml)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
+[![Java](https://img.shields.io/badge/java-17%2B-007396)](pom.xml)
+[![Status: community](https://img.shields.io/badge/status-community%20%2F%20experimental-orange)](#)
+
 > **Community / experimental.** This SDK is maintained in-house on a
 > best-effort basis until an outside maintainer volunteers. It still runs the
 > shared conformance suite on every build, but it may lag the
 > [TypeScript SDK](https://github.com/Wavvon/Wavvon-sdk-js), which is the
-> reference. Not yet published to Maven Central.
+> reference.
 
 Write programs that talk to a [Wavvon](https://github.com/Wavvon) hub: bots,
 apps with slash commands and buttons, event consumers, mini-app hosts, and
