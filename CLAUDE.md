@@ -61,7 +61,8 @@ in the commit message.
      signed DH key record, publish, fetch/verify/pin; `VoiceCrypto` key
      wrap, packet seal and the Opus TOC check; `Voice` the room (keys and
      rotation, pacing, replay watermark, zones, events as `VoiceEvent`);
-     `VoiceLink` its only WebRTC code (webrtc-java, libwebrtc over JNI).
+     `VoiceLink` its only WebRTC code (webrtc-java, libwebrtc over JNI, an
+     optional dependency: `joinVoice` checks it is there first).
    - `Json.MAPPER`: snake_case naming, unknown fields ignored, nulls left out.
      Records are camelCase and map to the wire through it.
 3. **Tests** - `src/test/java` (JUnit 5). HTTP is faked with a real

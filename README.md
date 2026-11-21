@@ -23,11 +23,12 @@ library implements is
 [sdk.md](https://github.com/Wavvon/Wavvon-docs/blob/main/docs/sdk.md) (tier 1).
 
 - Java 17 or later. Ed25519, HMAC and HTTP/WebSocket come from the JDK.
-- Depends on Jackson, `jakarta.annotation-api` and, for voice,
-  [webrtc-java](https://github.com/devopvoid/webrtc-java) (libwebrtc over JNI;
-  Maven picks the native jar for Windows, Linux or macOS on x86_64/aarch64).
-  `httpmime` is optional: only the two multipart operations (file and
-  soundboard upload) need it.
+- Depends on Jackson and `jakarta.annotation-api`. Two dependencies are
+  optional and must be added by a program that uses them:
+  [webrtc-java](https://github.com/devopvoid/webrtc-java) for voice (libwebrtc
+  over JNI; Maven picks the native jar for Windows, Linux or macOS on
+  x86_64/aarch64), and `httpmime` for the two multipart operations (file and
+  soundboard upload).
 - Blocking API, thread-safe: on Java 21+ call it from virtual threads.
 - Apache-2.0, so a closed-source program can use it.
 
@@ -40,6 +41,12 @@ From Maven Central:
   <groupId>io.github.wavvon</groupId>
   <artifactId>wavvon-sdk</artifactId>
   <version>0.2.0</version>
+</dependency>
+<!-- only for voice -->
+<dependency>
+  <groupId>dev.onvoid.webrtc</groupId>
+  <artifactId>webrtc-java</artifactId>
+  <version>1.0.1</version>
 </dependency>
 ```
 

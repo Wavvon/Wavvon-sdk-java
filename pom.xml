@@ -65,6 +65,7 @@
       <groupId>dev.onvoid.webrtc</groupId>
       <artifactId>webrtc-java</artifactId>
       <version>1.0.1</version>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
