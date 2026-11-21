@@ -1,7 +1,11 @@
 package org.wavvon.sdk;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -9,11 +13,14 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.security.GeneralSecurityException;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * Asserts the tier-1 vectors from Wavvon-server's {@code crates/identity/wire-vectors.json}, the
@@ -152,5 +159,71 @@ class ConformanceTest {
         Webhooks.verifyOutgoingWebhook(
             headers, body, v.at("/inputs/secret_as_shown").asText(), Webhooks.VerifyOptions.at(ts));
     assertEquals("hub_event", event.type());
+  }
+
+  @Test
+  void masterDhPubkey() {
+    JsonNode v = vector("master_dh_pubkey");
+    assertEquals(
+        hex(v, "dh_pubkey"), Identity.fromSeed(v.at("/inputs/seed").asText()).dhPublicKey());
+  }
+
+  @Test
+  void dhKeyRecord() {
+    JsonNode v = vector("dh_key_record");
+    String pub = v.at("/inputs/pubkey").asText();
+    String dh = v.at("/inputs/dh_pubkey").asText();
+    byte[] bytes = DhKeys.signingBytes(pub, dh);
+    assertEquals(hex(v, "signing_bytes"), Bytes.toHex(bytes));
+    assertEquals(
+        hex(v, "signature"),
+        Bytes.toHex(Identity.fromSeed(v.at("/inputs/signer_seed").asText()).sign(bytes)));
+    assertTrue(DhKeys.verifyRecord(pub, dh, hex(v, "signature")));
+    assertFalse(DhKeys.verifyRecord(pub, pub, hex(v, "signature")));
+  }
+
+  @Test
+  void voiceKeyWrap() throws Exception {
+    JsonNode v = vector("voice_key_wrap");
+    Identity sender = Identity.fromSeed(v.at("/inputs/sender_seed").asText());
+    Identity recipient = Identity.fromSeed(v.at("/inputs/recipient_seed").asText());
+    String channel = v.at("/inputs/channel_id").asText();
+    long keyId = v.at("/inputs/key_id").asLong();
+    byte[] nonce = Bytes.fromHex(v.at("/inputs/wrap_nonce").asText());
+    byte[] ct =
+        VoiceCrypto.keyWrap(
+            sender,
+            Bytes.fromHex(recipient.dhPublicKey()),
+            channel,
+            Bytes.fromHex(v.at("/inputs/sender_key").asText()),
+            Bytes.fromHex(v.at("/inputs/nonce_salt").asText()),
+            keyId,
+            nonce);
+    assertEquals(hex(v, "ciphertext"), Bytes.toHex(ct));
+    VoiceCrypto.Unwrapped k =
+        VoiceCrypto.keyUnwrap(recipient, Bytes.fromHex(sender.dhPublicKey()), channel, ct, nonce);
+    assertEquals(v.at("/inputs/sender_key").asText(), Bytes.toHex(k.senderKey()));
+    assertEquals(v.at("/inputs/nonce_salt").asText(), Bytes.toHex(k.nonceSalt()));
+    assertEquals(keyId, k.keyId());
+  }
+
+  @ParameterizedTest
+  @ValueSource(strings = {"voice_packet_ctr0", "voice_packet_ctr7"})
+  void voicePacket(String name) throws Exception {
+    JsonNode v = vector(name);
+    byte[] key = Bytes.fromHex(v.at("/inputs/sender_key").asText());
+    byte[] salt = Bytes.fromHex(v.at("/inputs/nonce_salt").asText());
+    long keyId = v.at("/inputs/key_id").asLong();
+    long ctr = v.at("/inputs/counter").asLong();
+    long ts = v.at("/inputs/timestamp").asLong();
+    byte[] opus = Bytes.fromHex(v.at("/inputs/opus").asText());
+    byte[] packet = VoiceCrypto.packetSeal(key, salt, keyId, ctr, ts, opus);
+    assertEquals(hex(v, "packet"), Bytes.toHex(packet));
+    VoiceCrypto.Opened o = VoiceCrypto.packetOpen(key, salt, packet, 0);
+    assertEquals(List.of(keyId, ctr, ts), List.of(o.keyId(), o.ctr(), o.ts()));
+    assertArrayEquals(opus, o.opus());
+    packet[packet.length - 1] ^= 1;
+    assertThrows(
+        GeneralSecurityException.class, () -> VoiceCrypto.packetOpen(key, salt, packet, 0));
   }
 }
