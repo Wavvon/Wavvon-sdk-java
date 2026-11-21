@@ -37,7 +37,7 @@
   <properties>
     <maven.compiler.release>17</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <jackson.version>2.17.2</jackson.version>
+    <jackson.version>2.22.4</jackson.version>
     <junit.version>5.10.3</junit.version>
     <openapi-generator.version>7.12.0</openapi-generator.version>
     <spec>${project.build.directory}/spec/openapi.yaml</spec>
