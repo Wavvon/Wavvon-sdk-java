@@ -118,10 +118,14 @@ public final class VoiceSmoke {
         () ->
             seenB2.hasZone("smoke-zone")
                 && va.zones().stream().anyMatch(z -> z.zoneId().equals("smoke-zone")));
+    long t0 = System.nanoTime();
     for (int i = 0; i < 10; i++) {
       va.setPosition("smoke-zone", 10 + i, 50);
       Thread.sleep(10);
     }
+    // One update per 50 ms window the loop spanned, plus the first and the final
+    // flush; timer slop stretches the loop, and nine keeps it a coalescing test.
+    int limit = (int) Math.min(9, Math.ceil((System.nanoTime() - t0) / 50e6) + 2);
     until(
         "B to see the last position",
         () -> {
@@ -129,7 +133,10 @@ public final class VoiceSmoke {
           return !p.isEmpty() && p.get(p.size() - 1).equals(List.of(19.0, 50.0));
         });
     int n = seenB2.positions().size();
-    if (n > 4) throw new IllegalStateException("coalescing let " + n + " of 10 positions through");
+    if (n > limit) {
+      throw new IllegalStateException(
+          "coalescing let " + n + " of 10 positions through (limit " + limit + ")");
+    }
     say("ten positions in 100 ms coalesced to " + n + ", ending at the last");
 
     // A position in someone else's creator-only zone is refused, as an event.
