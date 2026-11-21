@@ -56,6 +56,12 @@ in the commit message.
      `Dispatch` + reply records (`AppResponse`, `ComponentResponse`, `Embed`,
      `ComponentRow`); `DispatchHandler` the framework-agnostic webhook handler
      with a `com.sun.net.httpserver` adapter.
+   - Voice (sdk-voice.md): `Identity` also derives the X25519 key
+     (SHA-512(seed)[0..32], clamped, JDK XDH); `DhKeys` + `DhPinStore` the
+     signed DH key record, publish, fetch/verify/pin; `VoiceCrypto` key
+     wrap, packet seal and the Opus TOC check; `Voice` the room (keys and
+     rotation, pacing, replay watermark, zones, events as `VoiceEvent`);
+     `VoiceLink` its only WebRTC code (webrtc-java, libwebrtc over JNI).
    - `Json.MAPPER`: snake_case naming, unknown fields ignored, nulls left out.
      Records are camelCase and map to the wire through it.
 3. **Tests** - `src/test/java` (JUnit 5). HTTP is faked with a real
@@ -121,6 +127,17 @@ report the doc bug to Wavvon-docs.
 - The JDK `WebSocket` may deliver the first frame (`hello`) before
   `buildAsync` completes, so the socket handed to the listener comes from
   `onOpen`, not from the future.
+- The voice room needs its own socket with its listener in place before the
+  first `hello` (`WavvonClient.connect(sinceSeq, first)`): a second `hello`
+  means the hub already ran `leave_voice`, so the room rejoins on it.
+- The voice offer goes out only after ICE gathering is complete (the hub is
+  ICE-lite and takes no trickle), and every event that arrives while waiting
+  for `voice_rtc_answer` is kept and handled after: a dropped
+  `voice_key_received` leaves that speaker unreadable.
+- webrtc-java calls back on libwebrtc threads, which must not dispose their
+  own peer connection: a closed link is disposed from another thread. The
+  factory uses `HeadlessAudioDeviceModule`, so no sound card is touched.
+  Only `VoiceLink` loads the natives; the unit tests never do.
 - The `native` generator imports Apache httpmime into every API class after
   the first one with a multipart operation (a template state leak), so
   `httpmime` is an optional dependency rather than something to strip.
@@ -139,6 +156,13 @@ the build output is never locked, boots it on a fresh database
 owner through the generated client, runs the smoke, kills only that process
 tree and drops the database. In-process tests have missed every cross-process
 bug this project has had: run it when touching auth, the socket or webhooks.
+
+`src/test/java/org/wavvon/sdk/smoke/VoiceSmoke.java` needs a running hub
+(`WAVVON_SMOKE_HUB`) whose owner is `WAVVON_SMOKE_SEED` (default `5a` x 32):
+`./mvnw -B -Psmoke verify -Dsmoke.main=org.wavvon.sdk.smoke.VoiceSmoke`. Two
+identities share a room and must open each other's frames byte for byte, then
+a refused 40 ms packet, key rotation after a leave, position coalescing and a
+refused position.
 
 ## Git
 

@@ -41,6 +41,7 @@ public final class WavvonClient {
   private final HttpClient raw;
   private final SessionHttpClient http;
   private final ApiClient api;
+  private final DhPinStore dhPins;
   private final Object loginLock = new Object();
   private final List<Consumer<SessionState>> stateHandlers = new CopyOnWriteArrayList<>();
   private volatile Session session;
@@ -55,6 +56,7 @@ public final class WavvonClient {
     this.raw = b.httpClient != null ? b.httpClient : HttpClient.newHttpClient();
     this.http = new SessionHttpClient(raw, this, retry);
     this.api = new ApiClient(http.asBuilder(), ApiClient.createDefaultObjectMapper(), hubUrl);
+    this.dhPins = b.dhPins != null ? b.dhPins : DhPinStore.inMemory();
   }
 
   /**
@@ -72,6 +74,7 @@ public final class WavvonClient {
     private String inviteCode;
     private RetryOptions retry = RetryOptions.DEFAULTS;
     private HttpClient httpClient;
+    private DhPinStore dhPins;
 
     private Builder(String hubUrl) {
       this.hubUrl = Objects.requireNonNull(hubUrl, "hubUrl");
@@ -128,6 +131,16 @@ public final class WavvonClient {
      */
     public Builder httpClient(HttpClient client) {
       this.httpClient = client;
+      return this;
+    }
+
+    /**
+     * @param pins where pinned peer DH keys live (voice); default in memory, for the life of the
+     *     client
+     * @return this
+     */
+    public Builder dhPins(DhPinStore pins) {
+      this.dhPins = pins;
       return this;
     }
 
@@ -381,6 +394,10 @@ public final class WavvonClient {
    * @return the event stream
    */
   public EventStream connect(Long sinceSeq) {
+    return connect(sinceSeq, null);
+  }
+
+  EventStream connect(Long sinceSeq, Consumer<WsEvent> first) {
     String wsBase = hubUrl.replaceFirst("^http", "ws");
     return new EventStream(
         () -> wsBase + "/ws?" + socketQuery(loginInterruptibly()),
@@ -390,7 +407,68 @@ public final class WavvonClient {
         },
         EventStream.jdkSockets(raw),
         retry,
-        sinceSeq);
+        sinceSeq,
+        first);
+  }
+
+  /**
+   * Publishes the DH key, joins the channel's voice room on a socket of its own and opens the audio
+   * session. One room per client: the hub allows one per identity. Needs the hub capabilities
+   * {@code channels.voice} and {@code voice.webrtc}.
+   *
+   * @param channelId the voice channel
+   * @return the joined room
+   * @throws UnsupportedByHubException the hub lacks one of them
+   * @throws VoiceException the hub refused the join, or the audio session did not open
+   */
+  public Voice joinVoice(String channelId) {
+    requireCapability("channels.voice");
+    // Voice transport v3: a hub without it speaks only WebTransport.
+    requireCapability("voice.webrtc");
+    // Without a published key nobody wraps a voice key to this program and it cannot unwrap
+    // theirs: it would be deaf and mute.
+    publishDhKey();
+    Voice voice = new Voice(this, dhPins, channelId);
+    try {
+      voice.start();
+    } catch (RuntimeException e) {
+      voice.shutdown();
+      throw e;
+    }
+    return voice;
+  }
+
+  /**
+   * Publishes this program's DH key on this hub, unless the hub already holds it. Without it nobody
+   * can wrap a voice key to the program.
+   *
+   * @return whether it was written
+   */
+  public boolean publishDhKey() {
+    return DhKeys.publish(this);
+  }
+
+  /**
+   * A peer's verified, pinned X25519 key. The first key seen is pinned; a different validly signed
+   * one throws {@link DhKeyChangedException} and is not used.
+   *
+   * @param publicKey the peer
+   * @return the 32-byte X25519 key
+   * @throws RecipientHasNoKeyException the peer published none
+   * @throws DhKeyUnsignedException the hub served a record the peer did not sign
+   */
+  public byte[] peerDhKey(String publicKey) {
+    return DhKeys.peer(this, dhPins, publicKey);
+  }
+
+  /**
+   * Pins the DH key the hub now serves for a peer, after a {@link DhKeyChangedException} the
+   * program chose to accept.
+   *
+   * @param publicKey the peer
+   */
+  public void acceptDhKey(String publicKey) {
+    DhKeys.accept(this, dhPins, publicKey);
   }
 
   /**

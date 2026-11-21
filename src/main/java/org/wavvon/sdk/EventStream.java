@@ -93,11 +93,23 @@ public final class EventStream implements AutoCloseable {
       SocketFactory sockets,
       RetryOptions retry,
       Long sinceSeq) {
+    this(url, reauthenticate, sockets, retry, sinceSeq, null);
+  }
+
+  /** {@code first}, when set, sees every event from the first {@code hello} on. */
+  EventStream(
+      Source<String> url,
+      Action reauthenticate,
+      SocketFactory sockets,
+      RetryOptions retry,
+      Long sinceSeq,
+      Consumer<WsEvent> first) {
     this.url = url;
     this.reauthenticate = reauthenticate;
     this.sockets = sockets;
     this.retry = retry;
     this.lastSeq = sinceSeq;
+    if (first != null) anyHandlers.add(first);
     timer.execute(this::open);
   }
 
