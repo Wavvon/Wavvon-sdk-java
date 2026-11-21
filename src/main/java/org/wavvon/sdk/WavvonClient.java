@@ -394,6 +394,10 @@ public final class WavvonClient {
    * @return the event stream
    */
   public EventStream connect(Long sinceSeq) {
+    return connect(sinceSeq, null);
+  }
+
+  EventStream connect(Long sinceSeq, Consumer<WsEvent> first) {
     String wsBase = hubUrl.replaceFirst("^http", "ws");
     return new EventStream(
         () -> wsBase + "/ws?" + socketQuery(loginInterruptibly()),
@@ -403,7 +407,35 @@ public final class WavvonClient {
         },
         EventStream.jdkSockets(raw),
         retry,
-        sinceSeq);
+        sinceSeq,
+        first);
+  }
+
+  /**
+   * Publishes the DH key, joins the channel's voice room on a socket of its own and opens the audio
+   * session. One room per client: the hub allows one per identity. Needs the hub capabilities
+   * {@code channels.voice} and {@code voice.webrtc}.
+   *
+   * @param channelId the voice channel
+   * @return the joined room
+   * @throws UnsupportedByHubException the hub lacks one of them
+   * @throws VoiceException the hub refused the join, or the audio session did not open
+   */
+  public Voice joinVoice(String channelId) {
+    requireCapability("channels.voice");
+    // Voice transport v3: a hub without it speaks only WebTransport.
+    requireCapability("voice.webrtc");
+    // Without a published key nobody wraps a voice key to this program and it cannot unwrap
+    // theirs: it would be deaf and mute.
+    publishDhKey();
+    Voice voice = new Voice(this, dhPins, channelId);
+    try {
+      voice.start();
+    } catch (RuntimeException e) {
+      voice.shutdown();
+      throw e;
+    }
+    return voice;
   }
 
   /**

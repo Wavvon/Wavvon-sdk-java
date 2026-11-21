@@ -23,8 +23,11 @@ library implements is
 [sdk.md](https://github.com/Wavvon/Wavvon-docs/blob/main/docs/sdk.md) (tier 1).
 
 - Java 17 or later. Ed25519, HMAC and HTTP/WebSocket come from the JDK.
-- Depends on Jackson and `jakarta.annotation-api`. `httpmime` is optional:
-  only the two multipart operations (file and soundboard upload) need it.
+- Depends on Jackson, `jakarta.annotation-api` and, for voice,
+  [webrtc-java](https://github.com/devopvoid/webrtc-java) (libwebrtc over JNI;
+  Maven picks the native jar for Windows, Linux or macOS on x86_64/aarch64).
+  `httpmime` is optional: only the two multipart operations (file and
+  soundboard upload) need it.
 - Blocking API, thread-safe: on Java 21+ call it from virtual threads.
 - Apache-2.0, so a closed-source program can use it.
 
@@ -82,10 +85,34 @@ A fuller one is [examples/.../EchoBot.java](examples/org/wavvon/sdk/examples/Ech
 | Slash command and button webhooks | `DispatchHandler`, `Webhooks.verifyDispatch` |
 | Outgoing webhook receiver | `Webhooks.verifyOutgoingWebhook` |
 | Mini-app host | `EventStream.announceApp`, `dismissApp`, `sendMiniAppMessage` |
+| Voice: E2E Opus in a voice room, proximity zones | `client.joinVoice(channelId)` -> `Voice` |
+| DH key (publish, verify and pin peers' keys) | `client.publishDhKey`, `peerDhKey`, `acceptDhKey` |
 
 `DispatchHandler.handle(method, headers, body)` is framework-agnostic; wire it
 into Spring, Javalin or anything else in a few lines. `asHttpHandler()` adapts
 it to the JDK's `com.sun.net.httpserver`.
+
+## Voice
+
+```java
+Voice voice = client.joinVoice(channelId);  // publishes the DH key, joins, opens WebRTC, offers the key
+new Thread(() -> {
+  for (VoiceEvent ev; (ev = voice.next()) != null; ) {
+    if (ev instanceof VoiceEvent.Audio a) handle(a.from(), a.ts(), a.opus());
+  }
+}).start();
+for (byte[] packet : opusPackets) voice.sendOpus(packet);  // exactly 20 ms each, paced
+voice.setPosition("zone-1", 40, 60);                         // coalesced, at most one per 50 ms
+voice.leave();
+```
+
+Opus passthrough only: `sendOpus` takes pre-encoded 20 ms packets (the TOC
+byte is checked; a desktop listener cannot decode 40 or 60 ms) and refuses one
+that would not fit 1200 bytes sealed. Received audio arrives as
+`VoiceEvent.Audio` with the Opus packet; decoding and jitter buffering are the
+program's. Mute, deafen, AFK moves and changed DH keys are calls and events;
+the SDK decides nothing. Design:
+[sdk-voice.md](https://github.com/Wavvon/Wavvon-docs/blob/main/docs/sdk-voice.md).
 
 ## Capabilities each feature needs
 
@@ -100,6 +127,7 @@ advertise throws `UnsupportedByHubException`.
 | Paging `GET /users`, `/conversations/{id}/messages`, `/admin/reports` | `list.cursor` |
 | Paging bans, mutes, invites, pending, conversations, pins, polls | `list.cursor.lists` |
 | `ping` / `pong` over the socket | `ws.ping` |
+| `joinVoice` | `channels.voice` and `voice.webrtc` |
 
 Login, REST, the socket and polling need no capability.
 
@@ -126,9 +154,12 @@ Login, REST, the socket and polling need no capability.
 
 Every signed byte sequence is checked against the shared wire vectors in
 Wavvon-server (`crates/identity/wire-vectors.json`): the auth challenge, the
-Ed25519 dispatch signature, and the outgoing-webhook HKDF + HMAC. CI reads them
+Ed25519 dispatch signature, the outgoing-webhook HKDF + HMAC, the DH key and
+its signed record, the voice key wrap and the voice packet seal. CI reads them
 from Wavvon-server at commit `78ff4aab3ba905ef4480d02d47f24d63762cc697`. A smoke
-test (`./mvnw -Psmoke verify`) drives a real hub binary.
+test (`./mvnw -Psmoke verify`) drives a real hub binary; the voice smoke
+(`-Dsmoke.main=org.wavvon.sdk.smoke.VoiceSmoke`, against `WAVVON_SMOKE_HUB`)
+puts two identities in one room.
 
 The REST client was generated from Wavvon-docs at the commit in
 [src/main/generated/SPEC_COMMIT](src/main/generated/SPEC_COMMIT).

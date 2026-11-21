@@ -42,6 +42,7 @@
     <openapi-generator.version>7.12.0</openapi-generator.version>
     <spec>${project.build.directory}/spec/openapi.yaml</spec>
     <spec.skipValidate>false</spec.skipValidate>
+    <smoke.main>org.wavvon.sdk.smoke.Smoke</smoke.main>
   </properties>
 
   <dependencies>
@@ -59,6 +60,11 @@
       <groupId>jakarta.annotation</groupId>
       <artifactId>jakarta.annotation-api</artifactId>
       <version>2.1.1</version>
+    </dependency>
+    <dependency>
+      <groupId>dev.onvoid.webrtc</groupId>
+      <artifactId>webrtc-java</artifactId>
+      <version>1.0.1</version>
     </dependency>
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
@@ -240,7 +246,7 @@
                   <arguments>
                     <argument>-classpath</argument>
                     <classpath/>
-                    <argument>org.wavvon.sdk.smoke.Smoke</argument>
+                    <argument>${smoke.main}</argument>
                   </arguments>
                 </configuration>
               </execution>
