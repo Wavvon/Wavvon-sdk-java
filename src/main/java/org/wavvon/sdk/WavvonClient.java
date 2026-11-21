@@ -420,8 +420,10 @@ public final class WavvonClient {
    * @return the joined room
    * @throws UnsupportedByHubException the hub lacks one of them
    * @throws VoiceException the hub refused the join, or the audio session did not open
+   * @throws IllegalStateException {@code dev.onvoid.webrtc:webrtc-java} is not on the classpath
    */
   public Voice joinVoice(String channelId) {
+    requireWebrtc();
     requireCapability("channels.voice");
     // Voice transport v3: a hub without it speaks only WebTransport.
     requireCapability("voice.webrtc");
@@ -436,6 +438,18 @@ public final class WavvonClient {
       throw e;
     }
     return voice;
+  }
+
+  // webrtc-java is an optional dependency: a program without voice does not carry libwebrtc.
+  private static void requireWebrtc() {
+    try {
+      Class.forName(
+          "dev.onvoid.webrtc.PeerConnectionFactory", false, WavvonClient.class.getClassLoader());
+    } catch (ClassNotFoundException e) {
+      throw new IllegalStateException(
+          "voice needs dev.onvoid.webrtc:webrtc-java 1.0.1 on the classpath; add it beside wavvon-sdk",
+          e);
+    }
   }
 
   /**
