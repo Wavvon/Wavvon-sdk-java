@@ -152,7 +152,7 @@ public class ListSoundboardSounds200ResponseInner {
   }
 
   /**
-   * Get uploader
+   * Pubkey of the member who uploaded it; empty for a clip the hub ships with
    * @return uploader
    */
   @jakarta.annotation.Nullable

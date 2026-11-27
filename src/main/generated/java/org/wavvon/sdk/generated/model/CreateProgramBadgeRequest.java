@@ -24,52 +24,178 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * BeginWebauthnAssertionRequest
+ * CreateProgramBadgeRequest
  */
 @JsonPropertyOrder({
-  BeginWebauthnAssertionRequest.JSON_PROPERTY_USER_PUBKEY
+  CreateProgramBadgeRequest.JSON_PROPERTY_NAME,
+  CreateProgramBadgeRequest.JSON_PROPERTY_ICON,
+  CreateProgramBadgeRequest.JSON_PROPERTY_DESCRIPTION,
+  CreateProgramBadgeRequest.JSON_PROPERTY_DECLARED_RULE,
+  CreateProgramBadgeRequest.JSON_PROPERTY_LEVELS
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class BeginWebauthnAssertionRequest {
-  public static final String JSON_PROPERTY_USER_PUBKEY = "user_pubkey";
+public class CreateProgramBadgeRequest {
+  public static final String JSON_PROPERTY_NAME = "name";
   @jakarta.annotation.Nonnull
-  private String userPubkey;
+  private String name;
 
-  public BeginWebauthnAssertionRequest() { 
+  public static final String JSON_PROPERTY_ICON = "icon";
+  @jakarta.annotation.Nullable
+  private String icon;
+
+  public static final String JSON_PROPERTY_DESCRIPTION = "description";
+  @jakarta.annotation.Nullable
+  private String description;
+
+  public static final String JSON_PROPERTY_DECLARED_RULE = "declared_rule";
+  @jakarta.annotation.Nullable
+  private String declaredRule;
+
+  public static final String JSON_PROPERTY_LEVELS = "levels";
+  @jakarta.annotation.Nullable
+  private List<String> levels = new ArrayList<>();
+
+  public CreateProgramBadgeRequest() { 
   }
 
-  public BeginWebauthnAssertionRequest userPubkey(@jakarta.annotation.Nonnull String userPubkey) {
-    this.userPubkey = userPubkey;
+  public CreateProgramBadgeRequest name(@jakarta.annotation.Nonnull String name) {
+    this.name = name;
     return this;
   }
 
   /**
-   * Get userPubkey
-   * @return userPubkey
+   * Get name
+   * @return name
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_USER_PUBKEY)
+  @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public String getUserPubkey() {
-    return userPubkey;
+  public String getName() {
+    return name;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_USER_PUBKEY)
+  @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setUserPubkey(@jakarta.annotation.Nonnull String userPubkey) {
-    this.userPubkey = userPubkey;
+  public void setName(@jakarta.annotation.Nonnull String name) {
+    this.name = name;
+  }
+
+
+  public CreateProgramBadgeRequest icon(@jakarta.annotation.Nullable String icon) {
+    this.icon = icon;
+    return this;
+  }
+
+  /**
+   * Get icon
+   * @return icon
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_ICON)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getIcon() {
+    return icon;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_ICON)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setIcon(@jakarta.annotation.Nullable String icon) {
+    this.icon = icon;
+  }
+
+
+  public CreateProgramBadgeRequest description(@jakarta.annotation.Nullable String description) {
+    this.description = description;
+    return this;
+  }
+
+  /**
+   * Get description
+   * @return description
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_DESCRIPTION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getDescription() {
+    return description;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_DESCRIPTION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setDescription(@jakarta.annotation.Nullable String description) {
+    this.description = description;
+  }
+
+
+  public CreateProgramBadgeRequest declaredRule(@jakarta.annotation.Nullable String declaredRule) {
+    this.declaredRule = declaredRule;
+    return this;
+  }
+
+  /**
+   * Up to 280 chars
+   * @return declaredRule
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_DECLARED_RULE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getDeclaredRule() {
+    return declaredRule;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_DECLARED_RULE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setDeclaredRule(@jakarta.annotation.Nullable String declaredRule) {
+    this.declaredRule = declaredRule;
+  }
+
+
+  public CreateProgramBadgeRequest levels(@jakarta.annotation.Nullable List<String> levels) {
+    this.levels = levels;
+    return this;
+  }
+
+  public CreateProgramBadgeRequest addLevelsItem(String levelsItem) {
+    if (this.levels == null) {
+      this.levels = new ArrayList<>();
+    }
+    this.levels.add(levelsItem);
+    return this;
+  }
+
+  /**
+   * Level names in order; one level when absent.
+   * @return levels
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_LEVELS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public List<String> getLevels() {
+    return levels;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_LEVELS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setLevels(@jakarta.annotation.Nullable List<String> levels) {
+    this.levels = levels;
   }
 
 
   /**
-   * Return true if this beginWebauthnAssertion_request object is equal to o.
+   * Return true if this createProgramBadge_request object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -79,20 +205,28 @@ public class BeginWebauthnAssertionRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BeginWebauthnAssertionRequest beginWebauthnAssertionRequest = (BeginWebauthnAssertionRequest) o;
-    return Objects.equals(this.userPubkey, beginWebauthnAssertionRequest.userPubkey);
+    CreateProgramBadgeRequest createProgramBadgeRequest = (CreateProgramBadgeRequest) o;
+    return Objects.equals(this.name, createProgramBadgeRequest.name) &&
+        Objects.equals(this.icon, createProgramBadgeRequest.icon) &&
+        Objects.equals(this.description, createProgramBadgeRequest.description) &&
+        Objects.equals(this.declaredRule, createProgramBadgeRequest.declaredRule) &&
+        Objects.equals(this.levels, createProgramBadgeRequest.levels);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(userPubkey);
+    return Objects.hash(name, icon, description, declaredRule, levels);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class BeginWebauthnAssertionRequest {\n");
-    sb.append("    userPubkey: ").append(toIndentedString(userPubkey)).append("\n");
+    sb.append("class CreateProgramBadgeRequest {\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    icon: ").append(toIndentedString(icon)).append("\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    declaredRule: ").append(toIndentedString(declaredRule)).append("\n");
+    sb.append("    levels: ").append(toIndentedString(levels)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -140,9 +274,33 @@ public class BeginWebauthnAssertionRequest {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `user_pubkey` to the URL query string
-    if (getUserPubkey() != null) {
-      joiner.add(String.format("%suser_pubkey%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getUserPubkey()))));
+    // add `name` to the URL query string
+    if (getName() != null) {
+      joiner.add(String.format("%sname%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getName()))));
+    }
+
+    // add `icon` to the URL query string
+    if (getIcon() != null) {
+      joiner.add(String.format("%sicon%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getIcon()))));
+    }
+
+    // add `description` to the URL query string
+    if (getDescription() != null) {
+      joiner.add(String.format("%sdescription%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getDescription()))));
+    }
+
+    // add `declared_rule` to the URL query string
+    if (getDeclaredRule() != null) {
+      joiner.add(String.format("%sdeclared_rule%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getDeclaredRule()))));
+    }
+
+    // add `levels` to the URL query string
+    if (getLevels() != null) {
+      for (int i = 0; i < getLevels().size(); i++) {
+        joiner.add(String.format("%slevels%s%s=%s", prefix, suffix,
+            "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix),
+            ApiClient.urlEncode(ApiClient.valueToString(getLevels().get(i)))));
+      }
     }
 
     return joiner.toString();

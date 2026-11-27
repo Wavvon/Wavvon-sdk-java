@@ -33,6 +33,7 @@ import org.wavvon.sdk.generated.ApiClient;
  * CreateInviteRequest
  */
 @JsonPropertyOrder({
+  CreateInviteRequest.JSON_PROPERTY_CODE,
   CreateInviteRequest.JSON_PROPERTY_MAX_USES,
   CreateInviteRequest.JSON_PROPERTY_EXPIRES_IN_SECONDS,
   CreateInviteRequest.JSON_PROPERTY_GRANT_ROLE_ID,
@@ -40,6 +41,10 @@ import org.wavvon.sdk.generated.ApiClient;
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class CreateInviteRequest {
+  public static final String JSON_PROPERTY_CODE = "code";
+  @jakarta.annotation.Nullable
+  private String code;
+
   public static final String JSON_PROPERTY_MAX_USES = "max_uses";
   @jakarta.annotation.Nullable
   private Long maxUses;
@@ -58,6 +63,30 @@ public class CreateInviteRequest {
 
   public CreateInviteRequest() { 
   }
+
+  public CreateInviteRequest code(@jakarta.annotation.Nullable String code) {
+    this.code = code;
+    return this;
+  }
+
+  /**
+   * A code the creator chooses instead of a random one (&#x60;invites.customcode&#x60;): 3–32 of a-z, 0-9, - and _, stored and matched case-insensitively. A taken code is a 409.
+   * @return code
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CODE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getCode() {
+    return code;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_CODE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setCode(@jakarta.annotation.Nullable String code) {
+    this.code = code;
+  }
+
 
   public CreateInviteRequest maxUses(@jakarta.annotation.Nullable Long maxUses) {
     this.maxUses = maxUses;
@@ -169,7 +198,8 @@ public class CreateInviteRequest {
       return false;
     }
     CreateInviteRequest createInviteRequest = (CreateInviteRequest) o;
-    return Objects.equals(this.maxUses, createInviteRequest.maxUses) &&
+    return Objects.equals(this.code, createInviteRequest.code) &&
+        Objects.equals(this.maxUses, createInviteRequest.maxUses) &&
         Objects.equals(this.expiresInSeconds, createInviteRequest.expiresInSeconds) &&
         Objects.equals(this.grantRoleId, createInviteRequest.grantRoleId) &&
         Objects.equals(this.boundPubkey, createInviteRequest.boundPubkey);
@@ -177,13 +207,14 @@ public class CreateInviteRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(maxUses, expiresInSeconds, grantRoleId, boundPubkey);
+    return Objects.hash(code, maxUses, expiresInSeconds, grantRoleId, boundPubkey);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class CreateInviteRequest {\n");
+    sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    maxUses: ").append(toIndentedString(maxUses)).append("\n");
     sb.append("    expiresInSeconds: ").append(toIndentedString(expiresInSeconds)).append("\n");
     sb.append("    grantRoleId: ").append(toIndentedString(grantRoleId)).append("\n");
@@ -234,6 +265,11 @@ public class CreateInviteRequest {
     }
 
     StringJoiner joiner = new StringJoiner("&");
+
+    // add `code` to the URL query string
+    if (getCode() != null) {
+      joiner.add(String.format("%scode%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCode()))));
+    }
 
     // add `max_uses` to the URL query string
     if (getMaxUses() != null) {

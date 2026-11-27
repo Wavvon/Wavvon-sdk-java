@@ -23,10 +23,14 @@ import java.io.File;
 import org.wavvon.sdk.generated.model.GetAdminSettingsModeration200Response;
 import org.wavvon.sdk.generated.model.GetAdminSettingsPow200Response;
 import org.wavvon.sdk.generated.model.GetAdminSettingsTags200Response;
+import org.wavvon.sdk.generated.model.HubLanguagePack;
+import org.wavvon.sdk.generated.model.HubLanguages;
 import org.wavvon.sdk.generated.model.ListHubPending200ResponseInner;
 import org.wavvon.sdk.generated.model.MemberAdminInfo;
 import org.wavvon.sdk.generated.model.PatchAdminSettingsChallengeRequest;
 import org.wavvon.sdk.generated.model.PatchAdminSettingsLobbyRequest;
+import org.wavvon.sdk.generated.model.PutHubDefaultLanguageRequest;
+import org.wavvon.sdk.generated.model.PutHubTheme200Response;
 import org.wavvon.sdk.generated.model.RejectHubPendingRequest;
 import org.wavvon.sdk.generated.model.UpdateAdminSettingsListingRequest;
 import org.wavvon.sdk.generated.model.UpdateAdminSettingsModerationRequest;
@@ -316,6 +320,151 @@ public class HubApi {
 
     String localVarPath = "/hub/icons/{icon_id}"
         .replace("{icon_id}", ApiClient.urlEncode(iconId.toString()));
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("DELETE", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Remove a language pack (owner only)
+   * 
+   * @param sha256  (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void deleteHubLanguage(String sha256) throws ApiException {
+    deleteHubLanguageWithHttpInfo(sha256);
+  }
+
+  /**
+   * Remove a language pack (owner only)
+   * 
+   * @param sha256  (required)
+   * @return ApiResponse&lt;Void&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<Void> deleteHubLanguageWithHttpInfo(String sha256) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = deleteHubLanguageRequestBuilder(sha256);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("deleteHubLanguage", localVarResponse);
+        }
+        return new ApiResponse<>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            null
+        );
+      } finally {
+        // Drain the InputStream
+        while (localVarResponse.body().read() != -1) {
+          // Ignore
+        }
+        localVarResponse.body().close();
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder deleteHubLanguageRequestBuilder(String sha256) throws ApiException {
+    // verify the required parameter 'sha256' is set
+    if (sha256 == null) {
+      throw new ApiException(400, "Missing the required parameter 'sha256' when calling deleteHubLanguage");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/hub/languages/{sha256}"
+        .replace("{sha256}", ApiClient.urlEncode(sha256.toString()));
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("DELETE", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Remove the hub default theme (hub.appearance)
+   * 
+   * @throws ApiException if fails to make API call
+   */
+  public void deleteHubTheme() throws ApiException {
+    deleteHubThemeWithHttpInfo();
+  }
+
+  /**
+   * Remove the hub default theme (hub.appearance)
+   * 
+   * @return ApiResponse&lt;Void&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<Void> deleteHubThemeWithHttpInfo() throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = deleteHubThemeRequestBuilder();
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("deleteHubTheme", localVarResponse);
+        }
+        return new ApiResponse<>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            null
+        );
+      } finally {
+        // Drain the InputStream
+        while (localVarResponse.body().read() != -1) {
+          // Ignore
+        }
+        localVarResponse.body().close();
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder deleteHubThemeRequestBuilder() throws ApiException {
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/hub/theme";
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
@@ -640,6 +789,90 @@ public class HubApi {
   }
 
   /**
+   * A hub language pack (public, immutable)
+   * Answers only for a stored pack&#39;s hash, with &#x60;Cache-Control: public, max-age&#x3D;31536000, immutable&#x60;.
+   * @param sha256  (required)
+   * @return File
+   * @throws ApiException if fails to make API call
+   */
+  public File getHubLanguage(String sha256) throws ApiException {
+    ApiResponse<File> localVarResponse = getHubLanguageWithHttpInfo(sha256);
+    return localVarResponse.getData();
+  }
+
+  /**
+   * A hub language pack (public, immutable)
+   * Answers only for a stored pack&#39;s hash, with &#x60;Cache-Control: public, max-age&#x3D;31536000, immutable&#x60;.
+   * @param sha256  (required)
+   * @return ApiResponse&lt;File&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<File> getHubLanguageWithHttpInfo(String sha256) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = getHubLanguageRequestBuilder(sha256);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("getHubLanguage", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<File>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        localVarResponse.body().close();
+
+        return new ApiResponse<File>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<File>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder getHubLanguageRequestBuilder(String sha256) throws ApiException {
+    // verify the required parameter 'sha256' is set
+    if (sha256 == null) {
+      throw new ApiException(400, "Missing the required parameter 'sha256' when calling getHubLanguage");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/hub/languages/{sha256}"
+        .replace("{sha256}", ApiClient.urlEncode(sha256.toString()));
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/zip");
+
+    localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
    * Get hub settings (admin)
    * Besides the settings, &#x60;attachments_usage&#x60; is &#x60;{used_bytes, cap_bytes, warning, evictions}&#x60;: disk used by attachment blobs against &#x60;attachments_cap_bytes&#x60;, whether it is at &#x60;attachments_warn_percent&#x60;, and the blobs evicted for space since the hub started. &#x60;stream_limits&#x60; is the same object as on &#x60;/info&#x60;, and &#x60;landing&#x60; the one on the invite preview.
    * @throws ApiException if fails to make API call
@@ -697,6 +930,174 @@ public class HubApi {
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
     localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * The hub default theme package (public, immutable)
+   * Answers only for the current theme&#39;s hash, with &#x60;Cache-Control: public, max-age&#x3D;31536000, immutable&#x60;.
+   * @param sha256  (required)
+   * @return File
+   * @throws ApiException if fails to make API call
+   */
+  public File getHubTheme(String sha256) throws ApiException {
+    ApiResponse<File> localVarResponse = getHubThemeWithHttpInfo(sha256);
+    return localVarResponse.getData();
+  }
+
+  /**
+   * The hub default theme package (public, immutable)
+   * Answers only for the current theme&#39;s hash, with &#x60;Cache-Control: public, max-age&#x3D;31536000, immutable&#x60;.
+   * @param sha256  (required)
+   * @return ApiResponse&lt;File&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<File> getHubThemeWithHttpInfo(String sha256) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = getHubThemeRequestBuilder(sha256);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("getHubTheme", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<File>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        localVarResponse.body().close();
+
+        return new ApiResponse<File>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<File>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder getHubThemeRequestBuilder(String sha256) throws ApiException {
+    // verify the required parameter 'sha256' is set
+    if (sha256 == null) {
+      throw new ApiException(400, "Missing the required parameter 'sha256' when calling getHubTheme");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/hub/theme/{sha256}"
+        .replace("{sha256}", ApiClient.urlEncode(sha256.toString()));
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/zip");
+
+    localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * The hub default theme&#39;s preview image (public, immutable)
+   * 
+   * @param sha256  (required)
+   * @return File
+   * @throws ApiException if fails to make API call
+   */
+  public File getHubThemePreview(String sha256) throws ApiException {
+    ApiResponse<File> localVarResponse = getHubThemePreviewWithHttpInfo(sha256);
+    return localVarResponse.getData();
+  }
+
+  /**
+   * The hub default theme&#39;s preview image (public, immutable)
+   * 
+   * @param sha256  (required)
+   * @return ApiResponse&lt;File&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<File> getHubThemePreviewWithHttpInfo(String sha256) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = getHubThemePreviewRequestBuilder(sha256);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("getHubThemePreview", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<File>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        localVarResponse.body().close();
+
+        return new ApiResponse<File>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<File>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder getHubThemePreviewRequestBuilder(String sha256) throws ApiException {
+    // verify the required parameter 'sha256' is set
+    if (sha256 == null) {
+      throw new ApiException(400, "Missing the required parameter 'sha256' when calling getHubThemePreview");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/hub/theme/{sha256}/preview"
+        .replace("{sha256}", ApiClient.urlEncode(sha256.toString()));
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "image/*");
 
     localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
     if (memberVarReadTimeout != null) {
@@ -933,6 +1334,83 @@ public class HubApi {
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
     String localVarPath = "/hub/icons";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * The hub&#39;s language packs and default language (public)
+   * 
+   * @return HubLanguages
+   * @throws ApiException if fails to make API call
+   */
+  public HubLanguages listHubLanguages() throws ApiException {
+    ApiResponse<HubLanguages> localVarResponse = listHubLanguagesWithHttpInfo();
+    return localVarResponse.getData();
+  }
+
+  /**
+   * The hub&#39;s language packs and default language (public)
+   * 
+   * @return ApiResponse&lt;HubLanguages&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<HubLanguages> listHubLanguagesWithHttpInfo() throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = listHubLanguagesRequestBuilder();
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("listHubLanguages", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<HubLanguages>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        localVarResponse.body().close();
+
+        return new ApiResponse<HubLanguages>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<HubLanguages>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder listHubLanguagesRequestBuilder() throws ApiException {
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/hub/languages";
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
@@ -1294,6 +1772,273 @@ public class HubApi {
     try {
       byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(patchAdminSettingsLobbyRequest);
       localVarRequestBuilder.method("PATCH", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Set or clear the hub default language (owner only)
+   * A BCP-47 code: a stored pack&#39;s, or a language the client ships. The user&#39;s own choice always wins over it.
+   * @param putHubDefaultLanguageRequest  (required)
+   * @return HubLanguages
+   * @throws ApiException if fails to make API call
+   */
+  public HubLanguages putHubDefaultLanguage(PutHubDefaultLanguageRequest putHubDefaultLanguageRequest) throws ApiException {
+    ApiResponse<HubLanguages> localVarResponse = putHubDefaultLanguageWithHttpInfo(putHubDefaultLanguageRequest);
+    return localVarResponse.getData();
+  }
+
+  /**
+   * Set or clear the hub default language (owner only)
+   * A BCP-47 code: a stored pack&#39;s, or a language the client ships. The user&#39;s own choice always wins over it.
+   * @param putHubDefaultLanguageRequest  (required)
+   * @return ApiResponse&lt;HubLanguages&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<HubLanguages> putHubDefaultLanguageWithHttpInfo(PutHubDefaultLanguageRequest putHubDefaultLanguageRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = putHubDefaultLanguageRequestBuilder(putHubDefaultLanguageRequest);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("putHubDefaultLanguage", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<HubLanguages>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        localVarResponse.body().close();
+
+        return new ApiResponse<HubLanguages>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<HubLanguages>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder putHubDefaultLanguageRequestBuilder(PutHubDefaultLanguageRequest putHubDefaultLanguageRequest) throws ApiException {
+    // verify the required parameter 'putHubDefaultLanguageRequest' is set
+    if (putHubDefaultLanguageRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'putHubDefaultLanguageRequest' when calling putHubDefaultLanguage");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/hub/languages/default";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Content-Type", "application/json");
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(putHubDefaultLanguageRequest);
+      localVarRequestBuilder.method("PUT", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Upload a language pack (owner only)
+   * The body is a &#x60;.wavvonlang&#x60; package (language-packs.md). The hub checks the envelope only: a zip holding &#x60;lang.json&#x60; alone, format and version, a BCP-47 code, a 1-48 character name, string-only &#x60;strings&#x60;, 512 KB. Locked keys and placeholders are the client&#39;s to enforce. A pack with the code of one already stored replaces it. Advertised as &#x60;hub.languages&#x60;.
+   * @param body  (required)
+   * @return HubLanguagePack
+   * @throws ApiException if fails to make API call
+   */
+  public HubLanguagePack putHubLanguage(File body) throws ApiException {
+    ApiResponse<HubLanguagePack> localVarResponse = putHubLanguageWithHttpInfo(body);
+    return localVarResponse.getData();
+  }
+
+  /**
+   * Upload a language pack (owner only)
+   * The body is a &#x60;.wavvonlang&#x60; package (language-packs.md). The hub checks the envelope only: a zip holding &#x60;lang.json&#x60; alone, format and version, a BCP-47 code, a 1-48 character name, string-only &#x60;strings&#x60;, 512 KB. Locked keys and placeholders are the client&#39;s to enforce. A pack with the code of one already stored replaces it. Advertised as &#x60;hub.languages&#x60;.
+   * @param body  (required)
+   * @return ApiResponse&lt;HubLanguagePack&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<HubLanguagePack> putHubLanguageWithHttpInfo(File body) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = putHubLanguageRequestBuilder(body);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("putHubLanguage", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<HubLanguagePack>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        localVarResponse.body().close();
+
+        return new ApiResponse<HubLanguagePack>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<HubLanguagePack>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder putHubLanguageRequestBuilder(File body) throws ApiException {
+    // verify the required parameter 'body' is set
+    if (body == null) {
+      throw new ApiException(400, "Missing the required parameter 'body' when calling putHubLanguage");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/hub/languages";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Content-Type", "application/zip");
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(body);
+      localVarRequestBuilder.method("PUT", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Set or replace the hub default theme (hub.appearance)
+   * The body is a &#x60;.wavvontheme&#x60; package (themes.md). The hub checks it with the client&#39;s rules (size limits, relative paths, no links, allowed file types, colour token values, sound lengths) and refuses anything the client would. Advertised as &#x60;hub.theme&#x60;.
+   * @param body  (required)
+   * @return PutHubTheme200Response
+   * @throws ApiException if fails to make API call
+   */
+  public PutHubTheme200Response putHubTheme(File body) throws ApiException {
+    ApiResponse<PutHubTheme200Response> localVarResponse = putHubThemeWithHttpInfo(body);
+    return localVarResponse.getData();
+  }
+
+  /**
+   * Set or replace the hub default theme (hub.appearance)
+   * The body is a &#x60;.wavvontheme&#x60; package (themes.md). The hub checks it with the client&#39;s rules (size limits, relative paths, no links, allowed file types, colour token values, sound lengths) and refuses anything the client would. Advertised as &#x60;hub.theme&#x60;.
+   * @param body  (required)
+   * @return ApiResponse&lt;PutHubTheme200Response&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<PutHubTheme200Response> putHubThemeWithHttpInfo(File body) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = putHubThemeRequestBuilder(body);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("putHubTheme", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<PutHubTheme200Response>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        localVarResponse.body().close();
+
+        return new ApiResponse<PutHubTheme200Response>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<PutHubTheme200Response>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder putHubThemeRequestBuilder(File body) throws ApiException {
+    // verify the required parameter 'body' is set
+    if (body == null) {
+      throw new ApiException(400, "Missing the required parameter 'body' when calling putHubTheme");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/hub/theme";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Content-Type", "application/zip");
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(body);
+      localVarRequestBuilder.method("PUT", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
     } catch (IOException e) {
       throw new ApiException(e);
     }

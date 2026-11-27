@@ -30,104 +30,75 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * FinishWebauthnRegistrationRequest
+ * The hub default theme (&#x60;hub.theme&#x60;), present while one is set. The package is at &#x60;/hub/theme/{sha256}&#x60; and, when &#x60;has_preview&#x60;, its preview image at &#x60;/hub/theme/{sha256}/preview&#x60;.
  */
 @JsonPropertyOrder({
-  FinishWebauthnRegistrationRequest.JSON_PROPERTY_SESSION_ID,
-  FinishWebauthnRegistrationRequest.JSON_PROPERTY_CREDENTIAL,
-  FinishWebauthnRegistrationRequest.JSON_PROPERTY_FRIENDLY_NAME
+  HubInfoTheme.JSON_PROPERTY_SHA256,
+  HubInfoTheme.JSON_PROPERTY_HAS_PREVIEW
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class FinishWebauthnRegistrationRequest {
-  public static final String JSON_PROPERTY_SESSION_ID = "session_id";
+public class HubInfoTheme {
+  public static final String JSON_PROPERTY_SHA256 = "sha256";
   @jakarta.annotation.Nonnull
-  private String sessionId;
+  private String sha256;
 
-  public static final String JSON_PROPERTY_CREDENTIAL = "credential";
+  public static final String JSON_PROPERTY_HAS_PREVIEW = "has_preview";
   @jakarta.annotation.Nonnull
-  private Object credential;
+  private Boolean hasPreview;
 
-  public static final String JSON_PROPERTY_FRIENDLY_NAME = "friendly_name";
-  @jakarta.annotation.Nullable
-  private String friendlyName;
-
-  public FinishWebauthnRegistrationRequest() { 
+  public HubInfoTheme() { 
   }
 
-  public FinishWebauthnRegistrationRequest sessionId(@jakarta.annotation.Nonnull String sessionId) {
-    this.sessionId = sessionId;
+  public HubInfoTheme sha256(@jakarta.annotation.Nonnull String sha256) {
+    this.sha256 = sha256;
     return this;
   }
 
   /**
-   * Get sessionId
-   * @return sessionId
+   * Hex SHA-256 of the package bytes
+   * @return sha256
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_SESSION_ID)
+  @JsonProperty(JSON_PROPERTY_SHA256)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public String getSessionId() {
-    return sessionId;
+  public String getSha256() {
+    return sha256;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_SESSION_ID)
+  @JsonProperty(JSON_PROPERTY_SHA256)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setSessionId(@jakarta.annotation.Nonnull String sessionId) {
-    this.sessionId = sessionId;
+  public void setSha256(@jakarta.annotation.Nonnull String sha256) {
+    this.sha256 = sha256;
   }
 
 
-  public FinishWebauthnRegistrationRequest credential(@jakarta.annotation.Nonnull Object credential) {
-    this.credential = credential;
+  public HubInfoTheme hasPreview(@jakarta.annotation.Nonnull Boolean hasPreview) {
+    this.hasPreview = hasPreview;
     return this;
   }
 
   /**
-   * RegisterPublicKeyCredential from navigator.credentials.create()
-   * @return credential
+   * Get hasPreview
+   * @return hasPreview
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_CREDENTIAL)
+  @JsonProperty(JSON_PROPERTY_HAS_PREVIEW)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public Object getCredential() {
-    return credential;
+  public Boolean getHasPreview() {
+    return hasPreview;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_CREDENTIAL)
+  @JsonProperty(JSON_PROPERTY_HAS_PREVIEW)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setCredential(@jakarta.annotation.Nonnull Object credential) {
-    this.credential = credential;
-  }
-
-
-  public FinishWebauthnRegistrationRequest friendlyName(@jakarta.annotation.Nullable String friendlyName) {
-    this.friendlyName = friendlyName;
-    return this;
-  }
-
-  /**
-   * Get friendlyName
-   * @return friendlyName
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_FRIENDLY_NAME)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getFriendlyName() {
-    return friendlyName;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_FRIENDLY_NAME)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setFriendlyName(@jakarta.annotation.Nullable String friendlyName) {
-    this.friendlyName = friendlyName;
+  public void setHasPreview(@jakarta.annotation.Nonnull Boolean hasPreview) {
+    this.hasPreview = hasPreview;
   }
 
 
   /**
-   * Return true if this finishWebauthnRegistration_request object is equal to o.
+   * Return true if this HubInfo_theme object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -137,24 +108,22 @@ public class FinishWebauthnRegistrationRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    FinishWebauthnRegistrationRequest finishWebauthnRegistrationRequest = (FinishWebauthnRegistrationRequest) o;
-    return Objects.equals(this.sessionId, finishWebauthnRegistrationRequest.sessionId) &&
-        Objects.equals(this.credential, finishWebauthnRegistrationRequest.credential) &&
-        Objects.equals(this.friendlyName, finishWebauthnRegistrationRequest.friendlyName);
+    HubInfoTheme hubInfoTheme = (HubInfoTheme) o;
+    return Objects.equals(this.sha256, hubInfoTheme.sha256) &&
+        Objects.equals(this.hasPreview, hubInfoTheme.hasPreview);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(sessionId, credential, friendlyName);
+    return Objects.hash(sha256, hasPreview);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class FinishWebauthnRegistrationRequest {\n");
-    sb.append("    sessionId: ").append(toIndentedString(sessionId)).append("\n");
-    sb.append("    credential: ").append(toIndentedString(credential)).append("\n");
-    sb.append("    friendlyName: ").append(toIndentedString(friendlyName)).append("\n");
+    sb.append("class HubInfoTheme {\n");
+    sb.append("    sha256: ").append(toIndentedString(sha256)).append("\n");
+    sb.append("    hasPreview: ").append(toIndentedString(hasPreview)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -202,19 +171,14 @@ public class FinishWebauthnRegistrationRequest {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `session_id` to the URL query string
-    if (getSessionId() != null) {
-      joiner.add(String.format("%ssession_id%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getSessionId()))));
+    // add `sha256` to the URL query string
+    if (getSha256() != null) {
+      joiner.add(String.format("%ssha256%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getSha256()))));
     }
 
-    // add `credential` to the URL query string
-    if (getCredential() != null) {
-      joiner.add(String.format("%scredential%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCredential()))));
-    }
-
-    // add `friendly_name` to the URL query string
-    if (getFriendlyName() != null) {
-      joiner.add(String.format("%sfriendly_name%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getFriendlyName()))));
+    // add `has_preview` to the URL query string
+    if (getHasPreview() != null) {
+      joiner.add(String.format("%shas_preview%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getHasPreview()))));
     }
 
     return joiner.toString();

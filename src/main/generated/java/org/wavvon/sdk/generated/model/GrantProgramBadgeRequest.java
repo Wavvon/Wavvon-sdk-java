@@ -30,75 +30,75 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * BeginWebauthnAssertion200Response
+ * GrantProgramBadgeRequest
  */
 @JsonPropertyOrder({
-  BeginWebauthnAssertion200Response.JSON_PROPERTY_SESSION_ID,
-  BeginWebauthnAssertion200Response.JSON_PROPERTY_OPTIONS
+  GrantProgramBadgeRequest.JSON_PROPERTY_SUBJECT,
+  GrantProgramBadgeRequest.JSON_PROPERTY_LEVEL
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class BeginWebauthnAssertion200Response {
-  public static final String JSON_PROPERTY_SESSION_ID = "session_id";
-  @jakarta.annotation.Nullable
-  private String sessionId;
+public class GrantProgramBadgeRequest {
+  public static final String JSON_PROPERTY_SUBJECT = "subject";
+  @jakarta.annotation.Nonnull
+  private String subject;
 
-  public static final String JSON_PROPERTY_OPTIONS = "options";
+  public static final String JSON_PROPERTY_LEVEL = "level";
   @jakarta.annotation.Nullable
-  private Object options;
+  private Integer level;
 
-  public BeginWebauthnAssertion200Response() { 
+  public GrantProgramBadgeRequest() { 
   }
 
-  public BeginWebauthnAssertion200Response sessionId(@jakarta.annotation.Nullable String sessionId) {
-    this.sessionId = sessionId;
+  public GrantProgramBadgeRequest subject(@jakarta.annotation.Nonnull String subject) {
+    this.subject = subject;
     return this;
   }
 
   /**
-   * Get sessionId
-   * @return sessionId
+   * Get subject
+   * @return subject
    */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_SESSION_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getSessionId() {
-    return sessionId;
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_SUBJECT)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public String getSubject() {
+    return subject;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_SESSION_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setSessionId(@jakarta.annotation.Nullable String sessionId) {
-    this.sessionId = sessionId;
+  @JsonProperty(JSON_PROPERTY_SUBJECT)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setSubject(@jakarta.annotation.Nonnull String subject) {
+    this.subject = subject;
   }
 
 
-  public BeginWebauthnAssertion200Response options(@jakarta.annotation.Nullable Object options) {
-    this.options = options;
+  public GrantProgramBadgeRequest level(@jakarta.annotation.Nullable Integer level) {
+    this.level = level;
     return this;
   }
 
   /**
-   * PublicKeyCredentialRequestOptions
-   * @return options
+   * Get level
+   * @return level
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_OPTIONS)
+  @JsonProperty(JSON_PROPERTY_LEVEL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Object getOptions() {
-    return options;
+  public Integer getLevel() {
+    return level;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_OPTIONS)
+  @JsonProperty(JSON_PROPERTY_LEVEL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setOptions(@jakarta.annotation.Nullable Object options) {
-    this.options = options;
+  public void setLevel(@jakarta.annotation.Nullable Integer level) {
+    this.level = level;
   }
 
 
   /**
-   * Return true if this beginWebauthnAssertion_200_response object is equal to o.
+   * Return true if this grantProgramBadge_request object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -108,22 +108,22 @@ public class BeginWebauthnAssertion200Response {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BeginWebauthnAssertion200Response beginWebauthnAssertion200Response = (BeginWebauthnAssertion200Response) o;
-    return Objects.equals(this.sessionId, beginWebauthnAssertion200Response.sessionId) &&
-        Objects.equals(this.options, beginWebauthnAssertion200Response.options);
+    GrantProgramBadgeRequest grantProgramBadgeRequest = (GrantProgramBadgeRequest) o;
+    return Objects.equals(this.subject, grantProgramBadgeRequest.subject) &&
+        Objects.equals(this.level, grantProgramBadgeRequest.level);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(sessionId, options);
+    return Objects.hash(subject, level);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class BeginWebauthnAssertion200Response {\n");
-    sb.append("    sessionId: ").append(toIndentedString(sessionId)).append("\n");
-    sb.append("    options: ").append(toIndentedString(options)).append("\n");
+    sb.append("class GrantProgramBadgeRequest {\n");
+    sb.append("    subject: ").append(toIndentedString(subject)).append("\n");
+    sb.append("    level: ").append(toIndentedString(level)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -171,14 +171,14 @@ public class BeginWebauthnAssertion200Response {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `session_id` to the URL query string
-    if (getSessionId() != null) {
-      joiner.add(String.format("%ssession_id%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getSessionId()))));
+    // add `subject` to the URL query string
+    if (getSubject() != null) {
+      joiner.add(String.format("%ssubject%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getSubject()))));
     }
 
-    // add `options` to the URL query string
-    if (getOptions() != null) {
-      joiner.add(String.format("%soptions%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getOptions()))));
+    // add `level` to the URL query string
+    if (getLevel() != null) {
+      joiner.add(String.format("%slevel%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getLevel()))));
     }
 
     return joiner.toString();

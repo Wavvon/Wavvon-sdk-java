@@ -19,6 +19,7 @@ import org.wavvon.sdk.generated.Configuration;
 import org.wavvon.sdk.generated.Pair;
 
 import org.wavvon.sdk.generated.model.CreateAllianceVoiceGrantRequest;
+import org.wavvon.sdk.generated.model.CreateSoundboardSound201Response;
 import java.io.File;
 import org.wavvon.sdk.generated.model.ListSoundboardSounds200ResponseInner;
 
@@ -96,11 +97,11 @@ public class SoundboardApi {
    * @param name  (required)
    * @param audio  (required)
    * @param emoji  (optional)
-   * @return ListSoundboardSounds200ResponseInner
+   * @return CreateSoundboardSound201Response
    * @throws ApiException if fails to make API call
    */
-  public ListSoundboardSounds200ResponseInner createSoundboardSound(String name, File audio, String emoji) throws ApiException {
-    ApiResponse<ListSoundboardSounds200ResponseInner> localVarResponse = createSoundboardSoundWithHttpInfo(name, audio, emoji);
+  public CreateSoundboardSound201Response createSoundboardSound(String name, File audio, String emoji) throws ApiException {
+    ApiResponse<CreateSoundboardSound201Response> localVarResponse = createSoundboardSoundWithHttpInfo(name, audio, emoji);
     return localVarResponse.getData();
   }
 
@@ -110,10 +111,10 @@ public class SoundboardApi {
    * @param name  (required)
    * @param audio  (required)
    * @param emoji  (optional)
-   * @return ApiResponse&lt;ListSoundboardSounds200ResponseInner&gt;
+   * @return ApiResponse&lt;CreateSoundboardSound201Response&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<ListSoundboardSounds200ResponseInner> createSoundboardSoundWithHttpInfo(String name, File audio, String emoji) throws ApiException {
+  public ApiResponse<CreateSoundboardSound201Response> createSoundboardSoundWithHttpInfo(String name, File audio, String emoji) throws ApiException {
     HttpRequest.Builder localVarRequestBuilder = createSoundboardSoundRequestBuilder(name, audio, emoji);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
@@ -127,7 +128,7 @@ public class SoundboardApi {
           throw getApiException("createSoundboardSound", localVarResponse);
         }
         if (localVarResponse.body() == null) {
-          return new ApiResponse<ListSoundboardSounds200ResponseInner>(
+          return new ApiResponse<CreateSoundboardSound201Response>(
               localVarResponse.statusCode(),
               localVarResponse.headers().map(),
               null
@@ -137,10 +138,10 @@ public class SoundboardApi {
         String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         localVarResponse.body().close();
 
-        return new ApiResponse<ListSoundboardSounds200ResponseInner>(
+        return new ApiResponse<CreateSoundboardSound201Response>(
             localVarResponse.statusCode(),
             localVarResponse.headers().map(),
-            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<ListSoundboardSounds200ResponseInner>() {})
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<CreateSoundboardSound201Response>() {})
         );
       } finally {
       }
@@ -369,24 +370,28 @@ public class SoundboardApi {
   }
 
   /**
-   * List every clip in the hub&#39;s soundboard library
-   * Any authenticated member may list; playing one is gated separately by use_soundboard.
+   * List the hub&#39;s soundboard library by name, one page at a time
+   * Any authenticated member may list; playing one is gated separately by use_soundboard. There is no cap on the number of clips, so clients page to exhaustion.
+   * @param limit Page size, clamped to 1..500. (optional, default to 100)
+   * @param cursor Keyset cursor — the &#x60;id&#x60; of the previous page&#39;s last clip. (optional)
    * @return List&lt;ListSoundboardSounds200ResponseInner&gt;
    * @throws ApiException if fails to make API call
    */
-  public List<ListSoundboardSounds200ResponseInner> listSoundboardSounds() throws ApiException {
-    ApiResponse<List<ListSoundboardSounds200ResponseInner>> localVarResponse = listSoundboardSoundsWithHttpInfo();
+  public List<ListSoundboardSounds200ResponseInner> listSoundboardSounds(Long limit, String cursor) throws ApiException {
+    ApiResponse<List<ListSoundboardSounds200ResponseInner>> localVarResponse = listSoundboardSoundsWithHttpInfo(limit, cursor);
     return localVarResponse.getData();
   }
 
   /**
-   * List every clip in the hub&#39;s soundboard library
-   * Any authenticated member may list; playing one is gated separately by use_soundboard.
+   * List the hub&#39;s soundboard library by name, one page at a time
+   * Any authenticated member may list; playing one is gated separately by use_soundboard. There is no cap on the number of clips, so clients page to exhaustion.
+   * @param limit Page size, clamped to 1..500. (optional, default to 100)
+   * @param cursor Keyset cursor — the &#x60;id&#x60; of the previous page&#39;s last clip. (optional)
    * @return ApiResponse&lt;List&lt;ListSoundboardSounds200ResponseInner&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<List<ListSoundboardSounds200ResponseInner>> listSoundboardSoundsWithHttpInfo() throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = listSoundboardSoundsRequestBuilder();
+  public ApiResponse<List<ListSoundboardSounds200ResponseInner>> listSoundboardSoundsWithHttpInfo(Long limit, String cursor) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = listSoundboardSoundsRequestBuilder(limit, cursor);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -425,13 +430,30 @@ public class SoundboardApi {
     }
   }
 
-  private HttpRequest.Builder listSoundboardSoundsRequestBuilder() throws ApiException {
+  private HttpRequest.Builder listSoundboardSoundsRequestBuilder(Long limit, String cursor) throws ApiException {
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
     String localVarPath = "/soundboard";
 
-    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+    List<Pair> localVarQueryParams = new ArrayList<>();
+    StringJoiner localVarQueryStringJoiner = new StringJoiner("&");
+    String localVarQueryParameterBaseName;
+    localVarQueryParameterBaseName = "limit";
+    localVarQueryParams.addAll(ApiClient.parameterToPairs("limit", limit));
+    localVarQueryParameterBaseName = "cursor";
+    localVarQueryParams.addAll(ApiClient.parameterToPairs("cursor", cursor));
+
+    if (!localVarQueryParams.isEmpty() || localVarQueryStringJoiner.length() != 0) {
+      StringJoiner queryJoiner = new StringJoiner("&");
+      localVarQueryParams.forEach(p -> queryJoiner.add(p.getName() + '=' + p.getValue()));
+      if (localVarQueryStringJoiner.length() != 0) {
+        queryJoiner.add(localVarQueryStringJoiner.toString());
+      }
+      localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath + '?' + queryJoiner.toString()));
+    } else {
+      localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+    }
 
     localVarRequestBuilder.header("Accept", "application/json");
 

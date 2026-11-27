@@ -30,75 +30,104 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * HubInfoCertRequirementRequire
+ * ListBadgeAwards200ResponseInner
  */
 @JsonPropertyOrder({
-  HubInfoCertRequirementRequire.JSON_PROPERTY_MIN_POW_LEVEL,
-  HubInfoCertRequirementRequire.JSON_PROPERTY_MIN_MEMBER_SINCE_DAYS
+  ListBadgeAwards200ResponseInner.JSON_PROPERTY_SUBJECT_PUBKEY,
+  ListBadgeAwards200ResponseInner.JSON_PROPERTY_LEVEL,
+  ListBadgeAwards200ResponseInner.JSON_PROPERTY_AWARDED_AT
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class HubInfoCertRequirementRequire {
-  public static final String JSON_PROPERTY_MIN_POW_LEVEL = "min_pow_level";
-  @jakarta.annotation.Nullable
-  private Integer minPowLevel;
+public class ListBadgeAwards200ResponseInner {
+  public static final String JSON_PROPERTY_SUBJECT_PUBKEY = "subject_pubkey";
+  @jakarta.annotation.Nonnull
+  private String subjectPubkey;
 
-  public static final String JSON_PROPERTY_MIN_MEMBER_SINCE_DAYS = "min_member_since_days";
-  @jakarta.annotation.Nullable
-  private Integer minMemberSinceDays;
+  public static final String JSON_PROPERTY_LEVEL = "level";
+  @jakarta.annotation.Nonnull
+  private Integer level;
 
-  public HubInfoCertRequirementRequire() { 
+  public static final String JSON_PROPERTY_AWARDED_AT = "awarded_at";
+  @jakarta.annotation.Nonnull
+  private Long awardedAt;
+
+  public ListBadgeAwards200ResponseInner() { 
   }
 
-  public HubInfoCertRequirementRequire minPowLevel(@jakarta.annotation.Nullable Integer minPowLevel) {
-    this.minPowLevel = minPowLevel;
+  public ListBadgeAwards200ResponseInner subjectPubkey(@jakarta.annotation.Nonnull String subjectPubkey) {
+    this.subjectPubkey = subjectPubkey;
     return this;
   }
 
   /**
-   * Get minPowLevel
-   * @return minPowLevel
+   * Get subjectPubkey
+   * @return subjectPubkey
    */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_MIN_POW_LEVEL)
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_SUBJECT_PUBKEY)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public Integer getMinPowLevel() {
-    return minPowLevel;
+  public String getSubjectPubkey() {
+    return subjectPubkey;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_MIN_POW_LEVEL)
+  @JsonProperty(JSON_PROPERTY_SUBJECT_PUBKEY)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setMinPowLevel(@jakarta.annotation.Nullable Integer minPowLevel) {
-    this.minPowLevel = minPowLevel;
+  public void setSubjectPubkey(@jakarta.annotation.Nonnull String subjectPubkey) {
+    this.subjectPubkey = subjectPubkey;
   }
 
 
-  public HubInfoCertRequirementRequire minMemberSinceDays(@jakarta.annotation.Nullable Integer minMemberSinceDays) {
-    this.minMemberSinceDays = minMemberSinceDays;
+  public ListBadgeAwards200ResponseInner level(@jakarta.annotation.Nonnull Integer level) {
+    this.level = level;
     return this;
   }
 
   /**
-   * Get minMemberSinceDays
-   * @return minMemberSinceDays
+   * Get level
+   * @return level
    */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_MIN_MEMBER_SINCE_DAYS)
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_LEVEL)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public Integer getMinMemberSinceDays() {
-    return minMemberSinceDays;
+  public Integer getLevel() {
+    return level;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_MIN_MEMBER_SINCE_DAYS)
+  @JsonProperty(JSON_PROPERTY_LEVEL)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setMinMemberSinceDays(@jakarta.annotation.Nullable Integer minMemberSinceDays) {
-    this.minMemberSinceDays = minMemberSinceDays;
+  public void setLevel(@jakarta.annotation.Nonnull Integer level) {
+    this.level = level;
+  }
+
+
+  public ListBadgeAwards200ResponseInner awardedAt(@jakarta.annotation.Nonnull Long awardedAt) {
+    this.awardedAt = awardedAt;
+    return this;
+  }
+
+  /**
+   * Get awardedAt
+   * @return awardedAt
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_AWARDED_AT)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public Long getAwardedAt() {
+    return awardedAt;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_AWARDED_AT)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setAwardedAt(@jakarta.annotation.Nonnull Long awardedAt) {
+    this.awardedAt = awardedAt;
   }
 
 
   /**
-   * Return true if this HubInfo_cert_requirement_require object is equal to o.
+   * Return true if this listBadgeAwards_200_response_inner object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -108,22 +137,24 @@ public class HubInfoCertRequirementRequire {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    HubInfoCertRequirementRequire hubInfoCertRequirementRequire = (HubInfoCertRequirementRequire) o;
-    return Objects.equals(this.minPowLevel, hubInfoCertRequirementRequire.minPowLevel) &&
-        Objects.equals(this.minMemberSinceDays, hubInfoCertRequirementRequire.minMemberSinceDays);
+    ListBadgeAwards200ResponseInner listBadgeAwards200ResponseInner = (ListBadgeAwards200ResponseInner) o;
+    return Objects.equals(this.subjectPubkey, listBadgeAwards200ResponseInner.subjectPubkey) &&
+        Objects.equals(this.level, listBadgeAwards200ResponseInner.level) &&
+        Objects.equals(this.awardedAt, listBadgeAwards200ResponseInner.awardedAt);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(minPowLevel, minMemberSinceDays);
+    return Objects.hash(subjectPubkey, level, awardedAt);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class HubInfoCertRequirementRequire {\n");
-    sb.append("    minPowLevel: ").append(toIndentedString(minPowLevel)).append("\n");
-    sb.append("    minMemberSinceDays: ").append(toIndentedString(minMemberSinceDays)).append("\n");
+    sb.append("class ListBadgeAwards200ResponseInner {\n");
+    sb.append("    subjectPubkey: ").append(toIndentedString(subjectPubkey)).append("\n");
+    sb.append("    level: ").append(toIndentedString(level)).append("\n");
+    sb.append("    awardedAt: ").append(toIndentedString(awardedAt)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -171,14 +202,19 @@ public class HubInfoCertRequirementRequire {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `min_pow_level` to the URL query string
-    if (getMinPowLevel() != null) {
-      joiner.add(String.format("%smin_pow_level%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getMinPowLevel()))));
+    // add `subject_pubkey` to the URL query string
+    if (getSubjectPubkey() != null) {
+      joiner.add(String.format("%ssubject_pubkey%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getSubjectPubkey()))));
     }
 
-    // add `min_member_since_days` to the URL query string
-    if (getMinMemberSinceDays() != null) {
-      joiner.add(String.format("%smin_member_since_days%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getMinMemberSinceDays()))));
+    // add `level` to the URL query string
+    if (getLevel() != null) {
+      joiner.add(String.format("%slevel%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getLevel()))));
+    }
+
+    // add `awarded_at` to the URL query string
+    if (getAwardedAt() != null) {
+      joiner.add(String.format("%sawarded_at%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getAwardedAt()))));
     }
 
     return joiner.toString();

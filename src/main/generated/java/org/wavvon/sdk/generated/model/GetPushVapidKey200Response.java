@@ -30,75 +30,46 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * UpdateAdminSettingsCertsRequestCertRequire
+ * GetPushVapidKey200Response
  */
 @JsonPropertyOrder({
-  UpdateAdminSettingsCertsRequestCertRequire.JSON_PROPERTY_MIN_POW_LEVEL,
-  UpdateAdminSettingsCertsRequestCertRequire.JSON_PROPERTY_MIN_MEMBER_SINCE_DAYS
+  GetPushVapidKey200Response.JSON_PROPERTY_PUBLIC_KEY
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class UpdateAdminSettingsCertsRequestCertRequire {
-  public static final String JSON_PROPERTY_MIN_POW_LEVEL = "min_pow_level";
-  @jakarta.annotation.Nullable
-  private Integer minPowLevel;
+public class GetPushVapidKey200Response {
+  public static final String JSON_PROPERTY_PUBLIC_KEY = "public_key";
+  @jakarta.annotation.Nonnull
+  private String publicKey;
 
-  public static final String JSON_PROPERTY_MIN_MEMBER_SINCE_DAYS = "min_member_since_days";
-  @jakarta.annotation.Nullable
-  private Integer minMemberSinceDays;
-
-  public UpdateAdminSettingsCertsRequestCertRequire() { 
+  public GetPushVapidKey200Response() { 
   }
 
-  public UpdateAdminSettingsCertsRequestCertRequire minPowLevel(@jakarta.annotation.Nullable Integer minPowLevel) {
-    this.minPowLevel = minPowLevel;
+  public GetPushVapidKey200Response publicKey(@jakarta.annotation.Nonnull String publicKey) {
+    this.publicKey = publicKey;
     return this;
   }
 
   /**
-   * Get minPowLevel
-   * @return minPowLevel
+   * Get publicKey
+   * @return publicKey
    */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_MIN_POW_LEVEL)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Integer getMinPowLevel() {
-    return minPowLevel;
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_PUBLIC_KEY)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public String getPublicKey() {
+    return publicKey;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_MIN_POW_LEVEL)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setMinPowLevel(@jakarta.annotation.Nullable Integer minPowLevel) {
-    this.minPowLevel = minPowLevel;
-  }
-
-
-  public UpdateAdminSettingsCertsRequestCertRequire minMemberSinceDays(@jakarta.annotation.Nullable Integer minMemberSinceDays) {
-    this.minMemberSinceDays = minMemberSinceDays;
-    return this;
-  }
-
-  /**
-   * Get minMemberSinceDays
-   * @return minMemberSinceDays
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_MIN_MEMBER_SINCE_DAYS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Integer getMinMemberSinceDays() {
-    return minMemberSinceDays;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_MIN_MEMBER_SINCE_DAYS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setMinMemberSinceDays(@jakarta.annotation.Nullable Integer minMemberSinceDays) {
-    this.minMemberSinceDays = minMemberSinceDays;
+  @JsonProperty(JSON_PROPERTY_PUBLIC_KEY)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setPublicKey(@jakarta.annotation.Nonnull String publicKey) {
+    this.publicKey = publicKey;
   }
 
 
   /**
-   * Return true if this updateAdminSettingsCerts_request_cert_require object is equal to o.
+   * Return true if this getPushVapidKey_200_response object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -108,22 +79,20 @@ public class UpdateAdminSettingsCertsRequestCertRequire {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UpdateAdminSettingsCertsRequestCertRequire updateAdminSettingsCertsRequestCertRequire = (UpdateAdminSettingsCertsRequestCertRequire) o;
-    return Objects.equals(this.minPowLevel, updateAdminSettingsCertsRequestCertRequire.minPowLevel) &&
-        Objects.equals(this.minMemberSinceDays, updateAdminSettingsCertsRequestCertRequire.minMemberSinceDays);
+    GetPushVapidKey200Response getPushVapidKey200Response = (GetPushVapidKey200Response) o;
+    return Objects.equals(this.publicKey, getPushVapidKey200Response.publicKey);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(minPowLevel, minMemberSinceDays);
+    return Objects.hash(publicKey);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class UpdateAdminSettingsCertsRequestCertRequire {\n");
-    sb.append("    minPowLevel: ").append(toIndentedString(minPowLevel)).append("\n");
-    sb.append("    minMemberSinceDays: ").append(toIndentedString(minMemberSinceDays)).append("\n");
+    sb.append("class GetPushVapidKey200Response {\n");
+    sb.append("    publicKey: ").append(toIndentedString(publicKey)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -171,14 +140,9 @@ public class UpdateAdminSettingsCertsRequestCertRequire {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `min_pow_level` to the URL query string
-    if (getMinPowLevel() != null) {
-      joiner.add(String.format("%smin_pow_level%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getMinPowLevel()))));
-    }
-
-    // add `min_member_since_days` to the URL query string
-    if (getMinMemberSinceDays() != null) {
-      joiner.add(String.format("%smin_member_since_days%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getMinMemberSinceDays()))));
+    // add `public_key` to the URL query string
+    if (getPublicKey() != null) {
+      joiner.add(String.format("%spublic_key%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getPublicKey()))));
     }
 
     return joiner.toString();

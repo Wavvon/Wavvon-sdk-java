@@ -24,6 +24,8 @@ import org.wavvon.sdk.generated.model.GetChannelMyPermissions200Response;
 import org.wavvon.sdk.generated.model.ListChannelPermissions200Response;
 import org.wavvon.sdk.generated.model.ListChannelPermissions200ResponseRolesInnerOverwrites;
 import org.wavvon.sdk.generated.model.ListUnreadChannels200ResponseInner;
+import org.wavvon.sdk.generated.model.MarkChannelRead200Response;
+import org.wavvon.sdk.generated.model.MarkChannelReadRequest;
 import org.wavvon.sdk.generated.model.ReorderChannelsRequest;
 import org.wavvon.sdk.generated.model.UpdateChannelRequest;
 
@@ -660,24 +662,28 @@ public class ChannelsApi {
   }
 
   /**
-   * Mark a channel as read up to now
-   * 
+   * Mark a channel as read up to now, or unread from a message
+   * Without a body the caller&#39;s read marker moves to now. With &#x60;message_id&#x60; (\&quot;mark unread\&quot;, capability &#x60;channels.markunread&#x60;) it moves to that message&#39;s &#x60;created_at&#x60; minus one, so the message and everything after it count as unread. Only the caller&#39;s marker changes. 
    * @param channelId  (required)
+   * @param markChannelReadRequest  (optional)
+   * @return MarkChannelRead200Response
    * @throws ApiException if fails to make API call
    */
-  public void markChannelRead(String channelId) throws ApiException {
-    markChannelReadWithHttpInfo(channelId);
+  public MarkChannelRead200Response markChannelRead(String channelId, MarkChannelReadRequest markChannelReadRequest) throws ApiException {
+    ApiResponse<MarkChannelRead200Response> localVarResponse = markChannelReadWithHttpInfo(channelId, markChannelReadRequest);
+    return localVarResponse.getData();
   }
 
   /**
-   * Mark a channel as read up to now
-   * 
+   * Mark a channel as read up to now, or unread from a message
+   * Without a body the caller&#39;s read marker moves to now. With &#x60;message_id&#x60; (\&quot;mark unread\&quot;, capability &#x60;channels.markunread&#x60;) it moves to that message&#39;s &#x60;created_at&#x60; minus one, so the message and everything after it count as unread. Only the caller&#39;s marker changes. 
    * @param channelId  (required)
-   * @return ApiResponse&lt;Void&gt;
+   * @param markChannelReadRequest  (optional)
+   * @return ApiResponse&lt;MarkChannelRead200Response&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> markChannelReadWithHttpInfo(String channelId) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = markChannelReadRequestBuilder(channelId);
+  public ApiResponse<MarkChannelRead200Response> markChannelReadWithHttpInfo(String channelId, MarkChannelReadRequest markChannelReadRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = markChannelReadRequestBuilder(channelId, markChannelReadRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -689,17 +695,23 @@ public class ChannelsApi {
         if (localVarResponse.statusCode()/ 100 != 2) {
           throw getApiException("markChannelRead", localVarResponse);
         }
-        return new ApiResponse<>(
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<MarkChannelRead200Response>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        localVarResponse.body().close();
+
+        return new ApiResponse<MarkChannelRead200Response>(
             localVarResponse.statusCode(),
             localVarResponse.headers().map(),
-            null
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<MarkChannelRead200Response>() {})
         );
       } finally {
-        // Drain the InputStream
-        while (localVarResponse.body().read() != -1) {
-          // Ignore
-        }
-        localVarResponse.body().close();
       }
     } catch (IOException e) {
       throw new ApiException(e);
@@ -710,7 +722,7 @@ public class ChannelsApi {
     }
   }
 
-  private HttpRequest.Builder markChannelReadRequestBuilder(String channelId) throws ApiException {
+  private HttpRequest.Builder markChannelReadRequestBuilder(String channelId, MarkChannelReadRequest markChannelReadRequest) throws ApiException {
     // verify the required parameter 'channelId' is set
     if (channelId == null) {
       throw new ApiException(400, "Missing the required parameter 'channelId' when calling markChannelRead");
@@ -723,9 +735,15 @@ public class ChannelsApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(markChannelReadRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }

@@ -30,46 +30,46 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * UpdateMeCredentialRequest
+ * PutHubDefaultLanguageRequest
  */
 @JsonPropertyOrder({
-  UpdateMeCredentialRequest.JSON_PROPERTY_FRIENDLY_NAME
+  PutHubDefaultLanguageRequest.JSON_PROPERTY_CODE
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class UpdateMeCredentialRequest {
-  public static final String JSON_PROPERTY_FRIENDLY_NAME = "friendly_name";
-  @jakarta.annotation.Nonnull
-  private String friendlyName;
+public class PutHubDefaultLanguageRequest {
+  public static final String JSON_PROPERTY_CODE = "code";
+  @jakarta.annotation.Nullable
+  private String code;
 
-  public UpdateMeCredentialRequest() { 
+  public PutHubDefaultLanguageRequest() { 
   }
 
-  public UpdateMeCredentialRequest friendlyName(@jakarta.annotation.Nonnull String friendlyName) {
-    this.friendlyName = friendlyName;
+  public PutHubDefaultLanguageRequest code(@jakarta.annotation.Nullable String code) {
+    this.code = code;
     return this;
   }
 
   /**
-   * Get friendlyName
-   * @return friendlyName
+   * null clears the default
+   * @return code
    */
-  @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_FRIENDLY_NAME)
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CODE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public String getFriendlyName() {
-    return friendlyName;
+  public String getCode() {
+    return code;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_FRIENDLY_NAME)
+  @JsonProperty(JSON_PROPERTY_CODE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setFriendlyName(@jakarta.annotation.Nonnull String friendlyName) {
-    this.friendlyName = friendlyName;
+  public void setCode(@jakarta.annotation.Nullable String code) {
+    this.code = code;
   }
 
 
   /**
-   * Return true if this updateMeCredential_request object is equal to o.
+   * Return true if this putHubDefaultLanguage_request object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -79,20 +79,20 @@ public class UpdateMeCredentialRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UpdateMeCredentialRequest updateMeCredentialRequest = (UpdateMeCredentialRequest) o;
-    return Objects.equals(this.friendlyName, updateMeCredentialRequest.friendlyName);
+    PutHubDefaultLanguageRequest putHubDefaultLanguageRequest = (PutHubDefaultLanguageRequest) o;
+    return Objects.equals(this.code, putHubDefaultLanguageRequest.code);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(friendlyName);
+    return Objects.hash(code);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class UpdateMeCredentialRequest {\n");
-    sb.append("    friendlyName: ").append(toIndentedString(friendlyName)).append("\n");
+    sb.append("class PutHubDefaultLanguageRequest {\n");
+    sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -140,9 +140,9 @@ public class UpdateMeCredentialRequest {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `friendly_name` to the URL query string
-    if (getFriendlyName() != null) {
-      joiner.add(String.format("%sfriendly_name%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getFriendlyName()))));
+    // add `code` to the URL query string
+    if (getCode() != null) {
+      joiner.add(String.format("%scode%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCode()))));
     }
 
     return joiner.toString();

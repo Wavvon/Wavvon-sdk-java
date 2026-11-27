@@ -47,7 +47,8 @@ import org.wavvon.sdk.generated.ApiClient;
   CertPayload.JSON_PROPERTY_CAPABILITIES,
   CertPayload.JSON_PROPERTY_LABEL,
   CertPayload.JSON_PROPERTY_DESCRIPTION,
-  CertPayload.JSON_PROPERTY_ICON
+  CertPayload.JSON_PROPERTY_ICON,
+  CertPayload.JSON_PROPERTY_CERT_TYPE
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class CertPayload {
@@ -137,6 +138,10 @@ public class CertPayload {
   public static final String JSON_PROPERTY_ICON = "icon";
   @jakarta.annotation.Nullable
   private String icon;
+
+  public static final String JSON_PROPERTY_CERT_TYPE = "cert_type";
+  @jakarta.annotation.Nullable
+  private String certType;
 
   public CertPayload() { 
   }
@@ -461,6 +466,30 @@ public class CertPayload {
   }
 
 
+  public CertPayload certType(@jakarta.annotation.Nullable String certType) {
+    this.certType = certType;
+    return this;
+  }
+
+  /**
+   * A type from the issuer&#39;s catalogue. Absent on a plain standing cert and on every badge.
+   * @return certType
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CERT_TYPE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getCertType() {
+    return certType;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_CERT_TYPE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setCertType(@jakarta.annotation.Nullable String certType) {
+    this.certType = certType;
+  }
+
+
   /**
    * Return true if this CertPayload object is equal to o.
    */
@@ -485,12 +514,13 @@ public class CertPayload {
         Objects.equals(this.capabilities, certPayload.capabilities) &&
         Objects.equals(this.label, certPayload.label) &&
         Objects.equals(this.description, certPayload.description) &&
-        Objects.equals(this.icon, certPayload.icon);
+        Objects.equals(this.icon, certPayload.icon) &&
+        Objects.equals(this.certType, certPayload.certType);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(subjectKind, issuerPubkey, issuerUrl, subjectPubkey, memberSince, standing, powLevel, issuedAt, expiresAt, capabilities, label, description, icon);
+    return Objects.hash(subjectKind, issuerPubkey, issuerUrl, subjectPubkey, memberSince, standing, powLevel, issuedAt, expiresAt, capabilities, label, description, icon, certType);
   }
 
   @Override
@@ -510,6 +540,7 @@ public class CertPayload {
     sb.append("    label: ").append(toIndentedString(label)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    icon: ").append(toIndentedString(icon)).append("\n");
+    sb.append("    certType: ").append(toIndentedString(certType)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -624,6 +655,11 @@ public class CertPayload {
     // add `icon` to the URL query string
     if (getIcon() != null) {
       joiner.add(String.format("%sicon%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getIcon()))));
+    }
+
+    // add `cert_type` to the URL query string
+    if (getCertType() != null) {
+      joiner.add(String.format("%scert_type%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCertType()))));
     }
 
     return joiner.toString();

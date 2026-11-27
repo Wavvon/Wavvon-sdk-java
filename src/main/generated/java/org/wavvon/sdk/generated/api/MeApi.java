@@ -18,9 +18,7 @@ import org.wavvon.sdk.generated.ApiResponse;
 import org.wavvon.sdk.generated.Configuration;
 import org.wavvon.sdk.generated.Pair;
 
-import org.wavvon.sdk.generated.model.ListMeCredentials200ResponseInner;
 import org.wavvon.sdk.generated.model.MeInfo;
-import org.wavvon.sdk.generated.model.UpdateMeCredentialRequest;
 import org.wavvon.sdk.generated.model.UpdateMeRequest;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -155,82 +153,6 @@ public class MeApi {
   }
 
   /**
-   * Remove a passkey
-   * 
-   * @param id  (required)
-   * @throws ApiException if fails to make API call
-   */
-  public void deleteMeCredential(String id) throws ApiException {
-    deleteMeCredentialWithHttpInfo(id);
-  }
-
-  /**
-   * Remove a passkey
-   * 
-   * @param id  (required)
-   * @return ApiResponse&lt;Void&gt;
-   * @throws ApiException if fails to make API call
-   */
-  public ApiResponse<Void> deleteMeCredentialWithHttpInfo(String id) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = deleteMeCredentialRequestBuilder(id);
-    try {
-      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
-          localVarRequestBuilder.build(),
-          HttpResponse.BodyHandlers.ofInputStream());
-      if (memberVarResponseInterceptor != null) {
-        memberVarResponseInterceptor.accept(localVarResponse);
-      }
-      try {
-        if (localVarResponse.statusCode()/ 100 != 2) {
-          throw getApiException("deleteMeCredential", localVarResponse);
-        }
-        return new ApiResponse<>(
-            localVarResponse.statusCode(),
-            localVarResponse.headers().map(),
-            null
-        );
-      } finally {
-        // Drain the InputStream
-        while (localVarResponse.body().read() != -1) {
-          // Ignore
-        }
-        localVarResponse.body().close();
-      }
-    } catch (IOException e) {
-      throw new ApiException(e);
-    }
-    catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-      throw new ApiException(e);
-    }
-  }
-
-  private HttpRequest.Builder deleteMeCredentialRequestBuilder(String id) throws ApiException {
-    // verify the required parameter 'id' is set
-    if (id == null) {
-      throw new ApiException(400, "Missing the required parameter 'id' when calling deleteMeCredential");
-    }
-
-    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
-
-    String localVarPath = "/me/credentials/{id}"
-        .replace("{id}", ApiClient.urlEncode(id.toString()));
-
-    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
-
-    localVarRequestBuilder.header("Accept", "application/json");
-
-    localVarRequestBuilder.method("DELETE", HttpRequest.BodyPublishers.noBody());
-    if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }
-    return localVarRequestBuilder;
-  }
-
-  /**
    * Get own profile and roles
    * 
    * @return MeInfo
@@ -292,83 +214,6 @@ public class MeApi {
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
     String localVarPath = "/me";
-
-    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
-
-    localVarRequestBuilder.header("Accept", "application/json");
-
-    localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
-    if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }
-    return localVarRequestBuilder;
-  }
-
-  /**
-   * List the caller&#39;s registered passkeys
-   * 
-   * @return List&lt;ListMeCredentials200ResponseInner&gt;
-   * @throws ApiException if fails to make API call
-   */
-  public List<ListMeCredentials200ResponseInner> listMeCredentials() throws ApiException {
-    ApiResponse<List<ListMeCredentials200ResponseInner>> localVarResponse = listMeCredentialsWithHttpInfo();
-    return localVarResponse.getData();
-  }
-
-  /**
-   * List the caller&#39;s registered passkeys
-   * 
-   * @return ApiResponse&lt;List&lt;ListMeCredentials200ResponseInner&gt;&gt;
-   * @throws ApiException if fails to make API call
-   */
-  public ApiResponse<List<ListMeCredentials200ResponseInner>> listMeCredentialsWithHttpInfo() throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = listMeCredentialsRequestBuilder();
-    try {
-      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
-          localVarRequestBuilder.build(),
-          HttpResponse.BodyHandlers.ofInputStream());
-      if (memberVarResponseInterceptor != null) {
-        memberVarResponseInterceptor.accept(localVarResponse);
-      }
-      try {
-        if (localVarResponse.statusCode()/ 100 != 2) {
-          throw getApiException("listMeCredentials", localVarResponse);
-        }
-        if (localVarResponse.body() == null) {
-          return new ApiResponse<List<ListMeCredentials200ResponseInner>>(
-              localVarResponse.statusCode(),
-              localVarResponse.headers().map(),
-              null
-          );
-        }
-
-        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
-        localVarResponse.body().close();
-
-        return new ApiResponse<List<ListMeCredentials200ResponseInner>>(
-            localVarResponse.statusCode(),
-            localVarResponse.headers().map(),
-            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<List<ListMeCredentials200ResponseInner>>() {})
-        );
-      } finally {
-      }
-    } catch (IOException e) {
-      throw new ApiException(e);
-    }
-    catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-      throw new ApiException(e);
-    }
-  }
-
-  private HttpRequest.Builder listMeCredentialsRequestBuilder() throws ApiException {
-
-    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
-
-    String localVarPath = "/me/credentials";
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
@@ -460,94 +305,6 @@ public class MeApi {
 
     try {
       byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(updateMeRequest);
-      localVarRequestBuilder.method("PATCH", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
-    } catch (IOException e) {
-      throw new ApiException(e);
-    }
-    if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }
-    return localVarRequestBuilder;
-  }
-
-  /**
-   * Rename a passkey
-   * 
-   * @param id  (required)
-   * @param updateMeCredentialRequest  (required)
-   * @throws ApiException if fails to make API call
-   */
-  public void updateMeCredential(String id, UpdateMeCredentialRequest updateMeCredentialRequest) throws ApiException {
-    updateMeCredentialWithHttpInfo(id, updateMeCredentialRequest);
-  }
-
-  /**
-   * Rename a passkey
-   * 
-   * @param id  (required)
-   * @param updateMeCredentialRequest  (required)
-   * @return ApiResponse&lt;Void&gt;
-   * @throws ApiException if fails to make API call
-   */
-  public ApiResponse<Void> updateMeCredentialWithHttpInfo(String id, UpdateMeCredentialRequest updateMeCredentialRequest) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = updateMeCredentialRequestBuilder(id, updateMeCredentialRequest);
-    try {
-      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
-          localVarRequestBuilder.build(),
-          HttpResponse.BodyHandlers.ofInputStream());
-      if (memberVarResponseInterceptor != null) {
-        memberVarResponseInterceptor.accept(localVarResponse);
-      }
-      try {
-        if (localVarResponse.statusCode()/ 100 != 2) {
-          throw getApiException("updateMeCredential", localVarResponse);
-        }
-        return new ApiResponse<>(
-            localVarResponse.statusCode(),
-            localVarResponse.headers().map(),
-            null
-        );
-      } finally {
-        // Drain the InputStream
-        while (localVarResponse.body().read() != -1) {
-          // Ignore
-        }
-        localVarResponse.body().close();
-      }
-    } catch (IOException e) {
-      throw new ApiException(e);
-    }
-    catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-      throw new ApiException(e);
-    }
-  }
-
-  private HttpRequest.Builder updateMeCredentialRequestBuilder(String id, UpdateMeCredentialRequest updateMeCredentialRequest) throws ApiException {
-    // verify the required parameter 'id' is set
-    if (id == null) {
-      throw new ApiException(400, "Missing the required parameter 'id' when calling updateMeCredential");
-    }
-    // verify the required parameter 'updateMeCredentialRequest' is set
-    if (updateMeCredentialRequest == null) {
-      throw new ApiException(400, "Missing the required parameter 'updateMeCredentialRequest' when calling updateMeCredential");
-    }
-
-    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
-
-    String localVarPath = "/me/credentials/{id}"
-        .replace("{id}", ApiClient.urlEncode(id.toString()));
-
-    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
-
-    localVarRequestBuilder.header("Content-Type", "application/json");
-    localVarRequestBuilder.header("Accept", "application/json");
-
-    try {
-      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(updateMeCredentialRequest);
       localVarRequestBuilder.method("PATCH", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
     } catch (IOException e) {
       throw new ApiException(e);

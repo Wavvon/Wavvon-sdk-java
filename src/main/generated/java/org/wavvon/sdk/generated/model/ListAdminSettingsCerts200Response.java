@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.wavvon.sdk.generated.model.TrustedCertType;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -37,56 +38,17 @@ import org.wavvon.sdk.generated.ApiClient;
  * ListAdminSettingsCerts200Response
  */
 @JsonPropertyOrder({
-  ListAdminSettingsCerts200Response.JSON_PROPERTY_CERT_MODE,
   ListAdminSettingsCerts200Response.JSON_PROPERTY_CERT_AUTO_ISSUE,
   ListAdminSettingsCerts200Response.JSON_PROPERTY_CERT_MIN_AGE_DAYS,
   ListAdminSettingsCerts200Response.JSON_PROPERTY_CERT_VALIDITY_DAYS,
   ListAdminSettingsCerts200Response.JSON_PROPERTY_CERT_TRUSTED_ISSUERS,
+  ListAdminSettingsCerts200Response.JSON_PROPERTY_CERT_TRUSTED_TYPES,
+  ListAdminSettingsCerts200Response.JSON_PROPERTY_CERT_OTHERS,
+  ListAdminSettingsCerts200Response.JSON_PROPERTY_CERT_REPLACES_INVITE,
   ListAdminSettingsCerts200Response.JSON_PROPERTY_CERT_ISSUER_URLS
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class ListAdminSettingsCerts200Response {
-  /**
-   * Gets or Sets certMode
-   */
-  public enum CertModeEnum {
-    NONE(String.valueOf("none")),
-    
-    ANY(String.valueOf("any")),
-    
-    TRUSTED(String.valueOf("trusted"));
-
-    private String value;
-
-    CertModeEnum(String value) {
-      this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static CertModeEnum fromValue(String value) {
-      for (CertModeEnum b : CertModeEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-  }
-
-  public static final String JSON_PROPERTY_CERT_MODE = "cert_mode";
-  @jakarta.annotation.Nullable
-  private CertModeEnum certMode;
-
   public static final String JSON_PROPERTY_CERT_AUTO_ISSUE = "cert_auto_issue";
   @jakarta.annotation.Nullable
   private Boolean certAutoIssue;
@@ -103,36 +65,59 @@ public class ListAdminSettingsCerts200Response {
   @jakarta.annotation.Nullable
   private List<String> certTrustedIssuers = new ArrayList<>();
 
+  public static final String JSON_PROPERTY_CERT_TRUSTED_TYPES = "cert_trusted_types";
+  @jakarta.annotation.Nullable
+  private List<TrustedCertType> certTrustedTypes = new ArrayList<>();
+
+  /**
+   * Gets or Sets certOthers
+   */
+  public enum CertOthersEnum {
+    LOBBY(String.valueOf("lobby")),
+    
+    REFUSE(String.valueOf("refuse"));
+
+    private String value;
+
+    CertOthersEnum(String value) {
+      this.value = value;
+    }
+
+    @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static CertOthersEnum fromValue(String value) {
+      for (CertOthersEnum b : CertOthersEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+  }
+
+  public static final String JSON_PROPERTY_CERT_OTHERS = "cert_others";
+  @jakarta.annotation.Nullable
+  private CertOthersEnum certOthers;
+
+  public static final String JSON_PROPERTY_CERT_REPLACES_INVITE = "cert_replaces_invite";
+  @jakarta.annotation.Nullable
+  private Boolean certReplacesInvite;
+
   public static final String JSON_PROPERTY_CERT_ISSUER_URLS = "cert_issuer_urls";
   @jakarta.annotation.Nullable
   private Map<String, String> certIssuerUrls = new HashMap<>();
 
   public ListAdminSettingsCerts200Response() { 
   }
-
-  public ListAdminSettingsCerts200Response certMode(@jakarta.annotation.Nullable CertModeEnum certMode) {
-    this.certMode = certMode;
-    return this;
-  }
-
-  /**
-   * Get certMode
-   * @return certMode
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_CERT_MODE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public CertModeEnum getCertMode() {
-    return certMode;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_CERT_MODE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCertMode(@jakarta.annotation.Nullable CertModeEnum certMode) {
-    this.certMode = certMode;
-  }
-
 
   public ListAdminSettingsCerts200Response certAutoIssue(@jakarta.annotation.Nullable Boolean certAutoIssue) {
     this.certAutoIssue = certAutoIssue;
@@ -238,6 +223,86 @@ public class ListAdminSettingsCerts200Response {
   }
 
 
+  public ListAdminSettingsCerts200Response certTrustedTypes(@jakarta.annotation.Nullable List<TrustedCertType> certTrustedTypes) {
+    this.certTrustedTypes = certTrustedTypes;
+    return this;
+  }
+
+  public ListAdminSettingsCerts200Response addCertTrustedTypesItem(TrustedCertType certTrustedTypesItem) {
+    if (this.certTrustedTypes == null) {
+      this.certTrustedTypes = new ArrayList<>();
+    }
+    this.certTrustedTypes.add(certTrustedTypesItem);
+    return this;
+  }
+
+  /**
+   * Get certTrustedTypes
+   * @return certTrustedTypes
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CERT_TRUSTED_TYPES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public List<TrustedCertType> getCertTrustedTypes() {
+    return certTrustedTypes;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_CERT_TRUSTED_TYPES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setCertTrustedTypes(@jakarta.annotation.Nullable List<TrustedCertType> certTrustedTypes) {
+    this.certTrustedTypes = certTrustedTypes;
+  }
+
+
+  public ListAdminSettingsCerts200Response certOthers(@jakarta.annotation.Nullable CertOthersEnum certOthers) {
+    this.certOthers = certOthers;
+    return this;
+  }
+
+  /**
+   * Get certOthers
+   * @return certOthers
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CERT_OTHERS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public CertOthersEnum getCertOthers() {
+    return certOthers;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_CERT_OTHERS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setCertOthers(@jakarta.annotation.Nullable CertOthersEnum certOthers) {
+    this.certOthers = certOthers;
+  }
+
+
+  public ListAdminSettingsCerts200Response certReplacesInvite(@jakarta.annotation.Nullable Boolean certReplacesInvite) {
+    this.certReplacesInvite = certReplacesInvite;
+    return this;
+  }
+
+  /**
+   * Get certReplacesInvite
+   * @return certReplacesInvite
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CERT_REPLACES_INVITE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Boolean getCertReplacesInvite() {
+    return certReplacesInvite;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_CERT_REPLACES_INVITE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setCertReplacesInvite(@jakarta.annotation.Nullable Boolean certReplacesInvite) {
+    this.certReplacesInvite = certReplacesInvite;
+  }
+
+
   public ListAdminSettingsCerts200Response certIssuerUrls(@jakarta.annotation.Nullable Map<String, String> certIssuerUrls) {
     this.certIssuerUrls = certIssuerUrls;
     return this;
@@ -282,28 +347,32 @@ public class ListAdminSettingsCerts200Response {
       return false;
     }
     ListAdminSettingsCerts200Response listAdminSettingsCerts200Response = (ListAdminSettingsCerts200Response) o;
-    return Objects.equals(this.certMode, listAdminSettingsCerts200Response.certMode) &&
-        Objects.equals(this.certAutoIssue, listAdminSettingsCerts200Response.certAutoIssue) &&
+    return Objects.equals(this.certAutoIssue, listAdminSettingsCerts200Response.certAutoIssue) &&
         Objects.equals(this.certMinAgeDays, listAdminSettingsCerts200Response.certMinAgeDays) &&
         Objects.equals(this.certValidityDays, listAdminSettingsCerts200Response.certValidityDays) &&
         Objects.equals(this.certTrustedIssuers, listAdminSettingsCerts200Response.certTrustedIssuers) &&
+        Objects.equals(this.certTrustedTypes, listAdminSettingsCerts200Response.certTrustedTypes) &&
+        Objects.equals(this.certOthers, listAdminSettingsCerts200Response.certOthers) &&
+        Objects.equals(this.certReplacesInvite, listAdminSettingsCerts200Response.certReplacesInvite) &&
         Objects.equals(this.certIssuerUrls, listAdminSettingsCerts200Response.certIssuerUrls);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(certMode, certAutoIssue, certMinAgeDays, certValidityDays, certTrustedIssuers, certIssuerUrls);
+    return Objects.hash(certAutoIssue, certMinAgeDays, certValidityDays, certTrustedIssuers, certTrustedTypes, certOthers, certReplacesInvite, certIssuerUrls);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ListAdminSettingsCerts200Response {\n");
-    sb.append("    certMode: ").append(toIndentedString(certMode)).append("\n");
     sb.append("    certAutoIssue: ").append(toIndentedString(certAutoIssue)).append("\n");
     sb.append("    certMinAgeDays: ").append(toIndentedString(certMinAgeDays)).append("\n");
     sb.append("    certValidityDays: ").append(toIndentedString(certValidityDays)).append("\n");
     sb.append("    certTrustedIssuers: ").append(toIndentedString(certTrustedIssuers)).append("\n");
+    sb.append("    certTrustedTypes: ").append(toIndentedString(certTrustedTypes)).append("\n");
+    sb.append("    certOthers: ").append(toIndentedString(certOthers)).append("\n");
+    sb.append("    certReplacesInvite: ").append(toIndentedString(certReplacesInvite)).append("\n");
     sb.append("    certIssuerUrls: ").append(toIndentedString(certIssuerUrls)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -352,11 +421,6 @@ public class ListAdminSettingsCerts200Response {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `cert_mode` to the URL query string
-    if (getCertMode() != null) {
-      joiner.add(String.format("%scert_mode%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCertMode()))));
-    }
-
     // add `cert_auto_issue` to the URL query string
     if (getCertAutoIssue() != null) {
       joiner.add(String.format("%scert_auto_issue%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCertAutoIssue()))));
@@ -379,6 +443,26 @@ public class ListAdminSettingsCerts200Response {
             "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix),
             ApiClient.urlEncode(ApiClient.valueToString(getCertTrustedIssuers().get(i)))));
       }
+    }
+
+    // add `cert_trusted_types` to the URL query string
+    if (getCertTrustedTypes() != null) {
+      for (int i = 0; i < getCertTrustedTypes().size(); i++) {
+        if (getCertTrustedTypes().get(i) != null) {
+          joiner.add(getCertTrustedTypes().get(i).toUrlQueryString(String.format("%scert_trusted_types%s%s", prefix, suffix,
+          "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix))));
+        }
+      }
+    }
+
+    // add `cert_others` to the URL query string
+    if (getCertOthers() != null) {
+      joiner.add(String.format("%scert_others%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCertOthers()))));
+    }
+
+    // add `cert_replaces_invite` to the URL query string
+    if (getCertReplacesInvite() != null) {
+      joiner.add(String.format("%scert_replaces_invite%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCertReplacesInvite()))));
     }
 
     // add `cert_issuer_urls` to the URL query string

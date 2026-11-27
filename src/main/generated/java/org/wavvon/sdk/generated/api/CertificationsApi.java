@@ -18,8 +18,11 @@ import org.wavvon.sdk.generated.ApiResponse;
 import org.wavvon.sdk.generated.Configuration;
 import org.wavvon.sdk.generated.Pair;
 
+import org.wavvon.sdk.generated.model.CertType;
 import org.wavvon.sdk.generated.model.Certification;
 import org.wavvon.sdk.generated.model.CreateAdminCertBadgeRequest;
+import org.wavvon.sdk.generated.model.CreateCertTypeRequest;
+import org.wavvon.sdk.generated.model.IssueAdminCertRequest;
 import org.wavvon.sdk.generated.model.ListAdminCerts200ResponseInner;
 import org.wavvon.sdk.generated.model.ListAdminSettingsCerts200Response;
 import org.wavvon.sdk.generated.model.ListCertsRevocations200ResponseInner;
@@ -184,26 +187,193 @@ public class CertificationsApi {
   }
 
   /**
-   * Manually issue a cert for a user (admin)
+   * Add a certificate type to the catalogue (admin)
    * 
+   * @param createCertTypeRequest  (required)
+   * @return CertType
+   * @throws ApiException if fails to make API call
+   */
+  public CertType createCertType(CreateCertTypeRequest createCertTypeRequest) throws ApiException {
+    ApiResponse<CertType> localVarResponse = createCertTypeWithHttpInfo(createCertTypeRequest);
+    return localVarResponse.getData();
+  }
+
+  /**
+   * Add a certificate type to the catalogue (admin)
+   * 
+   * @param createCertTypeRequest  (required)
+   * @return ApiResponse&lt;CertType&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<CertType> createCertTypeWithHttpInfo(CreateCertTypeRequest createCertTypeRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = createCertTypeRequestBuilder(createCertTypeRequest);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("createCertType", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<CertType>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        localVarResponse.body().close();
+
+        return new ApiResponse<CertType>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<CertType>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder createCertTypeRequestBuilder(CreateCertTypeRequest createCertTypeRequest) throws ApiException {
+    // verify the required parameter 'createCertTypeRequest' is set
+    if (createCertTypeRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createCertTypeRequest' when calling createCertType");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/admin/cert-types";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Content-Type", "application/json");
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(createCertTypeRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Remove a certificate type (admin)
+   * Certificates already issued keep the type.
+   * @param id  (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void deleteCertType(String id) throws ApiException {
+    deleteCertTypeWithHttpInfo(id);
+  }
+
+  /**
+   * Remove a certificate type (admin)
+   * Certificates already issued keep the type.
+   * @param id  (required)
+   * @return ApiResponse&lt;Void&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<Void> deleteCertTypeWithHttpInfo(String id) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = deleteCertTypeRequestBuilder(id);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("deleteCertType", localVarResponse);
+        }
+        return new ApiResponse<>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            null
+        );
+      } finally {
+        // Drain the InputStream
+        while (localVarResponse.body().read() != -1) {
+          // Ignore
+        }
+        localVarResponse.body().close();
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder deleteCertTypeRequestBuilder(String id) throws ApiException {
+    // verify the required parameter 'id' is set
+    if (id == null) {
+      throw new ApiException(400, "Missing the required parameter 'id' when calling deleteCertType");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/admin/cert-types/{id}"
+        .replace("{id}", ApiClient.urlEncode(id.toString()));
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("DELETE", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Manually issue a cert for a user (admin)
+   * An optional body names a type from this hub&#39;s catalogue; without one the cert is a plain standing cert.
    * @param pubkey  (required)
+   * @param issueAdminCertRequest  (optional)
    * @return Certification
    * @throws ApiException if fails to make API call
    */
-  public Certification issueAdminCert(String pubkey) throws ApiException {
-    ApiResponse<Certification> localVarResponse = issueAdminCertWithHttpInfo(pubkey);
+  public Certification issueAdminCert(String pubkey, IssueAdminCertRequest issueAdminCertRequest) throws ApiException {
+    ApiResponse<Certification> localVarResponse = issueAdminCertWithHttpInfo(pubkey, issueAdminCertRequest);
     return localVarResponse.getData();
   }
 
   /**
    * Manually issue a cert for a user (admin)
-   * 
+   * An optional body names a type from this hub&#39;s catalogue; without one the cert is a plain standing cert.
    * @param pubkey  (required)
+   * @param issueAdminCertRequest  (optional)
    * @return ApiResponse&lt;Certification&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Certification> issueAdminCertWithHttpInfo(String pubkey) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = issueAdminCertRequestBuilder(pubkey);
+  public ApiResponse<Certification> issueAdminCertWithHttpInfo(String pubkey, IssueAdminCertRequest issueAdminCertRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = issueAdminCertRequestBuilder(pubkey, issueAdminCertRequest);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -242,7 +412,7 @@ public class CertificationsApi {
     }
   }
 
-  private HttpRequest.Builder issueAdminCertRequestBuilder(String pubkey) throws ApiException {
+  private HttpRequest.Builder issueAdminCertRequestBuilder(String pubkey, IssueAdminCertRequest issueAdminCertRequest) throws ApiException {
     // verify the required parameter 'pubkey' is set
     if (pubkey == null) {
       throw new ApiException(400, "Missing the required parameter 'pubkey' when calling issueAdminCert");
@@ -255,9 +425,15 @@ public class CertificationsApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
+    localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
-    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(issueAdminCertRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }
@@ -427,6 +603,83 @@ public class CertificationsApi {
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
     String localVarPath = "/admin/settings/certs";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * This hub&#39;s catalogue of certificate types (public)
+   * Read by another hub&#39;s admin to trust one type of certificate from this hub.
+   * @return List&lt;CertType&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public List<CertType> listCertTypes() throws ApiException {
+    ApiResponse<List<CertType>> localVarResponse = listCertTypesWithHttpInfo();
+    return localVarResponse.getData();
+  }
+
+  /**
+   * This hub&#39;s catalogue of certificate types (public)
+   * Read by another hub&#39;s admin to trust one type of certificate from this hub.
+   * @return ApiResponse&lt;List&lt;CertType&gt;&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<List<CertType>> listCertTypesWithHttpInfo() throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = listCertTypesRequestBuilder();
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("listCertTypes", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<List<CertType>>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        localVarResponse.body().close();
+
+        return new ApiResponse<List<CertType>>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<List<CertType>>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder listCertTypesRequestBuilder() throws ApiException {
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/certs/types";
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
