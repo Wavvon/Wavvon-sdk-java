@@ -29,6 +29,8 @@ import java.util.Arrays;
 import java.util.List;
 import org.wavvon.sdk.generated.model.HubInfoBadgesInner;
 import org.wavvon.sdk.generated.model.HubInfoCertRequirement;
+import org.wavvon.sdk.generated.model.HubInfoTheme;
+import org.wavvon.sdk.generated.model.HubLanguages;
 import org.wavvon.sdk.generated.model.Landing;
 import org.wavvon.sdk.generated.model.StreamLimits;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -47,6 +49,8 @@ import org.wavvon.sdk.generated.ApiClient;
   HubInfo.JSON_PROPERTY_CAPABILITIES,
   HubInfo.JSON_PROPERTY_CANONICAL_URL,
   HubInfo.JSON_PROPERTY_LANDING,
+  HubInfo.JSON_PROPERTY_THEME,
+  HubInfo.JSON_PROPERTY_LANGUAGES,
   HubInfo.JSON_PROPERTY_INVITE_ONLY,
   HubInfo.JSON_PROPERTY_MIN_SECURITY_LEVEL,
   HubInfo.JSON_PROPERTY_MIN_POW_LEVEL,
@@ -65,8 +69,6 @@ import org.wavvon.sdk.generated.ApiClient;
   HubInfo.JSON_PROPERTY_WELCOME_LABEL,
   HubInfo.JSON_PROPERTY_WELCOME_INVITE_URL,
   HubInfo.JSON_PROPERTY_FAREWELL_LABEL,
-  HubInfo.JSON_PROPERTY_VOICE_WT_URL,
-  HubInfo.JSON_PROPERTY_VOICE_CERT_HASH,
   HubInfo.JSON_PROPERTY_TIMEZONE,
   HubInfo.JSON_PROPERTY_BIRTHDAYS_ENABLED,
   HubInfo.JSON_PROPERTY_MAX_ATTACHMENT_BYTES,
@@ -105,6 +107,14 @@ public class HubInfo {
   public static final String JSON_PROPERTY_LANDING = "landing";
   @jakarta.annotation.Nullable
   private Landing landing;
+
+  public static final String JSON_PROPERTY_THEME = "theme";
+  @jakarta.annotation.Nullable
+  private HubInfoTheme theme;
+
+  public static final String JSON_PROPERTY_LANGUAGES = "languages";
+  @jakarta.annotation.Nullable
+  private HubLanguages languages;
 
   public static final String JSON_PROPERTY_INVITE_ONLY = "invite_only";
   @jakarta.annotation.Nonnull
@@ -216,14 +226,6 @@ public class HubInfo {
   public static final String JSON_PROPERTY_FAREWELL_LABEL = "farewell_label";
   @jakarta.annotation.Nullable
   private String farewellLabel;
-
-  public static final String JSON_PROPERTY_VOICE_WT_URL = "voice_wt_url";
-  @jakarta.annotation.Nullable
-  private String voiceWtUrl;
-
-  public static final String JSON_PROPERTY_VOICE_CERT_HASH = "voice_cert_hash";
-  @jakarta.annotation.Nullable
-  private String voiceCertHash;
 
   public static final String JSON_PROPERTY_TIMEZONE = "timezone";
   @jakarta.annotation.Nullable
@@ -441,6 +443,54 @@ public class HubInfo {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setLanding(@jakarta.annotation.Nullable Landing landing) {
     this.landing = landing;
+  }
+
+
+  public HubInfo theme(@jakarta.annotation.Nullable HubInfoTheme theme) {
+    this.theme = theme;
+    return this;
+  }
+
+  /**
+   * Get theme
+   * @return theme
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_THEME)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public HubInfoTheme getTheme() {
+    return theme;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_THEME)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setTheme(@jakarta.annotation.Nullable HubInfoTheme theme) {
+    this.theme = theme;
+  }
+
+
+  public HubInfo languages(@jakarta.annotation.Nullable HubLanguages languages) {
+    this.languages = languages;
+    return this;
+  }
+
+  /**
+   * The hub&#39;s language packs and default language (&#x60;hub.languages&#x60;), the same value as &#x60;GET /hub/languages&#x60;. Absent while the hub has neither.
+   * @return languages
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_LANGUAGES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public HubLanguages getLanguages() {
+    return languages;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_LANGUAGES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setLanguages(@jakarta.annotation.Nullable HubLanguages languages) {
+    this.languages = languages;
   }
 
 
@@ -892,54 +942,6 @@ public class HubInfo {
   }
 
 
-  public HubInfo voiceWtUrl(@jakarta.annotation.Nullable String voiceWtUrl) {
-    this.voiceWtUrl = voiceWtUrl;
-    return this;
-  }
-
-  /**
-   * WebTransport voice endpoint. Omitted unless set.
-   * @return voiceWtUrl
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_VOICE_WT_URL)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getVoiceWtUrl() {
-    return voiceWtUrl;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_VOICE_WT_URL)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setVoiceWtUrl(@jakarta.annotation.Nullable String voiceWtUrl) {
-    this.voiceWtUrl = voiceWtUrl;
-  }
-
-
-  public HubInfo voiceCertHash(@jakarta.annotation.Nullable String voiceCertHash) {
-    this.voiceCertHash = voiceCertHash;
-    return this;
-  }
-
-  /**
-   * Omitted unless set.
-   * @return voiceCertHash
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_VOICE_CERT_HASH)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getVoiceCertHash() {
-    return voiceCertHash;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_VOICE_CERT_HASH)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setVoiceCertHash(@jakarta.annotation.Nullable String voiceCertHash) {
-    this.voiceCertHash = voiceCertHash;
-  }
-
-
   public HubInfo timezone(@jakarta.annotation.Nullable String timezone) {
     this.timezone = timezone;
     return this;
@@ -1056,6 +1058,8 @@ public class HubInfo {
         Objects.equals(this.capabilities, hubInfo.capabilities) &&
         Objects.equals(this.canonicalUrl, hubInfo.canonicalUrl) &&
         Objects.equals(this.landing, hubInfo.landing) &&
+        Objects.equals(this.theme, hubInfo.theme) &&
+        Objects.equals(this.languages, hubInfo.languages) &&
         Objects.equals(this.inviteOnly, hubInfo.inviteOnly) &&
         Objects.equals(this.minSecurityLevel, hubInfo.minSecurityLevel) &&
         Objects.equals(this.minPowLevel, hubInfo.minPowLevel) &&
@@ -1074,8 +1078,6 @@ public class HubInfo {
         Objects.equals(this.welcomeLabel, hubInfo.welcomeLabel) &&
         Objects.equals(this.welcomeInviteUrl, hubInfo.welcomeInviteUrl) &&
         Objects.equals(this.farewellLabel, hubInfo.farewellLabel) &&
-        Objects.equals(this.voiceWtUrl, hubInfo.voiceWtUrl) &&
-        Objects.equals(this.voiceCertHash, hubInfo.voiceCertHash) &&
         Objects.equals(this.timezone, hubInfo.timezone) &&
         Objects.equals(this.birthdaysEnabled, hubInfo.birthdaysEnabled) &&
         Objects.equals(this.maxAttachmentBytes, hubInfo.maxAttachmentBytes) &&
@@ -1084,7 +1086,7 @@ public class HubInfo {
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, description, icon, publicKey, version, capabilities, canonicalUrl, landing, inviteOnly, minSecurityLevel, minPowLevel, challengeMode, farmUrl, selfTags, nsfw, badges, certRequirement, sfuUrl, emojiCount, rotation, lanMode, lanTls, lanFingerprint, welcomeLabel, welcomeInviteUrl, farewellLabel, voiceWtUrl, voiceCertHash, timezone, birthdaysEnabled, maxAttachmentBytes, streamLimits);
+    return Objects.hash(name, description, icon, publicKey, version, capabilities, canonicalUrl, landing, theme, languages, inviteOnly, minSecurityLevel, minPowLevel, challengeMode, farmUrl, selfTags, nsfw, badges, certRequirement, sfuUrl, emojiCount, rotation, lanMode, lanTls, lanFingerprint, welcomeLabel, welcomeInviteUrl, farewellLabel, timezone, birthdaysEnabled, maxAttachmentBytes, streamLimits);
   }
 
   @Override
@@ -1099,6 +1101,8 @@ public class HubInfo {
     sb.append("    capabilities: ").append(toIndentedString(capabilities)).append("\n");
     sb.append("    canonicalUrl: ").append(toIndentedString(canonicalUrl)).append("\n");
     sb.append("    landing: ").append(toIndentedString(landing)).append("\n");
+    sb.append("    theme: ").append(toIndentedString(theme)).append("\n");
+    sb.append("    languages: ").append(toIndentedString(languages)).append("\n");
     sb.append("    inviteOnly: ").append(toIndentedString(inviteOnly)).append("\n");
     sb.append("    minSecurityLevel: ").append(toIndentedString(minSecurityLevel)).append("\n");
     sb.append("    minPowLevel: ").append(toIndentedString(minPowLevel)).append("\n");
@@ -1117,8 +1121,6 @@ public class HubInfo {
     sb.append("    welcomeLabel: ").append(toIndentedString(welcomeLabel)).append("\n");
     sb.append("    welcomeInviteUrl: ").append(toIndentedString(welcomeInviteUrl)).append("\n");
     sb.append("    farewellLabel: ").append(toIndentedString(farewellLabel)).append("\n");
-    sb.append("    voiceWtUrl: ").append(toIndentedString(voiceWtUrl)).append("\n");
-    sb.append("    voiceCertHash: ").append(toIndentedString(voiceCertHash)).append("\n");
     sb.append("    timezone: ").append(toIndentedString(timezone)).append("\n");
     sb.append("    birthdaysEnabled: ").append(toIndentedString(birthdaysEnabled)).append("\n");
     sb.append("    maxAttachmentBytes: ").append(toIndentedString(maxAttachmentBytes)).append("\n");
@@ -1212,6 +1214,16 @@ public class HubInfo {
     // add `landing` to the URL query string
     if (getLanding() != null) {
       joiner.add(getLanding().toUrlQueryString(prefix + "landing" + suffix));
+    }
+
+    // add `theme` to the URL query string
+    if (getTheme() != null) {
+      joiner.add(getTheme().toUrlQueryString(prefix + "theme" + suffix));
+    }
+
+    // add `languages` to the URL query string
+    if (getLanguages() != null) {
+      joiner.add(getLanguages().toUrlQueryString(prefix + "languages" + suffix));
     }
 
     // add `invite_only` to the URL query string
@@ -1311,16 +1323,6 @@ public class HubInfo {
     // add `farewell_label` to the URL query string
     if (getFarewellLabel() != null) {
       joiner.add(String.format("%sfarewell_label%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getFarewellLabel()))));
-    }
-
-    // add `voice_wt_url` to the URL query string
-    if (getVoiceWtUrl() != null) {
-      joiner.add(String.format("%svoice_wt_url%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getVoiceWtUrl()))));
-    }
-
-    // add `voice_cert_hash` to the URL query string
-    if (getVoiceCertHash() != null) {
-      joiner.add(String.format("%svoice_cert_hash%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getVoiceCertHash()))));
     }
 
     // add `timezone` to the URL query string

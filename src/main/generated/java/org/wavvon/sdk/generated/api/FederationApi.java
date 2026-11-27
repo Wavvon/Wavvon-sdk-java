@@ -1911,7 +1911,7 @@ public class FederationApi {
 
   /**
    * Sign a directory entry for the hub discovery service
-   * 
+   * Returns &#x60;canonical_payload&#x60; (sorted keys: bio, hub_url, invite_code when given, language, nonce, tags, and &#x60;theme_preview_url&#x60; when the hub has a default theme with a preview), the hub key and its signature.
    * @param signAdminDirectoryListingRequest  (required)
    * @throws ApiException if fails to make API call
    */
@@ -1921,7 +1921,7 @@ public class FederationApi {
 
   /**
    * Sign a directory entry for the hub discovery service
-   * 
+   * Returns &#x60;canonical_payload&#x60; (sorted keys: bio, hub_url, invite_code when given, language, nonce, tags, and &#x60;theme_preview_url&#x60; when the hub has a default theme with a preview), the hub key and its signature.
    * @param signAdminDirectoryListingRequest  (required)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call

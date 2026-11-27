@@ -30,75 +30,75 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * FinishWebauthnAssertionRequest
+ * PutPushSubscriptionRequestKeys
  */
 @JsonPropertyOrder({
-  FinishWebauthnAssertionRequest.JSON_PROPERTY_SESSION_ID,
-  FinishWebauthnAssertionRequest.JSON_PROPERTY_CREDENTIAL
+  PutPushSubscriptionRequestKeys.JSON_PROPERTY_P256DH,
+  PutPushSubscriptionRequestKeys.JSON_PROPERTY_AUTH
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class FinishWebauthnAssertionRequest {
-  public static final String JSON_PROPERTY_SESSION_ID = "session_id";
+public class PutPushSubscriptionRequestKeys {
+  public static final String JSON_PROPERTY_P256DH = "p256dh";
   @jakarta.annotation.Nonnull
-  private String sessionId;
+  private String p256dh;
 
-  public static final String JSON_PROPERTY_CREDENTIAL = "credential";
+  public static final String JSON_PROPERTY_AUTH = "auth";
   @jakarta.annotation.Nonnull
-  private Object credential;
+  private String auth;
 
-  public FinishWebauthnAssertionRequest() { 
+  public PutPushSubscriptionRequestKeys() { 
   }
 
-  public FinishWebauthnAssertionRequest sessionId(@jakarta.annotation.Nonnull String sessionId) {
-    this.sessionId = sessionId;
+  public PutPushSubscriptionRequestKeys p256dh(@jakarta.annotation.Nonnull String p256dh) {
+    this.p256dh = p256dh;
     return this;
   }
 
   /**
-   * Get sessionId
-   * @return sessionId
+   * base64url P-256 point
+   * @return p256dh
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_SESSION_ID)
+  @JsonProperty(JSON_PROPERTY_P256DH)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public String getSessionId() {
-    return sessionId;
+  public String getP256dh() {
+    return p256dh;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_SESSION_ID)
+  @JsonProperty(JSON_PROPERTY_P256DH)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setSessionId(@jakarta.annotation.Nonnull String sessionId) {
-    this.sessionId = sessionId;
+  public void setP256dh(@jakarta.annotation.Nonnull String p256dh) {
+    this.p256dh = p256dh;
   }
 
 
-  public FinishWebauthnAssertionRequest credential(@jakarta.annotation.Nonnull Object credential) {
-    this.credential = credential;
+  public PutPushSubscriptionRequestKeys auth(@jakarta.annotation.Nonnull String auth) {
+    this.auth = auth;
     return this;
   }
 
   /**
-   * PublicKeyCredential assertion from navigator.credentials.get()
-   * @return credential
+   * base64url, 16 bytes
+   * @return auth
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_CREDENTIAL)
+  @JsonProperty(JSON_PROPERTY_AUTH)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public Object getCredential() {
-    return credential;
+  public String getAuth() {
+    return auth;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_CREDENTIAL)
+  @JsonProperty(JSON_PROPERTY_AUTH)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setCredential(@jakarta.annotation.Nonnull Object credential) {
-    this.credential = credential;
+  public void setAuth(@jakarta.annotation.Nonnull String auth) {
+    this.auth = auth;
   }
 
 
   /**
-   * Return true if this finishWebauthnAssertion_request object is equal to o.
+   * Return true if this putPushSubscription_request_keys object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -108,22 +108,22 @@ public class FinishWebauthnAssertionRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    FinishWebauthnAssertionRequest finishWebauthnAssertionRequest = (FinishWebauthnAssertionRequest) o;
-    return Objects.equals(this.sessionId, finishWebauthnAssertionRequest.sessionId) &&
-        Objects.equals(this.credential, finishWebauthnAssertionRequest.credential);
+    PutPushSubscriptionRequestKeys putPushSubscriptionRequestKeys = (PutPushSubscriptionRequestKeys) o;
+    return Objects.equals(this.p256dh, putPushSubscriptionRequestKeys.p256dh) &&
+        Objects.equals(this.auth, putPushSubscriptionRequestKeys.auth);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(sessionId, credential);
+    return Objects.hash(p256dh, auth);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class FinishWebauthnAssertionRequest {\n");
-    sb.append("    sessionId: ").append(toIndentedString(sessionId)).append("\n");
-    sb.append("    credential: ").append(toIndentedString(credential)).append("\n");
+    sb.append("class PutPushSubscriptionRequestKeys {\n");
+    sb.append("    p256dh: ").append(toIndentedString(p256dh)).append("\n");
+    sb.append("    auth: ").append(toIndentedString(auth)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -171,14 +171,14 @@ public class FinishWebauthnAssertionRequest {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `session_id` to the URL query string
-    if (getSessionId() != null) {
-      joiner.add(String.format("%ssession_id%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getSessionId()))));
+    // add `p256dh` to the URL query string
+    if (getP256dh() != null) {
+      joiner.add(String.format("%sp256dh%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getP256dh()))));
     }
 
-    // add `credential` to the URL query string
-    if (getCredential() != null) {
-      joiner.add(String.format("%scredential%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCredential()))));
+    // add `auth` to the URL query string
+    if (getAuth() != null) {
+      joiner.add(String.format("%sauth%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getAuth()))));
     }
 
     return joiner.toString();

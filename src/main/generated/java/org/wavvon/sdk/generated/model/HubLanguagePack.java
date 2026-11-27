@@ -30,75 +30,104 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * BeginWebauthnRegistrationRequest
+ * HubLanguagePack
  */
 @JsonPropertyOrder({
-  BeginWebauthnRegistrationRequest.JSON_PROPERTY_USER_PUBKEY,
-  BeginWebauthnRegistrationRequest.JSON_PROPERTY_DISPLAY_NAME
+  HubLanguagePack.JSON_PROPERTY_CODE,
+  HubLanguagePack.JSON_PROPERTY_NAME,
+  HubLanguagePack.JSON_PROPERTY_SHA256
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class BeginWebauthnRegistrationRequest {
-  public static final String JSON_PROPERTY_USER_PUBKEY = "user_pubkey";
+public class HubLanguagePack {
+  public static final String JSON_PROPERTY_CODE = "code";
   @jakarta.annotation.Nonnull
-  private String userPubkey;
+  private String code;
 
-  public static final String JSON_PROPERTY_DISPLAY_NAME = "display_name";
-  @jakarta.annotation.Nullable
-  private String displayName;
+  public static final String JSON_PROPERTY_NAME = "name";
+  @jakarta.annotation.Nonnull
+  private String name;
 
-  public BeginWebauthnRegistrationRequest() { 
+  public static final String JSON_PROPERTY_SHA256 = "sha256";
+  @jakarta.annotation.Nonnull
+  private String sha256;
+
+  public HubLanguagePack() { 
   }
 
-  public BeginWebauthnRegistrationRequest userPubkey(@jakarta.annotation.Nonnull String userPubkey) {
-    this.userPubkey = userPubkey;
+  public HubLanguagePack code(@jakarta.annotation.Nonnull String code) {
+    this.code = code;
     return this;
   }
 
   /**
-   * Hex-encoded Ed25519 public key
-   * @return userPubkey
+   * BCP-47 tag in canonical case
+   * @return code
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_USER_PUBKEY)
+  @JsonProperty(JSON_PROPERTY_CODE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public String getUserPubkey() {
-    return userPubkey;
+  public String getCode() {
+    return code;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_USER_PUBKEY)
+  @JsonProperty(JSON_PROPERTY_CODE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setUserPubkey(@jakarta.annotation.Nonnull String userPubkey) {
-    this.userPubkey = userPubkey;
+  public void setCode(@jakarta.annotation.Nonnull String code) {
+    this.code = code;
   }
 
 
-  public BeginWebauthnRegistrationRequest displayName(@jakarta.annotation.Nullable String displayName) {
-    this.displayName = displayName;
+  public HubLanguagePack name(@jakarta.annotation.Nonnull String name) {
+    this.name = name;
     return this;
   }
 
   /**
-   * Get displayName
-   * @return displayName
+   * Get name
+   * @return name
    */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_DISPLAY_NAME)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getDisplayName() {
-    return displayName;
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_NAME)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public String getName() {
+    return name;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_DISPLAY_NAME)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setDisplayName(@jakarta.annotation.Nullable String displayName) {
-    this.displayName = displayName;
+  @JsonProperty(JSON_PROPERTY_NAME)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setName(@jakarta.annotation.Nonnull String name) {
+    this.name = name;
+  }
+
+
+  public HubLanguagePack sha256(@jakarta.annotation.Nonnull String sha256) {
+    this.sha256 = sha256;
+    return this;
+  }
+
+  /**
+   * Hex SHA-256 of the package bytes; it is served at /hub/languages/{sha256}
+   * @return sha256
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_SHA256)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public String getSha256() {
+    return sha256;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_SHA256)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setSha256(@jakarta.annotation.Nonnull String sha256) {
+    this.sha256 = sha256;
   }
 
 
   /**
-   * Return true if this beginWebauthnRegistration_request object is equal to o.
+   * Return true if this HubLanguagePack object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -108,22 +137,24 @@ public class BeginWebauthnRegistrationRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BeginWebauthnRegistrationRequest beginWebauthnRegistrationRequest = (BeginWebauthnRegistrationRequest) o;
-    return Objects.equals(this.userPubkey, beginWebauthnRegistrationRequest.userPubkey) &&
-        Objects.equals(this.displayName, beginWebauthnRegistrationRequest.displayName);
+    HubLanguagePack hubLanguagePack = (HubLanguagePack) o;
+    return Objects.equals(this.code, hubLanguagePack.code) &&
+        Objects.equals(this.name, hubLanguagePack.name) &&
+        Objects.equals(this.sha256, hubLanguagePack.sha256);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(userPubkey, displayName);
+    return Objects.hash(code, name, sha256);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class BeginWebauthnRegistrationRequest {\n");
-    sb.append("    userPubkey: ").append(toIndentedString(userPubkey)).append("\n");
-    sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n");
+    sb.append("class HubLanguagePack {\n");
+    sb.append("    code: ").append(toIndentedString(code)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    sha256: ").append(toIndentedString(sha256)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -171,14 +202,19 @@ public class BeginWebauthnRegistrationRequest {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `user_pubkey` to the URL query string
-    if (getUserPubkey() != null) {
-      joiner.add(String.format("%suser_pubkey%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getUserPubkey()))));
+    // add `code` to the URL query string
+    if (getCode() != null) {
+      joiner.add(String.format("%scode%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCode()))));
     }
 
-    // add `display_name` to the URL query string
-    if (getDisplayName() != null) {
-      joiner.add(String.format("%sdisplay_name%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getDisplayName()))));
+    // add `name` to the URL query string
+    if (getName() != null) {
+      joiner.add(String.format("%sname%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getName()))));
+    }
+
+    // add `sha256` to the URL query string
+    if (getSha256() != null) {
+      joiner.add(String.format("%ssha256%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getSha256()))));
     }
 
     return joiner.toString();

@@ -24,81 +24,91 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * BeginWebauthnRegistration200Response
+ * ListVoicePins200Response
  */
 @JsonPropertyOrder({
-  BeginWebauthnRegistration200Response.JSON_PROPERTY_SESSION_ID,
-  BeginWebauthnRegistration200Response.JSON_PROPERTY_OPTIONS
+  ListVoicePins200Response.JSON_PROPERTY_PUBLIC_KEYS,
+  ListVoicePins200Response.JSON_PROPERTY_CAN_PIN
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class BeginWebauthnRegistration200Response {
-  public static final String JSON_PROPERTY_SESSION_ID = "session_id";
-  @jakarta.annotation.Nullable
-  private String sessionId;
+public class ListVoicePins200Response {
+  public static final String JSON_PROPERTY_PUBLIC_KEYS = "public_keys";
+  @jakarta.annotation.Nonnull
+  private List<String> publicKeys = new ArrayList<>();
 
-  public static final String JSON_PROPERTY_OPTIONS = "options";
-  @jakarta.annotation.Nullable
-  private Object options;
+  public static final String JSON_PROPERTY_CAN_PIN = "can_pin";
+  @jakarta.annotation.Nonnull
+  private Boolean canPin;
 
-  public BeginWebauthnRegistration200Response() { 
+  public ListVoicePins200Response() { 
   }
 
-  public BeginWebauthnRegistration200Response sessionId(@jakarta.annotation.Nullable String sessionId) {
-    this.sessionId = sessionId;
+  public ListVoicePins200Response publicKeys(@jakarta.annotation.Nonnull List<String> publicKeys) {
+    this.publicKeys = publicKeys;
+    return this;
+  }
+
+  public ListVoicePins200Response addPublicKeysItem(String publicKeysItem) {
+    if (this.publicKeys == null) {
+      this.publicKeys = new ArrayList<>();
+    }
+    this.publicKeys.add(publicKeysItem);
     return this;
   }
 
   /**
-   * Get sessionId
-   * @return sessionId
+   * In pin order
+   * @return publicKeys
    */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_SESSION_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getSessionId() {
-    return sessionId;
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_PUBLIC_KEYS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public List<String> getPublicKeys() {
+    return publicKeys;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_SESSION_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setSessionId(@jakarta.annotation.Nullable String sessionId) {
-    this.sessionId = sessionId;
+  @JsonProperty(JSON_PROPERTY_PUBLIC_KEYS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setPublicKeys(@jakarta.annotation.Nonnull List<String> publicKeys) {
+    this.publicKeys = publicKeys;
   }
 
 
-  public BeginWebauthnRegistration200Response options(@jakarta.annotation.Nullable Object options) {
-    this.options = options;
+  public ListVoicePins200Response canPin(@jakarta.annotation.Nonnull Boolean canPin) {
+    this.canPin = canPin;
     return this;
   }
 
   /**
-   * PublicKeyCredentialCreationOptions
-   * @return options
+   * The caller&#39;s own &#x60;voice.stage&#x60; in this channel
+   * @return canPin
    */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_OPTIONS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Object getOptions() {
-    return options;
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_CAN_PIN)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public Boolean getCanPin() {
+    return canPin;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_OPTIONS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setOptions(@jakarta.annotation.Nullable Object options) {
-    this.options = options;
+  @JsonProperty(JSON_PROPERTY_CAN_PIN)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setCanPin(@jakarta.annotation.Nonnull Boolean canPin) {
+    this.canPin = canPin;
   }
 
 
   /**
-   * Return true if this beginWebauthnRegistration_200_response object is equal to o.
+   * Return true if this listVoicePins_200_response object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -108,22 +118,22 @@ public class BeginWebauthnRegistration200Response {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BeginWebauthnRegistration200Response beginWebauthnRegistration200Response = (BeginWebauthnRegistration200Response) o;
-    return Objects.equals(this.sessionId, beginWebauthnRegistration200Response.sessionId) &&
-        Objects.equals(this.options, beginWebauthnRegistration200Response.options);
+    ListVoicePins200Response listVoicePins200Response = (ListVoicePins200Response) o;
+    return Objects.equals(this.publicKeys, listVoicePins200Response.publicKeys) &&
+        Objects.equals(this.canPin, listVoicePins200Response.canPin);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(sessionId, options);
+    return Objects.hash(publicKeys, canPin);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class BeginWebauthnRegistration200Response {\n");
-    sb.append("    sessionId: ").append(toIndentedString(sessionId)).append("\n");
-    sb.append("    options: ").append(toIndentedString(options)).append("\n");
+    sb.append("class ListVoicePins200Response {\n");
+    sb.append("    publicKeys: ").append(toIndentedString(publicKeys)).append("\n");
+    sb.append("    canPin: ").append(toIndentedString(canPin)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -171,14 +181,18 @@ public class BeginWebauthnRegistration200Response {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `session_id` to the URL query string
-    if (getSessionId() != null) {
-      joiner.add(String.format("%ssession_id%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getSessionId()))));
+    // add `public_keys` to the URL query string
+    if (getPublicKeys() != null) {
+      for (int i = 0; i < getPublicKeys().size(); i++) {
+        joiner.add(String.format("%spublic_keys%s%s=%s", prefix, suffix,
+            "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix),
+            ApiClient.urlEncode(ApiClient.valueToString(getPublicKeys().get(i)))));
+      }
     }
 
-    // add `options` to the URL query string
-    if (getOptions() != null) {
-      joiner.add(String.format("%soptions%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getOptions()))));
+    // add `can_pin` to the URL query string
+    if (getCanPin() != null) {
+      joiner.add(String.format("%scan_pin%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCanPin()))));
     }
 
     return joiner.toString();

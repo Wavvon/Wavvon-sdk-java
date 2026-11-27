@@ -30,46 +30,46 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * FinishWebauthnRegistration200Response
+ * IssueAdminCertRequest
  */
 @JsonPropertyOrder({
-  FinishWebauthnRegistration200Response.JSON_PROPERTY_SESSION_TOKEN
+  IssueAdminCertRequest.JSON_PROPERTY_CERT_TYPE
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class FinishWebauthnRegistration200Response {
-  public static final String JSON_PROPERTY_SESSION_TOKEN = "session_token";
+public class IssueAdminCertRequest {
+  public static final String JSON_PROPERTY_CERT_TYPE = "cert_type";
   @jakarta.annotation.Nullable
-  private String sessionToken;
+  private String certType;
 
-  public FinishWebauthnRegistration200Response() { 
+  public IssueAdminCertRequest() { 
   }
 
-  public FinishWebauthnRegistration200Response sessionToken(@jakarta.annotation.Nullable String sessionToken) {
-    this.sessionToken = sessionToken;
+  public IssueAdminCertRequest certType(@jakarta.annotation.Nullable String certType) {
+    this.certType = certType;
     return this;
   }
 
   /**
-   * Get sessionToken
-   * @return sessionToken
+   * Id from GET /certs/types.
+   * @return certType
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_SESSION_TOKEN)
+  @JsonProperty(JSON_PROPERTY_CERT_TYPE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getSessionToken() {
-    return sessionToken;
+  public String getCertType() {
+    return certType;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_SESSION_TOKEN)
+  @JsonProperty(JSON_PROPERTY_CERT_TYPE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setSessionToken(@jakarta.annotation.Nullable String sessionToken) {
-    this.sessionToken = sessionToken;
+  public void setCertType(@jakarta.annotation.Nullable String certType) {
+    this.certType = certType;
   }
 
 
   /**
-   * Return true if this finishWebauthnRegistration_200_response object is equal to o.
+   * Return true if this issueAdminCert_request object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -79,20 +79,20 @@ public class FinishWebauthnRegistration200Response {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    FinishWebauthnRegistration200Response finishWebauthnRegistration200Response = (FinishWebauthnRegistration200Response) o;
-    return Objects.equals(this.sessionToken, finishWebauthnRegistration200Response.sessionToken);
+    IssueAdminCertRequest issueAdminCertRequest = (IssueAdminCertRequest) o;
+    return Objects.equals(this.certType, issueAdminCertRequest.certType);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(sessionToken);
+    return Objects.hash(certType);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class FinishWebauthnRegistration200Response {\n");
-    sb.append("    sessionToken: ").append(toIndentedString(sessionToken)).append("\n");
+    sb.append("class IssueAdminCertRequest {\n");
+    sb.append("    certType: ").append(toIndentedString(certType)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -140,9 +140,9 @@ public class FinishWebauthnRegistration200Response {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `session_token` to the URL query string
-    if (getSessionToken() != null) {
-      joiner.add(String.format("%ssession_token%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getSessionToken()))));
+    // add `cert_type` to the URL query string
+    if (getCertType() != null) {
+      joiner.add(String.format("%scert_type%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCertType()))));
     }
 
     return joiner.toString();

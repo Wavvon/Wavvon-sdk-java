@@ -18,12 +18,19 @@ import org.wavvon.sdk.generated.ApiResponse;
 import org.wavvon.sdk.generated.Configuration;
 import org.wavvon.sdk.generated.Pair;
 
+import org.wavvon.sdk.generated.model.BadgeDef;
+import org.wavvon.sdk.generated.model.BadgeDefRequest;
 import org.wavvon.sdk.generated.model.CreateFederationBadgeOfferRequest;
+import org.wavvon.sdk.generated.model.CreateProgramBadgeRequest;
+import org.wavvon.sdk.generated.model.GrantBadgeRequest;
+import org.wavvon.sdk.generated.model.GrantProgramBadgeRequest;
 import org.wavvon.sdk.generated.model.IssueAdminBadge201Response;
 import org.wavvon.sdk.generated.model.IssueAdminBadgeRequest;
+import org.wavvon.sdk.generated.model.ListBadgeAwards200ResponseInner;
 import org.wavvon.sdk.generated.model.ListBadges200ResponseInner;
 import org.wavvon.sdk.generated.model.ListFederationBadgeRevocations200ResponseInner;
 import org.wavvon.sdk.generated.model.ListPendingBadges200ResponseInner;
+import org.wavvon.sdk.generated.model.UpdateBadgeDefRequest;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -164,6 +171,95 @@ public class BadgesApi {
   }
 
   /**
+   * Define a hub badge, by hand or by rule (badges.manage)
+   * A rule badge is retroactive; whoever already qualifies receives it at once.
+   * @param badgeDefRequest  (required)
+   * @return BadgeDef
+   * @throws ApiException if fails to make API call
+   */
+  public BadgeDef createBadgeDef(BadgeDefRequest badgeDefRequest) throws ApiException {
+    ApiResponse<BadgeDef> localVarResponse = createBadgeDefWithHttpInfo(badgeDefRequest);
+    return localVarResponse.getData();
+  }
+
+  /**
+   * Define a hub badge, by hand or by rule (badges.manage)
+   * A rule badge is retroactive; whoever already qualifies receives it at once.
+   * @param badgeDefRequest  (required)
+   * @return ApiResponse&lt;BadgeDef&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<BadgeDef> createBadgeDefWithHttpInfo(BadgeDefRequest badgeDefRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = createBadgeDefRequestBuilder(badgeDefRequest);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("createBadgeDef", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<BadgeDef>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        localVarResponse.body().close();
+
+        return new ApiResponse<BadgeDef>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<BadgeDef>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder createBadgeDefRequestBuilder(BadgeDefRequest badgeDefRequest) throws ApiException {
+    // verify the required parameter 'badgeDefRequest' is set
+    if (badgeDefRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'badgeDefRequest' when calling createBadgeDef");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/admin/badge-defs";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Content-Type", "application/json");
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(badgeDefRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
    * Receive a badge offer from another hub
    * Hub-to-hub. The Ed25519 signature over the payload is the credential; no Bearer token.
    * @param createFederationBadgeOfferRequest  (required)
@@ -231,6 +327,95 @@ public class BadgesApi {
 
     try {
       byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(createFederationBadgeOfferRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * A program defines one of its own badges (badges.programs)
+   * At most 50 badges per program. The program decides who earns which level; declared_rule says how, in its own words.
+   * @param createProgramBadgeRequest  (required)
+   * @return BadgeDef
+   * @throws ApiException if fails to make API call
+   */
+  public BadgeDef createProgramBadge(CreateProgramBadgeRequest createProgramBadgeRequest) throws ApiException {
+    ApiResponse<BadgeDef> localVarResponse = createProgramBadgeWithHttpInfo(createProgramBadgeRequest);
+    return localVarResponse.getData();
+  }
+
+  /**
+   * A program defines one of its own badges (badges.programs)
+   * At most 50 badges per program. The program decides who earns which level; declared_rule says how, in its own words.
+   * @param createProgramBadgeRequest  (required)
+   * @return ApiResponse&lt;BadgeDef&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<BadgeDef> createProgramBadgeWithHttpInfo(CreateProgramBadgeRequest createProgramBadgeRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = createProgramBadgeRequestBuilder(createProgramBadgeRequest);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("createProgramBadge", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<BadgeDef>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        localVarResponse.body().close();
+
+        return new ApiResponse<BadgeDef>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<BadgeDef>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder createProgramBadgeRequestBuilder(CreateProgramBadgeRequest createProgramBadgeRequest) throws ApiException {
+    // verify the required parameter 'createProgramBadgeRequest' is set
+    if (createProgramBadgeRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'createProgramBadgeRequest' when calling createProgramBadge");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/badges/programs";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Content-Type", "application/json");
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(createProgramBadgeRequest);
       localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
     } catch (IOException e) {
       throw new ApiException(e);
@@ -397,6 +582,334 @@ public class BadgesApi {
   }
 
   /**
+   * Delete a badge and revoke every award (badges.manage)
+   * 
+   * @param id  (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void deleteBadgeDef(String id) throws ApiException {
+    deleteBadgeDefWithHttpInfo(id);
+  }
+
+  /**
+   * Delete a badge and revoke every award (badges.manage)
+   * 
+   * @param id  (required)
+   * @return ApiResponse&lt;Void&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<Void> deleteBadgeDefWithHttpInfo(String id) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = deleteBadgeDefRequestBuilder(id);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("deleteBadgeDef", localVarResponse);
+        }
+        return new ApiResponse<>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            null
+        );
+      } finally {
+        // Drain the InputStream
+        while (localVarResponse.body().read() != -1) {
+          // Ignore
+        }
+        localVarResponse.body().close();
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder deleteBadgeDefRequestBuilder(String id) throws ApiException {
+    // verify the required parameter 'id' is set
+    if (id == null) {
+      throw new ApiException(400, "Missing the required parameter 'id' when calling deleteBadgeDef");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/admin/badge-defs/{id}"
+        .replace("{id}", ApiClient.urlEncode(id.toString()));
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("DELETE", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * A program retires one of its badges, revoking every award (badges.programs)
+   * 
+   * @param id  (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void deleteProgramBadge(String id) throws ApiException {
+    deleteProgramBadgeWithHttpInfo(id);
+  }
+
+  /**
+   * A program retires one of its badges, revoking every award (badges.programs)
+   * 
+   * @param id  (required)
+   * @return ApiResponse&lt;Void&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<Void> deleteProgramBadgeWithHttpInfo(String id) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = deleteProgramBadgeRequestBuilder(id);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("deleteProgramBadge", localVarResponse);
+        }
+        return new ApiResponse<>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            null
+        );
+      } finally {
+        // Drain the InputStream
+        while (localVarResponse.body().read() != -1) {
+          // Ignore
+        }
+        localVarResponse.body().close();
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder deleteProgramBadgeRequestBuilder(String id) throws ApiException {
+    // verify the required parameter 'id' is set
+    if (id == null) {
+      throw new ApiException(400, "Missing the required parameter 'id' when calling deleteProgramBadge");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/badges/programs/{id}"
+        .replace("{id}", ApiClient.urlEncode(id.toString()));
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("DELETE", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Give a hand badge to several members (badges.manage)
+   * 
+   * @param id  (required)
+   * @param grantBadgeRequest  (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void grantBadge(String id, GrantBadgeRequest grantBadgeRequest) throws ApiException {
+    grantBadgeWithHttpInfo(id, grantBadgeRequest);
+  }
+
+  /**
+   * Give a hand badge to several members (badges.manage)
+   * 
+   * @param id  (required)
+   * @param grantBadgeRequest  (required)
+   * @return ApiResponse&lt;Void&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<Void> grantBadgeWithHttpInfo(String id, GrantBadgeRequest grantBadgeRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = grantBadgeRequestBuilder(id, grantBadgeRequest);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("grantBadge", localVarResponse);
+        }
+        return new ApiResponse<>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            null
+        );
+      } finally {
+        // Drain the InputStream
+        while (localVarResponse.body().read() != -1) {
+          // Ignore
+        }
+        localVarResponse.body().close();
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder grantBadgeRequestBuilder(String id, GrantBadgeRequest grantBadgeRequest) throws ApiException {
+    // verify the required parameter 'id' is set
+    if (id == null) {
+      throw new ApiException(400, "Missing the required parameter 'id' when calling grantBadge");
+    }
+    // verify the required parameter 'grantBadgeRequest' is set
+    if (grantBadgeRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'grantBadgeRequest' when calling grantBadge");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/admin/badge-defs/{id}/grant"
+        .replace("{id}", ApiClient.urlEncode(id.toString()));
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Content-Type", "application/json");
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(grantBadgeRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * A program gives one of its badges to a member (badges.programs)
+   * At most 60 grants a minute per program.
+   * @param id  (required)
+   * @param grantProgramBadgeRequest  (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void grantProgramBadge(String id, GrantProgramBadgeRequest grantProgramBadgeRequest) throws ApiException {
+    grantProgramBadgeWithHttpInfo(id, grantProgramBadgeRequest);
+  }
+
+  /**
+   * A program gives one of its badges to a member (badges.programs)
+   * At most 60 grants a minute per program.
+   * @param id  (required)
+   * @param grantProgramBadgeRequest  (required)
+   * @return ApiResponse&lt;Void&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<Void> grantProgramBadgeWithHttpInfo(String id, GrantProgramBadgeRequest grantProgramBadgeRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = grantProgramBadgeRequestBuilder(id, grantProgramBadgeRequest);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("grantProgramBadge", localVarResponse);
+        }
+        return new ApiResponse<>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            null
+        );
+      } finally {
+        // Drain the InputStream
+        while (localVarResponse.body().read() != -1) {
+          // Ignore
+        }
+        localVarResponse.body().close();
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder grantProgramBadgeRequestBuilder(String id, GrantProgramBadgeRequest grantProgramBadgeRequest) throws ApiException {
+    // verify the required parameter 'id' is set
+    if (id == null) {
+      throw new ApiException(400, "Missing the required parameter 'id' when calling grantProgramBadge");
+    }
+    // verify the required parameter 'grantProgramBadgeRequest' is set
+    if (grantProgramBadgeRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'grantProgramBadgeRequest' when calling grantProgramBadge");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/badges/programs/{id}/grant"
+        .replace("{id}", ApiClient.urlEncode(id.toString()));
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Content-Type", "application/json");
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(grantProgramBadgeRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
    * Issue a badge to another hub (admin)
    * Fetches the recipient hub&#39;s /info, signs the badge payload with this hub&#39;s keypair, delivers it to the recipient&#39;s /federation/badge-offer, and records it locally.
    * @param issueAdminBadgeRequest  (required)
@@ -539,6 +1052,167 @@ public class BadgesApi {
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
     String localVarPath = "/admin/badges/issued";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Who holds a badge, at which level (badges.manage)
+   * 
+   * @param id  (required)
+   * @return List&lt;ListBadgeAwards200ResponseInner&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public List<ListBadgeAwards200ResponseInner> listBadgeAwards(String id) throws ApiException {
+    ApiResponse<List<ListBadgeAwards200ResponseInner>> localVarResponse = listBadgeAwardsWithHttpInfo(id);
+    return localVarResponse.getData();
+  }
+
+  /**
+   * Who holds a badge, at which level (badges.manage)
+   * 
+   * @param id  (required)
+   * @return ApiResponse&lt;List&lt;ListBadgeAwards200ResponseInner&gt;&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<List<ListBadgeAwards200ResponseInner>> listBadgeAwardsWithHttpInfo(String id) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = listBadgeAwardsRequestBuilder(id);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("listBadgeAwards", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<List<ListBadgeAwards200ResponseInner>>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        localVarResponse.body().close();
+
+        return new ApiResponse<List<ListBadgeAwards200ResponseInner>>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<List<ListBadgeAwards200ResponseInner>>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder listBadgeAwardsRequestBuilder(String id) throws ApiException {
+    // verify the required parameter 'id' is set
+    if (id == null) {
+      throw new ApiException(400, "Missing the required parameter 'id' when calling listBadgeAwards");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/admin/badge-defs/{id}/awards"
+        .replace("{id}", ApiClient.urlEncode(id.toString()));
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * The hub&#39;s badge catalogue
+   * Hidden badges are left out unless the caller holds badges.manage.
+   * @return List&lt;BadgeDef&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public List<BadgeDef> listBadgeDefs() throws ApiException {
+    ApiResponse<List<BadgeDef>> localVarResponse = listBadgeDefsWithHttpInfo();
+    return localVarResponse.getData();
+  }
+
+  /**
+   * The hub&#39;s badge catalogue
+   * Hidden badges are left out unless the caller holds badges.manage.
+   * @return ApiResponse&lt;List&lt;BadgeDef&gt;&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<List<BadgeDef>> listBadgeDefsWithHttpInfo() throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = listBadgeDefsRequestBuilder();
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("listBadgeDefs", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<List<BadgeDef>>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        localVarResponse.body().close();
+
+        return new ApiResponse<List<BadgeDef>>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<List<BadgeDef>>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder listBadgeDefsRequestBuilder() throws ApiException {
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/badges/defs";
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
@@ -803,6 +1477,95 @@ public class BadgesApi {
   }
 
   /**
+   * How many members a rule badge would reach, per level (badges.manage)
+   * 
+   * @param badgeDefRequest  (required)
+   * @return Map&lt;String, Long&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public Map<String, Long> previewBadgeDef(BadgeDefRequest badgeDefRequest) throws ApiException {
+    ApiResponse<Map<String, Long>> localVarResponse = previewBadgeDefWithHttpInfo(badgeDefRequest);
+    return localVarResponse.getData();
+  }
+
+  /**
+   * How many members a rule badge would reach, per level (badges.manage)
+   * 
+   * @param badgeDefRequest  (required)
+   * @return ApiResponse&lt;Map&lt;String, Long&gt;&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<Map<String, Long>> previewBadgeDefWithHttpInfo(BadgeDefRequest badgeDefRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = previewBadgeDefRequestBuilder(badgeDefRequest);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("previewBadgeDef", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<Map<String, Long>>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        localVarResponse.body().close();
+
+        return new ApiResponse<Map<String, Long>>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<Map<String, Long>>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder previewBadgeDefRequestBuilder(BadgeDefRequest badgeDefRequest) throws ApiException {
+    // verify the required parameter 'badgeDefRequest' is set
+    if (badgeDefRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'badgeDefRequest' when calling previewBadgeDef");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/admin/badge-defs/preview";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Content-Type", "application/json");
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(badgeDefRequest);
+      localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
    * Revoke an issued badge (admin)
    * Sets &#x60;revoked_at&#x60;; the revocation appears in /federation/badge-revocations.
    * @param id  (required)
@@ -869,6 +1632,260 @@ public class BadgesApi {
     localVarRequestBuilder.header("Accept", "application/json");
 
     localVarRequestBuilder.method("DELETE", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Take a badge back from a member (badges.manage)
+   * 
+   * @param id  (required)
+   * @param pubkey  (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void revokeBadgeAward(String id, String pubkey) throws ApiException {
+    revokeBadgeAwardWithHttpInfo(id, pubkey);
+  }
+
+  /**
+   * Take a badge back from a member (badges.manage)
+   * 
+   * @param id  (required)
+   * @param pubkey  (required)
+   * @return ApiResponse&lt;Void&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<Void> revokeBadgeAwardWithHttpInfo(String id, String pubkey) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = revokeBadgeAwardRequestBuilder(id, pubkey);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("revokeBadgeAward", localVarResponse);
+        }
+        return new ApiResponse<>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            null
+        );
+      } finally {
+        // Drain the InputStream
+        while (localVarResponse.body().read() != -1) {
+          // Ignore
+        }
+        localVarResponse.body().close();
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder revokeBadgeAwardRequestBuilder(String id, String pubkey) throws ApiException {
+    // verify the required parameter 'id' is set
+    if (id == null) {
+      throw new ApiException(400, "Missing the required parameter 'id' when calling revokeBadgeAward");
+    }
+    // verify the required parameter 'pubkey' is set
+    if (pubkey == null) {
+      throw new ApiException(400, "Missing the required parameter 'pubkey' when calling revokeBadgeAward");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/admin/badge-defs/{id}/awards/{pubkey}"
+        .replace("{id}", ApiClient.urlEncode(id.toString()))
+        .replace("{pubkey}", ApiClient.urlEncode(pubkey.toString()));
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("DELETE", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * A program takes one of its badges back (badges.programs)
+   * 
+   * @param id  (required)
+   * @param pubkey  (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void revokeProgramBadge(String id, String pubkey) throws ApiException {
+    revokeProgramBadgeWithHttpInfo(id, pubkey);
+  }
+
+  /**
+   * A program takes one of its badges back (badges.programs)
+   * 
+   * @param id  (required)
+   * @param pubkey  (required)
+   * @return ApiResponse&lt;Void&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<Void> revokeProgramBadgeWithHttpInfo(String id, String pubkey) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = revokeProgramBadgeRequestBuilder(id, pubkey);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("revokeProgramBadge", localVarResponse);
+        }
+        return new ApiResponse<>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            null
+        );
+      } finally {
+        // Drain the InputStream
+        while (localVarResponse.body().read() != -1) {
+          // Ignore
+        }
+        localVarResponse.body().close();
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder revokeProgramBadgeRequestBuilder(String id, String pubkey) throws ApiException {
+    // verify the required parameter 'id' is set
+    if (id == null) {
+      throw new ApiException(400, "Missing the required parameter 'id' when calling revokeProgramBadge");
+    }
+    // verify the required parameter 'pubkey' is set
+    if (pubkey == null) {
+      throw new ApiException(400, "Missing the required parameter 'pubkey' when calling revokeProgramBadge");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/badges/programs/{id}/awards/{pubkey}"
+        .replace("{id}", ApiClient.urlEncode(id.toString()))
+        .replace("{pubkey}", ApiClient.urlEncode(pubkey.toString()));
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("DELETE", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Hide or show a badge, a program&#39;s included (badges.manage)
+   * 
+   * @param id  (required)
+   * @param updateBadgeDefRequest  (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void updateBadgeDef(String id, UpdateBadgeDefRequest updateBadgeDefRequest) throws ApiException {
+    updateBadgeDefWithHttpInfo(id, updateBadgeDefRequest);
+  }
+
+  /**
+   * Hide or show a badge, a program&#39;s included (badges.manage)
+   * 
+   * @param id  (required)
+   * @param updateBadgeDefRequest  (required)
+   * @return ApiResponse&lt;Void&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<Void> updateBadgeDefWithHttpInfo(String id, UpdateBadgeDefRequest updateBadgeDefRequest) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = updateBadgeDefRequestBuilder(id, updateBadgeDefRequest);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("updateBadgeDef", localVarResponse);
+        }
+        return new ApiResponse<>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            null
+        );
+      } finally {
+        // Drain the InputStream
+        while (localVarResponse.body().read() != -1) {
+          // Ignore
+        }
+        localVarResponse.body().close();
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder updateBadgeDefRequestBuilder(String id, UpdateBadgeDefRequest updateBadgeDefRequest) throws ApiException {
+    // verify the required parameter 'id' is set
+    if (id == null) {
+      throw new ApiException(400, "Missing the required parameter 'id' when calling updateBadgeDef");
+    }
+    // verify the required parameter 'updateBadgeDefRequest' is set
+    if (updateBadgeDefRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'updateBadgeDefRequest' when calling updateBadgeDef");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/admin/badge-defs/{id}"
+        .replace("{id}", ApiClient.urlEncode(id.toString()));
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Content-Type", "application/json");
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    try {
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(updateBadgeDefRequest);
+      localVarRequestBuilder.method("PATCH", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }

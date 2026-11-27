@@ -27,59 +27,75 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.wavvon.sdk.generated.model.HubInfoCertRequirementRequire;
+import org.wavvon.sdk.generated.model.TrustedCertType;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * What a certificate must show to admit a member. Omitted unless set.
+ * Which certificates take a newcomer through the fast lane (no lobby, approval or challenge). Omitted while both trust lists are empty.
  */
 @JsonPropertyOrder({
-  HubInfoCertRequirement.JSON_PROPERTY_MODE,
   HubInfoCertRequirement.JSON_PROPERTY_TRUSTED_ISSUERS,
-  HubInfoCertRequirement.JSON_PROPERTY_REQUIRE
+  HubInfoCertRequirement.JSON_PROPERTY_TRUSTED_TYPES,
+  HubInfoCertRequirement.JSON_PROPERTY_OTHERS,
+  HubInfoCertRequirement.JSON_PROPERTY_REPLACES_INVITE
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class HubInfoCertRequirement {
-  public static final String JSON_PROPERTY_MODE = "mode";
-  @jakarta.annotation.Nonnull
-  private String mode;
-
   public static final String JSON_PROPERTY_TRUSTED_ISSUERS = "trusted_issuers";
   @jakarta.annotation.Nonnull
   private List<String> trustedIssuers = new ArrayList<>();
 
-  public static final String JSON_PROPERTY_REQUIRE = "require";
+  public static final String JSON_PROPERTY_TRUSTED_TYPES = "trusted_types";
   @jakarta.annotation.Nonnull
-  private HubInfoCertRequirementRequire require;
+  private List<TrustedCertType> trustedTypes = new ArrayList<>();
+
+  /**
+   * What happens without a trusted certificate.
+   */
+  public enum OthersEnum {
+    LOBBY(String.valueOf("lobby")),
+    
+    REFUSE(String.valueOf("refuse"));
+
+    private String value;
+
+    OthersEnum(String value) {
+      this.value = value;
+    }
+
+    @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static OthersEnum fromValue(String value) {
+      for (OthersEnum b : OthersEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+  }
+
+  public static final String JSON_PROPERTY_OTHERS = "others";
+  @jakarta.annotation.Nonnull
+  private OthersEnum others;
+
+  public static final String JSON_PROPERTY_REPLACES_INVITE = "replaces_invite";
+  @jakarta.annotation.Nonnull
+  private Boolean replacesInvite;
 
   public HubInfoCertRequirement() { 
   }
-
-  public HubInfoCertRequirement mode(@jakarta.annotation.Nonnull String mode) {
-    this.mode = mode;
-    return this;
-  }
-
-  /**
-   * Get mode
-   * @return mode
-   */
-  @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_MODE)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public String getMode() {
-    return mode;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_MODE)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setMode(@jakarta.annotation.Nonnull String mode) {
-    this.mode = mode;
-  }
-
 
   public HubInfoCertRequirement trustedIssuers(@jakarta.annotation.Nonnull List<String> trustedIssuers) {
     this.trustedIssuers = trustedIssuers;
@@ -95,7 +111,7 @@ public class HubInfoCertRequirement {
   }
 
   /**
-   * Get trustedIssuers
+   * Hubs whose every certificate counts.
    * @return trustedIssuers
    */
   @jakarta.annotation.Nonnull
@@ -113,27 +129,83 @@ public class HubInfoCertRequirement {
   }
 
 
-  public HubInfoCertRequirement require(@jakarta.annotation.Nonnull HubInfoCertRequirementRequire require) {
-    this.require = require;
+  public HubInfoCertRequirement trustedTypes(@jakarta.annotation.Nonnull List<TrustedCertType> trustedTypes) {
+    this.trustedTypes = trustedTypes;
+    return this;
+  }
+
+  public HubInfoCertRequirement addTrustedTypesItem(TrustedCertType trustedTypesItem) {
+    if (this.trustedTypes == null) {
+      this.trustedTypes = new ArrayList<>();
+    }
+    this.trustedTypes.add(trustedTypesItem);
     return this;
   }
 
   /**
-   * Get require
-   * @return require
+   * Get trustedTypes
+   * @return trustedTypes
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_REQUIRE)
+  @JsonProperty(JSON_PROPERTY_TRUSTED_TYPES)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public HubInfoCertRequirementRequire getRequire() {
-    return require;
+  public List<TrustedCertType> getTrustedTypes() {
+    return trustedTypes;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_REQUIRE)
+  @JsonProperty(JSON_PROPERTY_TRUSTED_TYPES)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setRequire(@jakarta.annotation.Nonnull HubInfoCertRequirementRequire require) {
-    this.require = require;
+  public void setTrustedTypes(@jakarta.annotation.Nonnull List<TrustedCertType> trustedTypes) {
+    this.trustedTypes = trustedTypes;
+  }
+
+
+  public HubInfoCertRequirement others(@jakarta.annotation.Nonnull OthersEnum others) {
+    this.others = others;
+    return this;
+  }
+
+  /**
+   * What happens without a trusted certificate.
+   * @return others
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_OTHERS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public OthersEnum getOthers() {
+    return others;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_OTHERS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setOthers(@jakarta.annotation.Nonnull OthersEnum others) {
+    this.others = others;
+  }
+
+
+  public HubInfoCertRequirement replacesInvite(@jakarta.annotation.Nonnull Boolean replacesInvite) {
+    this.replacesInvite = replacesInvite;
+    return this;
+  }
+
+  /**
+   * A trusted certificate stands in for an invite.
+   * @return replacesInvite
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_REPLACES_INVITE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public Boolean getReplacesInvite() {
+    return replacesInvite;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_REPLACES_INVITE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setReplacesInvite(@jakarta.annotation.Nonnull Boolean replacesInvite) {
+    this.replacesInvite = replacesInvite;
   }
 
 
@@ -149,23 +221,25 @@ public class HubInfoCertRequirement {
       return false;
     }
     HubInfoCertRequirement hubInfoCertRequirement = (HubInfoCertRequirement) o;
-    return Objects.equals(this.mode, hubInfoCertRequirement.mode) &&
-        Objects.equals(this.trustedIssuers, hubInfoCertRequirement.trustedIssuers) &&
-        Objects.equals(this.require, hubInfoCertRequirement.require);
+    return Objects.equals(this.trustedIssuers, hubInfoCertRequirement.trustedIssuers) &&
+        Objects.equals(this.trustedTypes, hubInfoCertRequirement.trustedTypes) &&
+        Objects.equals(this.others, hubInfoCertRequirement.others) &&
+        Objects.equals(this.replacesInvite, hubInfoCertRequirement.replacesInvite);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(mode, trustedIssuers, require);
+    return Objects.hash(trustedIssuers, trustedTypes, others, replacesInvite);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class HubInfoCertRequirement {\n");
-    sb.append("    mode: ").append(toIndentedString(mode)).append("\n");
     sb.append("    trustedIssuers: ").append(toIndentedString(trustedIssuers)).append("\n");
-    sb.append("    require: ").append(toIndentedString(require)).append("\n");
+    sb.append("    trustedTypes: ").append(toIndentedString(trustedTypes)).append("\n");
+    sb.append("    others: ").append(toIndentedString(others)).append("\n");
+    sb.append("    replacesInvite: ").append(toIndentedString(replacesInvite)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -213,11 +287,6 @@ public class HubInfoCertRequirement {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `mode` to the URL query string
-    if (getMode() != null) {
-      joiner.add(String.format("%smode%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getMode()))));
-    }
-
     // add `trusted_issuers` to the URL query string
     if (getTrustedIssuers() != null) {
       for (int i = 0; i < getTrustedIssuers().size(); i++) {
@@ -227,9 +296,24 @@ public class HubInfoCertRequirement {
       }
     }
 
-    // add `require` to the URL query string
-    if (getRequire() != null) {
-      joiner.add(getRequire().toUrlQueryString(prefix + "require" + suffix));
+    // add `trusted_types` to the URL query string
+    if (getTrustedTypes() != null) {
+      for (int i = 0; i < getTrustedTypes().size(); i++) {
+        if (getTrustedTypes().get(i) != null) {
+          joiner.add(getTrustedTypes().get(i).toUrlQueryString(String.format("%strusted_types%s%s", prefix, suffix,
+          "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix))));
+        }
+      }
+    }
+
+    // add `others` to the URL query string
+    if (getOthers() != null) {
+      joiner.add(String.format("%sothers%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getOthers()))));
+    }
+
+    // add `replaces_invite` to the URL query string
+    if (getReplacesInvite() != null) {
+      joiner.add(String.format("%sreplaces_invite%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getReplacesInvite()))));
     }
 
     return joiner.toString();

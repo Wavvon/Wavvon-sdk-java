@@ -29,9 +29,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.wavvon.sdk.generated.model.TrustedCertType;
 import org.wavvon.sdk.generated.model.UpdateAdminSettingsCertsRequestCertAutoIssue;
 import org.wavvon.sdk.generated.model.UpdateAdminSettingsCertsRequestCertMinAgeDays;
-import org.wavvon.sdk.generated.model.UpdateAdminSettingsCertsRequestCertRequire;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -43,11 +43,11 @@ import org.wavvon.sdk.generated.ApiClient;
   UpdateAdminSettingsCertsRequest.JSON_PROPERTY_CERT_AUTO_ISSUE,
   UpdateAdminSettingsCertsRequest.JSON_PROPERTY_CERT_MIN_AGE_DAYS,
   UpdateAdminSettingsCertsRequest.JSON_PROPERTY_CERT_VALIDITY_DAYS,
-  UpdateAdminSettingsCertsRequest.JSON_PROPERTY_CERT_MODE,
   UpdateAdminSettingsCertsRequest.JSON_PROPERTY_CERT_TRUSTED_ISSUERS,
-  UpdateAdminSettingsCertsRequest.JSON_PROPERTY_CERT_ISSUER_URLS,
-  UpdateAdminSettingsCertsRequest.JSON_PROPERTY_CERT_REQUIRE,
-  UpdateAdminSettingsCertsRequest.JSON_PROPERTY_CERT_MIN_POW_LEVEL
+  UpdateAdminSettingsCertsRequest.JSON_PROPERTY_CERT_TRUSTED_TYPES,
+  UpdateAdminSettingsCertsRequest.JSON_PROPERTY_CERT_OTHERS,
+  UpdateAdminSettingsCertsRequest.JSON_PROPERTY_CERT_REPLACES_INVITE,
+  UpdateAdminSettingsCertsRequest.JSON_PROPERTY_CERT_ISSUER_URLS
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
 public class UpdateAdminSettingsCertsRequest {
@@ -63,19 +63,25 @@ public class UpdateAdminSettingsCertsRequest {
   @jakarta.annotation.Nullable
   private UpdateAdminSettingsCertsRequestCertMinAgeDays certValidityDays;
 
+  public static final String JSON_PROPERTY_CERT_TRUSTED_ISSUERS = "cert_trusted_issuers";
+  @jakarta.annotation.Nullable
+  private List<String> certTrustedIssuers = new ArrayList<>();
+
+  public static final String JSON_PROPERTY_CERT_TRUSTED_TYPES = "cert_trusted_types";
+  @jakarta.annotation.Nullable
+  private List<TrustedCertType> certTrustedTypes = new ArrayList<>();
+
   /**
-   * Gets or Sets certMode
+   * Gets or Sets certOthers
    */
-  public enum CertModeEnum {
-    NONE(String.valueOf("none")),
+  public enum CertOthersEnum {
+    LOBBY(String.valueOf("lobby")),
     
-    ANY(String.valueOf("any")),
-    
-    TRUSTED(String.valueOf("trusted"));
+    REFUSE(String.valueOf("refuse"));
 
     private String value;
 
-    CertModeEnum(String value) {
+    CertOthersEnum(String value) {
       this.value = value;
     }
 
@@ -90,8 +96,8 @@ public class UpdateAdminSettingsCertsRequest {
     }
 
     @JsonCreator
-    public static CertModeEnum fromValue(String value) {
-      for (CertModeEnum b : CertModeEnum.values()) {
+    public static CertOthersEnum fromValue(String value) {
+      for (CertOthersEnum b : CertOthersEnum.values()) {
         if (b.value.equals(value)) {
           return b;
         }
@@ -100,25 +106,17 @@ public class UpdateAdminSettingsCertsRequest {
     }
   }
 
-  public static final String JSON_PROPERTY_CERT_MODE = "cert_mode";
+  public static final String JSON_PROPERTY_CERT_OTHERS = "cert_others";
   @jakarta.annotation.Nullable
-  private CertModeEnum certMode;
+  private CertOthersEnum certOthers;
 
-  public static final String JSON_PROPERTY_CERT_TRUSTED_ISSUERS = "cert_trusted_issuers";
+  public static final String JSON_PROPERTY_CERT_REPLACES_INVITE = "cert_replaces_invite";
   @jakarta.annotation.Nullable
-  private List<String> certTrustedIssuers = new ArrayList<>();
+  private UpdateAdminSettingsCertsRequestCertAutoIssue certReplacesInvite;
 
   public static final String JSON_PROPERTY_CERT_ISSUER_URLS = "cert_issuer_urls";
   @jakarta.annotation.Nullable
   private Map<String, String> certIssuerUrls = new HashMap<>();
-
-  public static final String JSON_PROPERTY_CERT_REQUIRE = "cert_require";
-  @jakarta.annotation.Nullable
-  private UpdateAdminSettingsCertsRequestCertRequire certRequire;
-
-  public static final String JSON_PROPERTY_CERT_MIN_POW_LEVEL = "cert_min_pow_level";
-  @jakarta.annotation.Nullable
-  private UpdateAdminSettingsCertsRequestCertMinAgeDays certMinPowLevel;
 
   public UpdateAdminSettingsCertsRequest() { 
   }
@@ -195,30 +193,6 @@ public class UpdateAdminSettingsCertsRequest {
   }
 
 
-  public UpdateAdminSettingsCertsRequest certMode(@jakarta.annotation.Nullable CertModeEnum certMode) {
-    this.certMode = certMode;
-    return this;
-  }
-
-  /**
-   * Get certMode
-   * @return certMode
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_CERT_MODE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public CertModeEnum getCertMode() {
-    return certMode;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_CERT_MODE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCertMode(@jakarta.annotation.Nullable CertModeEnum certMode) {
-    this.certMode = certMode;
-  }
-
-
   public UpdateAdminSettingsCertsRequest certTrustedIssuers(@jakarta.annotation.Nullable List<String> certTrustedIssuers) {
     this.certTrustedIssuers = certTrustedIssuers;
     return this;
@@ -248,6 +222,86 @@ public class UpdateAdminSettingsCertsRequest {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCertTrustedIssuers(@jakarta.annotation.Nullable List<String> certTrustedIssuers) {
     this.certTrustedIssuers = certTrustedIssuers;
+  }
+
+
+  public UpdateAdminSettingsCertsRequest certTrustedTypes(@jakarta.annotation.Nullable List<TrustedCertType> certTrustedTypes) {
+    this.certTrustedTypes = certTrustedTypes;
+    return this;
+  }
+
+  public UpdateAdminSettingsCertsRequest addCertTrustedTypesItem(TrustedCertType certTrustedTypesItem) {
+    if (this.certTrustedTypes == null) {
+      this.certTrustedTypes = new ArrayList<>();
+    }
+    this.certTrustedTypes.add(certTrustedTypesItem);
+    return this;
+  }
+
+  /**
+   * Get certTrustedTypes
+   * @return certTrustedTypes
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CERT_TRUSTED_TYPES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public List<TrustedCertType> getCertTrustedTypes() {
+    return certTrustedTypes;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_CERT_TRUSTED_TYPES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setCertTrustedTypes(@jakarta.annotation.Nullable List<TrustedCertType> certTrustedTypes) {
+    this.certTrustedTypes = certTrustedTypes;
+  }
+
+
+  public UpdateAdminSettingsCertsRequest certOthers(@jakarta.annotation.Nullable CertOthersEnum certOthers) {
+    this.certOthers = certOthers;
+    return this;
+  }
+
+  /**
+   * Get certOthers
+   * @return certOthers
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CERT_OTHERS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public CertOthersEnum getCertOthers() {
+    return certOthers;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_CERT_OTHERS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setCertOthers(@jakarta.annotation.Nullable CertOthersEnum certOthers) {
+    this.certOthers = certOthers;
+  }
+
+
+  public UpdateAdminSettingsCertsRequest certReplacesInvite(@jakarta.annotation.Nullable UpdateAdminSettingsCertsRequestCertAutoIssue certReplacesInvite) {
+    this.certReplacesInvite = certReplacesInvite;
+    return this;
+  }
+
+  /**
+   * Get certReplacesInvite
+   * @return certReplacesInvite
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CERT_REPLACES_INVITE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public UpdateAdminSettingsCertsRequestCertAutoIssue getCertReplacesInvite() {
+    return certReplacesInvite;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_CERT_REPLACES_INVITE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setCertReplacesInvite(@jakarta.annotation.Nullable UpdateAdminSettingsCertsRequestCertAutoIssue certReplacesInvite) {
+    this.certReplacesInvite = certReplacesInvite;
   }
 
 
@@ -283,54 +337,6 @@ public class UpdateAdminSettingsCertsRequest {
   }
 
 
-  public UpdateAdminSettingsCertsRequest certRequire(@jakarta.annotation.Nullable UpdateAdminSettingsCertsRequestCertRequire certRequire) {
-    this.certRequire = certRequire;
-    return this;
-  }
-
-  /**
-   * Get certRequire
-   * @return certRequire
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_CERT_REQUIRE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public UpdateAdminSettingsCertsRequestCertRequire getCertRequire() {
-    return certRequire;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_CERT_REQUIRE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCertRequire(@jakarta.annotation.Nullable UpdateAdminSettingsCertsRequestCertRequire certRequire) {
-    this.certRequire = certRequire;
-  }
-
-
-  public UpdateAdminSettingsCertsRequest certMinPowLevel(@jakarta.annotation.Nullable UpdateAdminSettingsCertsRequestCertMinAgeDays certMinPowLevel) {
-    this.certMinPowLevel = certMinPowLevel;
-    return this;
-  }
-
-  /**
-   * Get certMinPowLevel
-   * @return certMinPowLevel
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_CERT_MIN_POW_LEVEL)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public UpdateAdminSettingsCertsRequestCertMinAgeDays getCertMinPowLevel() {
-    return certMinPowLevel;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_CERT_MIN_POW_LEVEL)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCertMinPowLevel(@jakarta.annotation.Nullable UpdateAdminSettingsCertsRequestCertMinAgeDays certMinPowLevel) {
-    this.certMinPowLevel = certMinPowLevel;
-  }
-
-
   /**
    * Return true if this updateAdminSettingsCerts_request object is equal to o.
    */
@@ -346,16 +352,16 @@ public class UpdateAdminSettingsCertsRequest {
     return Objects.equals(this.certAutoIssue, updateAdminSettingsCertsRequest.certAutoIssue) &&
         Objects.equals(this.certMinAgeDays, updateAdminSettingsCertsRequest.certMinAgeDays) &&
         Objects.equals(this.certValidityDays, updateAdminSettingsCertsRequest.certValidityDays) &&
-        Objects.equals(this.certMode, updateAdminSettingsCertsRequest.certMode) &&
         Objects.equals(this.certTrustedIssuers, updateAdminSettingsCertsRequest.certTrustedIssuers) &&
-        Objects.equals(this.certIssuerUrls, updateAdminSettingsCertsRequest.certIssuerUrls) &&
-        Objects.equals(this.certRequire, updateAdminSettingsCertsRequest.certRequire) &&
-        Objects.equals(this.certMinPowLevel, updateAdminSettingsCertsRequest.certMinPowLevel);
+        Objects.equals(this.certTrustedTypes, updateAdminSettingsCertsRequest.certTrustedTypes) &&
+        Objects.equals(this.certOthers, updateAdminSettingsCertsRequest.certOthers) &&
+        Objects.equals(this.certReplacesInvite, updateAdminSettingsCertsRequest.certReplacesInvite) &&
+        Objects.equals(this.certIssuerUrls, updateAdminSettingsCertsRequest.certIssuerUrls);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(certAutoIssue, certMinAgeDays, certValidityDays, certMode, certTrustedIssuers, certIssuerUrls, certRequire, certMinPowLevel);
+    return Objects.hash(certAutoIssue, certMinAgeDays, certValidityDays, certTrustedIssuers, certTrustedTypes, certOthers, certReplacesInvite, certIssuerUrls);
   }
 
   @Override
@@ -365,11 +371,11 @@ public class UpdateAdminSettingsCertsRequest {
     sb.append("    certAutoIssue: ").append(toIndentedString(certAutoIssue)).append("\n");
     sb.append("    certMinAgeDays: ").append(toIndentedString(certMinAgeDays)).append("\n");
     sb.append("    certValidityDays: ").append(toIndentedString(certValidityDays)).append("\n");
-    sb.append("    certMode: ").append(toIndentedString(certMode)).append("\n");
     sb.append("    certTrustedIssuers: ").append(toIndentedString(certTrustedIssuers)).append("\n");
+    sb.append("    certTrustedTypes: ").append(toIndentedString(certTrustedTypes)).append("\n");
+    sb.append("    certOthers: ").append(toIndentedString(certOthers)).append("\n");
+    sb.append("    certReplacesInvite: ").append(toIndentedString(certReplacesInvite)).append("\n");
     sb.append("    certIssuerUrls: ").append(toIndentedString(certIssuerUrls)).append("\n");
-    sb.append("    certRequire: ").append(toIndentedString(certRequire)).append("\n");
-    sb.append("    certMinPowLevel: ").append(toIndentedString(certMinPowLevel)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -432,11 +438,6 @@ public class UpdateAdminSettingsCertsRequest {
       joiner.add(getCertValidityDays().toUrlQueryString(prefix + "cert_validity_days" + suffix));
     }
 
-    // add `cert_mode` to the URL query string
-    if (getCertMode() != null) {
-      joiner.add(String.format("%scert_mode%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCertMode()))));
-    }
-
     // add `cert_trusted_issuers` to the URL query string
     if (getCertTrustedIssuers() != null) {
       for (int i = 0; i < getCertTrustedIssuers().size(); i++) {
@@ -446,6 +447,26 @@ public class UpdateAdminSettingsCertsRequest {
       }
     }
 
+    // add `cert_trusted_types` to the URL query string
+    if (getCertTrustedTypes() != null) {
+      for (int i = 0; i < getCertTrustedTypes().size(); i++) {
+        if (getCertTrustedTypes().get(i) != null) {
+          joiner.add(getCertTrustedTypes().get(i).toUrlQueryString(String.format("%scert_trusted_types%s%s", prefix, suffix,
+          "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix))));
+        }
+      }
+    }
+
+    // add `cert_others` to the URL query string
+    if (getCertOthers() != null) {
+      joiner.add(String.format("%scert_others%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCertOthers()))));
+    }
+
+    // add `cert_replaces_invite` to the URL query string
+    if (getCertReplacesInvite() != null) {
+      joiner.add(getCertReplacesInvite().toUrlQueryString(prefix + "cert_replaces_invite" + suffix));
+    }
+
     // add `cert_issuer_urls` to the URL query string
     if (getCertIssuerUrls() != null) {
       for (String _key : getCertIssuerUrls().keySet()) {
@@ -453,16 +474,6 @@ public class UpdateAdminSettingsCertsRequest {
             "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, _key, containerSuffix),
             getCertIssuerUrls().get(_key), ApiClient.urlEncode(ApiClient.valueToString(getCertIssuerUrls().get(_key)))));
       }
-    }
-
-    // add `cert_require` to the URL query string
-    if (getCertRequire() != null) {
-      joiner.add(getCertRequire().toUrlQueryString(prefix + "cert_require" + suffix));
-    }
-
-    // add `cert_min_pow_level` to the URL query string
-    if (getCertMinPowLevel() != null) {
-      joiner.add(getCertMinPowLevel().toUrlQueryString(prefix + "cert_min_pow_level" + suffix));
     }
 
     return joiner.toString();

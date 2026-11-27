@@ -292,7 +292,7 @@ public class HubEvent {
   }
 
   /**
-   * Get actorPubkey
+   * Absent when empty. Live, replay and webhooks.
    * @return actorPubkey
    */
   @jakarta.annotation.Nullable
@@ -316,7 +316,7 @@ public class HubEvent {
   }
 
   /**
-   * Get targetPubkey
+   * Absent when empty. Live, replay and webhooks.
    * @return targetPubkey
    */
   @jakarta.annotation.Nullable
@@ -340,7 +340,7 @@ public class HubEvent {
   }
 
   /**
-   * Get channelId
+   * Absent when empty. Live, replay and webhooks.
    * @return channelId
    */
   @jakarta.annotation.Nullable

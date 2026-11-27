@@ -24,168 +24,91 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
 import org.wavvon.sdk.generated.ApiClient;
 /**
- * ListMeCredentials200ResponseInner
+ * GrantBadgeRequest
  */
 @JsonPropertyOrder({
-  ListMeCredentials200ResponseInner.JSON_PROPERTY_ID,
-  ListMeCredentials200ResponseInner.JSON_PROPERTY_FRIENDLY_NAME,
-  ListMeCredentials200ResponseInner.JSON_PROPERTY_AAGUID,
-  ListMeCredentials200ResponseInner.JSON_PROPERTY_CREATED_AT,
-  ListMeCredentials200ResponseInner.JSON_PROPERTY_LAST_USED_AT
+  GrantBadgeRequest.JSON_PROPERTY_SUBJECTS,
+  GrantBadgeRequest.JSON_PROPERTY_LEVEL
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.12.0")
-public class ListMeCredentials200ResponseInner {
-  public static final String JSON_PROPERTY_ID = "id";
-  @jakarta.annotation.Nullable
-  private String id;
+public class GrantBadgeRequest {
+  public static final String JSON_PROPERTY_SUBJECTS = "subjects";
+  @jakarta.annotation.Nonnull
+  private List<String> subjects = new ArrayList<>();
 
-  public static final String JSON_PROPERTY_FRIENDLY_NAME = "friendly_name";
+  public static final String JSON_PROPERTY_LEVEL = "level";
   @jakarta.annotation.Nullable
-  private String friendlyName;
+  private Integer level;
 
-  public static final String JSON_PROPERTY_AAGUID = "aaguid";
-  @jakarta.annotation.Nullable
-  private String aaguid;
-
-  public static final String JSON_PROPERTY_CREATED_AT = "created_at";
-  @jakarta.annotation.Nullable
-  private Long createdAt;
-
-  public static final String JSON_PROPERTY_LAST_USED_AT = "last_used_at";
-  @jakarta.annotation.Nullable
-  private Long lastUsedAt;
-
-  public ListMeCredentials200ResponseInner() { 
+  public GrantBadgeRequest() { 
   }
 
-  public ListMeCredentials200ResponseInner id(@jakarta.annotation.Nullable String id) {
-    this.id = id;
+  public GrantBadgeRequest subjects(@jakarta.annotation.Nonnull List<String> subjects) {
+    this.subjects = subjects;
+    return this;
+  }
+
+  public GrantBadgeRequest addSubjectsItem(String subjectsItem) {
+    if (this.subjects == null) {
+      this.subjects = new ArrayList<>();
+    }
+    this.subjects.add(subjectsItem);
     return this;
   }
 
   /**
-   * Get id
-   * @return id
+   * Get subjects
+   * @return subjects
    */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getId() {
-    return id;
+  @jakarta.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_SUBJECTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public List<String> getSubjects() {
+    return subjects;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setId(@jakarta.annotation.Nullable String id) {
-    this.id = id;
+  @JsonProperty(JSON_PROPERTY_SUBJECTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setSubjects(@jakarta.annotation.Nonnull List<String> subjects) {
+    this.subjects = subjects;
   }
 
 
-  public ListMeCredentials200ResponseInner friendlyName(@jakarta.annotation.Nullable String friendlyName) {
-    this.friendlyName = friendlyName;
+  public GrantBadgeRequest level(@jakarta.annotation.Nullable Integer level) {
+    this.level = level;
     return this;
   }
 
   /**
-   * Get friendlyName
-   * @return friendlyName
+   * The first level when absent.
+   * @return level
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_FRIENDLY_NAME)
+  @JsonProperty(JSON_PROPERTY_LEVEL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getFriendlyName() {
-    return friendlyName;
+  public Integer getLevel() {
+    return level;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_FRIENDLY_NAME)
+  @JsonProperty(JSON_PROPERTY_LEVEL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setFriendlyName(@jakarta.annotation.Nullable String friendlyName) {
-    this.friendlyName = friendlyName;
-  }
-
-
-  public ListMeCredentials200ResponseInner aaguid(@jakarta.annotation.Nullable String aaguid) {
-    this.aaguid = aaguid;
-    return this;
-  }
-
-  /**
-   * Get aaguid
-   * @return aaguid
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_AAGUID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getAaguid() {
-    return aaguid;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_AAGUID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setAaguid(@jakarta.annotation.Nullable String aaguid) {
-    this.aaguid = aaguid;
-  }
-
-
-  public ListMeCredentials200ResponseInner createdAt(@jakarta.annotation.Nullable Long createdAt) {
-    this.createdAt = createdAt;
-    return this;
-  }
-
-  /**
-   * Get createdAt
-   * @return createdAt
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_CREATED_AT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Long getCreatedAt() {
-    return createdAt;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_CREATED_AT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCreatedAt(@jakarta.annotation.Nullable Long createdAt) {
-    this.createdAt = createdAt;
-  }
-
-
-  public ListMeCredentials200ResponseInner lastUsedAt(@jakarta.annotation.Nullable Long lastUsedAt) {
-    this.lastUsedAt = lastUsedAt;
-    return this;
-  }
-
-  /**
-   * Get lastUsedAt
-   * @return lastUsedAt
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_LAST_USED_AT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Long getLastUsedAt() {
-    return lastUsedAt;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_LAST_USED_AT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setLastUsedAt(@jakarta.annotation.Nullable Long lastUsedAt) {
-    this.lastUsedAt = lastUsedAt;
+  public void setLevel(@jakarta.annotation.Nullable Integer level) {
+    this.level = level;
   }
 
 
   /**
-   * Return true if this listMeCredentials_200_response_inner object is equal to o.
+   * Return true if this grantBadge_request object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -195,28 +118,22 @@ public class ListMeCredentials200ResponseInner {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ListMeCredentials200ResponseInner listMeCredentials200ResponseInner = (ListMeCredentials200ResponseInner) o;
-    return Objects.equals(this.id, listMeCredentials200ResponseInner.id) &&
-        Objects.equals(this.friendlyName, listMeCredentials200ResponseInner.friendlyName) &&
-        Objects.equals(this.aaguid, listMeCredentials200ResponseInner.aaguid) &&
-        Objects.equals(this.createdAt, listMeCredentials200ResponseInner.createdAt) &&
-        Objects.equals(this.lastUsedAt, listMeCredentials200ResponseInner.lastUsedAt);
+    GrantBadgeRequest grantBadgeRequest = (GrantBadgeRequest) o;
+    return Objects.equals(this.subjects, grantBadgeRequest.subjects) &&
+        Objects.equals(this.level, grantBadgeRequest.level);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, friendlyName, aaguid, createdAt, lastUsedAt);
+    return Objects.hash(subjects, level);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ListMeCredentials200ResponseInner {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    friendlyName: ").append(toIndentedString(friendlyName)).append("\n");
-    sb.append("    aaguid: ").append(toIndentedString(aaguid)).append("\n");
-    sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
-    sb.append("    lastUsedAt: ").append(toIndentedString(lastUsedAt)).append("\n");
+    sb.append("class GrantBadgeRequest {\n");
+    sb.append("    subjects: ").append(toIndentedString(subjects)).append("\n");
+    sb.append("    level: ").append(toIndentedString(level)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -264,29 +181,18 @@ public class ListMeCredentials200ResponseInner {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `id` to the URL query string
-    if (getId() != null) {
-      joiner.add(String.format("%sid%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getId()))));
+    // add `subjects` to the URL query string
+    if (getSubjects() != null) {
+      for (int i = 0; i < getSubjects().size(); i++) {
+        joiner.add(String.format("%ssubjects%s%s=%s", prefix, suffix,
+            "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix),
+            ApiClient.urlEncode(ApiClient.valueToString(getSubjects().get(i)))));
+      }
     }
 
-    // add `friendly_name` to the URL query string
-    if (getFriendlyName() != null) {
-      joiner.add(String.format("%sfriendly_name%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getFriendlyName()))));
-    }
-
-    // add `aaguid` to the URL query string
-    if (getAaguid() != null) {
-      joiner.add(String.format("%saaguid%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getAaguid()))));
-    }
-
-    // add `created_at` to the URL query string
-    if (getCreatedAt() != null) {
-      joiner.add(String.format("%screated_at%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCreatedAt()))));
-    }
-
-    // add `last_used_at` to the URL query string
-    if (getLastUsedAt() != null) {
-      joiner.add(String.format("%slast_used_at%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getLastUsedAt()))));
+    // add `level` to the URL query string
+    if (getLevel() != null) {
+      joiner.add(String.format("%slevel%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getLevel()))));
     }
 
     return joiner.toString();

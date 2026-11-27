@@ -28,6 +28,7 @@ import org.wavvon.sdk.generated.model.ListAdminAuditLog200ResponseInner;
 import org.wavvon.sdk.generated.model.ListAdminReports200ResponseInner;
 import org.wavvon.sdk.generated.model.ListChannelBans200ResponseInner;
 import org.wavvon.sdk.generated.model.ListChannelVoiceMutes200ResponseInner;
+import org.wavvon.sdk.generated.model.ListVoicePins200Response;
 import org.wavvon.sdk.generated.model.RaiseChannelHand201Response;
 import org.wavvon.sdk.generated.model.ReindexAdminSearch202Response;
 import org.wavvon.sdk.generated.model.RejectHubPendingRequest;
@@ -1868,6 +1869,90 @@ public class ModerationApi {
   }
 
   /**
+   * Who is pinned to this voice room&#39;s stage, in pin order
+   * The room&#39;s stage, the same for every viewer. Pins live in memory for one voice session: whoever leaves loses their pin and an empty room loses its stage. Behind &#x60;voice.pins&#x60;.
+   * @param channelId  (required)
+   * @return ListVoicePins200Response
+   * @throws ApiException if fails to make API call
+   */
+  public ListVoicePins200Response listVoicePins(String channelId) throws ApiException {
+    ApiResponse<ListVoicePins200Response> localVarResponse = listVoicePinsWithHttpInfo(channelId);
+    return localVarResponse.getData();
+  }
+
+  /**
+   * Who is pinned to this voice room&#39;s stage, in pin order
+   * The room&#39;s stage, the same for every viewer. Pins live in memory for one voice session: whoever leaves loses their pin and an empty room loses its stage. Behind &#x60;voice.pins&#x60;.
+   * @param channelId  (required)
+   * @return ApiResponse&lt;ListVoicePins200Response&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<ListVoicePins200Response> listVoicePinsWithHttpInfo(String channelId) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = listVoicePinsRequestBuilder(channelId);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("listVoicePins", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<ListVoicePins200Response>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        localVarResponse.body().close();
+
+        return new ApiResponse<ListVoicePins200Response>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<ListVoicePins200Response>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder listVoicePinsRequestBuilder(String channelId) throws ApiException {
+    // verify the required parameter 'channelId' is set
+    if (channelId == null) {
+      throw new ApiException(400, "Missing the required parameter 'channelId' when calling listVoicePins");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/channels/{channel_id}/voice-pins"
+        .replace("{channel_id}", ApiClient.urlEncode(channelId.toString()));
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
    * Lower a hand (own hand, or anyone&#39;s with mute_members)
    * 
    * @param channelId  (required)
@@ -1941,6 +2026,89 @@ public class ModerationApi {
     localVarRequestBuilder.header("Accept", "application/json");
 
     localVarRequestBuilder.method("DELETE", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Pin a member to this voice room&#39;s stage (voice.stage)
+   * Puts a member on the stage for everyone in the room and sends the room a &#x60;voice_pins&#x60; snapshot. 409 when the member is not in this voice channel.
+   * @param channelId  (required)
+   * @param pubkey  (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void pinVoice(String channelId, String pubkey) throws ApiException {
+    pinVoiceWithHttpInfo(channelId, pubkey);
+  }
+
+  /**
+   * Pin a member to this voice room&#39;s stage (voice.stage)
+   * Puts a member on the stage for everyone in the room and sends the room a &#x60;voice_pins&#x60; snapshot. 409 when the member is not in this voice channel.
+   * @param channelId  (required)
+   * @param pubkey  (required)
+   * @return ApiResponse&lt;Void&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<Void> pinVoiceWithHttpInfo(String channelId, String pubkey) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = pinVoiceRequestBuilder(channelId, pubkey);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("pinVoice", localVarResponse);
+        }
+        return new ApiResponse<>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            null
+        );
+      } finally {
+        // Drain the InputStream
+        while (localVarResponse.body().read() != -1) {
+          // Ignore
+        }
+        localVarResponse.body().close();
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder pinVoiceRequestBuilder(String channelId, String pubkey) throws ApiException {
+    // verify the required parameter 'channelId' is set
+    if (channelId == null) {
+      throw new ApiException(400, "Missing the required parameter 'channelId' when calling pinVoice");
+    }
+    // verify the required parameter 'pubkey' is set
+    if (pubkey == null) {
+      throw new ApiException(400, "Missing the required parameter 'pubkey' when calling pinVoice");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/channels/{channel_id}/voice-pins/{pubkey}"
+        .replace("{channel_id}", ApiClient.urlEncode(channelId.toString()))
+        .replace("{pubkey}", ApiClient.urlEncode(pubkey.toString()));
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }
@@ -2447,6 +2615,89 @@ public class ModerationApi {
     } catch (IOException e) {
       throw new ApiException(e);
     }
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Take a member off the stage
+   * Whoever holds &#x60;voice.stage&#x60; in this channel may unpin anyone; a member may unpin themselves.
+   * @param channelId  (required)
+   * @param pubkey  (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void unpinVoice(String channelId, String pubkey) throws ApiException {
+    unpinVoiceWithHttpInfo(channelId, pubkey);
+  }
+
+  /**
+   * Take a member off the stage
+   * Whoever holds &#x60;voice.stage&#x60; in this channel may unpin anyone; a member may unpin themselves.
+   * @param channelId  (required)
+   * @param pubkey  (required)
+   * @return ApiResponse&lt;Void&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<Void> unpinVoiceWithHttpInfo(String channelId, String pubkey) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = unpinVoiceRequestBuilder(channelId, pubkey);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("unpinVoice", localVarResponse);
+        }
+        return new ApiResponse<>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            null
+        );
+      } finally {
+        // Drain the InputStream
+        while (localVarResponse.body().read() != -1) {
+          // Ignore
+        }
+        localVarResponse.body().close();
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder unpinVoiceRequestBuilder(String channelId, String pubkey) throws ApiException {
+    // verify the required parameter 'channelId' is set
+    if (channelId == null) {
+      throw new ApiException(400, "Missing the required parameter 'channelId' when calling unpinVoice");
+    }
+    // verify the required parameter 'pubkey' is set
+    if (pubkey == null) {
+      throw new ApiException(400, "Missing the required parameter 'pubkey' when calling unpinVoice");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/channels/{channel_id}/voice-pins/{pubkey}"
+        .replace("{channel_id}", ApiClient.urlEncode(channelId.toString()))
+        .replace("{pubkey}", ApiClient.urlEncode(pubkey.toString()));
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("DELETE", HttpRequest.BodyPublishers.noBody());
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }
